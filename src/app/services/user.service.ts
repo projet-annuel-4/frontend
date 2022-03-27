@@ -16,7 +16,7 @@ const httpOptions = {
 
 export class UserService {
 
-  apiUrl: string = 'http://localhost:3000/api/v1/user/';
+  apiUrl: string = 'http://localhost:3000/api/v1/users/';
 
   constructor(private http: HttpClient) { }
 
@@ -24,24 +24,13 @@ export class UserService {
     return this.http.post<UserModel>(this.apiUrl, user, httpOptions);
   }
 
-  login(user: UserModel){
-    return this.http.put<UserModel>(this.apiUrl, user, httpOptions);
+  getUserInfo(user: UserModel){
+    return this.http.get<UserModel>(this.apiUrl, httpOptions);
   }
 
-  logout(){
-
-  }
-
-  getAll(): Observable<UserModel[]>{
-    return this.http.get<UserModel[]>(this.apiUrl);
-  }
-
-  getById(userId: string): Observable<UserModel>{
-    return this.http.get<UserModel>(this.apiUrl + userId);
-  }
 
   update(userUpdated: UserModel){
-    this.http.put<UserModel>(this.apiUrl + userUpdated.id, userUpdated, httpOptions);
+    this.http.put<UserModel>(this.apiUrl + "/edit", userUpdated, httpOptions);
   }
 
   delete(userId: string){
