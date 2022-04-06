@@ -27,9 +27,6 @@ export class AuthenticationService {
     return this.http.post<UserModel>(this.apiUrl + "forgot", passwordResetModel, httpOptions);
   }
 
-  getPasswordResetCode(){
-  }
-
   resetPassword(passwordResetModel: PasswordResetModel){
     return this.http.post<UserModel>(this.apiUrl + "reset/", passwordResetModel, httpOptions);
   }
