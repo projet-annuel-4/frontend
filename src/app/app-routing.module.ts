@@ -6,10 +6,10 @@ import {UserProfilComponent} from "./user-profil/user-profil.component";
 
 const routes: Routes = [
 
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
+  {path: "login", component: LoginComponent},
+  {path: "register", component: RegisterComponent},
 
-  {path: 'user/:id', component: UserProfilComponent}
+  {path: "user/:id", component: UserProfilComponent}
 
 
 

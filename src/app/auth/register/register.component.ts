@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../../services/user.service";
 import {UserModel} from "../../models/user.model";
+import {RegistrationService} from "../../services/registration.service";
 
 @Component({
   selector: 'app-register',
@@ -11,7 +11,7 @@ export class RegisterComponent implements OnInit {
 
   user = new UserModel();
 
-  constructor(private userService: UserService) { }
+  constructor(private registrationService: RegistrationService) { }
 
   ngOnInit(): void {
   }
@@ -21,7 +21,10 @@ export class RegisterComponent implements OnInit {
       alert('No User');
       return;
     }
-    this.userService.register(this.user).subscribe();
+    //TODO Captcha
+    this.user.captcha = "string";
+
+    this.registrationService.register(this.user).subscribe();
   }
 
 

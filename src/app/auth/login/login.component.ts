@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/user/user.service";
 import {UserModel} from "../../models/user.model";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-login',
@@ -11,15 +12,20 @@ export class LoginComponent implements OnInit {
 
   user = new UserModel();
 
-  constructor(private userService: UserService) { }
+  constructor(private authenticationService: AuthenticationService) { }
+
 
   ngOnInit(): void {
   }
 
+
   login(){
-    this.userService.login(this.user).subscribe( userLog => {
-      console.log(userLog);
-    });
+    if(this.user.email === undefined || this.user.password === undefined) {
+      alert('');
+      return;
+    }
+
+    this.authenticationService.login(this.user).subscribe();
   }
 
 

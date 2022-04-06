@@ -14,13 +14,13 @@ const httpOptions = {
 
 
 export class AuthenticationService {
-  apiUrl: string = 'http://localhost:3000/api/v1/auth/';
+  apiUrl: string = 'http://localhost:8082/api/v1/auth/';
 
   constructor(private http: HttpClient) { }
 
 
-  login(mail: string, password: string){
-    return this.http.post<UserModel>(this.apiUrl + "login", {mail, password}, httpOptions);
+  login(user: UserModel){
+    return this.http.post<UserModel>(this.apiUrl + "login", user, httpOptions);
   }
 
   forgot(passwordResetModel: PasswordResetModel){

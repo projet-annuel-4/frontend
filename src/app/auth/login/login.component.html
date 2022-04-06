@@ -1,3 +1,56 @@
-<p>login works!</p>
+<form (submit)="login()">
+  <div>
+    <p> Connexion </p>
+  </div>
 
 
+  <div>
+    <label> Email </label>
+    <input
+      [(ngModel)]="user.email"
+      name="name"
+      id="email"
+      placeholder="test@test.fr"
+      required
+      type="email"
+    >
+  </div>
+
+  <div>
+    <label> Password </label>
+    <input
+      [(ngModel)]="user.password"
+      name="password"
+      id="password"
+      required
+      type="password"
+    >
+  </div>
+
+  <div>
+    <button type="submit" > Se connecter</button>
+  </div>
+  <br>
+  <div>
+    <button type="button" routerLink=""> Mot de pas oublié ?</button>
+  </div>
+  <div>
+    <button type="button" routerLink="/register"> Créer mon compte </button>
+  </div>
+
+  <br>
+
+  <div>
+    <button type="button" routerLink=""> Google </button>
+  </div>
+  <div>
+    <button type="button" routerLink=""> Facebook </button>
+  </div>
+  <div>
+    <button type="button" routerLink=""> GitHub </button>
+  </div>
+
+
+
+
+</form>

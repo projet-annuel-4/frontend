@@ -3,11 +3,13 @@ export class UserModel {
   email?: string;
   password?: string;
   password2?: string;
-  firstname?: string;
-  lastname?: string;
+  firstName?: string;
+  lastName?: string;
   pseudo?: string;
   city?: string;
   address?: string;
   phoneNumber?: string;
+  captcha?: string;
   inscriptionDate?: Date;
 }
+

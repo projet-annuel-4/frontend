@@ -13,7 +13,7 @@ const httpOptions = {
 
 export class AdminService {
 
-  apiUrl: string = 'http://localhost:3000/api/v1/admin/';
+  apiUrl: string = 'http://localhost:8082/api/v1/admin/';
 
   constructor(private http: HttpClient) { }
 
