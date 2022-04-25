@@ -40,8 +40,6 @@ describe('User Service test', () => {
       .toBe(1);
   });
 
-
-
   it('should return an error when the server returns a 404', (done: DoneFn) => {
 
     const user: UserModel =

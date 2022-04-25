@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from "../../services/authentication.service";
+import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {PasswordResetModel} from "../../models/passwordReset.model";
 
 @Component({
@@ -17,7 +17,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   forgotPassword(){
-    this.authenticationService.forgot(this.passwordModel).subscribe();
+    this.authenticationService.forgot(this.passwordModel);
   }
 
 }

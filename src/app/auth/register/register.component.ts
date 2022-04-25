@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserModel} from "../../models/user.model";
-import {RegistrationService} from "../../services/registration.service";
+import {RegistrationService} from "../../services/registration/registration.service";
 
 @Component({
   selector: 'app-register',
@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     //TODO Captcha
     this.user.captcha = "string";
 
-    this.registrationService.register(this.user).subscribe();
+    this.registrationService.register(this.user);
   }
 
 

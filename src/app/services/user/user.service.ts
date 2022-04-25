@@ -13,7 +13,6 @@ const httpOptions = {
 })
 
 
-
 export class UserService {
 
   apiUrl: string = 'http://localhost:8082/api/v1/users/';
@@ -21,13 +20,21 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
 
-  getUserInfo(user: UserModel){
-    return this.http.get<UserModel>(this.apiUrl, httpOptions);
+  getUserInfo(): Observable<UserModel>{
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders();
+    if(token){
+      headers.set('Authorization', token);
+      headers.set( 'Content-Type', 'application/json');
+    }
+
+    return this.http.get<UserModel>(this.apiUrl + "info", {headers});
   }
 
 
   update(userUpdated: UserModel){
-    this.http.put<UserModel>(this.apiUrl + "/edit", userUpdated, httpOptions);
+    return this.http.put<UserModel>(this.apiUrl + "edit", userUpdated, httpOptions);
   }
 
   delete(userId: string){

@@ -9,6 +9,8 @@ export class UserModel {
   city?: string;
   address?: string;
   phoneNumber?: string;
+  token?:string;
+  userRole?:string;
   captcha?: string;
   inscriptionDate?: Date;
 }

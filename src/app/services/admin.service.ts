@@ -19,11 +19,26 @@ export class AdminService {
 
 
   getAll(): Observable<UserModel[]>{
-    return this.http.get<UserModel[]>(this.apiUrl + "user/all");
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders();
+
+    if(token){
+      headers.set('Authorization', token);
+      headers.set( 'Content-Type', 'application/json');
+    }
+
+    return this.http.get<UserModel[]>(this.apiUrl + "user/all", {headers});
   }
 
   getById(userId: string): Observable<UserModel>{
-    return this.http.get<UserModel>(this.apiUrl + "user" + userId);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders();
+
+    if(token){
+      headers.set('Authorization', token);
+      headers.set( 'Content-Type', 'application/json');
+    }
+    return this.http.get<UserModel>(this.apiUrl + "user/" + userId, {headers});
   }
 
 }
