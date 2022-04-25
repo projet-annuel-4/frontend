@@ -1,31 +1,38 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NbThemeModule, NbLayoutModule, NbMenuModule, NbDialogModule } from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from "./auth/auth.module";
+
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
-import { RegisterComponent } from './auth/register/register.component';
-import { UserProfilComponent } from './user-profil/user-profil.component';
-import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { HomeModule } from './home/home.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    UserProfilComponent,
-    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    NbThemeModule.forRoot({ name: 'cosmic' }),
+    NbMenuModule.forRoot(),
+    NbDialogModule.forRoot(),
+    NbLayoutModule,
+    NbEvaIconsModule,
     AppRoutingModule,
-
-    HttpClientModule,
-    FormsModule
+    AuthModule,
+    HomeModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
