@@ -14,7 +14,7 @@ export class ChatComponent implements OnInit {
   constructor(private notificationService: NotificationService, private chatService: ChatService, private router: Router) { }
 
   ngOnInit(): void {
-    this.notificationService.subscribe()
+    this.notificationService.suscribe()
   }
 
 }
