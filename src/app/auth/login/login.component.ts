@@ -3,12 +3,17 @@ import {UserService} from "../../services/user/user.service";
 import {UserModel} from "../../models/user.model";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {Router} from "@angular/router";
+import {NbFocusMonitor, NbStatusService} from "@nebular/theme";
 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers:[
+    NbStatusService,
+    NbFocusMonitor
+  ]
 })
 export class LoginComponent implements OnInit {
 

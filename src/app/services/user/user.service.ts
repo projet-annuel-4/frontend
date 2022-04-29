@@ -25,7 +25,8 @@ export class UserService {
 
     const headers = new HttpHeaders();
     if(token){
-      headers.set('Authorization', token);
+      //headers.set('Authorization', token);
+      headers.set('Authorization', 'Bearer' + token);
       headers.set( 'Content-Type', 'application/json');
     }
 
