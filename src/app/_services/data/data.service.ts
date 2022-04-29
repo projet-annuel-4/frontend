@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { FriendProfile } from '../_dtos/chat/FriendProfile';
-import { UserMessage } from '../_dtos/chat/UserMessage';
+import { FriendProfile } from '../../_dtos/chat/FriendProfile';
+import { UserMessage } from '../../_dtos/chat/UserMessage';
 import { map } from 'rxjs/operators';
 
 @Injectable()

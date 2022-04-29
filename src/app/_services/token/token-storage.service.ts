@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserProfile } from '../_dtos/user/UserProfile';
+import { UserProfile } from '../../_dtos/user/UserProfile';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class TokenStorageService {
   public getUser(): UserProfile {
     let raw = JSON.parse(localStorage.getItem(this.USER_KEY));
     return (raw != null)? new UserProfile(raw['id'], raw['email'], raw['name'], raw['imgUrl'], ) : null
-    
+
   }
 
 }

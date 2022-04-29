@@ -10,12 +10,12 @@ import { TokenComponent } from './token/token.component';
 
 const routes: Routes = [
   {path: 'auth', component: AuthComponent, children:[
-      {path: 'signin', component: SigninComponent},
+      {path: 'signing', component: SigninComponent},
       {path: 'signup', component: SignupComponent},
       {path: 'forgot', component: ForgotPasswordComponent},
       {path: 'reset', component: ResetPasswordComponent},
       {path: 'token', component: TokenComponent},
-      {path: '', redirectTo:'signin', pathMatch: 'full'}
+      {path: '', redirectTo:'signing', pathMatch: 'full'}
   ]}
 ];
 

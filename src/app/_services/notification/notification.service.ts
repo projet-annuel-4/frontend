@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { DataService } from './data.service';
+import { DataService } from '../data/data.service';
 import * as SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import { environment } from 'src/environments/environment';
-import { UserService } from './user.service';
-import { UserMessage } from '../_dtos/chat/UserMessage';
-import { FriendProfile } from '../_dtos/chat/FriendProfile';
-import { TokenStorageService } from './token-storage.service';
+import { UserService } from '../user/user.service';
+import { UserMessage } from '../../_dtos/chat/UserMessage';
+import { FriendProfile } from '../../_dtos/chat/FriendProfile';
+import { TokenStorageService } from '../token/token-storage.service';
 
 @Injectable()
 export class NotificationService {

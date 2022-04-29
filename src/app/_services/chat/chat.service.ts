@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
-import { FriendProfile } from '../_dtos/chat/FriendProfile';
-import { DataService } from './data.service';
-import { UserMessage } from '../_dtos/chat/UserMessage';
+import { FriendProfile } from '../../_dtos/chat/FriendProfile';
+import { DataService } from '../data/data.service';
+import { UserMessage } from '../../_dtos/chat/UserMessage';
 
 @Injectable()
 export class ChatService {

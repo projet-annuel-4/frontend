@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from 'src/app/_services/notification.service';
-import { DataService } from 'src/app/_services/data.service';
-import { ChatService } from 'src/app/_services/chat.service';
+import { NotificationService } from 'src/app/_services/notification/notification.service';
+import { DataService } from 'src/app/_services/data/data.service';
+import { ChatService } from 'src/app/_services/chat/chat.service';
 import { Router } from '@angular/router';
 
 @Component({

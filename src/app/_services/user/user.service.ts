@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { TokenStorageService } from './token-storage.service';
+import { environment } from '../../../environments/environment';
+import { TokenStorageService } from '../token/token-storage.service';
 import { map } from 'rxjs/operators';
-import { UserProfile } from '../_dtos/user/UserProfile';
+import { UserProfile } from '../../_dtos/user/UserProfile';
 import { Observable } from 'rxjs';
 
 @Injectable()

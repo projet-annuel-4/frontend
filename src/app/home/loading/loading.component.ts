@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatService } from 'src/app/_services/chat.service';
+import { ChatService } from 'src/app/_services/chat/chat.service';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/_services/user.service';
+import { UserService } from 'src/app/_services/user/user.service';
 
 @Component({
   selector: 'app-loading',

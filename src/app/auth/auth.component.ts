@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../_services/auth.service';
+import { AuthService } from '../_services/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ export class AuthComponent implements OnInit {
       this.router.navigateByUrl('/');
     }
 
-   }
+  }
 
   ngOnInit(): void {
   }
