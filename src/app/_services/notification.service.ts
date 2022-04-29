@@ -18,7 +18,7 @@ export class NotificationService {
     this.topic = `/notifications/${this.userService.getProfile().id}`
   }
 
-  suscribe() {
+  subscribe() {
     let ws = new SockJS(`${environment.DOMAIN}/ws`);
     this.stompClient = Stomp.over(ws);
     this.stompClient.debug = () => {};
@@ -28,7 +28,7 @@ export class NotificationService {
         _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
           _this.onMessageReceived(sdkEvent);
         });
-      }, function (error) { setTimeout(() => _this.suscribe(), 5000); });
+      }, function (error) { setTimeout(() => _this.subscribe(), 5000); });
   }
 
   onMessageReceived(message) {
