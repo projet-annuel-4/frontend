@@ -8,10 +8,10 @@ import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss']
+  templateUrl: './signing.component.html',
+  styleUrls: ['./signing.component.scss']
 })
-export class SigninComponent implements OnInit {
+export class SigningComponent implements OnInit {
 
   loading: Boolean = false
   signInFrom: FormGroup

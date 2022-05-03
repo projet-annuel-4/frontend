@@ -10,7 +10,7 @@ import { AuthService } from '../_services/auth/auth.service';
 
 import { AuthComponent } from './auth.component';
 import { SignupComponent } from './signup/signup.component';
-import { SigninComponent } from './signin/signin.component';
+import { SigningComponent } from './signin/signing.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TokenComponent } from './token/token.component';
@@ -18,7 +18,7 @@ import { UserService } from '../_services/user/user.service';
 
 
 @NgModule({
-  declarations: [AuthComponent, SignupComponent, SigninComponent, ForgotPasswordComponent, ResetPasswordComponent, TokenComponent],
+  declarations: [AuthComponent, SignupComponent, SigningComponent, ForgotPasswordComponent, ResetPasswordComponent, TokenComponent],
   imports: [
     CommonModule, AuthRoutingModule, SharedModule, HttpClientModule, FormsModule, ReactiveFormsModule
   ],
