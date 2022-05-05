@@ -19,7 +19,7 @@ export class ChatService {
   constructor(private httpClient: HttpClient, private dataService: DataService) { }
 
   fetchFriends(): Observable<any> {
-    return this.httpClient.get(`${environment.DOMAIN}/api/chat`, this.httpOptions)
+    return this.httpClient.get(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.chat}`, this.httpOptions)
       .pipe(map((friends: FriendProfile[]) => {
         this.dataService.updateFriends(friends)
       }))
@@ -30,20 +30,20 @@ export class ChatService {
   }
 
   fetchAllMessages(): Observable<any> {
-    return this.httpClient.post(`${environment.DOMAIN}/api/chat/messages`,
+    return this.httpClient.post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.chat}/messages`,
       Array.from(this.dataService.getAllFriend().keys()), this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
         this.dataService.updateUserMessages(msgs)
       }))
   }
-
+  /*getAllMessages*/
   fetchMessages(covId: string): Observable<any> {
     return this.httpClient.get(`${environment.DOMAIN}/api/chat/${covId}/messages`, this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
         this.dataService.updateUserMessages(msgs)
       }))
   }
-
+  /* */
   createFriend(email: String): Observable<any> {
     return this.httpClient.post(`${environment.DOMAIN}/api/chat?email=${email}`, this.httpOptions)
       .pipe(map((friend: FriendProfile) => {
@@ -53,7 +53,7 @@ export class ChatService {
 
   createMessageText(cid: string, content: string): Observable<UserMessage> {
     return this.httpClient
-      .post(`${environment.DOMAIN}/api/chat/${cid}/messages/text?content=${content}`,{}, this.httpOptions)
+      .post(`${environment.DOMAIN}/${environment.chat}/${cid}/messages/text?content=${content}`,{}, this.httpOptions)
       .pipe(map((v: UserMessage) => {
         this.dataService.updateUserMessages([v])
         return v
@@ -62,7 +62,7 @@ export class ChatService {
 
   createMessageFile(cid: string, content: string, data:FormData): Observable<UserMessage> {
     return this.httpClient
-      .post(`${environment.DOMAIN}/api/chat/${cid}/messages/files?content=${content}`, data)
+      .post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.chat}/${cid}/messages/files?content=${content}`, data)
       .pipe(map((v: UserMessage) => {
         this.dataService.updateUserMessages([v])
         return v

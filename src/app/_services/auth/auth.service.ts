@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   login(signInRequest: SignInRequest): Observable<SignInResponse> {
-    return this.http.post(`${environment.DOMAIN}/api/account/signin`, signInRequest, this.httpOptions)
+    return this.http.post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.auth}`, signInRequest, this.httpOptions)
       .pipe(map((response: SignInResponse) => {
         this.tokenStorage.saveToken(response.accessToken)
         this.tokenStorage.saveUser(new UserProfile(response.id, response.email, response.name, response.imageUrl))
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   register(signUpRequest: SignUpRequest): Observable<ApiResponse> {
-    return this.http.post(`${environment.DOMAIN}/api/account/signup`, signUpRequest, this.httpOptions) as Observable<ApiResponse>;
+    return this.http.post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.registration}`, signUpRequest, this.httpOptions) as Observable<ApiResponse>;
   }
 
   logout() {

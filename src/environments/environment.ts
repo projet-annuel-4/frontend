@@ -4,7 +4,12 @@
 
 export const environment = {
   production: false,
-  DOMAIN: 'http://localhost:8080'
+  DOMAIN: 'http://localhost:8080',
+  API_VERSION: 'api/v1',
+
+  auth: `auth`,
+  registration: `registration`,
+  chat: `chat`
 };
 
 /*
