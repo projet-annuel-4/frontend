@@ -11,6 +11,7 @@ import { SignUpRequest } from '../../_dtos/auth/SignUpRequest';
 import { ApiResponse } from '../../_dtos/common/ApiResponse';
 import { UserService } from '../user/user.service';
 import { UserProfile } from '../../_dtos/user/UserProfile';
+import {ForgotPasswordRequest} from "../../_dtos/auth/ForgotPasswordRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -49,4 +50,13 @@ export class AuthService {
   logout() {
     this.tokenStorage.signOut()
   }
+
+  forgotPassword(forgotPasswordRequest: ForgotPasswordRequest){
+    return this.http.put(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.auth}/forgot`, forgotPasswordRequest, this.httpOptions);
+  }
+
+  updatePassword(forgotPasswordRequest: ForgotPasswordRequest){
+    return this.http.put(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.auth}/edit/password`, forgotPasswordRequest, this.httpOptions);
+  }
+
 }
