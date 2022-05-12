@@ -4,13 +4,33 @@
 
 export const environment = {
   production: false,
-  DOMAIN: 'http://localhost:8080',
+
+  DOMAIN: 'http://localhost:8080/api/auth',
   API_VERSION: 'api/v1',
 
-  auth: `auth`,
-  registration: `registration`,
-  chat: `chat`
+  AUTH: `auth`,
+  REGISTRATION: `registration`,
+  CHAT: `chat`,
+  USERS: `users`
+
 };
+
+export const auth_service = {
+  //localhost:8082/api/auth/api/v1/users
+  LOGIN: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/login`,
+  REGISTRATION: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.REGISTRATION}`,
+
+  FORGOT_PASSWORD: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/forgot`,
+  EDIT_PASSWORD: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/edit/password`,
+}
+
+export const chat_service = {
+
+}
+
+export const user_service = {
+  INFO: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.USERS}/info`
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

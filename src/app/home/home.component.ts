@@ -10,10 +10,11 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   constructor(private chatService: ChatService, private router: Router) {
-    this.chatService.fetch.subscribe(v => {
+    /*this.chatService.fetch.subscribe(v => {
       if(v == 0) this.router.navigateByUrl("/loading")
       if(v == 100) this.router.navigateByUrl("/chat")
     })
+     */
    }
 
   ngOnInit(): void {

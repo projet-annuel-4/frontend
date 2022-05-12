@@ -10,7 +10,7 @@ import { AuthService } from '../_services/auth/auth.service';
 
 import { AuthComponent } from './auth.component';
 import { SignupComponent } from './signup/signup.component';
-import { SigningComponent } from './signin/signing.component';
+import { SigningComponent } from './signing/signing.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TokenComponent } from './token/token.component';

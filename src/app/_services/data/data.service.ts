@@ -20,9 +20,9 @@ export class DataService {
   }
 
   updateFriends(newFriends: FriendProfile[]) {
-    let friends = this._friends.value
+    const friends = this._friends.value
     newFriends.map(v => {
-      let friend = friends.get(v.id)
+      const friend = friends.get(v.id)
       if (friend) {
         friend.update(v.id, v.email, v.name, v.imgUrl, v.blockedBy, v.updatedAt)
       } else { friends.set(v.id, v) }
@@ -31,8 +31,8 @@ export class DataService {
   }
 
   sortFriends() {
-    let msgs = this._userMessages.value
-    let friends = this._friends.value
+    const msgs = this._userMessages.value
+    const friends = this._friends.value
 
     msgs.forEach((msg, k) => {
       let friend = friends.get(msg.chatId)

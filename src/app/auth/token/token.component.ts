@@ -12,15 +12,15 @@ import { delay } from 'rxjs/operators';
 })
 export class TokenComponent implements OnInit {
 
-  loading: Boolean = true
-  profile: UserProfile
-  token: string
-  redirect = "/loading"
+  loading: Boolean = true;
+  profile: UserProfile;
+  token: string;
+  redirect = "/loading";
 
   constructor(private route: ActivatedRoute, private authService: AuthService, private userService: UserService, private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.token = params['token'];
-      this.authService.setToken(this.token)
+      this.authService.setToken(this.token);
     });
   }
 
@@ -32,12 +32,12 @@ export class TokenComponent implements OnInit {
           this.profile = profile
           this.loading = false
         }, (err) => {
-          this.router.navigateByUrl("/auth/signin")
+          this.router.navigateByUrl("/auth/signing")
         })
     })();
   }
 
   continue() {
-    this.router.navigateByUrl(this.redirect)
+    this.router.navigateByUrl(this.redirect).then();
   }
 }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './auth.component';
-import { SigningComponent } from './signin/signing.component';
+import { SigningComponent } from './signing/signing.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';

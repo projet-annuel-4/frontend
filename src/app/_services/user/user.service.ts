@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import {environment, user_service} from '../../../environments/environment';
 import { TokenStorageService } from '../token/token-storage.service';
 import { map } from 'rxjs/operators';
 import { UserProfile } from '../../_dtos/user/UserProfile';
@@ -17,10 +17,10 @@ export class UserService {
   }
 
   fetchProfile(): Observable<UserProfile>{
-    return this.httpClient.get(`${environment.DOMAIN}/api/user/me`, this.httpOptions)
+    return this.httpClient.get(`${user_service.INFO}`, this.httpOptions)
     .pipe(map((user: UserProfile) =>{
       this.storage.saveUser(user)
-      return user
+      return user;
     }))
   }
 

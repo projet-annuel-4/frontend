@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-signin',
+  selector: 'app-signing',
   templateUrl: './signing.component.html',
   styleUrls: ['./signing.component.scss']
 })
@@ -17,7 +17,7 @@ export class SigningComponent implements OnInit {
   signInFrom: FormGroup
   redirect = "/"
 
-  constructor( private _authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
+  constructor( private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
     this.signInFrom = this.formBuilder.group({
       email: [],
       password: []
@@ -29,26 +29,30 @@ export class SigningComponent implements OnInit {
 
   login(){
     if(this.signInFrom.valid){
-      let data = this.signInFrom.value
+      const data = this.signInFrom.value
       this.loading = true
-      this._authService.login(new SignInRequest(data['email'], data['password'])).subscribe(
+      this.authService.login(new SignInRequest(data['email'], data['password'])).subscribe(
         (response: SignInResponse)=>{
-          this.router.navigateByUrl(this.redirect)
-          this.loading = false
+          this.router.navigateByUrl(this.redirect);
+          this.loading = false;
         },(err:any)=>{
-          this.loading = false
-          console.log(err.error.message)
+          this.loading = false;
+          console.log(err.error.message);
         }
-      )
+      );
     }
   }
 
   facebook(){
-    window.location.href=`${environment.DOMAIN}/oauth2/authorization/facebook?redirect_url=http://localhost:4200/auth/token`;
+    this.authService.registerWithFacebook();
   }
 
   google(){
-    window.location.href=`${environment.DOMAIN}/oauth2/authorization/google?redirect_url=http://localhost:4200/auth/token`;
+    this.authService.registerWithGoogle();
+  }
+
+  gitHub(){
+
   }
 
 }

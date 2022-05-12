@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {  Observable } from 'rxjs';
 import { TokenStorageService } from '../token/token-storage.service';
 
-import { environment } from '../../../environments/environment';
+import {auth_service, environment} from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { SignInResponse } from '../../_dtos/auth/SignInResponse';
 import { SignInRequest } from '../../_dtos/auth/SignInRequest';
@@ -35,7 +35,7 @@ export class AuthService {
   }
 
   login(signInRequest: SignInRequest): Observable<SignInResponse> {
-    return this.http.post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.auth}`, signInRequest, this.httpOptions)
+    return this.http.post(`${auth_service.LOGIN}`, signInRequest, this.httpOptions)
       .pipe(map((response: SignInResponse) => {
         this.tokenStorage.saveToken(response.accessToken)
         this.tokenStorage.saveUser(new UserProfile(response.id, response.email, response.name, response.imageUrl))
@@ -44,19 +44,31 @@ export class AuthService {
   }
 
   register(signUpRequest: SignUpRequest): Observable<ApiResponse> {
-    return this.http.post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.registration}`, signUpRequest, this.httpOptions) as Observable<ApiResponse>;
+    return this.http.post(`${auth_service.REGISTRATION}`, signUpRequest, this.httpOptions) as Observable<ApiResponse>;
+  }
+
+  registerWithFacebook(){
+    window.location.href=`${environment.DOMAIN}/oauth2/authorization/facebook?redirect_url=http://localhost:4200/auth/token`;
+  }
+
+  registerWithGoogle(){
+    window.location.href=`${environment.DOMAIN}/oauth2/authorization/google?redirect_url=http://localhost:4200/auth/token`;
+  }
+
+  registerWithGithub(){
+
   }
 
   logout() {
-    this.tokenStorage.signOut()
+    this.tokenStorage.signOut();
   }
 
   forgotPassword(forgotPasswordRequest: ForgotPasswordRequest){
-    return this.http.put(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.auth}/forgot`, forgotPasswordRequest, this.httpOptions);
+    return this.http.put(`${auth_service.FORGOT_PASSWORD}`, forgotPasswordRequest, this.httpOptions);
   }
 
   updatePassword(forgotPasswordRequest: ForgotPasswordRequest){
-    return this.http.put(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.auth}/edit/password`, forgotPasswordRequest, this.httpOptions);
+    return this.http.put(`${auth_service.EDIT_PASSWORD}`, forgotPasswordRequest, this.httpOptions);
   }
 
 }

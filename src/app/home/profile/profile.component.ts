@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
   }
 
   continue(): void{
-    this.router.navigateByUrl("/chat")
+    this.router.navigateByUrl("/chat").then();
   }
 
   uploadFile(file): void{

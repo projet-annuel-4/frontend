@@ -13,7 +13,6 @@ export class AuthComponent implements OnInit {
     if(this.authService.getToken()) {
       //this.router.navigateByUrl('/');
     }
-
   }
 
   ngOnInit(): void {

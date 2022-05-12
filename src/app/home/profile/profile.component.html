@@ -3,7 +3,8 @@
         <div class="col-lg-6 col-md-8 col-sm-10 col-12">
             <nb-card class="text-center">
                 <nb-card-header><h2>Edit your profile</h2></nb-card-header>
-                <nb-card-body *ngIf="profile">
+                <nb-card-body >
+                <!--<nb-card-body *ngIf="profile">-->
                     <form>
                         <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" (change)="uploadFile($event)"
                         #fileInput style="display:none;"/>

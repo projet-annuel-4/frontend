@@ -12,7 +12,7 @@ import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent, canActivate: [AuthGuard], children: [
+    path: '', component: HomeComponent, /*canActivate: [AuthGuard],*/ children: [
       {
         path: 'chat', component: ChatComponent, children: [
           { path: '', component: ChatBannerComponent },

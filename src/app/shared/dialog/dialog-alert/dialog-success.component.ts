@@ -17,14 +17,14 @@ import { NbDialogRef } from '@nebular/theme';
     </nb-card>
     `,
   })
+
+
 export class DialogSuccessComponent {
+  @Input() title: string;
+  @Input() message: string;
+  constructor(protected ref: NbDialogRef<DialogSuccessComponent>) {}
 
-    @Input() title: string;
-    @Input() message: string;
-    constructor(protected ref: NbDialogRef<DialogSuccessComponent>) {
-    }
-
-    dismiss() {
-        this.ref.close();
-      }
+  dismiss() {
+    this.ref.close();
   }
+}
