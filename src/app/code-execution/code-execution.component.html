@@ -1,0 +1,27 @@
+
+
+
+<nb-card>
+
+  <nb-card-header>
+    <nb-select placeholder="Select Showcase" [(selected)]="selectedLanguage">
+      <nb-option value="javascript">JavaScript</nb-option>
+      <nb-option value="java">JAVA</nb-option>
+    </nb-select>
+  </nb-card-header>
+
+  <nb-card-body>
+    <textarea [(ngModel)]="inputCode" rows="12" cols="50"> </textarea>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button (click)="test()"> Run </button>
+    <br>
+    <br>
+    <input type='file' id="fileUpload" accept=".java, .js, .png" (change)="uploadFile()" #fileInput />
+  </nb-card-footer>
+
+</nb-card>
+
+
+<nb-layout></nb-layout>
