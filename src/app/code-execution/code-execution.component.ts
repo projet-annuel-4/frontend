@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Code_executionService} from "../_services/code_execution/code_execution.service";
 
 @Component({
   selector: 'app-code-execution',
@@ -11,24 +12,17 @@ export class CodeExecutionComponent implements OnInit {
 
   inputCode;
 
-  constructor() { }
+  constructor(private codeExecutionService: Code_executionService) { }
 
   ngOnInit(): void {
   }
 
 
-
   test(){
     alert(this.selectedLanguage);
     alert(this.inputCode);
+
+    //this.codeExecutionService.sendCode(this.selectedLanguage, this.inputCode);
   }
-
-  uploadFile(){
-
-  }
-
-
-
-
 
 }
