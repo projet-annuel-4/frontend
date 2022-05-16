@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Code_executionService} from "../_services/code_execution/code_execution.service";
+import {environment} from "../../environments/environment.prod";
+import {auth_service, user_service} from "../../environments/environment";
+import {CodeExecution} from "../_dtos/code_execution/CodeExecution";
 
 @Component({
   selector: 'app-code-execution',
@@ -8,9 +11,7 @@ import {Code_executionService} from "../_services/code_execution/code_execution.
 })
 export class CodeExecutionComponent implements OnInit {
 
-  selectedLanguage;
-
-  inputCode;
+  codeToExecute = new CodeExecution();
 
   constructor(private codeExecutionService: Code_executionService) { }
 
@@ -18,11 +19,15 @@ export class CodeExecutionComponent implements OnInit {
   }
 
 
-  test(){
-    alert(this.selectedLanguage);
-    alert(this.inputCode);
+  sendCode(){
+    this.codeExecutionService.sendCode(this.codeToExecute).subscribe(
 
-    //this.codeExecutionService.sendCode(this.selectedLanguage, this.inputCode);
+      res => {},
+      error => {
+        alert(error['error']);
+      }
+
+    );
   }
 
 }

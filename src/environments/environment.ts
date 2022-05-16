@@ -33,7 +33,7 @@ export const user_service = {
 }
 
 export const code_execution_service = {
-
+  SEND: ``
 }
 
 /*
