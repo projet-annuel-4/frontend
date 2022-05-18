@@ -21,33 +21,33 @@ export class ChatService {
   fetchFriends(): Observable<any> {
     return this.httpClient.get(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}`, this.httpOptions)
       .pipe(map((friends: FriendProfile[]) => {
-        this.dataService.updateFriends(friends)
+        this.dataService.updateFriends(friends);
       }))
   }
 
   updateFetch(value) {
-    this._fetch.next(value)
+    this._fetch.next(value);
   }
 
   fetchAllMessages(): Observable<any> {
     return this.httpClient.post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/messages`,
       Array.from(this.dataService.getAllFriend().keys()), this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
-        this.dataService.updateUserMessages(msgs)
+        this.dataService.updateUserMessages(msgs);
       }))
   }
   /*getAllMessages*/
   fetchMessages(covId: string): Observable<any> {
     return this.httpClient.get(`${environment.DOMAIN}/api/chat/${covId}/messages`, this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
-        this.dataService.updateUserMessages(msgs)
+        this.dataService.updateUserMessages(msgs);
       }))
   }
   /* */
   createFriend(email: String): Observable<any> {
     return this.httpClient.post(`${environment.DOMAIN}/api/chat?email=${email}`, this.httpOptions)
       .pipe(map((friend: FriendProfile) => {
-        this.dataService.updateFriends([friend])
+        this.dataService.updateFriends([friend]);
       }))
   }
 
@@ -55,8 +55,8 @@ export class ChatService {
     return this.httpClient
       .post(`${environment.DOMAIN}/${environment.CHAT}/${cid}/messages/text?content=${content}`,{}, this.httpOptions)
       .pipe(map((v: UserMessage) => {
-        this.dataService.updateUserMessages([v])
-        return v
+        this.dataService.updateUserMessages([v]);
+        return v;
       }))
   }
 
@@ -64,21 +64,21 @@ export class ChatService {
     return this.httpClient
       .post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/${cid}/messages/files?content=${content}`, data)
       .pipe(map((v: UserMessage) => {
-        this.dataService.updateUserMessages([v])
-        return v
+        this.dataService.updateUserMessages([v]);
+        return v;
       }))
   }
 
   getFriends(): Observable<FriendProfile[]> {
-    return this.dataService.getFriends()
+    return this.dataService.getFriends();
   }
 
   getFriend(id: string): FriendProfile {
-    return this.dataService.getAllFriend().get(id)
+    return this.dataService.getAllFriend().get(id);
   }
 
   getMessages(covId: string): Observable<UserMessage[]> {
-    return this.dataService.getMessages(covId)
+    return this.dataService.getMessages(covId);
   }
 
 }

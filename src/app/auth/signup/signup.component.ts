@@ -14,15 +14,17 @@ import { DialogSuccessComponent } from 'src/app/shared/dialog/dialog-alert/dialo
 })
 export class SignupComponent implements OnInit {
 
-  loading: Boolean = false
-  signUpFrom: FormGroup
+  loading: Boolean = false;
+  signUpFrom: FormGroup;
 
   constructor(private _authService: AuthService, private formBuilder: FormBuilder, private router: Router, private dialogService: NbDialogService) {
     this.signUpFrom = this.formBuilder.group({
+      firstname: [],
+      lastname: [],
       email: [],
       password: [],
-      name: []
-    })
+      cpassword: [],
+    });
   }
 
   ngOnInit(): void {
@@ -31,20 +33,26 @@ export class SignupComponent implements OnInit {
 
   register() {
     if (this.signUpFrom.valid) {
-      let data = this.signUpFrom.value
-      this.loading = true
-      this._authService.register(new SignUpRequest(data['name'], data['email'], data['password'])).subscribe(
+
+      const data = this.signUpFrom.value;
+      this.loading = true;
+      this._authService.register(new SignUpRequest(data['firstname'], data['lastname'], data['email'],
+                                                          data['password'], data['cpassword'])).subscribe(
         (response: ApiResponse) => {
-          this.loading = false
+          this.loading = false;
           this.dialogService.open(DialogSuccessComponent, {
             context: { title: "Congratulation", message: response.message }
           })
         }, (err: any) => {
           this.loading = false
-          console.log(err.error.message)
+          console.log(err.error.message);
         }
-      )
+      );
+
+    } else {
+      alert("All fields must be completed");
     }
+
   }
 
 }

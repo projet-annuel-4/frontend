@@ -2,6 +2,7 @@
     <nb-card-header>
         <h3 id="title" class="text-center">Sign In</h3>
     </nb-card-header>
+
     <nb-card-body>
         <form [formGroup]="signInFrom" (ngSubmit)="login()">
             <div class="form-control-group mb-3">
@@ -19,7 +20,7 @@
                 </p>
             </div>
 
-            <button nbButton fullWidth outline status="primary" size="large" [disabled]="!signInFrom.valid">
+            <button nbButton fullWidth outline status="primary" size="large" [disabled]="signInFrom.invalid">
                 Sign In
             </button>
         </form>
@@ -33,6 +34,7 @@
             </button>
         </section>
     </nb-card-body>
+
     <nb-card-footer>
         <p class="another-action text-center" aria-label="Register">
             Don't have an account? <a class="text-link" routerLink="../signup">Register</a>

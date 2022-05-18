@@ -4,15 +4,22 @@
     </nb-card-header>
     <nb-card-body>
         <form [formGroup]="signUpFrom" (ngSubmit)="register()">
-            <div class="form-control-group mb-3">
-                <label class="label" for="input-email">Email address:</label>
-                <input nbInput fullWidth id="input-email" placeholder="Email address" fieldSize="large" formControlName="email">
-            </div>
 
-            <div class="form-control-group mb-3">
-                <label class="label" for="input-name">Full Name:</label>
-                <input nbInput fullWidth id="input-name" placeholder="Full Name" fieldSize="large" formControlName="name">
-            </div>
+          <div class="form-control-group mb-3">
+            <label class="label" for="input-firstname">First Name:</label>
+            <input nbInput fullWidth id="input-firstname" placeholder="First Name" fieldSize="large" formControlName="firstname">
+          </div>
+
+          <div class="form-control-group mb-3">
+            <label class="label" for="input-lastname">Last Name:</label>
+            <input nbInput fullWidth id="input-lastname" placeholder="Last Name" fieldSize="large" formControlName="lastname">
+          </div>
+
+          <div class="form-control-group mb-3">
+            <label class="label" for="input-email">Email address:</label>
+            <input nbInput fullWidth id="input-email" placeholder="Email address" fieldSize="large" formControlName="email">
+          </div>
+
 
             <div class="form-control-group mb-3">
                 <span class="label-with-link">
@@ -25,7 +32,9 @@
                 <span class="label-with-link">
                     <label class="label" for="input-cpassword">Confirm Password:</label>
                 </span>
-                <input nbInput fullWidth name="password" id="input-cpassword" type="password" placeholder="Confirm Password" fieldSize="large">
+
+                <input nbInput fullWidth name="cpassword" id="input-cpassword" type="password" required
+                       placeholder="Confirm Password" fieldSize="large" formControlName="cpassword">
             </div>
 
             <button nbButton fullWidth outline status="primary" size="large">

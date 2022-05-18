@@ -25,11 +25,11 @@ export class UserService {
   }
 
   getProfile(): UserProfile{
-    return this.storage.getUser()
+    return this.storage.getUser();
   }
 
   logout(): void{
-    this.storage.signOut()
+    this.storage.signOut();
     window.location.reload();
   }
 }

@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { SignInRequest } from 'src/app/_dtos/auth/SignInRequest';
 import { SignInResponse } from 'src/app/_dtos/auth/SignInResponse';
 import { Router, ActivatedRoute } from '@angular/router';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-signing',
@@ -29,17 +28,20 @@ export class SigningComponent implements OnInit {
 
   login(){
     if(this.signInFrom.valid){
-      const data = this.signInFrom.value
-      this.loading = true
+      const data = this.signInFrom.value;
+      this.loading = true;
+
       this.authService.login(new SignInRequest(data['email'], data['password'])).subscribe(
-        (response: SignInResponse)=>{
-          this.router.navigateByUrl(this.redirect);
+        (response: SignInResponse) => {
+          this.router.navigate(["profile"]).then();
           this.loading = false;
         },(err:any)=>{
           this.loading = false;
-          console.log(err.error.message);
+          alert(err['error']);
         }
       );
+    } else {
+      alert("All fields must be completed");
     }
   }
 
@@ -52,7 +54,7 @@ export class SigningComponent implements OnInit {
   }
 
   gitHub(){
-
+    this.authService.registerWithGithub();
   }
 
 }

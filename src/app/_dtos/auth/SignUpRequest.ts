@@ -1,11 +1,16 @@
 export class SignUpRequest {
-    name: string
+    firstname: string
+    lastname: string
     email: string
     password: string
+    cpassword: string
 
-    constructor(name: string, email: string, password: string){
-        this.email = email
-        this.name = name
-        this.password = password
+    constructor(firstname: string, lastname: string, email: string,
+                password: string, cpassword: string){
+      this.firstname = firstname;
+      this.lastname = lastname;
+      this.email = email;
+      this.password = password;
+      this.cpassword = cpassword;
     }
 }

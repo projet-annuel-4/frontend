@@ -10,10 +10,6 @@ export class TokenStorageService {
 
   constructor() { }
 
-  signOut() {
-    localStorage.clear();
-  }
-
   public saveToken(token: string) {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.setItem(this.TOKEN_KEY, token);
@@ -30,8 +26,12 @@ export class TokenStorageService {
 
   public getUser(): UserProfile {
     const raw = JSON.parse(localStorage.getItem(this.USER_KEY));
-    return (raw != null)? new UserProfile(raw['id'], raw['email'], raw['name'], raw['imgUrl'], ) : null
+    return (raw != null)? new UserProfile(raw['id'], raw['email'], raw['firstname'], raw['imgUrl'], ) : null;
 
+  }
+
+  signOut() {
+    localStorage.clear();
   }
 
 }
