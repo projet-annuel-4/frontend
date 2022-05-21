@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  DOMAIN: 'http://localhost:8080/api/auth',
+  DOMAIN: 'http://localhost:8072',
   API_VERSION: 'api/v1',
 
   AUTH: `auth`,
@@ -29,7 +29,7 @@ export const chat_service = {
 }
 
 export const user_service = {
-  INFO: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.USERS}/info`
+  INFO: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/info`
 }
 
 /*

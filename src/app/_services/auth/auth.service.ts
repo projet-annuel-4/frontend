@@ -19,7 +19,7 @@ import {ForgotPasswordRequest} from "../../_dtos/auth/ForgotPasswordRequest";
 export class AuthService {
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' })
   };
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {

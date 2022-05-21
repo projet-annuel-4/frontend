@@ -6,20 +6,21 @@ import { map, filter } from 'rxjs/operators';
 import { FriendProfile } from '../../_dtos/chat/FriendProfile';
 import { DataService } from '../data/data.service';
 import { UserMessage } from '../../_dtos/chat/UserMessage';
+import {TokenStorageService} from "../token/token-storage.service";
 
 @Injectable()
 export class ChatService {
 
   private _fetch: BehaviorSubject<number> = new BehaviorSubject(0);
   public readonly fetch: Observable<number> = this._fetch.asObservable();
-
+  private userEmail:String = this.storage.getUser().email
   httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   fileOptions = { headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }) };
 
-  constructor(private httpClient: HttpClient, private dataService: DataService) { }
+  constructor(private httpClient: HttpClient, private dataService: DataService,private storage:TokenStorageService) { }
 
   fetchFriends(): Observable<any> {
-    return this.httpClient.get(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}`, this.httpOptions)
+    return this.httpClient.get(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/?user-email=${this.userEmail}`, this.httpOptions)
       .pipe(map((friends: FriendProfile[]) => {
         this.dataService.updateFriends(friends);
       }))
@@ -30,7 +31,7 @@ export class ChatService {
   }
 
   fetchAllMessages(): Observable<any> {
-    return this.httpClient.post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/messages`,
+    return this.httpClient.post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/messages?user-email=${this.userEmail}`,
       Array.from(this.dataService.getAllFriend().keys()), this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
         this.dataService.updateUserMessages(msgs);
@@ -38,14 +39,14 @@ export class ChatService {
   }
   /*getAllMessages*/
   fetchMessages(covId: string): Observable<any> {
-    return this.httpClient.get(`${environment.DOMAIN}/api/chat/${covId}/messages`, this.httpOptions)
+    return this.httpClient.get(`${environment.DOMAIN}/${environment.API_VERSION}/chat/${covId}/messages?user-email=${this.userEmail}`, this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
         this.dataService.updateUserMessages(msgs);
       }))
   }
   /* */
   createFriend(email: String): Observable<any> {
-    return this.httpClient.post(`${environment.DOMAIN}/api/chat?email=${email}`, this.httpOptions)
+    return this.httpClient.post(`${environment.DOMAIN}/${environment.API_VERSION}/chat/?user-email=${this.userEmail}&friend-email=${email}`, this.httpOptions)
       .pipe(map((friend: FriendProfile) => {
         this.dataService.updateFriends([friend]);
       }))
@@ -53,7 +54,7 @@ export class ChatService {
 
   createMessageText(cid: string, content: string): Observable<UserMessage> {
     return this.httpClient
-      .post(`${environment.DOMAIN}/${environment.CHAT}/${cid}/messages/text?content=${content}`,{}, this.httpOptions)
+      .post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/${cid}/messages/text?content=${content}&user-email=${this.userEmail}`,{}, this.httpOptions)
       .pipe(map((v: UserMessage) => {
         this.dataService.updateUserMessages([v]);
         return v;
@@ -62,7 +63,7 @@ export class ChatService {
 
   createMessageFile(cid: string, content: string, data:FormData): Observable<UserMessage> {
     return this.httpClient
-      .post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/${cid}/messages/files?content=${content}`, data)
+      .post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/${cid}/messages/files?content=${content}&user-email=${this.userEmail}`, data)
       .pipe(map((v: UserMessage) => {
         this.dataService.updateUserMessages([v]);
         return v;
