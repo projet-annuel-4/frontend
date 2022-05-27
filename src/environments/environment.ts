@@ -16,15 +16,16 @@ export const environment = {
 };
 
 export const auth_service = {
-  //localhost:8082/api/auth/api/v1/users
   LOGIN: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/login`,
-  REGISTRATION: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.REGISTRATION}`,
+  REGISTRATION: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.REGISTRATION}`,
 
   FORGOT_PASSWORD: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/forgot`,
   EDIT_PASSWORD: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/edit/password`,
 }
 
 export const chat_service = {
+
+  CHAT: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}`
 
 }
 

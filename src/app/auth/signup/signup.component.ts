@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
       lastname: [],
       email: [],
       password: [],
-      cpassword: [],
+      password2: [],
     });
   }
 
@@ -36,8 +36,10 @@ export class SignupComponent implements OnInit {
 
       const data = this.signUpFrom.value;
       this.loading = true;
+      console.log("Data -> ", data['firstname'], data['lastname'], data['email'],
+        data['password'], data['password2']);
       this._authService.register(new SignUpRequest(data['firstname'], data['lastname'], data['email'],
-                                                          data['password'], data['cpassword'])).subscribe(
+                                                          data['password'], data['password2'], "captchtest")).subscribe(
         (response: ApiResponse) => {
           this.loading = false;
           this.dialogService.open(DialogSuccessComponent, {

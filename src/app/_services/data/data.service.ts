@@ -3,14 +3,30 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { FriendProfile } from '../../_dtos/chat/FriendProfile';
 import { UserMessage } from '../../_dtos/chat/UserMessage';
 import { map } from 'rxjs/operators';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {chat_service, environment} from '../../../environments/environment';
+import {TokenStorageService} from "../token/token-storage.service";
 
 @Injectable()
 export class DataService {
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' })
+  };
+
+
 
   private _friends: BehaviorSubject<Map<string, FriendProfile>> = new BehaviorSubject(new Map());
   public readonly friends: Observable<Map<string, FriendProfile>> = this._friends.asObservable();
 
   private _userMessages: BehaviorSubject<Map<string, UserMessage>> = new BehaviorSubject(new Map());
+
+
+
+  constructor(private httpClient: HttpClient, private tokenStorage:TokenStorageService) {
+  }
+
+
 
   updateUserMessages(msgs: UserMessage[]) {
     let oldMsgs = this._userMessages.value
@@ -24,7 +40,7 @@ export class DataService {
     newFriends.map(v => {
       const friend = friends.get(v.id)
       if (friend) {
-        friend.update(v.id, v.email, v.name, v.imgUrl, v.blockedBy, v.updatedAt)
+        friend.update(v.id, v.friendId, v.email, v.firstName, v.lastName, v.imgUrl, v.blockedBy, v.updatedAt)
       } else { friends.set(v.id, v) }
     })
     this._friends.next(friends)
@@ -43,6 +59,24 @@ export class DataService {
   }
 
   getMessages(chatId: String): Observable<UserMessage[]> {
+
+    const messagesList = this._userMessages.value;
+
+    return this.httpClient.get(`${chat_service.CHAT}/${chatId}/?user-email=${this.tokenStorage.getUser().email}`, this.httpOptions)
+      .pipe(map((userMessages:UserMessage[]) => {
+
+        const messages: UserMessage[] = [];
+        userMessages.forEach((v, k) => {
+          messages.push(v);
+          messagesList.set(v.id, v)
+        })
+        this._userMessages.next(messagesList);
+        console.log(messages);
+        return messages;
+      }));
+
+
+    /*
     return this._userMessages.pipe(
       map(m => {
         let msgs: UserMessage[] = []
@@ -51,17 +85,27 @@ export class DataService {
         return msgs
       })
     )
+
+     */
   }
 
   getFriends(): Observable<FriendProfile[]> {
-    return this._friends.pipe(
-      map(m => {
-        let friends: FriendProfile[] = []
-        m.forEach((v, k) => { friends.push(v) })
-        // friends.sort((a, b) => a.lastMsgAt.getTime() - b.lastMsgAt.getTime())
-        return friends
-      })
-    )
+
+    const friendsList = this._friends.value;
+
+    return this.httpClient.get(`${chat_service.CHAT}/?user-email=${this.tokenStorage.getUser().email}`, this.httpOptions)
+      .pipe(map((friendProfiles:FriendProfile[]) => {
+
+        const friends: FriendProfile[] = [];
+        friendProfiles.forEach((v, k) => {
+          friends.push(v);
+          friendsList.set(v.id, v)
+        })
+        this._friends.next(friendsList);
+        console.log(friends);
+        return friends;
+      }));
+
   }
 
   getAllFriend(): Map<string,FriendProfile> {

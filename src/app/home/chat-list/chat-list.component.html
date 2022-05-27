@@ -17,7 +17,7 @@
   </nb-card-body>
   <nb-list>
     <nb-list-item *ngFor="let friend of friends | async" (click)="chatClicked(friend.id)">
-      <nb-user [name]="friend.name" [title]="friend.lastMsg" [picture]="friend.imgUrl">
+      <nb-user [name]="friend.firstName + ' ' +  friend.lastName" [title]="friend.lastMsg" [picture]="friend.imgUrl">
       </nb-user>
     </nb-list-item>
   </nb-list>

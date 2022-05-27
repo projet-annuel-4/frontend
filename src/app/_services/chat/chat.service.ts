@@ -52,6 +52,10 @@ export class ChatService {
       }))
   }
 
+
+
+
+
   createMessageText(cid: string, content: string): Observable<UserMessage> {
     return this.httpClient
       .post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/${cid}/messages/text?content=${content}&user-email=${this.userEmail}`,{}, this.httpOptions)

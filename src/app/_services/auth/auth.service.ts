@@ -37,10 +37,11 @@ export class AuthService {
   login(signInRequest: SignInRequest): Observable<SignInResponse> {
     return this.http.post(`${auth_service.LOGIN}`, signInRequest, this.httpOptions)
       .pipe(map((response: SignInResponse) => {
-        this.tokenStorage.saveToken(response.accessToken)
-        this.tokenStorage.saveUser(new UserProfile(response.id, response.email, response.name, response.imageUrl))
+        this.tokenStorage.saveToken(response.accessToken);
+        this.tokenStorage.saveUser(new UserProfile(response.id, response.email, response.name, response.imageUrl));
         return response
       }));
+
   }
 
   register(signUpRequest: SignUpRequest): Observable<ApiResponse> {

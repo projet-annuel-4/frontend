@@ -15,6 +15,8 @@ export class SigningComponent implements OnInit {
   loading: Boolean = false
   signInFrom: FormGroup
   redirect = "/"
+  errorMessage = "";
+
 
   constructor( private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
     this.signInFrom = this.formBuilder.group({
@@ -31,13 +33,15 @@ export class SigningComponent implements OnInit {
       const data = this.signInFrom.value;
       this.loading = true;
 
+
       this.authService.login(new SignInRequest(data['email'], data['password'])).subscribe(
         (response: SignInResponse) => {
           this.router.navigate(["profile"]).then();
           this.loading = false;
         },(err:any)=>{
           this.loading = false;
-          alert(err['error']);
+          this.errorMessage = err;
+          alert(err['statusText']);
         }
       );
     } else {
