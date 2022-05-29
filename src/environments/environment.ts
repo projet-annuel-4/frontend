@@ -33,6 +33,10 @@ export const user_service = {
   INFO: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/info`
 }
 
+export const code_execution_service = {
+  SEND: ``
+}
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

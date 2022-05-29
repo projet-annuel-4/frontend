@@ -1,0 +1,23 @@
+<nb-card>
+
+  <nb-card-header>
+    <select placeholder="Choose your language" [(ngModel)]="codeToExecute.language">
+      <option value="javascript">JavaScript</option>
+      <option value="java">JAVA</option>
+    </select>
+  </nb-card-header>
+
+  <nb-card-body>
+    <textarea [(ngModel)]="codeToExecute.content" rows="12" cols="50"> </textarea>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button (click)="sendCode()"> Run </button>
+    <br>
+    <br>
+    <!--<input type='file' id="fileUpload" accept=".java, .js, .png" (change)="uploadFile()" #fileInput /> -->
+  </nb-card-footer>
+
+</nb-card>
+
+<nb-layout></nb-layout>
