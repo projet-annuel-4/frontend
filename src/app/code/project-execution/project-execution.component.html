@@ -1,22 +1,17 @@
-<h1>Editor</h1>
-
-<nb-card size="small">
-  <nb-card-header>
-    <select placeholder="Choose your language" (click)="updateOptions()" [(ngModel)]="chosenLanguage" >
+<nb-layout>
+  <nb-layout-header>
+    <select placeholder="Choose your language" (click)="updateOptions()" [(ngModel)]="codeExecutionModel.language" >
       <option value="javascript">JavaScript</option>
       <option value="java">JAVA</option>
     </select>
-  </nb-card-header>
-
-  <nb-card-body>
-    <div style="height: 400px">
-      <ngx-monaco-editor style="height: 100%" [options]="options" [(ngModel)]="code" (onInit)="onInit($event)"> </ngx-monaco-editor>
-    </div>
-  </nb-card-body>
-</nb-card>
-
-
-
+  </nb-layout-header>
+  <nb-layout-column class="colored-column-basic">
+      <ngx-monaco-editor style="height: 100%" [options]="options" [(ngModel)]="codeExecutionModel.content" (onInit)="onInit($event)"> </ngx-monaco-editor>
+  </nb-layout-column>
+  <nb-layout-footer>
+    <button nbButton outline (click)="sendCode()"> Run </button>
+  </nb-layout-footer>
+</nb-layout>
 
 
 

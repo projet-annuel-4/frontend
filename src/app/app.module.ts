@@ -8,7 +8,7 @@ import {
   NbMenuModule,
   NbDialogModule,
   NbSelectModule,
-  NbCardModule, NbContextMenuModule
+  NbCardModule, NbContextMenuModule, NbIconModule, NbButtonModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
@@ -95,7 +95,9 @@ const monacoConfig: NgxMonacoEditorConfig = {
     NbCardModule,
     FormsModule,
     NbContextMenuModule,
-    MonacoEditorModule.forRoot()
+    MonacoEditorModule.forRoot(),
+    NbIconModule,
+    NbButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
