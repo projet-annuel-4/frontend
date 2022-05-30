@@ -62,7 +62,7 @@ export class DataService {
 
     const messagesList = this._userMessages.value;
 
-    return this.httpClient.get(`${chat_service.CHAT}/${chatId}/?user-email=${this.tokenStorage.getUser().email}`, this.httpOptions)
+    return this.httpClient.get(`${chat_service.CHAT}/${chatId}/messages/?user-email=${this.tokenStorage.getUser().email}`, this.httpOptions)
       .pipe(map((userMessages:UserMessage[]) => {
 
         const messages: UserMessage[] = [];
