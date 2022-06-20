@@ -70,7 +70,7 @@ export class ChatListComponent implements OnInit {
             break;
           case 'Log out':
             this.userService.logout();
-            this.router.navigateByUrl("/auth").then();
+            this.router.navigateByUrl("/auth/signing").then();
             break;
           default:
             break;

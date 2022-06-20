@@ -23,7 +23,7 @@ export class NewChatComponent {
     dismiss() {
         this.ref.close();
     }
-    
+
     submit(email: string){
         this.ref.close(email);
     }

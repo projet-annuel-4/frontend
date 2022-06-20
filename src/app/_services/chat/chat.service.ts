@@ -7,17 +7,18 @@ import { FriendProfile } from '../../_dtos/chat/FriendProfile';
 import { DataService } from '../data/data.service';
 import { UserMessage } from '../../_dtos/chat/UserMessage';
 import {TokenStorageService} from "../token/token-storage.service";
+import {JwtInterceptor} from "../../_helpers/jwt.interceptor";
 
 @Injectable()
 export class ChatService {
 
   private _fetch: BehaviorSubject<number> = new BehaviorSubject(0);
   public readonly fetch: Observable<number> = this._fetch.asObservable();
-  private userEmail:String = this.storage.getUser().email
+  private userEmail:String = this.tokenStorageService.getUser().email
   httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   fileOptions = { headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }) };
 
-  constructor(private httpClient: HttpClient, private dataService: DataService,private storage:TokenStorageService) { }
+  constructor(private httpClient: HttpClient, private dataService: DataService,private tokenStorageService:TokenStorageService) { }
 
   fetchFriends(): Observable<any> {
     return this.httpClient.get(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/?user-email=${this.userEmail}`, this.httpOptions)
@@ -46,13 +47,26 @@ export class ChatService {
   }
   /* */
   createFriend(email: String): Observable<any> {
-    return this.httpClient.post(`${environment.DOMAIN}/${environment.API_VERSION}/chat/?user-email=${this.userEmail}&friend-email=${email}`, this.httpOptions)
+
+    const token = this.tokenStorageService.getToken();
+    console.log("const token : " + token);
+
+    const headers = new HttpHeaders().set('Authorization',  token);
+    const contentType =  new HttpHeaders( {'Content-Type': 'application/json'});
+    const requestOptions = {
+      headers,
+      contentType
+    };
+
+
+    console.log("token headers : " + headers.get('Authorization'));
+    console.log("token requestOptions : " + requestOptions.headers.get('Authorization'));
+
+    return this.httpClient.post(`${environment.DOMAIN}/${environment.API_VERSION}/chat/?user-email=${this.userEmail}&friend-email=${email}`, /*requestOptions*/this.httpOptions)
       .pipe(map((friend: FriendProfile) => {
         this.dataService.updateFriends([friend]);
       }))
   }
-
-
 
 
 

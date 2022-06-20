@@ -38,7 +38,12 @@ export class AuthService {
     return this.http.post(`${auth_service.LOGIN}`, signInRequest, this.httpOptions)
       .pipe(map((response: SignInResponse) => {
         this.tokenStorage.saveToken(response.accessToken);
+        console.log("Login token  : " + this.tokenStorage.getToken());
         this.tokenStorage.saveUser(new UserProfile(response.id, response.email, response.name, response.imageUrl));
+        console.log("Login User id : " + this.tokenStorage.getUser().id);
+        console.log("Login User email : " + this.tokenStorage.getUser().email);
+        console.log("Login User name : " + this.tokenStorage.getUser().name);
+        console.log("Login User imgUrl : " + this.tokenStorage.getUser().imgUrl);
         return response
       }));
 

@@ -30,6 +30,5 @@ export class UserService {
 
   logout(): void{
     this.storage.signOut();
-    window.location.reload();
   }
 }

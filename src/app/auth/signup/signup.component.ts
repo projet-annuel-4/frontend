@@ -36,18 +36,18 @@ export class SignupComponent implements OnInit {
 
       const data = this.signUpFrom.value;
       this.loading = true;
-      console.log("Data -> ", data['firstname'], data['lastname'], data['email'],
-        data['password'], data['password2']);
       this._authService.register(new SignUpRequest(data['firstname'], data['lastname'], data['email'],
                                                           data['password'], data['password2'], "captchtest")).subscribe(
         (response: ApiResponse) => {
           this.loading = false;
+          console.log("avant le dialog !");
           this.dialogService.open(DialogSuccessComponent, {
             context: { title: "Congratulation", message: response.message }
-          })
+          });
         }, (err: any) => {
-          this.loading = false
-          console.log(err.error.message);
+          this.loading = false;
+          console.log("dans le err !");
+          console.log(err['statusText']);
         }
       );
 
