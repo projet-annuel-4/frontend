@@ -8,7 +8,7 @@ import {
   NbMenuModule,
   NbDialogModule,
   NbSelectModule,
-  NbCardModule, NbContextMenuModule, NbIconModule, NbButtonModule
+  NbCardModule, NbContextMenuModule, NbIconModule, NbButtonModule, NbAccordionModule, NbInputModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
@@ -20,10 +20,11 @@ import { HomeModule } from './home/home.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import {CodeExecutionComponent} from "./code/code-execution/code-execution.component";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ProjectExecutionComponent } from './code/project-execution/project-execution.component';
 import {MonacoEditorModule} from "./code/lib/editor.module";
 import {NgxMonacoEditorConfig} from "./code/lib/config";
+import { FeedComponent } from './post/feed/feed.component';
 
 
 /************** Config Monaco *************/
@@ -78,7 +79,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
   declarations: [
     AppComponent,
     CodeExecutionComponent,
-    ProjectExecutionComponent
+    ProjectExecutionComponent,
+    FeedComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +99,10 @@ const monacoConfig: NgxMonacoEditorConfig = {
     NbContextMenuModule,
     MonacoEditorModule.forRoot(),
     NbIconModule,
-    NbButtonModule
+    NbButtonModule,
+    ReactiveFormsModule,
+    NbInputModule,
+    NbAccordionModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -11,7 +11,8 @@ export const environment = {
   AUTH: `auth`,
   REGISTRATION: `registration`,
   CHAT: `chat`,
-  USERS: `users`
+  USERS: `users`,
+  POST: `post`
 
 };
 
@@ -35,6 +36,10 @@ export const user_service = {
 
 export const code_execution_service = {
   SEND: ``
+}
+
+export const post_service = {
+  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.POST}`
 }
 
 /*

@@ -1,0 +1,31 @@
+<nb-layout>
+
+  <nb-layout-header>
+    Feed instagram (affichage des posts des personnes que je follow)
+  </nb-layout-header>
+
+  <nb-layout-column class="col-12" >
+    <div *ngFor="let post of posts">
+      <nb-card >
+        <nb-card-body class="</nb-layout-column>">
+          <div>Content : {{post.content}}</div>
+          <div >NbLike : {{post.nbLike}}</div>
+        </nb-card-body>
+
+        <nb-accordion>
+          <nb-accordion-item (click)="getAnswers(post.id)">
+            <nb-accordion-item-header>Show me answers</nb-accordion-item-header>
+            <nb-accordion-item-body *ngFor="let answer of answers">
+              <div *ngIf="answers != null">
+                <div>{{answer.content}}</div>
+                <div>{{answer.nbLike}}</div>
+              </div>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+
+      </nb-card>
+    </div>
+  </nb-layout-column>
+
+</nb-layout>
