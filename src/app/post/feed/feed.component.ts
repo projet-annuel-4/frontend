@@ -3,6 +3,7 @@ import {PostService} from "../../_services/post/post.service";
 import {Post} from "../../_dtos/post/Post";
 import {TokenStorageService} from "../../_services/token/token-storage.service";
 import {UserProfile} from "../../_dtos/user/UserProfile";
+import {User} from "../../_dtos/user/User";
 
 @Component({
   selector: 'app-feed',
@@ -11,7 +12,8 @@ import {UserProfile} from "../../_dtos/user/UserProfile";
 })
 export class FeedComponent implements OnInit {
 
-  user: UserProfile;
+  //user: UserProfile;
+  user: User;
   posts: Post[];
   answers: Post[];
 
@@ -20,30 +22,48 @@ export class FeedComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.user = this.tokenStorage.getUser();
-
+    //this.user = this.tokenStorage.getUser();
+    //this.user.id = "5";
+/*
     this.posts = [
-      new Post("0","Je suis le contenu du Post", 1, 12, new Date(), new Date()),
-      new Post("0","Je suis le contenu du Post", 1, 12, new Date(), new Date()),
-      new Post("0","Je suis le contenu du Post", 1, 12, new Date(), new Date()),
-      ];
-    /*
-    this.postService.getAllSubscriptionPost(parseInt(this.user.id)).subscribe(posts =>{
+      new Post("0","Je suis le contenu de la reponse", 1, "new Date()"," new Date()", new User(6)),
+      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
+      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
+      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
+      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
+      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
+      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
+      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
+      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
+    ];
+
+ */
+
+    this.postService.getAllSubscriptionPost(parseInt("5")).subscribe(posts =>{
+      posts.forEach(post => {
+        console.log(post.content);
+      })
       this.posts = posts;
     });
-     */
-
 
   }
 
+
+
+
   getAnswers(post_id: string){
+    /*
     this.answers = [
-      new Post("0","Je suis le contenu de la reponse", 1, 3, new Date(), new Date()),
-      new Post("0","Je suis le contenu de la reponse", 1, 3, new Date(), new Date()),
-      new Post("0","Je suis le contenu de la reponse", 1, 3, new Date(), new Date()),
-      new Post("0","Je suis le contenu de la reponse", 1, 3, new Date(), new Date()),
-      new Post("0","Je suis le contenu de la reponse", 1, 3, new Date(), new Date()),
+      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
+      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
+      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
+      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
+      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
+      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
+      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
     ];
+
+     */
     //this.postService.getAllPostAnswers(parseInt(post_id));
   }
 

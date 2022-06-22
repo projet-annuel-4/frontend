@@ -1,18 +1,21 @@
+import {UserProfile} from "../user/UserProfile";
+import {User} from "../user/User";
+
 export class Post {
-  id?: string;
+  id: string;
   content: string;
-  user_id: number;
   nbLike: number;
-  creationDate: Date;
-  updateDate: Date;
+  creationDate?: String;
+  updateDate?: String;
+  user: User;
 
 
-  constructor(id: string, content: string, user_id: number, nbLike: number, creationDate: Date, updateDate: Date) {
+  constructor(id: string, content: string, nbLike: number, creationDate: String, updateDate: String, user: User) {
     this.id = id;
     this.content = content;
-    this.user_id = user_id;
     this.nbLike = nbLike;
     this.creationDate = creationDate;
     this.updateDate = updateDate;
+    this.user = user;
   }
 }

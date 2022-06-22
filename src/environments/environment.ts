@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
 
-  DOMAIN: 'http://localhost:8072',
+  //DOMAIN: 'http://localhost:8072',
+  DOMAIN: 'http://localhost:8096', /* post-service URL */
   API_VERSION: 'api/v1',
 
   AUTH: `auth`,
