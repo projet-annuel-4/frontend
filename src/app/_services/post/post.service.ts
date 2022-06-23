@@ -7,6 +7,7 @@ import {post_service} from "../../../environments/environment";
 import {UserProfile} from "../../_dtos/user/UserProfile";
 import {CommentRequest} from "../../_dtos/post/CommentRequest";
 import {FilterRequest} from "../../_dtos/post/FilterRequest";
+import {PostRequest} from "../../_dtos/post/PostRequest";
 
 
 @Injectable({
@@ -21,7 +22,7 @@ export class PostService {
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {}
 
 
-  create(post: Post): Observable<Post> {
+  create(post: PostRequest): Observable<Post> {
     return this.http.post<Post>(`${post_service.BASE_URL}`, post, this.httpOptions);
   }
 

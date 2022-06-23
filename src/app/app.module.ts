@@ -25,6 +25,7 @@ import { ProjectExecutionComponent } from './code/project-execution/project-exec
 import {MonacoEditorModule} from "./code/lib/editor.module";
 import {NgxMonacoEditorConfig} from "./code/lib/config";
 import { FeedComponent } from './post/feed/feed.component';
+import { CreateComponent } from './post/create/create.component';
 
 
 /************** Config Monaco *************/
@@ -80,7 +81,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
     AppComponent,
     CodeExecutionComponent,
     ProjectExecutionComponent,
-    FeedComponent
+    FeedComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,

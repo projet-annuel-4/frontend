@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {CodeExecutionComponent} from "./code/code-execution/code-execution.component";
 import {ProjectExecutionComponent} from "./code/project-execution/project-execution.component";
 import {FeedComponent} from "./post/feed/feed.component";
+import {CreateComponent} from "./post/create/create.component";
 
 const routes: Routes = [
   {path: '', redirectTo:'loading', pathMatch: 'full'},
@@ -13,7 +14,13 @@ const routes: Routes = [
       {path: 'project', component: ProjectExecutionComponent}
     ]
   },
-  {path: 'feed', component: FeedComponent}
+  {
+    path: 'post', children:[
+      {path: 'feed', component: FeedComponent},
+      {path: 'create', component: CreateComponent},
+    ]
+  },
+
 
 ];
 
