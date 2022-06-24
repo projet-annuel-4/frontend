@@ -26,16 +26,15 @@ export class FeedComponent implements OnInit {
     //this.user.id = "5";
 
     this.posts = [
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
+      new Post("1","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
     ];
-
 
 /*
     this.postService.getAllSubscriptionPost(parseInt("5")).subscribe(posts =>{
@@ -50,22 +49,5 @@ export class FeedComponent implements OnInit {
   }
 
 
-
-
-  getAnswers(post_id: string){
-    /*
-    this.answers = [
-      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
-      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
-      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
-      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
-      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
-      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
-      new Post("0","Je suis le contenu de la reponse", 1, new Date(), new Date(), 6),
-    ];
-
-     */
-    //this.postService.getAllPostAnswers(parseInt(post_id));
-  }
 
 }

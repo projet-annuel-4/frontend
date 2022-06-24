@@ -1,0 +1,37 @@
+<nb-card status="info">
+  <nb-card-header>Titre du post</nb-card-header>
+  <nb-card-body>
+    <div>Content : {{post.content}}</div>
+    Tags :
+    <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <nb-accordion>
+      <nb-accordion-item>
+
+        <nb-accordion-item-header>Answers</nb-accordion-item-header>
+        <nb-accordion-item-body *ngFor="let answer of answers">
+          <nb-card>
+            <nb-card-body>
+              <div>Content : {{answer.content}}</div>
+              Tags :
+              <span *ngFor="let answerTag of answer.tags">| {{answerTag.name}} </span>
+            </nb-card-body>
+          </nb-card>
+        </nb-accordion-item-body>
+
+      </nb-accordion-item>
+    </nb-accordion>
+
+  </nb-card-footer>
+
+
+
+
+
+
+
+
+</nb-card>
+

@@ -5,6 +5,7 @@ import {CodeExecutionComponent} from "./code/code-execution/code-execution.compo
 import {ProjectExecutionComponent} from "./code/project-execution/project-execution.component";
 import {FeedComponent} from "./post/feed/feed.component";
 import {CreateComponent} from "./post/create/create.component";
+import {PostDetailComponent} from "./post/post-detail/post-detail.component";
 
 const routes: Routes = [
   {path: '', redirectTo:'loading', pathMatch: 'full'},
@@ -18,6 +19,7 @@ const routes: Routes = [
     path: 'post', children:[
       {path: 'feed', component: FeedComponent},
       {path: 'create', component: CreateComponent},
+      {path: ':postId/detail', component: PostDetailComponent},
     ]
   },
 
