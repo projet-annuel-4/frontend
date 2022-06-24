@@ -20,22 +20,25 @@ import { ChatBannerComponent } from './chat-banner/chat-banner.component';
 import { NewChatComponent } from './chat-list/new-chat/new-chat.component';
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    ChatComponent,
-    ProfileComponent,
-    SettingsComponent,
-    ChatListComponent,
-    LoadingComponent,
-    ChatDetailComponent,
-    ChatBannerComponent,
-    NewChatComponent
-  ],
-  imports: [
-    CommonModule, HomeRoutingModule, SharedModule,
-  ],
-  providers:[
-    DataService, NbMenuService, UserService, ChatService, NotificationService
-  ]
+    declarations: [
+        HomeComponent,
+        ChatComponent,
+        ProfileComponent,
+        SettingsComponent,
+        ChatListComponent,
+        LoadingComponent,
+        ChatDetailComponent,
+        ChatBannerComponent,
+        NewChatComponent
+    ],
+    imports: [
+        CommonModule, HomeRoutingModule, SharedModule,
+    ],
+    exports: [
+        HomeComponent
+    ],
+    providers: [
+        DataService, NbMenuService, UserService, ChatService, NotificationService
+    ]
 })
 export class HomeModule { }

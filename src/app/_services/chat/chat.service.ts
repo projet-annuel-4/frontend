@@ -13,7 +13,8 @@ export class ChatService {
 
   private _fetch: BehaviorSubject<number> = new BehaviorSubject(0);
   public readonly fetch: Observable<number> = this._fetch.asObservable();
-  private userEmail:String = this.storage.getUser().email
+  //private userEmail:String = this.storage.getUser().email
+  private userEmail:String = "oui@oui.test"
   httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   fileOptions = { headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }) };
 

@@ -24,27 +24,28 @@ export class FeedComponent implements OnInit {
   ngOnInit(): void {
     //this.user = this.tokenStorage.getUser();
     //this.user.id = "5";
-/*
+
     this.posts = [
-      new Post("0","Je suis le contenu de la reponse", 1, "new Date()"," new Date()", new User(6)),
-      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
-      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
-      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
-      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
-      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
-      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
-      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
-      new Post("0","Je suis le contenu de la reponse", 1, "new Date()", "new Date()", new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
+      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", new User(6)),
     ];
 
- */
 
+/*
     this.postService.getAllSubscriptionPost(parseInt("5")).subscribe(posts =>{
       posts.forEach(post => {
         console.log(post.content);
       })
       this.posts = posts;
     });
+
+ */
 
   }
 

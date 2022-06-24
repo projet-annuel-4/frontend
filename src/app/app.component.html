@@ -1,2 +1,12 @@
-<router-outlet></router-outlet>
+<router-outlet>
+  <nb-layout>
+    <nb-layout-header>
+      <nb-user name="Jean Pierre"
+               title="full-stack developer"
+               [nbContextMenu]="items"
+               nbContextMenuTag="my-context-menu">
+      </nb-user>
+    </nb-layout-header>
+  </nb-layout>
+</router-outlet>
 

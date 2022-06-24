@@ -5,10 +5,12 @@
 
   <nb-card-body>
     <form [formGroup]="postForm" (ngSubmit)="create()">
-      <div class="form-control-group mb-3">
-        <label class="label" for="input-content">Content:</label>
-        <input nbInput fullWidth id="input-content" type="" fieldSize="large" formControlName="content">
-      </div>
+        <div class="form-control-group mb-3">
+                    <span class="label-with-link">
+                        <label class="label" for="input-content">Content :</label>
+                    </span>
+        </div>
+        <textarea id="input-content" formControlName="content" rows="8" cols="50"> </textarea>
 
       <div class="form-control-group mb-3">
                 <span class="label-with-link">
@@ -16,12 +18,14 @@
                 </span>
         <input nbInput fullWidth id="input-tagName"  placeholder="js, test,..." fieldSize="large" formControlName="tagName">
       </div>
+
       <div class="form-control-group mb-3">
                 <span class="label-with-link">
                     <label class="label" for="input-attachmentUrl">Attachment Url :</label>
                 </span>
         <input nbInput fullWidth id="input-attachmentUrl"  placeholder="" fieldSize="large" formControlName="attachmentUrl">
       </div>
+
       <div class="form-control-group mb-3">
                 <span class="label-with-link">
                     <label class="label" for="input-attachmentDescription">Attachment Description :</label>
@@ -32,10 +36,12 @@
       <button nbButton fullWidth outline status="primary" size="large" [disabled]="postForm.invalid">
         Post
       </button>
+
     </form>
   </nb-card-body>
 
   <nb-card-footer>
-
+    Footer
   </nb-card-footer>
+
 </nb-card>
