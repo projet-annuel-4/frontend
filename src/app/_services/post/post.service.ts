@@ -90,7 +90,7 @@ export class PostService {
   }
 
   getAllPostAnswers(postId: number): Observable<Post[]> {
-    return this.http.get<Post[]>(`${post_service.BASE_URL}/${postId}/answer`, this.httpOptions);
+    return this.http.get<Post[]>(`${post_service.BASE_URL}/${postId}/answers`, this.httpOptions);
   }
 
   getAllSubscriptionPost(userId: number): Observable<Post[]> {

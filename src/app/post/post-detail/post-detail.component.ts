@@ -19,31 +19,26 @@ export class PostDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const tags = [new Tag("js",  1), new Tag("front",  1)];
-
-    this.post = new Post("1","Je suis le contenu ", 1, "new Date()"," new Date()", tags, new User(6));
-
-    /*
-        this.route.params.subscribe((params: Params): void => {
-          if(params.postId !== undefined){
-            this.postService.getById(params.postId).subscribe(post => {
-              this.post = post;
-            });
-          }
-
+    this.route.params.subscribe((params: Params): void => {
+      if(params.postId !== undefined){
+        this.postService.getById(params.postId).subscribe(post => {
+          this.post = post;
+          console.log("id: " + post.id);
+          console.log("content: " + post.content);
         });
-
-     */
-    this.answers = [
-      new Post("0","Je suis la réponse ", 1, "new Date()"," new Date()", [], new User(6)),
-      new Post("0","Je suis la réponse ", 1, "new Date()"," new Date()", [], new User(6)),
-      new Post("0","Je suis la réponse ", 1, "new Date()"," new Date()", [], new User(6)),
-      new Post("0","Je suis la réponse ", 1, "new Date()"," new Date()", [], new User(6)),
-      new Post("0","Je suis la réponse ", 1, "new Date()"," new Date()", [], new User(6)),
-    ];
+      }
+    });
+  }
 
 
-    /*this.postService.getAllPostAnswers(parseInt(this.post.id));*/
+  getAnswers(){
+    this.postService.getAllPostAnswers(parseInt(this.post.id)).subscribe(answers => {
+      answers.forEach(answer => {
+        console.log("answer.id : " + answer.id)
+      });
+      this.answers = answers;
+    });
+
   }
 
 

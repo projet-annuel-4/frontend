@@ -15,8 +15,6 @@ export class FeedComponent implements OnInit {
   //user: UserProfile;
   user: User;
   posts: Post[];
-  answers: Post[];
-
 
   constructor(private postService: PostService, private tokenStorage: TokenStorageService) { }
 
@@ -25,29 +23,10 @@ export class FeedComponent implements OnInit {
     //this.user = this.tokenStorage.getUser();
     //this.user.id = "5";
 
-    this.posts = [
-      new Post("1","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
-      new Post("0","Je suis le contenu ", 1, "new Date()"," new Date()", [], new User(6)),
-    ];
-
-/*
     this.postService.getAllSubscriptionPost(parseInt("5")).subscribe(posts =>{
-      posts.forEach(post => {
-        console.log(post.content);
-      })
       this.posts = posts;
     });
-
- */
-
+    
   }
-
-
 
 }
