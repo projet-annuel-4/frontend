@@ -35,7 +35,7 @@ export class PostService {
   }
 
   getAllByUser(user_id: number): Observable<Post[]> {
-    return this.http.get<Post[]>(`${post_service.BASE_URL}/${user_id}`, this.httpOptions);
+    return this.http.get<Post[]>(`${post_service.BASE_URL}/userId/${user_id}`, this.httpOptions);
   }
 
   getAll(): Observable<Post[]> {

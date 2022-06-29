@@ -40,7 +40,7 @@ export const code_execution_service = {
 }
 
 export const post_service = {
-  BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.POST}`
+    BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.POST}`
 }
 
 /*
