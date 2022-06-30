@@ -1,11 +1,15 @@
+<br>
+<br>
+<br>
+<br>
 <nb-layout>
 
-  <nb-layout-header>
-    Feed instagram (affichage des posts des personnes que je follow)
-  </nb-layout-header>
-
-
   <nb-layout-column class="col-12" >
+
+    <button id="fixedButton" nbButton shape="round" size="small" (click)="refresh()">
+      <img width="20" height="20" src="/assets/refresh.png">
+    </button>
+
     <div *ngFor="let post of posts">
       <nb-card routerLink="../{{post.id}}/detail">
 

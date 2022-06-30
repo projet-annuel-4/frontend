@@ -26,7 +26,11 @@ export class FeedComponent implements OnInit {
     this.postService.getAllSubscriptionPost(parseInt("5")).subscribe(posts =>{
       this.posts = posts;
     });
-    
+
+  }
+
+  refresh(){
+    window.location.reload()
   }
 
 }
