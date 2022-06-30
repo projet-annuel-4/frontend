@@ -3,12 +3,19 @@ import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  NbThemeModule,
-  NbLayoutModule,
-  NbMenuModule,
-  NbDialogModule,
-  NbSelectModule,
-  NbCardModule, NbContextMenuModule, NbIconModule, NbButtonModule
+    NbThemeModule,
+    NbLayoutModule,
+    NbMenuModule,
+    NbDialogModule,
+    NbSelectModule,
+    NbCardModule,
+    NbContextMenuModule,
+    NbIconModule,
+    NbButtonModule,
+    NbAccordionModule,
+    NbInputModule,
+    NbUserModule,
+    NbTableModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
@@ -20,10 +27,14 @@ import { HomeModule } from './home/home.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import {CodeExecutionComponent} from "./code/code-execution/code-execution.component";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ProjectExecutionComponent } from './code/project-execution/project-execution.component';
 import {MonacoEditorModule} from "./code/lib/editor.module";
 import {NgxMonacoEditorConfig} from "./code/lib/config";
+import { FeedComponent } from './post/feed/feed.component';
+import { CreateComponent } from './post/create/create.component';
+import { PostDetailComponent } from './post/post-detail/post-detail.component';
+import { CommentComponent } from './post/comment/comment.component';
 
 
 /************** Config Monaco *************/
@@ -78,27 +89,36 @@ const monacoConfig: NgxMonacoEditorConfig = {
   declarations: [
     AppComponent,
     CodeExecutionComponent,
-    ProjectExecutionComponent
+    ProjectExecutionComponent,
+    FeedComponent,
+    CreateComponent,
+    PostDetailComponent,
+    CommentComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    NbThemeModule.forRoot({name: 'cosmic'}),
-    NbMenuModule.forRoot(),
-    NbDialogModule.forRoot(),
-    NbLayoutModule,
-    NbEvaIconsModule,
-    NbSelectModule,
-    AppRoutingModule,
-    AuthModule,
-    HomeModule,
-    NbCardModule,
-    FormsModule,
-    NbContextMenuModule,
-    MonacoEditorModule.forRoot(),
-    NbIconModule,
-    NbButtonModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        NbThemeModule.forRoot({name: 'cosmic'}),
+        NbMenuModule.forRoot(),
+        NbDialogModule.forRoot(),
+        NbLayoutModule,
+        NbEvaIconsModule,
+        NbSelectModule,
+        AppRoutingModule,
+        AuthModule,
+        HomeModule,
+        NbCardModule,
+        FormsModule,
+        NbContextMenuModule,
+        MonacoEditorModule.forRoot(),
+        NbIconModule,
+        NbButtonModule,
+        ReactiveFormsModule,
+        NbInputModule,
+        NbAccordionModule,
+        NbUserModule,
+        NbTableModule,
+    ],
   providers: [
     /*{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },*/
 

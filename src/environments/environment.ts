@@ -5,13 +5,15 @@
 export const environment = {
   production: false,
 
-  DOMAIN: 'http://localhost:8072',
+  DOMAIN: 'http://localhost:8072', /* api gateway */
+  //DOMAIN: 'http://localhost:8096', /* post-service URL */
   API_VERSION: 'api/v1',
 
   AUTH: `auth`,
   REGISTRATION: `registration`,
   CHAT: `chat`,
-  USERS: `users`
+  USERS: `users`,
+  POST: `post`
 
 };
 
@@ -35,6 +37,10 @@ export const user_service = {
 
 export const code_execution_service = {
   SEND: ``
+}
+
+export const post_service = {
+    BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.POST}`
 }
 
 /*

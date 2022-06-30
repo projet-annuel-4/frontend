@@ -30,8 +30,8 @@ export class ChatListComponent implements OnInit {
 
   constructor(private menuService: NbMenuService, private router: Router, private dialogService: NbDialogService,
     private userService: UserService, private chatService: ChatService, private route: ActivatedRoute) {
-    this.profile = this.userService.getProfile()
-    this.friends = this.chatService.getFriends()
+    //this.profile = this.userService.getProfile()
+    //this.friends = this.chatService.getFriends()
   }
 
   ngOnInit(): void {

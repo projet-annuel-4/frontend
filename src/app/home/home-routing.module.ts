@@ -20,7 +20,7 @@ const routes: Routes = [
         ]
       },
       { path: 'profile', component: ProfileComponent},
-      { path: 'loading', component: LoadingComponent },
+      //{ path: 'loading', component: LoadingComponent },
       { path: 'settings', component: SettingsComponent }
     ]
   }
