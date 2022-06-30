@@ -6,6 +6,13 @@
     <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
   </nb-card-body>
 
+  <nb-layout-column>
+    <button nbButton
+            status="basic"
+            size="small"
+            routerLink="/post/{{post.id}}/comment"> Comment </button>
+  </nb-layout-column>
+
   <nb-card-footer>
     <nb-accordion (click)="getAnswers()">
       <nb-accordion-item>
