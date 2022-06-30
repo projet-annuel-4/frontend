@@ -1,5 +1,4 @@
 <nb-layout>
-
   <nb-layout-column class="col-12" >
 
     <button id="fixedButton" nbButton shape="round" size="small" (click)="refresh()">
@@ -7,15 +6,38 @@
     </button>
 
     <div *ngFor="let post of posts">
-      <nb-card routerLink="../{{post.id}}/detail">
+      <nb-card >
 
-        <nb-card-body class="</nb-layout-column>">
+        <nb-card-body class="</nb-layout-column>" routerLink="../{{post.id}}/detail">
           <div>Content : {{post.content}}</div>
           <div >NbLike : {{post.nbLike}}</div>
+
+
         </nb-card-body>
+        <nb-card-footer>
+
+<!--          <button  nbButton
+                   name="likeButton"
+                   ngDefaultControl
+                   status="danger"
+                   [(ngModel)]="likeButton"
+                   (click)="like_dislike()">
+
+
+          </button>
+-->
+            <button
+                (click)="markPostAlreadyLiked()"
+                [ngClass]="{'green' : toggle, 'red': !toggle}">
+              <nb-icon icon="heart-outline"></nb-icon>
+              {{status}}
+            </button>
+
+
+        </nb-card-footer>
 
       </nb-card>
     </div>
-  </nb-layout-column>
 
+  </nb-layout-column>
 </nb-layout>

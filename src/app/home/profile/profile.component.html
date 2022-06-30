@@ -1,8 +1,6 @@
 <nb-layout>
-  <nb-layout-header>Profile</nb-layout-header>
 
-
-  <nb-layout-column class="colored-column-warning">
+  <nb-layout-column class="col-12">
     <nb-card>
       <nb-card-body>
         <img src="favicon.ico" width="150" height="150" alt="">
@@ -13,15 +11,16 @@
     </nb-card>
 
 
-    <nb-card >
-      <nb-card-body>
-        Affichage des posts du user
-      </nb-card-body>
-    </nb-card>
+    <div *ngFor="let post of userPost">
+      <nb-card>
+        <nb-card-body>
+          Affichage des posts du user
+        </nb-card-body>
+      </nb-card>
+    </div>
+
 
   </nb-layout-column>
-
-
 
 
 </nb-layout>

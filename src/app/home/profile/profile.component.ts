@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/_services/user/user.service';
 import { UserProfile } from 'src/app/_dtos/user/UserProfile';
-import {User} from "../../_dtos/user/User";
 import {Post} from "../../_dtos/post/Post";
 import {PostService} from "../../_services/post/post.service";
 
