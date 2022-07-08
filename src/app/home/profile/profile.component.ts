@@ -37,6 +37,10 @@ export class ProfileComponent implements OnInit {
     this.router.navigateByUrl("/chat").then();
   }
 
+  viewFollowers(){
+    alert("TODO : Liste des followers")
+  }
+
 
   deletePost(post_id: string){
     if(confirm("You are going to delete a post")) {

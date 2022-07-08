@@ -5,6 +5,7 @@ import {auth_service, user_service} from "../../../environments/environment";
 import {CodeExecution} from "../../_dtos/code_execution/CodeExecution";
 import {NbDialogService} from "@nebular/theme";
 import {CodeNotRunnableComponent} from "../code-not-runnable.component";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-code-execution',
@@ -18,7 +19,8 @@ export class CodeExecutionComponent implements OnInit {
 
   codeToExecute = new CodeExecution();
 
-  constructor(private codeExecutionService: Code_executionService, private dialogService: NbDialogService) { }
+  constructor(private codeExecutionService: Code_executionService, private dialogService: NbDialogService,
+              private cookieService: CookieService) { }
 
   ngOnInit(): void {
 
@@ -33,9 +35,9 @@ export class CodeExecutionComponent implements OnInit {
     if(runnable(code)){
       return true;
     }
+     */
     alert ("Code no runnable");
 
-     */
     return false;
 
   }
