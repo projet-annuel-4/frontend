@@ -1,8 +1,11 @@
 <nb-layout>
   <nb-layout-column class="col-12" >
 
-    <button id="fixedButton" nbButton shape="round" size="small" (click)="refresh()">
-      <img width="20" height="20" src="/assets/refresh.png">
+    <button id="refreshButton" nbButton shape="round" size="small" (click)="refresh()">
+      <img width="30" height="30" src="/assets/refresh.png">
+    </button>
+    <button id="createButton" nbButton shape="round" size="small" routerLink="/post/create">
+      <img width="30" height="30" src="/assets/add.png">
     </button>
 
     <div *ngFor="let post of posts">
@@ -26,12 +29,12 @@
 
           </button>
 -->
-            <button
-                (click)="markPostAlreadyLiked()"
+              <button
+                (click)="like_dislike(post.id)"
                 [ngClass]="{'green' : toggle, 'red': !toggle}">
               <nb-icon icon="heart-outline"></nb-icon>
-              {{status}}
             </button>
+
 
 
         </nb-card-footer>

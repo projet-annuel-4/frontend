@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/_services/auth/auth.service';
 import { UserService } from 'src/app/_services/user/user.service';
 import { UserProfile } from 'src/app/_dtos/user/UserProfile';
 import { delay } from 'rxjs/operators';
+import {User} from "../../_dtos/user/User";
 
 @Component({
   selector: 'app-token',
@@ -13,7 +14,7 @@ import { delay } from 'rxjs/operators';
 export class TokenComponent implements OnInit {
 
   loading: Boolean = true;
-  profile: UserProfile;
+  profile: User;
   token: string;
   redirect = "/loading";
 
@@ -28,7 +29,7 @@ export class TokenComponent implements OnInit {
     (async () => {
       await delay(5000);
       this.userService.fetchProfile().subscribe(
-        (profile: UserProfile) => {
+        (profile: User) => {
           this.profile = profile
           this.loading = false
         }, (err) => {

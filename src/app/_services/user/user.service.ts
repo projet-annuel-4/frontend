@@ -5,6 +5,7 @@ import { TokenStorageService } from '../token/token-storage.service';
 import { map } from 'rxjs/operators';
 import { UserProfile } from '../../_dtos/user/UserProfile';
 import { Observable } from 'rxjs';
+import {User} from "../../_dtos/user/User";
 
 @Injectable()
 export class UserService {
@@ -16,15 +17,15 @@ export class UserService {
   constructor(private httpClient: HttpClient, private storage:TokenStorageService) {
   }
 
-  fetchProfile(): Observable<UserProfile>{
+  fetchProfile(): Observable<User>{
     return this.httpClient.get(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/info`, this.httpOptions)
-    .pipe(map((user: UserProfile) =>{
+    .pipe(map((user: User) =>{
       this.storage.saveUser(user)
       return user;
     }))
   }
 
-  getProfile(): UserProfile{
+  getProfile(): User{
     return this.storage.getUser();
   }
 

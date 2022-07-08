@@ -17,7 +17,8 @@ export class NotificationService {
   //https://haseeamarathunga.medium.com/create-a-spring-boot-angular-websocket-using-sockjs-and-stomp-cb339f766a98
 
   constructor(private dataService: DataService, private userService: UserService, private storageService: TokenStorageService) {
-    this.topic = `/notifications/${this.userService.getProfile().id}`
+    //this.topic = `/notifications/${this.userService.getProfile().id}`
+    this.topic = `/notifications/${6}`
   }
 
   subscribe() {

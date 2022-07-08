@@ -16,8 +16,6 @@ export class Code_executionService{
 
 
   sendCode(code:CodeExecution): Observable<ApiResponse>{
-    alert("Langage : " + code.language);
-    alert("Code : " + code.content);
     return this.http.post(`${code_execution_service.SEND}`, code , this.httpOptions) as Observable<ApiResponse>;
   }
 

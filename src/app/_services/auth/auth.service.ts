@@ -12,6 +12,7 @@ import { ApiResponse } from '../../_dtos/common/ApiResponse';
 import { UserService } from '../user/user.service';
 import { UserProfile } from '../../_dtos/user/UserProfile';
 import {ForgotPasswordRequest} from "../../_dtos/auth/ForgotPasswordRequest";
+import {User} from "../../_dtos/user/User";
 
 @Injectable({
   providedIn: 'root'
@@ -39,11 +40,11 @@ export class AuthService {
       .pipe(map((response: SignInResponse) => {
         this.tokenStorage.saveToken(response.accessToken);
         console.log("Login token  : " + this.tokenStorage.getToken());
-        this.tokenStorage.saveUser(new UserProfile(response.id, response.email, response.name, response.imageUrl));
+        this.tokenStorage.saveUser(new User(response.id, response.firstname, response.lastname, response.email, response.followers, response.imgUrl));
         console.log("Login User id : " + this.tokenStorage.getUser().id);
+        console.log("Login User firstname : " + this.tokenStorage.getUser().firstname);
+        console.log("Login User lastname : " + this.tokenStorage.getUser().lastname);
         console.log("Login User email : " + this.tokenStorage.getUser().email);
-        console.log("Login User name : " + this.tokenStorage.getUser().name);
-        console.log("Login User imgUrl : " + this.tokenStorage.getUser().imgUrl);
         return response
       }));
 

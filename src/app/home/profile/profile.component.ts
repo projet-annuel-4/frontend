@@ -4,6 +4,7 @@ import { UserService } from 'src/app/_services/user/user.service';
 import { UserProfile } from 'src/app/_dtos/user/UserProfile';
 import {Post} from "../../_dtos/post/Post";
 import {PostService} from "../../_services/post/post.service";
+import {User} from "../../_dtos/user/User";
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +13,7 @@ import {PostService} from "../../_services/post/post.service";
 })
 export class ProfileComponent implements OnInit {
 
-  profile: UserProfile
+  profile: User
   userPost: Post[];
 
 
@@ -22,14 +23,16 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.postService.getAllByUser(6).subscribe(posts => {
-      this.userPost = posts;
+    this.postService.getAllByUser(this.profile.id).subscribe(posts => {
+      this.userPost = posts.reverse();
     },error => {
 
     });
 
 
   }
+
+  //TODO : Cliquer sur le nombre de follower pour aller vpor les personnes qui nous suivent
 
   continue(): void{
     this.router.navigateByUrl("/chat").then();

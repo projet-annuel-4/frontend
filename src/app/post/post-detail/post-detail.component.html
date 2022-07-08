@@ -20,7 +20,7 @@
         <nb-accordion-item-header>Answers</nb-accordion-item-header>
         <nb-accordion-item-body *ngFor="let answer of answers">
           <nb-card>
-            <nb-card-body>
+            <nb-card-body (click)="goToAnswerDetail(answer.id)">
               <div>Content : {{answer.content}}</div>
               Tags :
               <span *ngFor="let answerTag of answer.tags">| {{answerTag.name}} </span>

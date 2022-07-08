@@ -8,6 +8,7 @@ import { ChatService } from 'src/app/_services/chat/chat.service';
 import { Observable } from 'rxjs';
 import { FriendProfile } from 'src/app/_dtos/chat/FriendProfile';
 import { NewChatComponent } from './new-chat/new-chat.component';
+import {User} from "../../_dtos/user/User";
 
 @Component({
   selector: 'home-chat-list',
@@ -26,11 +27,11 @@ export class ChatListComponent implements OnInit {
     { title: 'Log out', icon: 'unlock-outline' },
   ];
 
-  profile: UserProfile
+  profile: User
 
   constructor(private menuService: NbMenuService, private router: Router, private dialogService: NbDialogService,
     private userService: UserService, private chatService: ChatService, private route: ActivatedRoute) {
-    //this.profile = this.userService.getProfile()
+    this.profile = this.userService.getProfile()
     //this.friends = this.chatService.getFriends()
   }
 

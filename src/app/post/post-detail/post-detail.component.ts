@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Post} from "../../_dtos/post/Post";
 import {PostService} from "../../_services/post/post.service";
 import {User} from "../../_dtos/user/User";
@@ -15,7 +15,7 @@ export class PostDetailComponent implements OnInit {
   post: Post;
   answers: Post[];
 
-  constructor(private postService: PostService, private route: ActivatedRoute) { }
+  constructor(private postService: PostService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -39,6 +39,11 @@ export class PostDetailComponent implements OnInit {
       this.answers = answers;
     });
 
+  }
+
+
+  goToAnswerDetail(post_id: string){
+    this.router.navigate(["post/" + post_id + "/detail"]).then()
   }
 
 

@@ -7,6 +7,7 @@ import { UserService } from 'src/app/_services/user/user.service';
 import { NbMessage } from 'src/app/_dtos/chat/NbMessage';
 import { Observable } from 'rxjs';
 import { UserMessage } from 'src/app/_dtos/chat/UserMessage';
+import {User} from "../../_dtos/user/User";
 
 @Component({
   selector: 'app-chat-detail',
@@ -18,7 +19,7 @@ export class ChatDetailComponent implements OnInit {
   messages: NbMessage[] = [];
   friendId: string;
   friendProfile: FriendProfile;
-  myProfile: UserProfile;
+  myProfile: User;
   subscription: any;
 
   constructor(private chatService: ChatService, private router: Router, private route: ActivatedRoute, private userService: UserService) {
@@ -40,8 +41,12 @@ export class ChatDetailComponent implements OnInit {
     this.subscription = this.chatService.getMessages(this.friendId).subscribe(msgs => {
       let messages = msgs.map(msg => {
         let nm = new NbMessage(msg)
-        if (msg.senderId == this.myProfile.id) nm.updateUser(this.myProfile.name, this.myProfile.imgUrl, true)
-        else nm.updateUser(this.friendProfile.name, this.friendProfile.imgUrl, false)
+        if (msg.senderId == this.myProfile.id.toString()) {
+          nm.updateUser(this.myProfile.firstname, this.myProfile.imgUrl, true)
+        }
+        else {
+          nm.updateUser(this.friendProfile.name, this.friendProfile.imgUrl, false)
+        }
         return nm
       })
       this.messages.push(...messages.slice(this.messages.length, messages.length))

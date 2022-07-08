@@ -15,8 +15,10 @@ import {UserProfile} from "../../_dtos/user/UserProfile";
 })
 export class CreateComponent implements OnInit {
 
-  user: UserProfile;
+  user: User;
   postForm: FormGroup;
+
+  code:string;
 
 
   constructor(private formBuilder: FormBuilder, private postService: PostService, private router: Router,
@@ -30,7 +32,7 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.user = this.tokenStorage.getUser()
+    this.user = this.tokenStorage.getUser()
   }
 
 
@@ -43,8 +45,7 @@ export class CreateComponent implements OnInit {
 
       this.postService.create(new PostRequest(
                         data["content"] == null ? data["content"] = "" : data["content"],
-                        //this.user.id,
-                  "6",
+                        this.user.id.toString(),
                         data["tagName"] == null ? data["tagName"] = "" : data["tagName"],
                         data["attachmentUrl"] == null ? data["attachmentUrl"] = "" : data["attachmentUrl"],
                         data["attachmentDescription"] == null ? data["attachmentDescription"] = "" : data["attachmentDescription"]))

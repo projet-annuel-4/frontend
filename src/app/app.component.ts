@@ -3,6 +3,7 @@ import {NB_WINDOW, NbDialogService, NbMenuService} from "@nebular/theme";
 import {TokenStorageService} from "./_services/token/token-storage.service";
 import {Router} from "@angular/router";
 import {DialogSuccessComponent} from "./shared/dialog/dialog-alert/dialog-success.component";
+import {User} from "./_dtos/user/User";
 
 @Component({
   selector: 'app-root',
@@ -18,9 +19,13 @@ import {DialogSuccessComponent} from "./shared/dialog/dialog-alert/dialog-succes
 export class AppComponent implements OnInit{
   title = 'frontend';
 
+  user: User
+
   items = [
-    { title: 'Profile' },
-    { title: 'Logout' },
+    { title: 'Profile', icon: 'person-outline'},
+    { title: 'Chat', icon: ''},
+    { title: 'Feed' },
+    { title: 'Logout', icon: 'unlock-outline'},
   ];
 
 
@@ -29,12 +34,23 @@ export class AppComponent implements OnInit{
               private dialogService: NbDialogService) {}
 
   ngOnInit(): void {
+    this.user = this.tokenStorageService.getUser();
+
+
     this.nbMenuService.onItemClick()
       .subscribe(title => {
 
         switch (title.item.title) {
           case 'Profile':
             this.router.navigate(['../profile']).then();
+            break;
+
+          case 'Chat':
+            this.router.navigate(['../chat/']).then();
+            break;
+
+          case 'Feed':
+            this.router.navigate(['../post/feed']).then();
             break;
 
           case 'Logout':

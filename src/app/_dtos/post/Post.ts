@@ -1,4 +1,3 @@
-import {UserProfile} from "../user/UserProfile";
 import {User} from "../user/User";
 import {Tag} from "./Tag";
 

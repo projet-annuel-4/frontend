@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
 import {Post} from "../../_dtos/post/Post";
 import {Observable} from "rxjs";
 import {post_service} from "../../../environments/environment";
-import {UserProfile} from "../../_dtos/user/UserProfile";
+import {User} from "../../_dtos/user/User";
 import {CommentRequest} from "../../_dtos/post/CommentRequest";
 import {FilterRequest} from "../../_dtos/post/FilterRequest";
 import {PostRequest} from "../../_dtos/post/PostRequest";
@@ -73,16 +73,16 @@ export class PostService {
   }
 
 
-  getUsersLiked(post_id: number): Observable<UserProfile[]> {
-    return this.http.get<UserProfile[]>(`${post_service.BASE_URL}/${post_id}/userLiked`, this.httpOptions);
+  getUsersLiked(post_id: number): Observable<User[]> {
+    return this.http.get<User[]>(`${post_service.BASE_URL}/${post_id}/userLiked`, this.httpOptions);
   }
 
   getPostLikedByUser(user_id: number): Observable<Post[]> {
     return this.http.get<Post[]>(`${post_service.BASE_URL}/userId/${user_id}/postLiked`, this.httpOptions);
   }
 
-  delete(post_id: number): Observable<UserProfile[]> {
-    return this.http.delete<UserProfile[]>(`${post_service.BASE_URL}/${post_id}`, this.httpOptions);
+  delete(post_id: number): Observable<User[]> {
+    return this.http.delete<User[]>(`${post_service.BASE_URL}/${post_id}`, this.httpOptions);
   }
 
   comment(comment: CommentRequest): Observable<any>{

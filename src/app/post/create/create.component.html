@@ -1,3 +1,78 @@
+<nb-layout>
+  <nb-layout-header>Post Creation</nb-layout-header>
+  <nb-layout-column class="colored-column-warning">
+
+
+    <nb-card nbSpinnerStatus="primary">
+      <nb-card-header>
+        <h3 id="title" class="text-center">Create Post</h3>
+      </nb-card-header>
+
+      <nb-card-body>
+        <form [formGroup]="postForm" (ngSubmit)="create()">
+          <div class="form-control-group mb-3">
+                    <span class="label-with-link">
+                        <label class="label" for="input-content">Content :</label>
+                    </span>
+          </div>
+          <textarea [(ngModel)]="code" id="input-content" formControlName="content" rows="8" cols="50"> </textarea>
+
+          <pre>{{code | json}}</pre>
+
+          <div class="form-control-group mb-3">
+                <span class="label-with-link">
+                    <label class="label" for="input-tagName">Tag :</label>
+                </span>
+            <input nbInput fullWidth id="input-tagName"  placeholder="js, test,..." fieldSize="large" formControlName="tagName">
+          </div>
+
+          <div class="form-control-group mb-3">
+                <span class="label-with-link">
+                    <label class="label" for="input-attachmentUrl">Attachment Url :</label>
+                </span>
+            <input nbInput fullWidth id="input-attachmentUrl"  placeholder="" fieldSize="large" formControlName="attachmentUrl">
+          </div>
+
+          <div class="form-control-group mb-3">
+                <span class="label-with-link">
+                    <label class="label" for="input-attachmentDescription">Attachment Description :</label>
+                </span>
+            <input nbInput fullWidth id="input-attachmentDescription"  placeholder="" fieldSize="large" formControlName="attachmentDescription">
+          </div>
+
+          <button nbButton fullWidth outline status="primary" size="large" [disabled]="postForm.invalid">
+            Post
+          </button>
+
+        </form>
+      </nb-card-body>
+
+      <nb-card-footer>
+        Footer
+      </nb-card-footer>
+
+    </nb-card>
+
+
+  </nb-layout-column>
+
+  <nb-layout-column class="colored-column-danger">
+
+    <app-code-execution [inputCode] = "code"></app-code-execution>
+
+  </nb-layout-column>
+</nb-layout>
+
+
+
+
+
+
+
+
+
+<!--
+
 <nb-card nbSpinnerStatus="primary">
   <nb-card-header>
     <h3 id="title" class="text-center">Create Post</h3>
@@ -45,3 +120,6 @@
   </nb-card-footer>
 
 </nb-card>
+
+
+-->

@@ -3,10 +3,16 @@
   <nb-layout-column class="col-12">
     <nb-card>
       <nb-card-body>
-        <img src="favicon.ico" width="150" height="150" alt="">
+        <img class="profile-image" src="favicon.ico" width="150" height="150" alt="" >
         <br>
-        Name : <div>{{profile.name}}</div>
-        Mail :<div>{{profile.email}}</div>
+        <div>Name : {{profile.firstname}}</div>
+        <div>Mail : {{profile.email}}</div>
+
+
+        <div>Followers: {{profile.followers}}</div>
+
+
+
       </nb-card-body>
     </nb-card>
 
@@ -14,7 +20,9 @@
     <div *ngFor="let post of userPost">
       <nb-card>
         <nb-card-body>
-          Affichage des posts du user
+          <div>Content : {{post.content}}</div>
+          Tags :
+          <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
         </nb-card-body>
       </nb-card>
     </div>
