@@ -1,6 +1,7 @@
 <nb-layout>
 
   <nb-layout-column class="col-12">
+
     <nb-card>
       <nb-card-body>
         <img class="profile-image" src="favicon.ico" width="150" height="150" alt="" >
@@ -8,10 +9,7 @@
         <div>Name : {{profile.firstname}}</div>
         <div>Mail : {{profile.email}}</div>
 
-
         <div>Followers: {{profile.followers}}</div>
-
-
 
       </nb-card-body>
     </nb-card>
@@ -19,14 +17,16 @@
 
     <div *ngFor="let post of userPost">
       <nb-card>
-        <nb-card-body>
-          <div>Content : {{post.content}}</div>
+        <nb-card-body><div>Content : {{post.content}}</div>
           Tags :
           <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
+          <br>
+          <br>
+          <button (click)="deletePost(post.id)" nbButton outline status="danger" size="tiny">Delete</button>
+
         </nb-card-body>
       </nb-card>
     </div>
-
 
   </nb-layout-column>
 

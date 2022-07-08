@@ -19,12 +19,9 @@ export class ChatListComponent implements OnInit {
 
   friends: Observable<FriendProfile[]>
   menu = [
-    { title: 'Profile', icon: 'person-outline' },
     { title: 'New Chat', icon: 'person-add-outline' },
     { title: 'New Group', icon: 'plus-outline' },
-    { title: 'Code Execution', icon: '' },
-    { title: 'Settings', icon: 'settings-outline' },
-    { title: 'Log out', icon: 'unlock-outline' },
+    { title: 'Settings', icon: 'settings-outline' }
   ];
 
   profile: User
@@ -47,9 +44,6 @@ export class ChatListComponent implements OnInit {
       )
       .subscribe(title => {
         switch (title) {
-          case 'Profile':
-            this.router.navigateByUrl("/profile")
-            break;
           case 'New Chat':
             this.dialogService.open(NewChatComponent).onClose.subscribe((email) => {
               this.chatService.createFriend(email).subscribe(
@@ -58,21 +52,15 @@ export class ChatListComponent implements OnInit {
               )
             })
             break;
+
           case 'New Group':
             // TODO
             break;
-          case 'Code Execution':
 
-            this.router.navigateByUrl("/execution/project").then();
-
-            break;
           case 'Settings':
             this.router.navigateByUrl("/settings").then();
             break;
-          case 'Log out':
-            this.userService.logout();
-            this.router.navigateByUrl("/auth/signing").then();
-            break;
+
           default:
             break;
         }
