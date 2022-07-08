@@ -39,8 +39,6 @@ export class ProfileComponent implements OnInit {
   }
 
 
-
-
   viewFollowers(){
     alert("TODO : Liste des followers")
   }
