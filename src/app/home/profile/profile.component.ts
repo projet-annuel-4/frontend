@@ -40,18 +40,19 @@ export class ProfileComponent implements OnInit {
 
 
 
+
   viewFollowers(){
     alert("TODO : Liste des followers")
   }
 
 
-  deletePost(post_id: string){
-    if(confirm("You are going to delete a post")) {
+  deletePost(post_id: string) {
+    if (confirm("You are going to delete a post")) {
       //this.postService.delete(parseInt(post_id)).subscribe()
 
       //For demo
-      this.userPost.forEach(post =>{
-        if (post.id == post_id){
+      this.userPost.forEach(post => {
+        if (post.id == post_id) {
           let i = this.userPost.indexOf(post)
           this.userPost.splice(i, 1);
         }
@@ -60,10 +61,6 @@ export class ProfileComponent implements OnInit {
     }
 
 
-  uploadFile(file): void{
-    console.log(file)
-
   }
-
 
 }
