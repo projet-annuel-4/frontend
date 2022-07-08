@@ -39,6 +39,7 @@ export class ProfileComponent implements OnInit {
   }
 
 
+
   viewFollowers(){
     alert("TODO : Liste des followers")
   }
@@ -57,6 +58,10 @@ export class ProfileComponent implements OnInit {
       })
       //
     }
+
+
+  uploadFile(file): void{
+    console.log(file)
 
   }
 
