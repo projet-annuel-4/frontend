@@ -17,8 +17,8 @@ export class CreateComponent implements OnInit {
 
   user: User;
   postForm: FormGroup;
-
-  code:string;
+  content:string;
+  code;
 
 
   constructor(private formBuilder: FormBuilder, private postService: PostService, private router: Router,

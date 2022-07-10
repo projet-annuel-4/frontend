@@ -76,7 +76,7 @@ export class ProjectExecutionComponent implements OnInit {
 
   sendCode(){
     console.log("language : " + this.codeExecutionModel.language);
-    console.log("code : " + this.codeExecutionModel.content);
+    console.log("code : " + this.codeExecutionModel.code);
 
     this.codeExecution.sendCode(this.codeExecutionModel);
   }
