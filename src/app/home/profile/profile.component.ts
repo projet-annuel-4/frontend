@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  //TODO : Cliquer sur le nombre de follower pour aller vpor les personnes qui nous suivent
+  //TODO : Cliquer sur le nombre de follower pour aller voir les personnes qui nous suivent
 
   continue(): void{
     this.router.navigateByUrl("/chat").then();

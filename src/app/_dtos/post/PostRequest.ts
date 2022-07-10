@@ -1,5 +1,6 @@
 export class PostRequest {
 
+  title: string;
   content: string;
   userId: string;
   tagName: String;
@@ -7,7 +8,8 @@ export class PostRequest {
   attachmentDescription: string;
 
 
-  constructor(content: string, userId: string, tagName: String, attachmentUrl: string, attachmentDescription: string) {
+  constructor(title: string, content: string, userId: string, tagName: String, attachmentUrl: string, attachmentDescription: string) {
+    this.title = title;
     this.content = content;
     this.userId = userId;
     this.tagName = tagName;

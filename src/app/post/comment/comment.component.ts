@@ -21,6 +21,7 @@ export class CommentComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private postService: PostService, private route: ActivatedRoute,
               private tokenStorage: TokenStorageService, private router: Router) {
     this.answerForm = this.formBuilder.group({
+      title: [],
       content: [],
       tagName: [],
       attachmentUrl: [],
@@ -49,6 +50,7 @@ export class CommentComponent implements OnInit {
       const data = this.answerForm.value;
 
       this.postService.create(new PostRequest(
+        "",
         data["content"] == null ? data["content"] = "" : data["content"],
         //this.user.id,
         "6",

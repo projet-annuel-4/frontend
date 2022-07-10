@@ -3,6 +3,7 @@ import {Tag} from "./Tag";
 
 export class Post {
   id: string;
+  title: string;
   content: string;
   nbLike: number;
   creationDate?: String;
@@ -11,8 +12,9 @@ export class Post {
   user: User;
 
 
-  constructor(id: string, content: string, nbLike: number, creationDate: String, updateDate: String, tags: Tag[], user: User) {
+  constructor(id: string, title: string, content: string, nbLike: number, creationDate: String, updateDate: String, tags: Tag[], user: User) {
     this.id = id;
+    this.title = title;
     this.content = content;
     this.nbLike = nbLike;
     this.creationDate = creationDate;

@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
 import {post_service} from "../../../environments/environment";
 import {User} from "../../_dtos/user/User";
 import {CommentRequest} from "../../_dtos/post/CommentRequest";
-import {FilterRequest} from "../../_dtos/post/FilterRequest";
+import {PostFilterRequest} from "../../_dtos/post/PostFilterRequest";
 import {PostRequest} from "../../_dtos/post/PostRequest";
 
 
@@ -97,9 +97,10 @@ export class PostService {
     return this.http.get<Post[]>(`${post_service.BASE_URL}/subscriptions/userId/${userId}`, this.httpOptions);
   }
 
-  getAllWithFilters(filters: FilterRequest): Observable<Post[]> {
+  getAllWithFilters(filters: PostFilterRequest): Observable<Post[]> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' });
     const requestParams = new HttpParams()
+                                .set("title", filters.title)
                                 .set("content", filters.content)
                                 .set("tagName", filters.tagName)
                                 .set("creationDate", filters.creationDate.toString())

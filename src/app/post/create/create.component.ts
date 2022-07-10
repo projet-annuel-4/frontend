@@ -24,6 +24,7 @@ export class CreateComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private postService: PostService, private router: Router,
               private tokenStorage: TokenStorageService) {
     this.postForm = this.formBuilder.group({
+      title: [],
       content: [],
       tagName: [],
       attachmentUrl: [],
@@ -44,6 +45,7 @@ export class CreateComponent implements OnInit {
       console.log("tagName :" + data["tagName"]);
 
       this.postService.create(new PostRequest(
+                        data["title"] == null ? data["title"] = "" : data["title"],
                         data["content"] == null ? data["content"] = "" : data["content"],
                         this.user.id.toString(),
                         data["tagName"] == null ? data["tagName"] = "" : data["tagName"],

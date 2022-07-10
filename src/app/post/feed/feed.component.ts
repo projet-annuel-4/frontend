@@ -15,7 +15,6 @@ import {LikeButton} from "../../_dtos/post/LikeButton";
 })
 export class FeedComponent implements OnInit {
 
-  //user: UserProfile;
   user: User;
   posts: Post[];
   postsLikedByUser: Post[];
