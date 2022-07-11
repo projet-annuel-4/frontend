@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {PostService} from "../../_services/post/post.service";
-import {Post} from "../../_dtos/post/Post";
 import {PostRequest} from "../../_dtos/post/PostRequest";
 import {Router} from "@angular/router";
 import {User} from "../../_dtos/user/User";
 import {TokenStorageService} from "../../_services/token/token-storage.service";
-import {UserProfile} from "../../_dtos/user/UserProfile";
+import {NbDialogService} from "@nebular/theme";
+import {CodeNotRunnableComponent} from "../../code/code-not-runnable.component";
 
 @Component({
   selector: 'app-create',
@@ -20,9 +20,11 @@ export class CreateComponent implements OnInit {
   content:string;
   code;
 
+  CODE_RUNNABLE_KEY = 'code-runnable';
+
 
   constructor(private formBuilder: FormBuilder, private postService: PostService, private router: Router,
-              private tokenStorage: TokenStorageService) {
+              private tokenStorage: TokenStorageService, private dialogService: NbDialogService) {
     this.postForm = this.formBuilder.group({
       title: [],
       content: [],
@@ -49,6 +51,18 @@ export class CreateComponent implements OnInit {
         tagsName.forEach(tagName => tagName.trim());
       }
 
+      if(tagsName.length > 5) {
+        alert("5 tags max");
+        return;
+      }
+
+
+      // On recupere l'info depuis le composant d'exécution
+      if(localStorage.getItem(this.CODE_RUNNABLE_KEY) == "false"){
+        this.dialogService.open(CodeNotRunnableComponent)
+        localStorage.removeItem(this.CODE_RUNNABLE_KEY);
+      }
+
 
       this.postService.create(new PostRequest(
                         data["title"] == null ? data["title"] = "" : data["title"],
@@ -59,6 +73,8 @@ export class CreateComponent implements OnInit {
                         data["attachmentDescription"] == null ? data["attachmentDescription"] = "" : data["attachmentDescription"]))
         .subscribe(then => {
           this.router.navigate(['/profile']).then();
+        }, error => {
+          console.log(error["message"])
         });
     }
 
