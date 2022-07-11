@@ -45,6 +45,7 @@ export class CodeExecutionComponent implements OnInit {
   codePreview(){
     this.codes = [];
 
+    //const regexp = RegExp('#(.+?)#(.+?)#(.+?)#','g');
     const regexp = RegExp('#(.+?)##','g');
     const str = this.inputContent;
     let matches;
@@ -88,6 +89,13 @@ export class CodeExecutionComponent implements OnInit {
        */
     }
 
+
+    console.log("codeId : " + codeId);
+    console.log("this.codeToExecute.language : " + this.codeToExecute.language);
+    console.log("this.codeToExecute.code : " + this.codeToExecute.code);
+    console.log("--------------------------------------------------");
+
+    /*
     this.codeExecutionService.sendCode(this.codeToExecute).subscribe(
       res => {
         this.codes.forEach(code => {
@@ -101,6 +109,8 @@ export class CodeExecutionComponent implements OnInit {
         alert(error['error']);
       }
     );
+
+     */
   }
 
 }

@@ -42,13 +42,19 @@ export class CreateComponent implements OnInit {
     if(this.postForm.valid) {
       const data = this.postForm.value;
 
-      console.log("tagName :" + data["tagName"]);
+      let tagsName:string[] = [];
+
+      if(data["tagName"] !== null){
+        tagsName = data["tagName"].split(",");
+        tagsName.forEach(tagName => tagName.trim());
+      }
+
 
       this.postService.create(new PostRequest(
                         data["title"] == null ? data["title"] = "" : data["title"],
                         data["content"] == null ? data["content"] = "" : data["content"],
                         this.user.id.toString(),
-                        data["tagName"] == null ? data["tagName"] = "" : data["tagName"],
+                        tagsName,
                         data["attachmentUrl"] == null ? data["attachmentUrl"] = "" : data["attachmentUrl"],
                         data["attachmentDescription"] == null ? data["attachmentDescription"] = "" : data["attachmentDescription"]))
         .subscribe(then => {

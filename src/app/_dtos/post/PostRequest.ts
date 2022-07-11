@@ -3,16 +3,16 @@ export class PostRequest {
   title: string;
   content: string;
   userId: string;
-  tagName: String;
+  tagsName: string[];
   attachmentUrl: string;
   attachmentDescription: string;
 
 
-  constructor(title: string, content: string, userId: string, tagName: String, attachmentUrl: string, attachmentDescription: string) {
+  constructor(title: string, content: string, userId: string, tagsName: string[], attachmentUrl: string, attachmentDescription: string) {
     this.title = title;
     this.content = content;
     this.userId = userId;
-    this.tagName = tagName;
+    this.tagsName = tagsName;
     this.attachmentUrl = attachmentUrl;
     this.attachmentDescription = attachmentDescription;
   }
