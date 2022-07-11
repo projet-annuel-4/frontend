@@ -27,6 +27,16 @@ export class CodeExecutionComponent implements OnInit {
 
   }
 
+  /* Template content with code *
+    j'ai ça
+    #`js` code1 ##
+    puis encode ça
+    #`js` code2 ##
+    blablabla
+    #`js` code3 ##
+
+   */
+
 
   codePreview(){
     this.codes = [];
