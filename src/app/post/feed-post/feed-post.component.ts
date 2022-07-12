@@ -32,7 +32,7 @@ export class FeedPostComponent implements OnInit {
 
   like_dislike(post_id: string){
     this.post.value.isLiked = !this.post.value.isLiked;
-    
+
     if(this.post.value.isLiked){
       this.postService.like(parseInt(post_id), this.user.id).subscribe(then => {
         this.status = this.ENABLE;

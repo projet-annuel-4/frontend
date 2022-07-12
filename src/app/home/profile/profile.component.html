@@ -1,22 +1,19 @@
 <nb-layout>
 
-  <nb-layout-column class="col-12">
+  <nb-layout-column class="col-3">
     <nb-card>
       <nb-card-body>
         <img class="profile-image" src="favicon.ico" width="150" height="150" alt="" >
         <br>
         <div>Name : {{profile.firstname}}</div>
         <div>Mail : {{profile.email}}</div>
-
-
-
         <div (click)="viewFollowers()">Followers: {{profile.followers}}</div>
-
-
       </nb-card-body>
     </nb-card>
+  </nb-layout-column>
 
 
+  <nb-layout-column>
     <div *ngFor="let post of userPost">
       <nb-card>
         <nb-card-body>
@@ -36,8 +33,6 @@
         </nb-card-footer>
       </nb-card>
     </div>
-
-
   </nb-layout-column>
 
 

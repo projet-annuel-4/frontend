@@ -1,8 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {NB_WINDOW, NbDialogService, NbMenuService} from "@nebular/theme";
+import {NB_WINDOW, NbDialogService, NbMenuService, NbThemeService} from "@nebular/theme";
 import {TokenStorageService} from "./_services/token/token-storage.service";
 import {Router} from "@angular/router";
-import {DialogSuccessComponent} from "./shared/dialog/dialog-alert/dialog-success.component";
 import {User} from "./_dtos/user/User";
 
 @Component({
@@ -19,7 +18,9 @@ import {User} from "./_dtos/user/User";
 export class AppComponent implements OnInit{
   title = 'frontend';
 
-  user: User
+  toggleTheme = false;
+
+  user: User;
 
   items = [
     { title: 'Profile', icon: 'person-outline'},
@@ -29,9 +30,10 @@ export class AppComponent implements OnInit{
   ];
 
 
+
   constructor(private nbMenuService: NbMenuService, @Inject(NB_WINDOW) private window,
               private tokenStorageService: TokenStorageService, private router: Router,
-              private dialogService: NbDialogService) {}
+              private dialogService: NbDialogService, private themeService: NbThemeService) {}
 
   ngOnInit(): void {
     this.user = this.tokenStorageService.getUser();
@@ -63,6 +65,24 @@ export class AppComponent implements OnInit{
             throw new Error();
         }
       });
+
+  }
+
+
+
+  changeTheme(){
+    //TODO : Debug
+    //https://akveo.github.io/nebular/docs/components/toggle/overview#nbtogglecomponent
+
+    this.toggleTheme = !this.toggleTheme;
+
+    if(this.toggleTheme) {
+      this.themeService.changeTheme('dark');
+    }
+    else {
+      this.themeService.changeTheme('cosmic');
+    }
+
   }
 
 }
