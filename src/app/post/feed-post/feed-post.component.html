@@ -12,7 +12,7 @@
 
   <nb-card-footer>
     <button
-      (click)="like_dislike()"
+      (click)="like_dislike(post.key.id)"
       [ngClass]="{'green' : post.value.isLiked, 'white': !post.value.isLiked}">
       <nb-icon icon="heart-outline"></nb-icon>
     </button>

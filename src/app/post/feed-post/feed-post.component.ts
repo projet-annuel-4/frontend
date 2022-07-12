@@ -30,22 +30,20 @@ export class FeedPostComponent implements OnInit {
   }
 
 
-  like_dislike(/*post_id: string*/){
+  like_dislike(post_id: string){
     this.post.value.isLiked = !this.post.value.isLiked;
-
     
     if(this.post.value.isLiked){
-      this.status = this.ENABLE
-      //this.postService.like(parseInt(post_id), this.user.id).subscribe(then => {
-      //  changer le status du bouton
-      // });
+      this.postService.like(parseInt(post_id), this.user.id).subscribe(then => {
+        this.status = this.ENABLE;
+        window.location.reload();
+      });
     } else {
-      this.status = this.DISABLE
-      //this.postService.dislike(parseInt(post_id), this.user.id).subscribe(then => {
-      //  changer le status du bouton
-      // });
+      this.postService.dislike(parseInt(post_id), this.user.id).subscribe(then => {
+        this.status = this.DISABLE;
+        window.location.reload();
+      });
     }
-
   }
 
 }
