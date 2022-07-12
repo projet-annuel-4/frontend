@@ -1,0 +1,21 @@
+<nb-card>
+
+  <nb-card-body class="</nb-layout-column>" routerLink="../{{post.key.id}}/detail">
+
+    <div>Title : {{post.key.title}}</div>
+    <div>Content : {{post.key.content}}</div>
+    <div >NbLike : {{post.key.nbLike}}</div>
+    Tags :
+    <span *ngFor="let tag of post.key.tags">| {{tag.name}} </span>
+
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button
+      (click)="like_dislike()"
+      [ngClass]="{'green' : post.value.isLiked, 'white': !post.value.isLiked}">
+      <nb-icon icon="heart-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
+
+</nb-card>

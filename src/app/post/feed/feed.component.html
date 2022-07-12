@@ -8,39 +8,8 @@
       <img width="30" height="30" src="/assets/add.png">
     </button>
 
-    <div *ngFor="let post of posts">
-      <nb-card >
-
-        <nb-card-body class="</nb-layout-column>" routerLink="../{{post.id}}/detail">
-          <div>Title : {{post.title}}</div>
-          <div>Content : {{post.content}}</div>
-          <div >NbLike : {{post.nbLike}}</div>
-
-
-        </nb-card-body>
-        <nb-card-footer>
-
-<!--          <button  nbButton
-                   name="likeButton"
-                   ngDefaultControl
-                   status="danger"
-                   [(ngModel)]="likeButton"
-                   (click)="like_dislike()">
-
-
-          </button>
--->
-              <button
-                (click)="like_dislike(post.id)"
-                [ngClass]="{'green' : toggle, 'red': !toggle}">
-              <nb-icon icon="heart-outline"></nb-icon>
-            </button>
-
-
-
-        </nb-card-footer>
-
-      </nb-card>
+    <div *ngFor="let post of posts | keyvalue">
+      <app-feed-post [post]="post" ></app-feed-post>
     </div>
 
   </nb-layout-column>

@@ -36,6 +36,7 @@ import { CreateComponent } from './post/create/create.component';
 import { PostDetailComponent } from './post/post-detail/post-detail.component';
 import { CommentComponent } from './post/comment/comment.component';
 import {CodeNotRunnableComponent} from "./code/code-not-runnable.component";
+import { FeedPostComponent } from './post/feed-post/feed-post.component';
 
 
 /************** Config Monaco *************/
@@ -95,7 +96,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
     CreateComponent,
     PostDetailComponent,
     CommentComponent,
-    CodeNotRunnableComponent
+    CodeNotRunnableComponent,
+    FeedPostComponent
   ],
     imports: [
         BrowserModule,
