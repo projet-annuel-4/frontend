@@ -2,37 +2,79 @@
 
   <nb-layout-column class="col-3">
     <nb-card>
-      <nb-card-body>
+      <nb-card-body style="text-align:center">
         <img class="profile-image" src="favicon.ico" width="150" height="150" alt="" >
         <br>
-        <div>Name : {{profile.firstname}}</div>
+        <div>{{profile.firstname}} {{profile.lastname.toUpperCase()}}</div>
         <div>Mail : {{profile.email}}</div>
-        <div (click)="viewFollowers()">Followers: {{profile.followers}}</div>
       </nb-card-body>
+
+      <nb-card-footer>
+          <div (click)="viewFollowers()">
+            <img  src="favicon.ico" width="28" height="30" alt="" >
+            Followers: {{profile.nbFollowers}}
+          </div>
+        <hr>
+          <div (click)="viewSubscriptions()">
+            <img  src="favicon.ico" width="28" height="30" alt="" >
+            Subs : {{profile.nbSubscriptions}}
+          </div>
+      </nb-card-footer>
+    </nb-card>
+
+    <nb-card>
+      <button nbButton routerLink="../profile/update">Edit</button>
     </nb-card>
   </nb-layout-column>
 
 
   <nb-layout-column>
-    <div *ngFor="let post of userPost">
-      <nb-card>
-        <nb-card-body>
-          <div>Title : {{post.title}}</div>
-          <div>Content : {{post.content}}</div>
-          Tags :
-          <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
-        </nb-card-body>
+    <nb-tabset>
 
-        <nb-card-footer>
-          <button nbButton
-                  status="danger"
-                  size="tiny"
-                  (click)="deletePost(post.id)">
-            Delete
-          </button>
-        </nb-card-footer>
-      </nb-card>
-    </div>
+      <nb-tab tabTitle="My Posts">
+        <div *ngFor="let post of userPost">
+          <nb-card>
+            <nb-card-body>
+              <nb-card-header> Title : {{post.title}} </nb-card-header>
+              <div style="padding: 15px">
+                <textarea readonly rows="7" cols="50">{{post.content}}</textarea>
+              </div>
+              Tags :
+              <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
+            </nb-card-body>
+
+            <nb-card-footer>
+              <button nbButton
+                      status="danger"
+                      size="tiny"
+                      (click)="deletePost(post.id)">
+                Delete
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </div>
+      </nb-tab>
+
+      <nb-tab tabTitle="Simple Tab #2">
+        Tab content 2
+      </nb-tab>
+
+      <nb-tab tabTitle="Like">
+        <div *ngFor="let postLiked of postsLiked">
+          <nb-card>
+            <nb-card-body>
+              <nb-card-header> Title : {{postLiked.title}} </nb-card-header>
+              <div>
+                <textarea readonly rows="5" cols="50">{{postLiked.content}}</textarea>
+              </div>
+              Tags :
+              <span *ngFor="let tag of postLiked.tags">| {{tag.name}} </span>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </nb-tab>
+
+    </nb-tabset>
   </nb-layout-column>
 
 

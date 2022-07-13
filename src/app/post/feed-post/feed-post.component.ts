@@ -13,9 +13,7 @@ import {KeyValue} from "@angular/common";
 export class FeedPostComponent implements OnInit {
 
   @Input()
-  post: KeyValue<Post, {isLiked: boolean }>;
-  @Input()
-  isLiked: boolean;
+  post: KeyValue<Post, {isLiked: boolean}>;
 
   user: User;
 

@@ -77,10 +77,10 @@ export class AppComponent implements OnInit{
     this.toggleTheme = !this.toggleTheme;
 
     if(this.toggleTheme) {
-      this.themeService.changeTheme('dark');
+      this.themeService.changeTheme('corporate');
     }
     else {
-      this.themeService.changeTheme('cosmic');
+      this.themeService.changeTheme('dark');
     }
 
   }

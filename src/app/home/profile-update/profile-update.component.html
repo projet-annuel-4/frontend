@@ -1,0 +1,74 @@
+<nb-layout>
+  <nb-layout-column>
+    <div class="container">
+      <div class="row row-eq-height no-gutters justify-content-center mt-5 mb-4">
+        <div class="col-md-auto col-lg-auto col-xl-7">
+
+          <nb-card [nbSpinner]="" nbSpinnerStatus="primary">
+            <nb-card-header>
+              <h3 id="title" class="text-center">Edit Profile</h3>
+            </nb-card-header>
+            <nb-card-body>
+              <form [formGroup]="signUpFrom" (ngSubmit)="update()">
+
+                <div class="form-control-group mb-3">
+                  <label class="label" for="input-firstname">First Name:</label>
+                  <input nbInput fullWidth id="input-firstname" placeholder="First Name" fieldSize="large" formControlName="firstname">
+                </div>
+
+                <div class="form-control-group mb-3">
+                  <label class="label" for="input-lastname">Last Name:</label>
+                  <input nbInput fullWidth id="input-lastname" placeholder="Last Name" fieldSize="large" formControlName="lastname">
+                </div>
+
+                <div class="form-control-group mb-3">
+                  <label class="label" for="input-email">Email address:</label>
+                  <input nbInput fullWidth id="input-email" placeholder="Email address" fieldSize="large" formControlName="email">
+                </div>
+
+
+                <div class="form-control-group mb-3">
+                <span class="label-with-link">
+                    <label class="label" for="input-password">Password:</label>
+                </span>
+                  <input nbInput fullWidth id="input-password" type="password" placeholder="Password" fieldSize="large" formControlName="password">
+                </div>
+
+                <div class="form-control-group mb-3">
+                <span class="label-with-link">
+                    <label class="label" for="input-password2">Confirm Password:</label>
+                </span>
+
+                  <input nbInput fullWidth name="password2" id="input-password2" type="password" required
+                         placeholder="Confirm Password" fieldSize="large" formControlName="password2">
+                </div>
+
+                <button nbButton
+                        fullWidth
+                        outline
+                        status="primary"
+                        size="large">
+                  Update
+                </button>
+
+              </form>
+            </nb-card-body>
+            <nb-card-footer>
+              <button nbButton
+                      fullWidth
+                      outline
+                      status="danger"
+                      size="small"
+                      routerLink="/profile">
+                Cancel
+              </button>
+            </nb-card-footer>
+          </nb-card>
+
+        </div>
+      </div>
+    </div>
+  </nb-layout-column>
+</nb-layout>
+
+

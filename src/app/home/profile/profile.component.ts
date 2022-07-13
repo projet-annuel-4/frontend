@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/_services/user/user.service';
-import { UserProfile } from 'src/app/_dtos/user/UserProfile';
 import {Post} from "../../_dtos/post/Post";
 import {PostService} from "../../_services/post/post.service";
 import {User} from "../../_dtos/user/User";
+import {NbDialogService} from "@nebular/theme";
+import {FollowerListComponent} from "./follower-list/follower-list.component";
+import {SubscriptionListComponent} from "./subscription-list/subscription-list.component";
 
 @Component({
   selector: 'app-profile',
@@ -16,8 +18,11 @@ export class ProfileComponent implements OnInit {
   profile: User
   userPost: Post[];
 
+  postsLiked: Post[];
 
-  constructor(private userService: UserService, private postService: PostService, private router: Router) {
+
+  constructor(private userService: UserService, private postService: PostService, private router: Router,
+              private dialogService: NbDialogService) {
     this.profile = this.userService.getProfile()
   }
 
@@ -29,18 +34,20 @@ export class ProfileComponent implements OnInit {
 
     });
 
+    this.postService.getPostLikedByUser(this.profile.id).subscribe(postsLiked => {
+      this.postsLiked = postsLiked;
+    }, error => {});
 
-  }
 
-  //TODO : Cliquer sur le nombre de follower pour aller voir les personnes qui nous suivent
-
-  continue(): void{
-    this.router.navigateByUrl("/chat").then();
   }
 
 
   viewFollowers(){
-    alert("TODO : Liste des followers")
+    this.dialogService.open(FollowerListComponent);
+  }
+  viewSubscriptions(){
+    this.dialogService.open(SubscriptionListComponent);
+
   }
 
 

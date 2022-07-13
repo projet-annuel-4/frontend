@@ -4,7 +4,8 @@ export class SignInResponse {
     firstname: string
     lastname: string
     email: string
-    followers: number
+    nbFollowers: number;
+    nbSubscriptions: number;
     imgUrl: string
     id: number
 }

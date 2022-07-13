@@ -40,7 +40,7 @@ export class AuthService {
       .pipe(map((response: SignInResponse) => {
         this.tokenStorage.saveToken(response.accessToken);
         console.log("Login token  : " + this.tokenStorage.getToken());
-        this.tokenStorage.saveUser(new User(response.id, response.firstname, response.lastname, response.email, response.followers, response.imgUrl));
+        this.tokenStorage.saveUser(new User(response.id, response.firstname, response.lastname, response.email, response.nbFollowers, response.nbSubscriptions, response.imgUrl));
         console.log("Login User id : " + this.tokenStorage.getUser().id);
         console.log("Login User firstname : " + this.tokenStorage.getUser().firstname);
         console.log("Login User lastname : " + this.tokenStorage.getUser().lastname);

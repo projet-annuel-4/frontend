@@ -28,9 +28,8 @@ export class TokenStorageService {
   public getUser(): User {
     /*const raw = JSON.parse(localStorage.getItem(this.USER_KEY));
     return (raw != null)? new UserProfile(raw['id'], raw['email'], raw['firstname'], raw['imgUrl'], ) : null;
-
      */
-    return new User(5, "Kelyan", "Bevrin", "test@test.com", 25, "https://image.fr");
+    return new User(5, "Kélyan", "Bervin", "test@test.com", 352, 102, "https://image.fr");
   }
 
   signOut() {

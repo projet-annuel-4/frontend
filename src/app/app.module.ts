@@ -103,7 +103,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
     BrowserModule,
     BrowserAnimationsModule,
     //NbThemeModule.forRoot({name: 'cosmic'}),
-    NbThemeModule.forRoot({name: 'corporate'}),
+    NbThemeModule.forRoot({name: 'dark'}),
     NbMenuModule.forRoot(),
     NbDialogModule.forRoot(),
     NbLayoutModule,

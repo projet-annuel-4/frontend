@@ -8,7 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 
 import { HomeRoutingModule } from './home-routing.module';
-import { NbSidebarService, NbMenuService } from '@nebular/theme';
+import {NbSidebarService, NbMenuService, NbTabsetModule} from '@nebular/theme';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { UserService } from '../_services/user/user.service';
 import { ChatService } from '../_services/chat/chat.service';
@@ -18,6 +18,12 @@ import { LoadingComponent } from './loading/loading.component';
 import { ChatDetailComponent } from './chat-detail/chat-detail.component';
 import { ChatBannerComponent } from './chat-banner/chat-banner.component';
 import { NewChatComponent } from './chat-list/new-chat/new-chat.component';
+import { FollowerListComponent } from './profile/follower-list/follower-list.component';
+import { FollowerItemComponent } from './profile/follower-item/follower-item.component';
+import { SubscriptionItemComponent } from './profile/subscription-item/subscription-item.component';
+import { SubscriptionListComponent } from './profile/subscription-list/subscription-list.component';
+import { ProfileUpdateComponent } from './profile-update/profile-update.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -29,11 +35,16 @@ import { NewChatComponent } from './chat-list/new-chat/new-chat.component';
         LoadingComponent,
         ChatDetailComponent,
         ChatBannerComponent,
-        NewChatComponent
+        NewChatComponent,
+        FollowerListComponent,
+        FollowerItemComponent,
+        SubscriptionItemComponent,
+        SubscriptionListComponent,
+        ProfileUpdateComponent,
     ],
-    imports: [
-        CommonModule, HomeRoutingModule, SharedModule,
-    ],
+  imports: [
+    CommonModule, HomeRoutingModule, SharedModule, NbTabsetModule, ReactiveFormsModule,
+  ],
     exports: [
         HomeComponent
     ],
