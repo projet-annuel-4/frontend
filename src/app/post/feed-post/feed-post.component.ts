@@ -4,6 +4,7 @@ import {PostService} from "../../_services/post/post.service";
 import {TokenStorageService} from "../../_services/token/token-storage.service";
 import {User} from "../../_dtos/user/User";
 import {KeyValue} from "@angular/common";
+import {CodeService} from "../../_services/code_execution/code.service";
 
 @Component({
   selector: 'app-feed-post',
@@ -21,14 +22,43 @@ export class FeedPostComponent implements OnInit {
   DISABLE = "Disable"
   status: string;
 
-  constructor(private postService: PostService, private tokenStorage: TokenStorageService) { }
+
+  contentFormat: string;
+
+  constructor(private postService: PostService, private tokenStorage: TokenStorageService,
+              public codeService: CodeService) { }
 
   ngOnInit(): void {
     this.user = this.tokenStorage.getUser();
+
+    this.formatContent();
   }
 
   //TODO : mettre les codes du content dans une balise  <code></code>
   // https://developer.mozilla.org/fr/docs/Web/HTML/Element/code
+
+
+  // Remplacer le code string par le Code() pour l'affichage
+  formatContent(){
+    let content = this.post.key.content;
+
+    let newContent = this.post.key.content;
+    let codes = this.codeService.codePreview(content);
+
+    console.log("content de base  :" + content);
+
+    codes.codesFound.forEach((codeStr, i) => {
+        console.log("newContent -> " + newContent);
+        console.log("codeStr :" + codeStr);
+        newContent = newContent.replace(codeStr, '\n' + codes.codes[i].content + '\n');
+        console.log("replace -> " + newContent);
+    });
+
+    console.log("final -> " + newContent);
+    console.log("-----------------------------");
+
+    return newContent;
+  }
 
 
   like_dislike(post_id: string){
