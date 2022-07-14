@@ -26,6 +26,8 @@ export class ProfileComponent implements OnInit {
     this.profile = this.userService.getProfile()
   }
 
+  //TODO : NbTab ->  My Posts, Answers, Friend, like
+
   ngOnInit(): void {
 
     this.postService.getAllByUser(this.profile.id).subscribe(posts => {
@@ -47,7 +49,6 @@ export class ProfileComponent implements OnInit {
   }
   viewSubscriptions(){
     this.dialogService.open(SubscriptionListComponent);
-
   }
 
 

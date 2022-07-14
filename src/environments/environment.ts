@@ -40,7 +40,7 @@ export const code_execution_service = {
 }
 
 export const post_service = {
-  //TODO : Mettre à jour un fois l'api-gateway configurée
+  //TODO : Mettre à jour une fois l'api-gateway configurée
     BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.POST}`
 }
 

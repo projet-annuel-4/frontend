@@ -59,7 +59,8 @@ export class ChatListComponent implements OnInit {
             })
             break;
           case 'New Group':
-            // TODO
+            // TODO : Implémenter click New Group
+            alert("TODO : Implement")
             break;
           case 'Code Execution':
 

@@ -27,6 +27,9 @@ export class FeedPostComponent implements OnInit {
     this.user = this.tokenStorage.getUser();
   }
 
+  //TODO : mettre les codes du content dans une balise  <code></code>
+  // https://developer.mozilla.org/fr/docs/Web/HTML/Element/code
+
 
   like_dislike(post_id: string){
     this.post.value.isLiked = !this.post.value.isLiked;
@@ -34,12 +37,14 @@ export class FeedPostComponent implements OnInit {
     if(this.post.value.isLiked){
       this.postService.like(parseInt(post_id), this.user.id).subscribe(then => {
         this.status = this.ENABLE;
-        window.location.reload();
+        this.post.key.nbLike += 1;
+        //window.location.reload();
       });
     } else {
       this.postService.dislike(parseInt(post_id), this.user.id).subscribe(then => {
         this.status = this.DISABLE;
-        window.location.reload();
+        //window.location.reload();
+        this.post.key.nbLike -= 1;
       });
     }
   }

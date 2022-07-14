@@ -27,8 +27,9 @@ export class TokenStorageService {
 
   public getUser(): User {
     /*const raw = JSON.parse(localStorage.getItem(this.USER_KEY));
-    return (raw != null)? new UserProfile(raw['id'], raw['email'], raw['firstname'], raw['imgUrl'], ) : null;
-     */
+    return (raw != null)? new User(raw['id'], raw['firstname'], raw['lastname'], raw['email'],
+                                  raw['nbFollowers'], raw['nbSubscriptions'], raw['imgUrl']) : null;
+*/
     return new User(5, "Kélyan", "Bervin", "test@test.com", 352, 102, "https://image.fr");
   }
 
