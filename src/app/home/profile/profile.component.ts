@@ -7,6 +7,7 @@ import {User} from "../../_dtos/user/User";
 import {NbDialogService} from "@nebular/theme";
 import {FollowerListComponent} from "./follower-list/follower-list.component";
 import {SubscriptionListComponent} from "./subscription-list/subscription-list.component";
+import {CodeService} from "../../_services/code_execution/code.service";
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ import {SubscriptionListComponent} from "./subscription-list/subscription-list.c
 })
 export class ProfileComponent implements OnInit {
 
+
   profile: User
   userPost: Post[];
 
@@ -22,7 +24,7 @@ export class ProfileComponent implements OnInit {
 
 
   constructor(private userService: UserService, private postService: PostService, private router: Router,
-              private dialogService: NbDialogService) {
+              private dialogService: NbDialogService, private codeService:CodeService) {
     this.profile = this.userService.getProfile()
   }
 
@@ -40,9 +42,7 @@ export class ProfileComponent implements OnInit {
       this.postsLiked = postsLiked;
     }, error => {});
 
-
   }
-
 
   viewFollowers(){
     this.dialogService.open(FollowerListComponent);
@@ -50,6 +50,22 @@ export class ProfileComponent implements OnInit {
   viewSubscriptions(){
     this.dialogService.open(SubscriptionListComponent);
   }
+
+  formatContentP(content: string){
+    let newContent = content;
+    let codes = this.codeService.codePreview(content);
+
+    codes.codesFound.forEach((codeStr, i) => {
+      newContent = newContent.replace(codeStr, '\n' + codes.codes[i].content + '\n');
+    });
+
+    return newContent;
+  }
+
+  containCode(str: string) : boolean{
+    return this.codeService.findCodeInContent(RegExp('#(.+?)##','g'), str).length > 0;
+  }
+
 
 
   deletePost(post_id: string) {
