@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, Type} from '@angular/core';
-import {Code_executionService} from "../../_services/code_execution/code_execution.service";
+import {CodeService} from "../../_services/code_execution/code.service";
 import {CodeExecution} from "../../_dtos/code_execution/CodeExecution";
 import {Code} from "../../_dtos/code_execution/Code";
 import {v4 as uuidv4} from 'uuid';
@@ -21,7 +21,7 @@ export class CodeExecutionComponent implements OnInit {
   CODE_RUNNABLE_KEY = 'code-runnable';
 
 
-  constructor(private codeExecutionService: Code_executionService) { }
+  constructor(private codeService: CodeService) { }
 
   ngOnInit(): void {
 
@@ -44,26 +44,14 @@ export class CodeExecutionComponent implements OnInit {
     //const regexp = RegExp('#(.+?)#(.+?)#(.+?)#','g');
     const regexp = RegExp('#(.+?)##','g');
     const str = this.inputContent;
-    let matches;
-    let codesFound = [];
 
-    while ((matches = regexp.exec(str)) !== null) {
-      codesFound.push(matches[0]);
-    }
-
+    let codesFound = this.codeService.findCodeInContent(regexp, str);
 
     codesFound.forEach(code => {
-      this.codes.push(this.createCodeFromString(code));
+      this.codes.push(this.codeService.createCodeFromString(code));
     });
 
     this.codesString = codesFound;
-  }
-
-  createCodeFromString(codeString: string): Code{
-    const codeRegex = RegExp('`(.+?)`','g');
-    let languageMatch = codeRegex.exec(codeString);
-
-    return new Code(uuidv4(), languageMatch[0], codeString, "", false);
   }
 
 
@@ -73,7 +61,7 @@ export class CodeExecutionComponent implements OnInit {
     this.codeToExecute.language = language;
     this.codeToExecute.code = code;
 
-    this.codeExecutionService.sendCode(this.codeToExecute).subscribe(
+    this.codeService.sendCode(this.codeToExecute).subscribe(
       res => {
 
         this.codes.forEach(code => {

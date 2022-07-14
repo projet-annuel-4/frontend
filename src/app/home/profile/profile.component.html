@@ -37,7 +37,7 @@
             <nb-card-body>
               <nb-card-header> Title : {{post.title}} </nb-card-header>
               <div style="padding: 15px">
-                <textarea readonly rows="7" cols="50">{{post.content}}</textarea>
+                <code readonly rows="7" cols="50">{{post.content}}</code>
               </div>
               Tags :
               <span *ngFor="let tag of post.tags">| {{tag.name}} </span>

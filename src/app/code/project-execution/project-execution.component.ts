@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgxEditorModel} from "../lib/types";
-import {Code_executionService} from "../../_services/code_execution/code_execution.service";
+import {CodeService} from "../../_services/code_execution/code.service";
 import {CodeExecution} from "../../_dtos/code_execution/CodeExecution";
 
 
@@ -16,7 +16,7 @@ export class ProjectExecutionComponent implements OnInit {
 
   codeExecutionModel = new CodeExecution();
 
-  constructor(private codeExecution: Code_executionService) { }
+  constructor(private codeExecution: CodeService) { }
 
   editor:any;
   code:string;
