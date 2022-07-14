@@ -38,22 +38,14 @@ export class CodeExecutionComponent implements OnInit {
    */
 
 
-  codePreview(){
+  previewCode(inoutContent: string){
     this.codes = [];
 
-    //const regexp = RegExp('#(.+?)#(.+?)#(.+?)#','g');
-    const regexp = RegExp('#(.+?)##','g');
-    const str = this.inputContent;
+    const preview = this.codeService.codePreview(inoutContent);
 
-    let codesFound = this.codeService.findCodeInContent(regexp, str);
-
-    codesFound.forEach(code => {
-      this.codes.push(this.codeService.createCodeFromString(code));
-    });
-
-    this.codesString = codesFound;
+    this.codes = preview.codes;
+    this.codesString = preview.codesFound;
   }
-
 
 
   sendCode(codeId: string, language: string, code: string){

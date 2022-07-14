@@ -31,6 +31,31 @@ export class CodeService {
     return codesFound;
   }
 
+  /**
+   * # `ts` let a = 12; ##  =>  let a = 12;
+   * @param code
+   * @param language
+   */
+  cleanCode(code: string, language: string): string{
+    return code
+      .replace(language, '')
+      .replace(/#/, '')
+      .replace(/##/, '')
+      .trim();
+  }
+
+  /**
+   *  `js` => js
+   * @param language
+   */
+  cleanLanguage(language: string): string{
+    return language
+      .replace('`', '')
+      .replace('`', '')
+      .trim();
+  }
+
+
   createCodeFromString(codeString: string): Code{
     const codeRegex = RegExp('`(.+?)`','g');
     let languageMatch = codeRegex.exec(codeString);
@@ -44,26 +69,20 @@ export class CodeService {
     );
   }
 
-  /**
-   * # `ts` let a = 12; ##  =>  let a = 12;
-   * @param code
-   * @param language
-   */
-  cleanCode(code: string, language: string): string{
-    return code
-              .replace(language, '')
-              .replace(/#/, '')
-              .replace(/##/, '')
-              .trim();
+
+  codePreview(inputContent: string){
+    let codes: Code[] = [];
+
+    //const regexp = RegExp('#(.+?)#(.+?)#(.+?)#','g');
+    const regexp = RegExp('#(.+?)##','g');
+
+    let codesFound = this.findCodeInContent(regexp, inputContent);
+
+    codesFound.forEach(code => {
+      codes.push(this.createCodeFromString(code));
+    });
+
+    return {codes, codesFound};
   }
-
-  cleanLanguage(language: string): string{
-    return language
-                .replace('`', '')
-                .replace('`', '')
-                .trim();
-  }
-
-
 
 }
