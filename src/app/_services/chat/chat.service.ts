@@ -63,8 +63,16 @@ export class ChatService {
     return this.httpClient.post(`${chat_service.CHAT}/?user-email=${this.userEmail}&friend-email=${email}`, "", requestOptions)
       .pipe(map((friend: FriendProfile) => {
         console.log("friend.id : " + friend.id);
+        console.log("friend.friendId : " + friend.friendId);
+        console.log("friend.email : " + friend.email);
         console.log("friend.firstName : " + friend.firstName);
         console.log("friend.lastName : " + friend.lastName);
+        console.log("friend.imgUrl : " + friend.imgUrl);
+        console.log("friend.blockedBy : " + friend.blockedBy);
+        console.log("friend.lastMsg : " + friend.lastMsg);
+        console.log("friend.lastMsgAt : " + friend.lastMsgAt);
+        console.log("friend.unreadMsgs : " + friend.unreadMsgs);
+        console.log("friend.updatedAt : " + friend.updatedAt);
         this.dataService.updateFriends([friend]);
       }))
   }

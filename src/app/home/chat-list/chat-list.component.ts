@@ -86,7 +86,7 @@ export class ChatListComponent implements OnInit {
   }
 
   chatClicked(id: String){
-    this.router.navigate([id], { relativeTo: this.route, skipLocationChange:true })
+    this.router.navigate([id], { relativeTo: this.route, skipLocationChange:true }).then()
   }
 
 }

@@ -25,12 +25,14 @@ export class ProfileComponent implements OnInit {
 
   constructor(private userService: UserService, private postService: PostService, private router: Router,
               private dialogService: NbDialogService, private codeService:CodeService) {
-    this.profile = this.userService.getProfile()
+
   }
 
   //TODO : NbTab ->  My Posts, Answers, Friend, like
 
   ngOnInit(): void {
+
+    this.profile = this.userService.getProfile()
 
     this.postService.getAllByUser(this.profile.id).subscribe(posts => {
       this.userPost = posts.reverse();

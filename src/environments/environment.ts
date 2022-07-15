@@ -32,7 +32,8 @@ export const chat_service = {
 }
 
 export const user_service = {
-  INFO: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/info`
+  INFO: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/info`,
+  UPDATE: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/edit`
 }
 
 export const code_execution_service = {

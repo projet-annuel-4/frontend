@@ -15,16 +15,12 @@ export class DataService {
   };
 
 
-
   private _friends: BehaviorSubject<Map<string, FriendProfile>> = new BehaviorSubject(new Map());
   public readonly friends: Observable<Map<string, FriendProfile>> = this._friends.asObservable();
-
   private _userMessages: BehaviorSubject<Map<string, UserMessage>> = new BehaviorSubject(new Map());
 
 
-
-  constructor(private httpClient: HttpClient, private tokenStorage:TokenStorageService) {
-  }
+  constructor(private httpClient: HttpClient, private tokenStorage:TokenStorageService) {}
 
 
 
@@ -32,7 +28,7 @@ export class DataService {
     let oldMsgs = this._userMessages.value
     msgs.map(msg => oldMsgs.set(msg.id, msg))
     this._userMessages.next(oldMsgs)
-    this.sortFriends()
+    //this.sortFriends()
   }
 
   updateFriends(newFriends: FriendProfile[]) {
@@ -64,7 +60,7 @@ export class DataService {
 
     return this.httpClient.get(`${chat_service.CHAT}/${chatId}/messages/?user-email=${this.tokenStorage.getUser().email}`, this.httpOptions)
       .pipe(map((userMessages:UserMessage[]) => {
-
+        console.log("userMessages.length : " + userMessages.length);
         const messages: UserMessage[] = [];
         userMessages.forEach((v, k) => {
           messages.push(v);

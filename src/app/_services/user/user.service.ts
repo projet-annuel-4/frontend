@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { UserProfile } from '../../_dtos/user/UserProfile';
 import { Observable } from 'rxjs';
 import {User} from "../../_dtos/user/User";
+import {UserUpdateRequest} from "../../_dtos/user/UserUpdateRequest";
 
 @Injectable()
 export class UserService {
@@ -23,6 +24,15 @@ export class UserService {
       this.storage.saveUser(user)
       return user;
     }))
+  }
+
+
+  update(userUpdate: UserUpdateRequest): Observable<User>{
+    return this.httpClient.put<User>(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/edit`, userUpdate, this.httpOptions)
+      .pipe(map((user: User) =>{
+        this.storage.saveUser(user);
+        return user;
+      }))
   }
 
   getProfile(): User{

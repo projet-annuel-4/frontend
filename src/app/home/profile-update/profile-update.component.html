@@ -11,6 +11,20 @@
             <nb-card-body>
               <form [formGroup]="signUpFrom" (ngSubmit)="update()">
 
+                <label class="label" for="input-imgUrl">Avatar:</label>
+                <input type='file'
+                       id="input-imgUrl"
+                       accept=".png, .jpg, .jpeg"
+                       #fileInput
+                       style="display:none;"
+                       formControlName="imgUrl"/>
+                <div class="profile-image" [ngStyle]="{'background-image': 'url()'}">
+                  <div class="top-layer h-100 w-100 text-center">
+                    <nb-icon icon="edit" (click)="fileInput.click()"></nb-icon>
+                  </div>
+                </div>
+
+
                 <div class="form-control-group mb-3">
                   <label class="label" for="input-firstname">First Name:</label>
                   <input nbInput fullWidth id="input-firstname" placeholder="First Name" fieldSize="large" formControlName="firstname">
@@ -27,21 +41,7 @@
                 </div>
 
 
-                <div class="form-control-group mb-3">
-                <span class="label-with-link">
-                    <label class="label" for="input-password">Password:</label>
-                </span>
-                  <input nbInput fullWidth id="input-password" type="password" placeholder="Password" fieldSize="large" formControlName="password">
-                </div>
 
-                <div class="form-control-group mb-3">
-                <span class="label-with-link">
-                    <label class="label" for="input-password2">Confirm Password:</label>
-                </span>
-
-                  <input nbInput fullWidth name="password2" id="input-password2" type="password" required
-                         placeholder="Confirm Password" fieldSize="large" formControlName="password2">
-                </div>
 
                 <button nbButton
                         fullWidth
