@@ -58,7 +58,7 @@ export class DataService {
     this._friends.next(friends)
   }
 
-  getMessages(chatId: String): Observable<UserMessage[]> {
+  getMessagesByChatId(chatId: String): Observable<UserMessage[]> {
 
     const messagesList = this._userMessages.value;
 
@@ -71,7 +71,7 @@ export class DataService {
           messagesList.set(v.id, v)
         })
         this._userMessages.next(messagesList);
-        console.log(messages);
+        console.log("messages.length : " + messages.length);
         return messages;
       }));
 
@@ -93,7 +93,7 @@ export class DataService {
 
     const friendsList = this._friends.value;
 
-    return this.httpClient.get(`${chat_service.CHAT}/?user-email=${this.tokenStorage.getUser().email}`, this.httpOptions)
+    return this.httpClient.get<FriendProfile[]>(`${chat_service.CHAT}/?user-email=${this.tokenStorage.getUser().email}`, this.httpOptions)
       .pipe(map((friendProfiles:FriendProfile[]) => {
 
         const friends: FriendProfile[] = [];

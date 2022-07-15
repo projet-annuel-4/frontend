@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import {chat_service, environment} from '../../../environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import { FriendProfile } from '../../_dtos/chat/FriendProfile';
@@ -14,8 +14,7 @@ export class ChatService {
 
   private _fetch: BehaviorSubject<number> = new BehaviorSubject(0);
   public readonly fetch: Observable<number> = this._fetch.asObservable();
-  //private userEmail:String = this.storage.getUser().email
-  private userEmail:String = "oui@oui.test"
+  private userEmail:String = this.tokenStorageService.getUser().email;
 
   httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   fileOptions = { headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }) };
@@ -33,57 +32,58 @@ export class ChatService {
     this._fetch.next(value);
   }
 
-  fetchAllMessages(): Observable<any> {
+  getAllUserMessages(): Observable<any> {
     return this.httpClient.post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/messages?user-email=${this.userEmail}`,
       Array.from(this.dataService.getAllFriend().keys()), this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
         this.dataService.updateUserMessages(msgs);
       }))
   }
-  /*getAllMessages*/
+
+  //TODO : Supprimer ???
   fetchMessages(covId: string): Observable<any> {
     return this.httpClient.get(`${environment.DOMAIN}/${environment.API_VERSION}/chat/${covId}/messages?user-email=${this.userEmail}`, this.httpOptions)
       .pipe(map((msgs: UserMessage[]) => {
         this.dataService.updateUserMessages(msgs);
       }))
   }
-  /* */
-  createFriend(email: String): Observable<any> {
 
+  startConversation(email: String): Observable<any> {
+
+    //TODO : Utiliser le JWT Interceptor
     const token = this.tokenStorageService.getToken();
-    console.log("const token : " + token);
 
-    const headers = new HttpHeaders().set('Authorization',  token);
-    const contentType =  new HttpHeaders( {'Content-Type': 'application/json'});
+    const headers = new HttpHeaders().set('Authorization',  `Bearer ${token}`);
+    const contentType =  new HttpHeaders(this.httpOptions.headers.get('Content-Type'));
     const requestOptions = {
       headers,
       contentType
     };
 
-
-    console.log("token headers : " + headers.get('Authorization'));
-    console.log("token requestOptions : " + requestOptions.headers.get('Authorization'));
-
-    return this.httpClient.post(`${environment.DOMAIN}/${environment.API_VERSION}/chat/?user-email=${this.userEmail}&friend-email=${email}`, /*requestOptions*/this.httpOptions)
+    return this.httpClient.post(`${chat_service.CHAT}/?user-email=${this.userEmail}&friend-email=${email}`, "", requestOptions)
       .pipe(map((friend: FriendProfile) => {
+        console.log("friend.id : " + friend.id);
+        console.log("friend.firstName : " + friend.firstName);
+        console.log("friend.lastName : " + friend.lastName);
         this.dataService.updateFriends([friend]);
       }))
   }
 
 
-
   createMessageText(cid: string, content: string): Observable<UserMessage> {
     return this.httpClient
-      .post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/${cid}/messages/text?content=${content}&user-email=${this.userEmail}`,{}, this.httpOptions)
-      .pipe(map((v: UserMessage) => {
-        this.dataService.updateUserMessages([v]);
-        return v;
+
+      .post(`${chat_service.CHAT}/${cid}/messages/text?content=${content}&user-email=${this.userEmail}`,{}, this.httpOptions)
+      .pipe(map((userMessage: UserMessage) => {
+        this.dataService.updateUserMessages([userMessage]);
+        return userMessage;
       }))
   }
 
+  // TODO : Voir les params avec la route du Chat Service
   createMessageFile(cid: string, content: string, data:FormData): Observable<UserMessage> {
     return this.httpClient
-      .post(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}/${cid}/messages/files?content=${content}&user-email=${this.userEmail}`, data)
+      .post(`${chat_service.CHAT}/${cid}/messages/files?content=${content}&user-email=${this.userEmail}`, data)
       .pipe(map((v: UserMessage) => {
         this.dataService.updateUserMessages([v]);
         return v;
@@ -98,8 +98,8 @@ export class ChatService {
     return this.dataService.getAllFriend().get(id);
   }
 
-  getMessages(covId: string): Observable<UserMessage[]> {
-    return this.dataService.getMessages(covId);
+  getMessagesByChat(covId: string): Observable<UserMessage[]> {
+    return this.dataService.getMessagesByChatId(covId);
   }
 
 }

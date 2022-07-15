@@ -50,8 +50,8 @@ export class AuthService {
 
   }
 
-  register(signUpRequest: SignUpRequest): Observable<ApiResponse> {
-    return this.http.post(`${auth_service.REGISTRATION}`, signUpRequest, this.httpOptions) as Observable<ApiResponse>;
+  register(signUpRequest: SignUpRequest): Observable<string> {
+    return this.http.post<string>(`${auth_service.REGISTRATION}`, signUpRequest, this.httpOptions);
   }
 
   registerWithFacebook(){

@@ -14,7 +14,7 @@ import { DialogSuccessComponent } from 'src/app/shared/dialog/dialog-alert/dialo
 })
 export class SignupComponent implements OnInit {
 
-  loading: Boolean = false;
+  //loading: Boolean = false;
   signUpFrom: FormGroup;
 
   constructor(private _authService: AuthService, private formBuilder: FormBuilder, private router: Router, private dialogService: NbDialogService) {
@@ -35,19 +35,13 @@ export class SignupComponent implements OnInit {
     if (this.signUpFrom.valid) {
 
       const data = this.signUpFrom.value;
-      this.loading = true;
+      //this.loading = true;
       this._authService.register(new SignUpRequest(data['firstname'], data['lastname'], data['email'],
                                                           data['password'], data['password2'], "captchtest")).subscribe(
-        (response: ApiResponse) => {
-          this.loading = false;
-          console.log("avant le dialog !");
-          this.dialogService.open(DialogSuccessComponent, {
-            context: { title: "Congratulation", message: response.message }
-          });
-        }, (err: any) => {
-          this.loading = false;
-          console.log("dans le err !");
-          console.log(err['statusText']);
+        response => {
+          //this.loading = true;
+          console.log("subscribe");
+          this.router.navigate(['../signing']).then()
         }
       );
 

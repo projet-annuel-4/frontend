@@ -18,7 +18,7 @@ export class LoadingComponent implements OnInit {
     });
     this.chatService.fetchFriends().subscribe((output)=>{
       this.chatService.updateFetch(20);
-      this.chatService.fetchAllMessages().subscribe(v =>{
+      this.chatService.getAllUserMessages().subscribe(v =>{
         this.chatService.updateFetch(100)
       });
     });

@@ -17,7 +17,7 @@ import {User} from "../../_dtos/user/User";
 })
 export class ChatListComponent implements OnInit {
 
-  friends: Observable<FriendProfile[]>
+  friends: FriendProfile[];
   menu = [
     { title: 'Profile', icon: 'person-outline' },
     { title: 'New Chat', icon: 'person-add-outline' },
@@ -27,16 +27,21 @@ export class ChatListComponent implements OnInit {
     { title: 'Log out', icon: 'unlock-outline' },
   ];
 
-  profile: User
+  profile: User;
 
   constructor(private menuService: NbMenuService, private router: Router, private dialogService: NbDialogService,
     private userService: UserService, private chatService: ChatService, private route: ActivatedRoute) {
-    this.profile = this.userService.getProfile()
-    //this.friends = this.chatService.getFriends()
+
   }
 
   ngOnInit(): void {
-    this.menuListener()
+    this.profile = this.userService.getProfile();
+
+    this.chatService.getFriends().subscribe(friends => {
+      this.friends = friends;
+    });
+
+    this.menuListener();
   }
 
   menuListener() {
@@ -52,7 +57,7 @@ export class ChatListComponent implements OnInit {
             break;
           case 'New Chat':
             this.dialogService.open(NewChatComponent).onClose.subscribe((email) => {
-              this.chatService.createFriend(email).subscribe(
+              this.chatService.startConversation(email).subscribe(
                 (r) => { console.log(r) },
                 (err) => { console.log(err) }
               )

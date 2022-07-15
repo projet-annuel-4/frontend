@@ -38,7 +38,7 @@ export class ChatDetailComponent implements OnInit {
 
   getChat() {
     this.messages = []
-    this.subscription = this.chatService.getMessages(this.friendId).subscribe(msgs => {
+    this.subscription = this.chatService.getMessagesByChat(this.friendId).subscribe(msgs => {
       let messages = msgs.map(msg => {
         let nm = new NbMessage(msg)
         if (msg.senderId == this.myProfile.id.toString()) {
