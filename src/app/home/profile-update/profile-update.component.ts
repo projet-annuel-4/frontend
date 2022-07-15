@@ -21,8 +21,7 @@ export class ProfileUpdateComponent implements OnInit {
     this.signUpFrom = this.formBuilder.group({
       imgUrl: [],
       firstname: [],
-      lastname: [],
-      email: []
+      lastname: []
     });
   }
 
@@ -33,12 +32,12 @@ export class ProfileUpdateComponent implements OnInit {
     if (this.signUpFrom.valid) {
       const data = this.signUpFrom.value;
       //this.loading = true;
-      this.userService.update(new UserUpdateRequest(data['firstname'], data['lastname'], data['email'],
+      this.userService.update(new UserUpdateRequest(data['firstname'], data['lastname'],
         data['imgUrl'])).subscribe(
         response => {
           //this.loading = true;
           console.log("subscribe");
-          this.router.navigate(['../auth/signing']).then()
+          this.router.navigate(['../profile']).then()
         }
       );
 
