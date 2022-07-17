@@ -29,9 +29,6 @@ export class ProfileComponent implements OnInit {
   //TODO : NbTab ->  My Posts, Answers, Friend, like
 
 
-
-  //TODO : Mettre à jour le nombre de follower/subscriptions
-
   ngOnInit(): void {
 
     this.profile = this.userService.getProfile()

@@ -13,6 +13,7 @@ import { UserService } from '../user/user.service';
 import { UserProfile } from '../../_dtos/user/UserProfile';
 import {ForgotPasswordRequest} from "../../_dtos/auth/ForgotPasswordRequest";
 import {User} from "../../_dtos/user/User";
+import {FollowService} from "../follow/follow.service";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class AuthService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' })
   };
 
-  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private followService: FollowService) {
 
   }
 
@@ -38,14 +39,29 @@ export class AuthService {
   login(signInRequest: SignInRequest): Observable<SignInResponse> {
     return this.http.post(`${auth_service.LOGIN}`, signInRequest, this.httpOptions)
       .pipe(map((response: SignInResponse) => {
+
         this.tokenStorage.saveToken(response.accessToken);
         console.log("Login token  : " + this.tokenStorage.getToken());
-        this.tokenStorage.saveUser(new User(response.id, response.firstname, response.lastname, response.email, response.nbFollowers, response.nbSubscriptions, response.imgUrl));
+
+        this.tokenStorage.saveUser(new User(response.id, response.firstname, response.lastname, response.email,
+                                            response.nbFollowers, response.nbSubscriptions, response.imgUrl));
+
+
+        this.followService.getAllFollowers(response.id).subscribe( followers => {
+          this.tokenStorage.getUser().nbFollowers = followers.length;
+        });
+
+        this.followService.getAllSubscriptions(response.id).subscribe( subscriptions => {
+          this.tokenStorage.getUser().nbSubscriptions = subscriptions.length;
+        });
+
         console.log("Login User id : " + this.tokenStorage.getUser().id);
         console.log("Login User firstname : " + this.tokenStorage.getUser().firstname);
         console.log("Login User lastname : " + this.tokenStorage.getUser().lastname);
         console.log("Login User email : " + this.tokenStorage.getUser().email);
-        return response
+        console.log("Login User nbFollowers : " + this.tokenStorage.getUser().nbFollowers);
+        console.log("Login User nbSubscriptions : " + this.tokenStorage.getUser().nbSubscriptions);
+        return response;
       }));
 
   }
