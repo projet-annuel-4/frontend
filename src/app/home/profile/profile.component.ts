@@ -16,14 +16,10 @@ import {CodeService} from "../../_services/code_execution/code.service";
 })
 export class ProfileComponent implements OnInit {
 
-
   profile: User
   userPost: Post[];
-
   postsLiked: Post[];
-
   userAnswers: Post[];
-
 
   constructor(private userService: UserService, private postService: PostService, private router: Router,
               private dialogService: NbDialogService, private codeService:CodeService) {
@@ -31,6 +27,10 @@ export class ProfileComponent implements OnInit {
   }
 
   //TODO : NbTab ->  My Posts, Answers, Friend, like
+
+
+
+  //TODO : Mettre à jour le nombre de follower/subscriptions
 
   ngOnInit(): void {
 

@@ -14,7 +14,6 @@ export class FollowerItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    //TODO : Call API for unfollow
   }
 
 

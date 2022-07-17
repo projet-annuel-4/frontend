@@ -16,26 +16,10 @@ export class FollowerListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //TODO : Call API for followers
     this.followService.getAllFollowers(this.tokenStorage.getUser().id).subscribe(followers => {
       this.followers = followers;
     });
 
-    /*
-    const followersMock = [
-      new User(1, "Jean1", "Mock", "jean.mock@gmail.com", 12, 5, "http://profile-image.oui"),
-      new User(2, "Jean2", "Mock", "jean.mock@gmail.com", 12, 5,  "http://profile-image.oui"),
-      new User(3, "Jean3", "Mock", "jean.mock@gmail.com", 12, 5,  "http://profile-image.oui"),
-      new User(4, "Jean4", "Mock", "jean.mock@gmail.com", 12, 5,  "http://profile-image.oui"),
-      new User(5, "Jean5", "Mock", "jean.mock@gmail.com", 12, 5,  "http://profile-image.oui"),
-      new User(6, "Jean6", "Mock", "jean.mock@gmail.com", 12, 5,  "http://profile-image.oui"),
-      new User(7, "Jean7", "Mock", "jean.mock@gmail.com", 12, 5,  "http://profile-image.oui"),
-    ]
-
-
-    this.followers = followersMock;
-
-     */
   }
 
 }

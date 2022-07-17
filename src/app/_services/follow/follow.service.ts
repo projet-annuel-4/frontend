@@ -24,10 +24,10 @@ export class FollowService {
   }
 
   getAllFollowers(user_id: number): Observable<User[]>{
-    return this.http.post<User[]>(`${follower_service.BASE_URL}/${user_id}/followers`, this.httpOptions);
+    return this.http.get<User[]>(`${follower_service.BASE_URL}/${user_id}/followers`, this.httpOptions);
   }
   getAllSubscriptions(user_id: number){
-    return this.http.post<User[]>(`${follower_service.BASE_URL}/${user_id}/subscriptions`, this.httpOptions);
+    return this.http.get<User[]>(`${follower_service.BASE_URL}/${user_id}/subscriptions`, this.httpOptions);
   }
 
 

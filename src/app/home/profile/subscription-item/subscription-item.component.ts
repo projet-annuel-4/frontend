@@ -1,5 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../_dtos/user/User";
+import {FollowService} from "../../../_services/follow/follow.service";
+import {TokenStorageService} from "../../../_services/token/token-storage.service";
+import {Router} from "@angular/router";
+import {NbDialogRef} from "@nebular/theme";
 
 @Component({
   selector: 'app-subscription-item',
@@ -11,14 +15,17 @@ export class SubscriptionItemComponent implements OnInit {
   @Input()
   subscription: User;
 
-  constructor() { }
+  constructor(private followService: FollowService, private tokenStorage: TokenStorageService,
+              protected ref: NbDialogRef<SubscriptionItemComponent>) { }
 
   ngOnInit(): void {
-    //TODO : Call API for unfollow
   }
 
   unfollow(){
-    alert("TODO : Implement unfollow");
+    this.followService.unfollow(this.tokenStorage.getUser().id, this.subscription.id)
+      .subscribe(then =>{
+        this.ref.close();
+      });
   }
 
 }
