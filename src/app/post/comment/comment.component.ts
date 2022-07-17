@@ -19,6 +19,8 @@ export class CommentComponent implements OnInit {
   answer: Post;
   content:string;
 
+  //TODO : Enlever la possiblité de mettre un titre à la réponse ??
+
   constructor(private formBuilder: FormBuilder, private postService: PostService, private route: ActivatedRoute,
               private tokenStorage: TokenStorageService, private router: Router) {
     this.answerForm = this.formBuilder.group({
@@ -46,7 +48,6 @@ export class CommentComponent implements OnInit {
 
 
   comment(){
-    //créer le post
     if(this.answerForm.valid) {
       const data = this.answerForm.value;
 
@@ -74,7 +75,6 @@ export class CommentComponent implements OnInit {
 
           this.createCommentLink();
         });
-
     }
 
   }

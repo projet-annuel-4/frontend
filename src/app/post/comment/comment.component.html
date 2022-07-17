@@ -8,7 +8,7 @@
 </nb-card>
 
 
-    <!-- Afficher le formulaire de post -->
+
 <nb-layout>
   <nb-layout-column>
     <nb-card nbSpinnerStatus="primary">
@@ -46,7 +46,7 @@
             <input nbInput fullWidth id="input-attachmentDescription"  placeholder="" fieldSize="large" formControlName="attachmentDescription">
           </div>
 
-          <button nbButton fullWidth outline status="primary" size="small" [disabled]="answerForm.invalid">
+          <button nbButton fullWidth outline status="primary" size="large" [disabled]="answerForm.invalid">
             Post your answer
           </button>
         </form>
@@ -62,8 +62,6 @@
   <nb-layout-column>
     <app-code-execution [inputContent]="content"></app-code-execution>
   </nb-layout-column>
-
-
 </nb-layout>
 
 

@@ -22,6 +22,8 @@ export class ProfileComponent implements OnInit {
 
   postsLiked: Post[];
 
+  userAnswers: Post[];
+
 
   constructor(private userService: UserService, private postService: PostService, private router: Router,
               private dialogService: NbDialogService, private codeService:CodeService) {
@@ -42,6 +44,10 @@ export class ProfileComponent implements OnInit {
 
     this.postService.getPostLikedByUser(this.profile.id).subscribe(postsLiked => {
       this.postsLiked = postsLiked;
+    }, error => {});
+
+    this.postService.getAllUserAnswers(this.profile.id).subscribe(userAnswers => {
+      this.userAnswers = userAnswers;
     }, error => {});
 
   }
@@ -70,6 +76,7 @@ export class ProfileComponent implements OnInit {
 
 
 
+  //TODO : Debug le delete cote API
   deletePost(post_id: string) {
     if (confirm("You are going to delete a post")) {
       //this.postService.delete(parseInt(post_id)).subscribe()

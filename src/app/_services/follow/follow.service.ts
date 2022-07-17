@@ -15,7 +15,6 @@ export class FollowService {
 
   constructor(private http: HttpClient) {}
 
-
   follow(idUser1: number, idUser2: number){
     return this.http.post(`${follower_service.BASE_URL}/${idUser1}/follow/${idUser2}`, this.httpOptions);
   }

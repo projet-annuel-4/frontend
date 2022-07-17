@@ -114,4 +114,8 @@ export class PostService {
     return this.http.get<Post[]>(`${post_service.BASE_URL}/filters`, requestOptions);
   }
 
+  getAllUserAnswers(user_id: number): Observable<Post[]>{
+    return this.http.get<Post[]>(`${post_service.BASE_URL}/user/${user_id}/answers`, this.httpOptions);
+  }
+
 }
