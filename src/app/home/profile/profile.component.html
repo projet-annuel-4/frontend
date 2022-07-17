@@ -34,7 +34,7 @@
       <nb-tab tabTitle="My Posts">
         <div *ngFor="let post of userPost">
           <nb-card>
-            <nb-card-body>
+            <nb-card-body routerLink="../post/{{post.id}}/detail">
               <nb-card-header> Title : {{post.title}} </nb-card-header>
 
               <div style="padding: 2%">

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from "../../../_dtos/user/User";
+import {FollowService} from "../../../_services/follow/follow.service";
+import {TokenStorageService} from "../../../_services/token/token-storage.service";
 
 @Component({
   selector: 'app-follower-list',
@@ -10,12 +12,16 @@ export class FollowerListComponent implements OnInit {
 
   followers: User[];
 
-  constructor() { }
+  constructor(private followService: FollowService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
 
     //TODO : Call API for followers
+    this.followService.getAllFollowers(this.tokenStorage.getUser().id).subscribe(followers => {
+      this.followers = followers;
+    });
 
+    /*
     const followersMock = [
       new User(1, "Jean1", "Mock", "jean.mock@gmail.com", 12, 5, "http://profile-image.oui"),
       new User(2, "Jean2", "Mock", "jean.mock@gmail.com", 12, 5,  "http://profile-image.oui"),
@@ -28,6 +34,8 @@ export class FollowerListComponent implements OnInit {
 
 
     this.followers = followersMock;
+
+     */
   }
 
 }

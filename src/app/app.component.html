@@ -1,6 +1,7 @@
 <nb-layout>
   <nb-layout-header class="fixed-header">
-    <nb-user name="{{user.firstname}} {{user.lastname}}"
+    <nb-user *ngIf="user != null"
+             name="{{user.firstname}} {{user.lastname}}"
              title="full-stack developer"
              picture=""
              [nbContextMenu]="items"
