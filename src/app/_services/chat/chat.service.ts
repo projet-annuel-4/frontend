@@ -49,8 +49,7 @@ export class ChatService {
   }
 
   startConversation(email: String): Observable<any> {
-
-    //TODO : Utiliser le JWT Interceptor
+/*
     const token = this.tokenStorageService.getToken();
 
     const headers = new HttpHeaders().set('Authorization',  `Bearer ${token}`);
@@ -60,7 +59,9 @@ export class ChatService {
       contentType
     };
 
-    return this.httpClient.post(`${chat_service.CHAT}/?user-email=${this.userEmail}&friend-email=${email}`, "", requestOptions)
+ */
+
+    return this.httpClient.post(`${chat_service.CHAT}/?user-email=${this.userEmail}&friend-email=${email}`, "", this.httpOptions)
       .pipe(map((friend: FriendProfile) => {
         console.log("friend.id : " + friend.id);
         console.log("friend.friendId : " + friend.friendId);

@@ -15,7 +15,8 @@ export const environment = {
   USERS: `users`,
   POST: `post`,
   FOLLOW: `followLink`,
-  GROUPS: `groups`
+  GROUPS: `groups`,
+  FILE: `files`
 
 };
 
@@ -56,6 +57,9 @@ export const group_service = {
   BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.GROUPS}`
 }
 
+export const file_service = {
+  BASE_URL: `${environment.DOMAIN}/files-management/${environment.API_VERSION}/${environment.FILE}`
+}
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
