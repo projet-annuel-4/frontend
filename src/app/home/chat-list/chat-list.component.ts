@@ -20,7 +20,6 @@ export class ChatListComponent implements OnInit {
 
   friends: FriendProfile[];
   menu = [
-    { title: 'Profile', icon: 'person-outline' },
     { title: 'New Chat', icon: 'person-add-outline' },
     { title: 'New Group', icon: 'plus-outline' },
     { title: 'Code Execution', icon: '' },
@@ -53,9 +52,6 @@ export class ChatListComponent implements OnInit {
       )
       .subscribe(title => {
         switch (title) {
-          case 'Profile':
-            this.router.navigateByUrl("/profile")
-            break;
           case 'New Chat':
             this.dialogService.open(NewChatComponent).onClose.subscribe((email) => {
               this.chatService.startConversation(email).subscribe(
@@ -65,7 +61,6 @@ export class ChatListComponent implements OnInit {
             })
             break;
           case 'New Group':
-            // TODO : Implémenter click New Group
             this.dialogService.open(NewGroupComponent);
             break;
           case 'Code Execution':

@@ -12,18 +12,17 @@
               <form [formGroup]="signUpFrom" (ngSubmit)="update()">
 
                 <label class="label" for="input-imgUrl">Avatar:</label>
-                <input type='file'
-                       id="input-imgUrl"
-                       accept=".png, .jpg, .jpeg"
-                       #fileInput
-                       style="display:none;"
-                       formControlName="imgUrl"/>
                 <div class="profile-image" [ngStyle]="{'background-image': 'url()'}">
                   <div class="top-layer h-100 w-100 text-center">
-                    <nb-icon icon="edit" (click)="fileInput.click()"></nb-icon>
+                    <nb-icon icon="edit" ></nb-icon>
                   </div>
                 </div>
-
+                <input style="text-align: center"
+                       id="input-imgUrl"
+                       type="file"
+                       accept=".png, .jpg, .jpeg"
+                       formControlName="imgUrl"
+                       (change)="onChange($event)"/>
 
                 <div class="form-control-group mb-3">
                   <label class="label" for="input-firstname">First Name:</label>
@@ -34,7 +33,6 @@
                   <label class="label" for="input-lastname">Last Name:</label>
                   <input nbInput fullWidth id="input-lastname" placeholder="Last Name" fieldSize="large" formControlName="lastname">
                 </div>
-
 
                 <button nbButton
                         fullWidth

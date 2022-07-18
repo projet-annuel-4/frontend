@@ -15,6 +15,7 @@ import {UserUpdateRequest} from "../../_dtos/user/UserUpdateRequest";
 export class ProfileUpdateComponent implements OnInit {
 
   signUpFrom: FormGroup;
+  file: File;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder,
               private userService: UserService, private router: Router) {
@@ -30,6 +31,9 @@ export class ProfileUpdateComponent implements OnInit {
 
   update() {
     if (this.signUpFrom.valid) {
+
+      this.onUpload();
+
       const data = this.signUpFrom.value;
       //this.loading = true;
       this.userService.update(new UserUpdateRequest(data['firstname'], data['lastname'],
@@ -44,6 +48,29 @@ export class ProfileUpdateComponent implements OnInit {
     } else {
       alert("All fields must be completed");
     }
+
+  }
+
+
+  onChange(event) {
+    this.file = event.target.files[0];
+  }
+
+
+  onUpload(){
+    console.log("file.name : " + this.file.name);
+    console.log("file.type : " + this.file.type);
+    console.log("file.size : " + this.file.size);
+    console.log("file.lastModified : " + this.file.lastModified);
+
+
+    if(this.file.type != "image/png" && this.file.type != "image/jpg"
+      && this.file.type != "image/jpeg"){
+      alert("Type of photo accepted : .png, .jpg, .jpeg");
+      return;
+    }
+
+    //TODO : Upload la photo de profile
 
   }
 }
