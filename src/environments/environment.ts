@@ -14,7 +14,8 @@ export const environment = {
   CHAT: `chat`,
   USERS: `users`,
   POST: `post`,
-  FOLLOW: `followLink`
+  FOLLOW: `followLink`,
+  GROUPS: `groups`
 
 };
 
@@ -49,6 +50,10 @@ export const post_service = {
 
 export const follower_service = {
   BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.FOLLOW}`
+}
+
+export const group_service = {
+  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.GROUPS}`
 }
 
 /*

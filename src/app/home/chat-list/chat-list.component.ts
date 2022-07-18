@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { FriendProfile } from 'src/app/_dtos/chat/FriendProfile';
 import { NewChatComponent } from './new-chat/new-chat.component';
 import {User} from "../../_dtos/user/User";
+import {NewGroupComponent} from "./new-chat/new-group.component";
 
 @Component({
   selector: 'home-chat-list',
@@ -65,7 +66,7 @@ export class ChatListComponent implements OnInit {
             break;
           case 'New Group':
             // TODO : Implémenter click New Group
-            alert("TODO : Implement")
+            this.dialogService.open(NewGroupComponent);
             break;
           case 'Code Execution':
 

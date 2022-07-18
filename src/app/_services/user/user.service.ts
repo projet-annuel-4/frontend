@@ -42,4 +42,8 @@ export class UserService {
   logout(): void{
     this.storage.signOut();
   }
+
+  getByEmail(email: string): Observable<User> {
+    return this.httpClient.get<User>(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/mail/${email}`, this.httpOptions);
+  }
 }

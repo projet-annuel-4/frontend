@@ -23,7 +23,8 @@ import { FollowerItemComponent } from './profile/follower-item/follower-item.com
 import { SubscriptionItemComponent } from './profile/subscription-item/subscription-item.component';
 import { SubscriptionListComponent } from './profile/subscription-list/subscription-list.component';
 import { ProfileUpdateComponent } from './profile-update/profile-update.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NewGroupComponent} from "./chat-list/new-chat/new-group.component";
 
 @NgModule({
     declarations: [
@@ -41,9 +42,10 @@ import {ReactiveFormsModule} from "@angular/forms";
         SubscriptionItemComponent,
         SubscriptionListComponent,
         ProfileUpdateComponent,
+        NewGroupComponent
     ],
   imports: [
-    CommonModule, HomeRoutingModule, SharedModule, NbTabsetModule, ReactiveFormsModule,
+    CommonModule, HomeRoutingModule, SharedModule, NbTabsetModule, ReactiveFormsModule, FormsModule,
   ],
     exports: [
         HomeComponent
