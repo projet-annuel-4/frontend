@@ -15,7 +15,7 @@ import {
   NbAccordionModule,
   NbInputModule,
   NbUserModule,
-  NbTableModule, NbToggleModule,
+  NbTableModule, NbToggleModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
