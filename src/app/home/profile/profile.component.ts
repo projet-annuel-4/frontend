@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.profile = this.userService.getProfile()
+    this.profile = this.userService.getProfile();
 
     this.postService.getAllByUser(this.profile.id).subscribe(posts => {
       this.userPost = posts.reverse();

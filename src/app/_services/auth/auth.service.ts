@@ -43,17 +43,21 @@ export class AuthService {
         this.tokenStorage.saveToken(response.accessToken);
         console.log("Login token  : " + this.tokenStorage.getToken());
 
-        this.tokenStorage.saveUser(new User(response.id, response.firstname, response.lastname, response.email,
-                                            response.nbFollowers, response.nbSubscriptions, response.imgUrl));
-
+        this.tokenStorage.saveUser(new User(response.id, response.firstName, response.lastName, response.email,
+          0, 0, response.imgUrl));
 
         this.followService.getAllFollowers(response.id).subscribe( followers => {
-          this.tokenStorage.getUser().nbFollowers = followers.length;
+          let user = this.tokenStorage.getUser();
+          user.nbFollowers = followers.length;
+          this.tokenStorage.saveUser(user);
         });
 
         this.followService.getAllSubscriptions(response.id).subscribe( subscriptions => {
-          this.tokenStorage.getUser().nbSubscriptions = subscriptions.length;
+          let user = this.tokenStorage.getUser();
+          user.nbSubscriptions = subscriptions.length;
+          this.tokenStorage.saveUser(user);
         });
+
 
         console.log("Login User id : " + this.tokenStorage.getUser().id);
         console.log("Login User firstname : " + this.tokenStorage.getUser().firstname);

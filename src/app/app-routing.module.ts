@@ -9,7 +9,7 @@ import {PostDetailComponent} from "./post/post-detail/post-detail.component";
 import {CommentComponent} from "./post/comment/comment.component";
 
 const routes: Routes = [
-  {path: '', redirectTo:'loading', pathMatch: 'full'},
+  {path: '', redirectTo:'auth/signing', pathMatch: 'full'},
   {
     path: 'execution', children:[
       {path: 'code', component: CodeExecutionComponent},
