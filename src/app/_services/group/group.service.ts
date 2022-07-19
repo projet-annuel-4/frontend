@@ -13,7 +13,7 @@ export class GroupService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' })
   };
 
-  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {}
+  constructor(private http: HttpClient) {}
 
 
   create(createGroupRequest: CreateGroupRequest){

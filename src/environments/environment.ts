@@ -15,7 +15,7 @@ export const environment = {
   USERS: `users`,
   POST: `post`,
   FOLLOW: `followLink`,
-  GROUPS: `groups`,
+  USERS_GROUPS: `users-group`,
   FILE: `files`
 
 };
@@ -54,7 +54,7 @@ export const follower_service = {
 }
 
 export const group_service = {
-  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.GROUPS}`
+  BASE_URL: `${environment.DOMAIN}/${environment.USERS_GROUPS}/groups`
 }
 
 export const file_service = {
