@@ -11,11 +11,18 @@ export class FollowerItemComponent implements OnInit {
   @Input()
   follower: User;
 
+  name: string;
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  //TODO : Crée la page de profile du Friend
 
+  //TODO: Click sur le Friend redirige vers le profile
+  // routerlink etc....
+
+  ngOnInit(): void {
+    this.name = this.follower.firstname + " " + this.follower.lastname;
+  }
 
 
 }

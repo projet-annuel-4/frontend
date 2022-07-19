@@ -81,7 +81,6 @@ export class ChatService {
 
   createMessageText(cid: string, content: string): Observable<UserMessage> {
     return this.httpClient
-
       .post(`${chat_service.CHAT}/${cid}/messages/text?content=${content}&user-email=${this.userEmail}`,{}, this.httpOptions)
       .pipe(map((userMessage: UserMessage) => {
         this.dataService.updateUserMessages([userMessage]);
@@ -89,10 +88,9 @@ export class ChatService {
       }))
   }
 
-  // TODO : Voir les params avec la route du Chat Service
   createMessageFile(cid: string, content: string, data:FormData): Observable<UserMessage> {
     return this.httpClient
-      .post(`${chat_service.CHAT}/${cid}/messages/files?content=${content}&user-email=${this.userEmail}`, data)
+      .post(`${chat_service.CHAT}/${cid}/messages/files?content=${content}&user-email=${this.userEmail}`, data, this.fileOptions)
       .pipe(map((v: UserMessage) => {
         this.dataService.updateUserMessages([v]);
         return v;

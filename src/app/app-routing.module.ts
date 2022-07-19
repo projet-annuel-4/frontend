@@ -7,9 +7,11 @@ import {FeedComponent} from "./post/feed/feed.component";
 import {CreateComponent} from "./post/create/create.component";
 import {PostDetailComponent} from "./post/post-detail/post-detail.component";
 import {CommentComponent} from "./post/comment/comment.component";
+import {SearchComponent} from "./post/search/search.component";
 
 const routes: Routes = [
   {path: '', redirectTo:'auth/signing', pathMatch: 'full'},
+
   {
     path: 'execution', children:[
       {path: 'code', component: CodeExecutionComponent},
@@ -20,6 +22,7 @@ const routes: Routes = [
     path: 'post', children:[
       {path: 'feed', component: FeedComponent},
       {path: 'create', component: CreateComponent},
+      {path: 'search', component: SearchComponent},// --> TODO : Test à supprimer
 
       {path: ':postId', children:[
           {path: 'detail', component: PostDetailComponent},
@@ -27,6 +30,7 @@ const routes: Routes = [
         ]},
     ]
   },
+
 
 
 ];

@@ -3,19 +3,19 @@ import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  NbThemeModule,
-  NbLayoutModule,
-  NbMenuModule,
-  NbDialogModule,
-  NbSelectModule,
-  NbCardModule,
-  NbContextMenuModule,
-  NbIconModule,
-  NbButtonModule,
-  NbAccordionModule,
-  NbInputModule,
-  NbUserModule,
-  NbTableModule, NbToggleModule
+    NbThemeModule,
+    NbLayoutModule,
+    NbMenuModule,
+    NbDialogModule,
+    NbSelectModule,
+    NbCardModule,
+    NbContextMenuModule,
+    NbIconModule,
+    NbButtonModule,
+    NbAccordionModule,
+    NbInputModule,
+    NbUserModule,
+    NbTableModule, NbToggleModule, NbSearchModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
@@ -37,6 +37,7 @@ import { PostDetailComponent } from './post/post-detail/post-detail.component';
 import { CommentComponent } from './post/comment/comment.component';
 import {CodeNotRunnableComponent} from "./code/code-not-runnable.component";
 import { FeedPostComponent } from './post/feed-post/feed-post.component';
+import { SearchComponent } from './post/search/search.component';
 
 
 /************** Config Monaco *************/
@@ -97,35 +98,38 @@ const monacoConfig: NgxMonacoEditorConfig = {
     PostDetailComponent,
     CommentComponent,
     CodeNotRunnableComponent,
-    FeedPostComponent
+    FeedPostComponent,
+    SearchComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    //NbThemeModule.forRoot({name: 'cosmic'}),
-    NbThemeModule.forRoot({name: 'dark'}),
-    NbMenuModule.forRoot(),
-    NbDialogModule.forRoot(),
-    NbLayoutModule,
-    NbEvaIconsModule,
-    NbSelectModule,
-    AppRoutingModule,
-    AuthModule,
-    HomeModule,
-    NbCardModule,
-    FormsModule,
-    NbContextMenuModule,
-    MonacoEditorModule.forRoot(),
-    NbIconModule,
-    NbButtonModule,
-    ReactiveFormsModule,
-    NbInputModule,
-    NbAccordionModule,
-    NbUserModule,
-    NbTableModule,
-    NbToggleModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        //NbThemeModule.forRoot({name: 'cosmic'}),
+        NbThemeModule.forRoot({name: 'dark'}),
+        NbMenuModule.forRoot(),
+        NbDialogModule.forRoot(),
+        NbLayoutModule,
+        NbEvaIconsModule,
+        NbSelectModule,
+        AppRoutingModule,
+        AuthModule,
+        HomeModule,
+        NbCardModule,
+        FormsModule,
+        NbContextMenuModule,
+        MonacoEditorModule.forRoot(),
+        NbIconModule,
+        NbButtonModule,
+        ReactiveFormsModule,
+        NbInputModule,
+        NbAccordionModule,
+        NbUserModule,
+        NbTableModule,
+        NbToggleModule,
+        NbSearchModule,
+    ],
   providers: [
+    NbSearchModule,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 
   ],
