@@ -57,9 +57,10 @@ export class AppComponent implements OnInit{
             break;
 
           case 'Logout':
-            confirm("Sure ?");
-            this.tokenStorageService.signOut();
-            this.router.navigate(['auth/signing']).then();
+            if(confirm("Sure ?")){
+              this.tokenStorageService.signOut();
+              this.router.navigate(['auth/signing']).then();
+            }
             break;
 
           default:
@@ -72,7 +73,6 @@ export class AppComponent implements OnInit{
 
 
   changeTheme(){
-    //TODO : Debug
     //https://akveo.github.io/nebular/docs/components/toggle/overview#nbtogglecomponent
 
     this.toggleTheme = !this.toggleTheme;
