@@ -1,7 +1,7 @@
 #
 # Build stage
 #
-FROM node:12.8-alpine AS builder
+FROM node:16-alpine
 
 # Setting working directory. All the path will be relative to WORKDIR
 WORKDIR /usr/src/app
@@ -16,5 +16,7 @@ COPY . .
 # Building app
 RUN npm run build
 
+EXPOSE 4200
 # Running the app
 CMD [ "npm", "start" ]
+
