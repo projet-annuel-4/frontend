@@ -3,17 +3,18 @@
 #
 FROM node:12.8-alpine AS builder
 
+# Setting working directory. All the path will be relative to WORKDIR
 WORKDIR /usr/src/app
+
+# Installing dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copying source files
 COPY . .
-RUN yarn && yarn build
 
-#
-# Package stage
-#
-FROM nginx:stable-alpine
-LABEL version="1.0"
+# Building app
+RUN npm run build
 
-COPY nginx.conf /etc/nginx/nginx.conf
-
-WORKDIR /usr/share/nginx/html
-COPY --from=builder /usr/src/app/dist/my-angular-app/ .
+# Running the app
+CMD [ "npm", "start" ]
