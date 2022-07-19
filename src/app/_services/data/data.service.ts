@@ -58,7 +58,7 @@ export class DataService {
 
     const messagesList = this._userMessages.value;
 
-    return this.httpClient.get(`${chat_service.CHAT}/${chatId}/messages/?user-email=${this.tokenStorage.getUser().email}`, this.httpOptions)
+    return this.httpClient.get(`${chat_service.CHAT}/${chatId}/messages/?from=/?user-email=${this.tokenStorage.getUser().email}`, this.httpOptions)
       .pipe(map((userMessages:UserMessage[]) => {
         console.log("userMessages.length : " + userMessages.length);
         const messages: UserMessage[] = [];
