@@ -1,0 +1,132 @@
+<nb-layout>
+
+  <nb-layout-column class="col-3">
+    <nb-card>
+      <nb-card-body style="text-align:center">
+        <img class="profile-image" src="favicon.ico" width="150" height="150" alt="" >
+        <!--<img class="profile-image" src="{{profile.imgUrl}}" width="150" height="150" alt=""> -->
+        <br>
+        <div>{{profile.firstname}} {{profile.lastname.toUpperCase()}}</div>
+        <div>Mail : {{profile.email}}</div>
+      </nb-card-body>
+
+      <nb-card-footer>
+          <div (click)="viewFollowers()">
+            <img  src="favicon.ico" width="28" height="30" alt="" >
+            Followers: {{profile.nbFollowers}}
+          </div>
+        <hr>
+          <div (click)="viewSubscriptions()">
+            <img  src="favicon.ico" width="28" height="30" alt="" >
+            Subs : {{profile.nbSubscriptions}}
+          </div>
+      </nb-card-footer>
+    </nb-card>
+
+    <nb-card>
+      <button nbButton routerLink="../profile/update">Edit</button>
+    </nb-card>
+  </nb-layout-column>
+
+
+  <nb-layout-column>
+    <nb-tabset>
+
+      <nb-tab tabTitle="My Posts">
+        <div *ngFor="let post of userPost">
+          <nb-card>
+            <nb-card-body routerLink="../post/{{post.id}}/detail">
+              <nb-card-header> Title : {{post.title}} </nb-card-header>
+
+              <div style="padding: 2%">
+                Content : <code>{{post.content}}</code>
+                <!-- Content : <code>{{formatContentP(post.content)}}</code> -->
+              </div>
+
+              <div>
+                Tags : <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
+              </div>
+
+            </nb-card-body>
+
+            <nb-card-footer>
+              <button nbButton
+                      status="danger"
+                      size="tiny"
+                      (click)="deletePost(post.id)">
+                Delete
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </div>
+      </nb-tab>
+
+      <nb-tab tabTitle="Answers">
+        <div *ngFor="let userAnswer of userAnswers">
+          <nb-card>
+            <nb-card-body routerLink="../post/{{userAnswer.id}}/detail">
+              <nb-card-header> Title : {{userAnswer.title}} </nb-card-header>
+
+              <div style="padding: 2%">
+                Content : <code>{{userAnswer.content}}</code>
+                <!-- Content : <code>{{formatContentP(post.content)}}</code> -->
+              </div>
+
+              <div>
+                Tags : <span *ngFor="let tag of userAnswer.tags">| {{tag.name}} </span>
+              </div>
+
+            </nb-card-body>
+
+            <nb-card-footer>
+              <button nbButton
+                      status="danger"
+                      size="tiny"
+                      (click)="deletePost(userAnswer.id)">
+                Delete
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </div>
+      </nb-tab>
+
+      <nb-tab tabTitle="Friends">
+        Coucou les amis
+      </nb-tab>
+
+
+
+      <nb-tab tabTitle="Like">
+        <div *ngFor="let postLiked of postsLiked">
+          <nb-card>
+            <nb-card-body routerLink="../post/{{postLiked.id}}/detail">
+              <nb-card-header> Title : {{postLiked.title}} </nb-card-header>
+
+              <div style="padding: 2%">
+                Content : <code>{{postLiked.content}}</code>
+                <!-- Content : <code>{{formatContentP(post.content)}}</code> -->
+              </div>
+
+              <div>
+                Tags : <span *ngFor="let tag of postLiked.tags">| {{tag.name}} </span>
+              </div>
+
+            </nb-card-body>
+
+            <nb-card-footer>
+              <button nbButton
+                      status="danger"
+                      size="tiny"
+                      (click)="deletePost(postLiked.id)">
+                Delete
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </div>
+      </nb-tab>
+
+    </nb-tabset>
+  </nb-layout-column>
+
+
+</nb-layout>

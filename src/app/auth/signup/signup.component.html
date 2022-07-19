@@ -1,0 +1,51 @@
+<!--<nb-card [nbSpinner]="loading" nbSpinnerStatus="primary">-->
+<nb-card>
+    <nb-card-header>
+        <h3 id="title" class="text-center">Sign Up</h3>
+    </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="signUpFrom" (ngSubmit)="register()">
+
+          <div class="form-control-group mb-3">
+            <label class="label" for="input-firstname">First Name:</label>
+            <input nbInput fullWidth id="input-firstname" placeholder="First Name" fieldSize="large" formControlName="firstname">
+          </div>
+
+          <div class="form-control-group mb-3">
+            <label class="label" for="input-lastname">Last Name:</label>
+            <input nbInput fullWidth id="input-lastname" placeholder="Last Name" fieldSize="large" formControlName="lastname">
+          </div>
+
+          <div class="form-control-group mb-3">
+            <label class="label" for="input-email">Email address:</label>
+            <input nbInput fullWidth id="input-email" placeholder="Email address" fieldSize="large" formControlName="email">
+          </div>
+
+
+            <div class="form-control-group mb-3">
+                <span class="label-with-link">
+                    <label class="label" for="input-password">Password:</label>
+                </span>
+                <input nbInput fullWidth id="input-password" type="password" placeholder="Password" fieldSize="large" formControlName="password">
+            </div>
+
+            <div class="form-control-group mb-3">
+                <span class="label-with-link">
+                    <label class="label" for="input-password2">Confirm Password:</label>
+                </span>
+
+                <input nbInput fullWidth name="password2" id="input-password2" type="password" required
+                       placeholder="Confirm Password" fieldSize="large" formControlName="password2">
+            </div>
+
+            <button nbButton fullWidth outline status="primary" size="large">
+                Sign Up
+            </button>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <p class="another-action text-center" aria-label="Register">
+            Already have an account? <a class="text-link" routerLink="../signing">Sign</a>
+        </p>
+    </nb-card-footer>
+</nb-card>

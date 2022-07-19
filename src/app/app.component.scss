@@ -1,0 +1,12 @@
+.fixed-header, .fixed-footer{
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+}
+.fixed-header{
+  top: 0;
+}
+
+.themeToggle{
+  padding-left: 30px;
+}

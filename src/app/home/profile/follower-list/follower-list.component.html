@@ -1,0 +1,9 @@
+<nb-card size="large">
+  <nb-card-header>Followers</nb-card-header>
+  <nb-list>
+    <nb-list-item *ngFor="let follower of followers">
+      <app-follower-item [follower]="follower"></app-follower-item>
+    </nb-list-item>
+  </nb-list>
+</nb-card>
+

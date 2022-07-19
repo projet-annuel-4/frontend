@@ -1,0 +1,7 @@
+<nb-card size="large">
+  <nb-list>
+    <nb-list-item *ngFor="let subscription of subscriptions">
+      <app-subscription-item [subscription]="subscription"></app-subscription-item>
+    </nb-list-item>
+  </nb-list>
+</nb-card>

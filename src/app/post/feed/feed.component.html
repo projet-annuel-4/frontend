@@ -1,0 +1,16 @@
+<nb-layout>
+  <nb-layout-column class="col-12" >
+
+    <button id="refreshButton" nbButton shape="round" size="small" (click)="refresh()">
+      <img width="30" height="30" src="/assets/refresh.png">
+    </button>
+    <button id="createButton" nbButton shape="round" size="small" routerLink="/post/create">
+      <img width="30" height="30" src="/assets/add.png">
+    </button>
+
+    <div *ngFor="let post of posts | keyvalue">
+      <app-feed-post [post]="post"></app-feed-post>
+    </div>
+
+  </nb-layout-column>
+</nb-layout>
