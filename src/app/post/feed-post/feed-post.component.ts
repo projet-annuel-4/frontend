@@ -30,9 +30,6 @@ export class FeedPostComponent implements OnInit {
     this.user = this.tokenStorage.getUser();
   }
 
-  //TODO : mettre les codes du content dans une balise  <code></code>
-  // https://developer.mozilla.org/fr/docs/Web/HTML/Element/code
-
 
   formatContent(content: string){
     let newContent = content;
