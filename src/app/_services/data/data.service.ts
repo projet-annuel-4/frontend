@@ -54,7 +54,6 @@ export class DataService {
     this._friends.next(friends)
   }
 
-  //TODO : Debug getMessagesByChatId()
   getMessagesByChatId(chatId: String): Observable<UserMessage[]> {
     const messagesList = this._userMessages.value;
 

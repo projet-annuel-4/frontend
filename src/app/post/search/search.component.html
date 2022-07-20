@@ -2,19 +2,20 @@
   <nb-card-header>
     <span *ngIf="titleToggle">
       <label class="label" for="title">Title : </label>
-      <input nbInput  size="" shape="round" id="title" placeholder="Title">
+      <input nbInput shape="round" id="title" placeholder="Title" [(ngModel)]="filter.title">
     </span>
     <span *ngIf="contentToggle">
-      <label class="label" for="content">Content : </label>
-      <input nbInput  size="" shape="round" id="content" placeholder="Content">
+      <label class="label" for="content" >Content : </label>
+      <input nbInput shape="round" id="content" placeholder="Content" [(ngModel)]="filter.content">
     </span>
     <span *ngIf="tagToggle">
       <label class="label" for="tag">Tag : </label>
-      <input nbInput  size="" shape="round" id="tag" placeholder="TS">
+      <input nbInput shape="round" id="tag" placeholder="TS" [(ngModel)]="filter.tagName">
     </span>
     <span *ngIf="creationDateToggle">
-      <label class="label" for="creationDate">CreationDate : </label>
-      <input nbInput  size="" shape="round" id="creationDate" placeholder="date">
+      <label class="label" for="creationDate" >CreationDate : </label>
+      <input nbInput type="date" shape="round" id="creationDate"
+             placeholder="date" [(ngModel)]="filter.creationDate">
     </span>
   </nb-card-header>
 
@@ -31,6 +32,16 @@
 </nb-card>
 
 
+<nb-card>
+  <nb-card-body *ngIf="postsFound !== undefined; else elseBlock">
+    <span *ngFor="let post of postsFound">
+      <app-post-card [post]="post"></app-post-card>
+  </span>
+  </nb-card-body>
 
-
-
+  <ng-template #elseBlock>
+    <nb-card-body style="text-align: center">
+      No Post
+    </nb-card-body>
+  </ng-template>
+</nb-card>

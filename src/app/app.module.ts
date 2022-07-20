@@ -39,6 +39,7 @@ import {CodeNotRunnableComponent} from "./code/code-not-runnable.component";
 import { FeedPostComponent } from './post/feed-post/feed-post.component';
 import { SearchComponent } from './post/search/search.component';
 import { PostCardComponent } from './post/post-card/post-card.component';
+import {DatePipe} from "@angular/common";
 
 
 /************** Config Monaco *************/
@@ -131,7 +132,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
         NbSearchModule,
     ],
   providers: [
-    NbSearchModule,
+    NbSearchModule,DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 
   ],

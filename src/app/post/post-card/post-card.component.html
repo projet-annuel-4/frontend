@@ -1,1 +1,14 @@
-<p>post-card works!</p>
+<nb-card>
+  <nb-card-body routerLink="../post/{{post.id}}/detail">
+    <nb-card-header> Title : {{post.title}} </nb-card-header>
+
+    <div style="padding: 2%">
+      Content : <code>{{post.content}}</code>
+      <!-- Content : <code>{{formatContentP(post.content)}}</code> -->
+    </div>
+
+    <div>
+      Tags : <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
+    </div>
+  </nb-card-body>
+</nb-card>

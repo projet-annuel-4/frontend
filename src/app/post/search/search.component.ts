@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PostService} from "../../_services/post/post.service";
 import {PostFilterRequest} from "../../_dtos/post/PostFilterRequest";
 import {Post} from "../../_dtos/post/Post";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-search',
@@ -9,36 +10,53 @@ import {Post} from "../../_dtos/post/Post";
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
+  titleToggle = true;
+  contentToggle: boolean = true;
+  tagToggle: boolean = true;
+  creationDateToggle: boolean = true;
 
-  //TODO : Implementer la recherche
-  titleToggle = false;
-  contentToggle: boolean = false;
-  tagToggle: boolean = false;
-  creationDateToggle: boolean = false;
+  filter = new PostFilterRequest();
 
+  postsFound: Post[];
 
-  filter: PostFilterRequest;
-
-
-  postFound: Post[];
-
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
-
+    
   }
 
   search(){
-    alert("lets go");
-    this.postService.getAllWithFilters(this.filter).subscribe(posts => {
-      //TODO : Afficher les posts trouvés
-      this.postFound = posts;
+    console.log("content : " + this.filter.content)
+    if(this.filter.title === undefined && this.filter.content === undefined
+      && this.filter.tagName === undefined && this.filter.creationDate === undefined){
+      alert("One params min");
+      return;
+    }
 
-      this.postFound.forEach(post => console.log(post.id));
+    this.checkFilterValue();
+
+    this.postService.getAllWithFilters(this.filter).subscribe(posts => {
+      this.postsFound = posts;
     });
   }
 
 
+  checkFilterValue(){
+    this.filter.title === undefined ?  this.filter.title = "": this.filter.title;
+    this.filter.content === undefined ?  this.filter.content = "": this.filter.content;
+    this.filter.tagName === undefined ?  this.filter.tagName = "": this.filter.tagName;
+
+    if (this.filter.creationDate === undefined) {
+      this.filter.creationDate = this.dateToString(new Date(1900, 1, 1, 0, 0, 0))
+    } else {
+      this.filter.creationDate += " 00:00:00";
+    }
+  }
+
+
+  dateToString(date: Date){
+    return this.datePipe.transform(date, 'yyyy-MM-dd 00:00:00');
+  }
 
 
 
