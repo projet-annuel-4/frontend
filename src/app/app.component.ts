@@ -31,8 +31,6 @@ export class AppComponent implements OnInit{
   ];
 
 
-  //TODO: Chercher une icone pour l'app
-
   constructor(private nbMenuService: NbMenuService, @Inject(NB_WINDOW) private window,
               private tokenStorageService: TokenStorageService, private router: Router,
               private dialogService: NbDialogService, private themeService: NbThemeService) {}

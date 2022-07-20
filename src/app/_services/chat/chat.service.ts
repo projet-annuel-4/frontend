@@ -40,14 +40,6 @@ export class ChatService {
       }))
   }
 
-  //TODO : Supprimer ???
-  fetchMessages(covId: string): Observable<any> {
-    return this.httpClient.get(`${environment.DOMAIN}/${environment.API_VERSION}/chat/${covId}/messages?user-email=${this.userEmail}`, this.httpOptions)
-      .pipe(map((msgs: UserMessage[]) => {
-        this.dataService.updateUserMessages(msgs);
-      }))
-  }
-
   startConversation(email: String): Observable<any> {
 /*
     const token = this.tokenStorageService.getToken();
