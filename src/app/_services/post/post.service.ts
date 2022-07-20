@@ -98,20 +98,7 @@ export class PostService {
   }
 
   getAllWithFilters(filters: PostFilterRequest): Observable<Post[]> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' });
-    const requestParams = new HttpParams()
-                                .set("title", filters.title)
-                                .set("content", filters.content)
-                                .set("tagName", filters.tagName)
-                                .set("creationDate", filters.creationDate.toString())
-
-    const requestOptions = {
-      header : this.httpOptions,
-      params : requestParams,
-      //body : filters
-    };
-
-    return this.http.get<Post[]>(`${post_service.BASE_URL}/filters`, requestOptions);
+    return this.http.post<Post[]>(`${post_service.BASE_URL}/filters`, filters, this.httpOptions);
   }
 
   getAllUserAnswers(user_id: number): Observable<Post[]>{
