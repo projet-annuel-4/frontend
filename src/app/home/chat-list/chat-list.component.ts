@@ -23,8 +23,6 @@ export class ChatListComponent implements OnInit {
     { title: 'New Chat', icon: 'person-add-outline' },
     { title: 'New Group', icon: 'plus-outline' },
     { title: 'Code Execution', icon: '' },
-    { title: 'Settings', icon: 'settings-outline' },
-    { title: 'Log out', icon: 'unlock-outline' },
   ];
 
   profile: User;
@@ -63,18 +61,11 @@ export class ChatListComponent implements OnInit {
           case 'New Group':
             this.dialogService.open(NewGroupComponent);
             break;
+
           case 'Code Execution':
-
             this.router.navigateByUrl("/execution/project").then();
+            break;
 
-            break;
-          case 'Settings':
-            this.router.navigateByUrl("/settings").then();
-            break;
-          case 'Log out':
-            this.userService.logout();
-            this.router.navigateByUrl("/auth/signing").then();
-            break;
           default:
             break;
         }

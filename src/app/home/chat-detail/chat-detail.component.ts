@@ -20,7 +20,6 @@ export class ChatDetailComponent implements OnInit {
   friendId: string;
   friendProfile: FriendProfile;
   myProfile: User;
-  subscription: any;
 
   constructor(private chatService: ChatService, private router: Router, private route: ActivatedRoute,
               private userService: UserService) {  }
@@ -28,7 +27,6 @@ export class ChatDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params): void => {
       this.friendId = params.id;
-      //if (this.subscription) this.subscription.unsubscribe();
       this.myProfile = this.userService.getProfile();
       this.friendProfile = this.chatService.getFriend(this.friendId);
       this.getChat()
@@ -37,7 +35,7 @@ export class ChatDetailComponent implements OnInit {
 
   getChat() {
     this.messages = []
-    /*this.subscription =*/ this.chatService.getMessagesByChat(this.friendId).subscribe(msgs => {
+    this.chatService.getMessagesByChat(this.friendId).subscribe(msgs => {
       let messages = msgs.map(msg => {
         let nm = new NbMessage(msg)
         if (msg.senderId == this.myProfile.id.toString()) {

@@ -70,18 +70,6 @@ export class DataService {
         return messages;
       }));
 
-
-    /*
-    return this._userMessages.pipe(
-      map(m => {
-        let msgs: UserMessage[] = []
-        m.forEach((v, k) => { if (v.chatId == chatId) msgs.push(v) })
-        // msgs.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
-        return msgs
-      })
-    )
-
-     */
   }
 
   getFriends(): Observable<FriendProfile[]> {
