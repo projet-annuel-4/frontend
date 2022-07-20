@@ -24,9 +24,10 @@ export class AppComponent implements OnInit{
 
   items = [
     { title: 'Profile', icon: 'person-outline'},
+    { title: 'Search', icon: ''},
     { title: 'Chat', icon: ''},
     { title: 'Feed' },
-    { title: 'Logout', icon: 'unlock-outline'},
+    { title: 'Logout', icon: 'unlock-outline'}
   ];
 
 
@@ -46,6 +47,10 @@ export class AppComponent implements OnInit{
         switch (title.item.title) {
           case 'Profile':
             this.router.navigate(['../profile']).then();
+            break;
+
+          case 'Search':
+            this.router.navigate(['../post/search']).then();
             break;
 
           case 'Chat':
