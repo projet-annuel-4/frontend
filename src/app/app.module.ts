@@ -38,6 +38,7 @@ import { CommentComponent } from './post/comment/comment.component';
 import {CodeNotRunnableComponent} from "./code/code-not-runnable.component";
 import { FeedPostComponent } from './post/feed-post/feed-post.component';
 import { SearchComponent } from './post/search/search.component';
+import { PostCardComponent } from './post/post-card/post-card.component';
 
 
 /************** Config Monaco *************/
@@ -99,7 +100,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
     CommentComponent,
     CodeNotRunnableComponent,
     FeedPostComponent,
-    SearchComponent
+    SearchComponent,
+    PostCardComponent
   ],
     imports: [
         BrowserModule,
