@@ -1,1 +1,31 @@
-<p>search works!</p>
+<nb-card>
+  <nb-card-header>
+    <span *ngIf="titleToggle">
+      <label class="label" for="title">Title : </label>
+      <input nbInput  size="" shape="round" id="title" placeholder="Title">
+    </span>
+    <span *ngIf="contentToggle">
+      <label class="label" for="content">Content : </label>
+      <input nbInput  size="" shape="round" id="content" placeholder="Content">
+    </span>
+    <span *ngIf="tagToggle">
+      <label class="label" for="tag">Tag : </label>
+      <input nbInput  size="" shape="round" id="tag" placeholder="TS">
+    </span>
+    <span *ngIf="creationDateToggle">
+      <label class="label" for="creationDate">CreationDate : </label>
+      <input nbInput  size="" shape="round" id="creationDate" placeholder="date">
+    </span>
+  </nb-card-header>
+
+  <nb-card-body>
+    <button nbButton size="small" (click)="titleToggle = !titleToggle">affiche title</button>
+    <button nbButton size="small" (click)="contentToggle = !contentToggle">affiche content</button>
+    <button nbButton size="small" (click)="tagToggle = !tagToggle">affiche tag</button>
+    <button nbButton size="small" (click)="creationDateToggle = !creationDateToggle">affiche creation date</button>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button nbButton (click)="search()">Search</button>
+  </nb-card-footer>
+</nb-card>
