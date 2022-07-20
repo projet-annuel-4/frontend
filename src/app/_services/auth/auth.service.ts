@@ -90,9 +90,8 @@ export class AuthService {
     this.tokenStorage.signOut();
   }
 
-  //TODO: Cote API -> prendre que le mail dans le body
   forgotPassword(email: string){
-    return this.http.post(`${auth_service.FORGOT_PASSWORD}`, email, this.httpOptions);
+    return this.http.post(`${auth_service.FORGOT_PASSWORD}/${email}`, this.httpOptions);
   }
 
   updatePassword(forgotPasswordRequest: ForgotPasswordRequest){

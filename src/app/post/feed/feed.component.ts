@@ -19,7 +19,6 @@ export class FeedComponent implements OnInit {
 
   constructor(private postService: PostService, private tokenStorage: TokenStorageService) {}
 
-  //TODO : Faire la recherche
 
   ngOnInit(): void {
     this.user = this.tokenStorage.getUser();

@@ -22,7 +22,7 @@ const routes: Routes = [
     path: 'post', children:[
       {path: 'feed', component: FeedComponent},
       {path: 'create', component: CreateComponent},
-      {path: 'search', component: SearchComponent},// --> TODO : Test à supprimer
+      {path: 'search', component: SearchComponent},
 
       {path: ':postId', children:[
           {path: 'detail', component: PostDetailComponent},

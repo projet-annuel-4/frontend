@@ -21,23 +21,25 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   forgotPassword(){
+    const data = this.form.value;
 
-    if(this.form.valid){
-      const data = this.form.value;
-      this.loading = true;
-
-      this.authService.forgotPassword(data['email']).subscribe(next => {
-        alert("Email has been sent to the given address : " + data['email']);
-        this.router.navigate(['/auth/signing']).then();
-      });
+    if(data['email'] === null){
+      alert("Please enter your email");
+      return;
     }
-    alert("Please enter your email");
+
+    this.loading = true;
+
+    this.authService.forgotPassword(data['email']).subscribe(next => {
+      alert("Email has been sent to the given address : " + data['email']);
+      this.router.navigate(['/auth/signing']).then();
+    });
 
   }
-
 
 
 }
