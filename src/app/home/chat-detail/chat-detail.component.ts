@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/_services/chat/chat.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { FriendProfile } from 'src/app/_dtos/chat/FriendProfile';
-import { UserProfile } from 'src/app/_dtos/user/UserProfile';
 import { UserService } from 'src/app/_services/user/user.service';
 import { NbMessage } from 'src/app/_dtos/chat/NbMessage';
-import { Observable } from 'rxjs';
-import { UserMessage } from 'src/app/_dtos/chat/UserMessage';
 import {User} from "../../_dtos/user/User";
 
 @Component({

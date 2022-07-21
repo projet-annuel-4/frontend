@@ -11,8 +11,6 @@ import {SearchComponent} from "./post/search/search.component";
 import {AuthGuard} from "./_helpers/auth.guard";
 
 const routes: Routes = [
-  //{path: '', pathMatch: 'full', canActivate: [AuthGuard]},
-
   {
     path: 'execution', canActivate: [AuthGuard], children:[
       {path: 'code', component: CodeExecutionComponent},

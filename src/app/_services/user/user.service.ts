@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {environment, user_service} from '../../../environments/environment';
 import { TokenStorageService } from '../token/token-storage.service';
 import { map } from 'rxjs/operators';
-import { UserProfile } from '../../_dtos/user/UserProfile';
 import { Observable } from 'rxjs';
 import {User} from "../../_dtos/user/User";
 import {UserUpdateRequest} from "../../_dtos/user/UserUpdateRequest";

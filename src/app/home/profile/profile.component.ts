@@ -26,9 +26,6 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  //TODO : NbTab ->  My Posts, Answers, Friend, like
-
-
   ngOnInit(): void {
 
     this.profile = this.userService.getProfile();

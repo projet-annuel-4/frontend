@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AuthGuard } from '../_helpers/auth.guard';
-import { LoadingComponent } from './loading/loading.component';
 import { ChatComponent } from './chat/chat.component';
 import { ChatDetailComponent } from './chat-detail/chat-detail.component';
 import { ChatBannerComponent } from './chat-banner/chat-banner.component';
@@ -33,7 +32,6 @@ const routes: Routes = [
           {path: ':friendId', component: FriendProfileComponent}
         ]
       },
-      //{ path: 'loading', component: LoadingComponent },
       { path: 'settings', component: SettingsComponent }
     ]
   }

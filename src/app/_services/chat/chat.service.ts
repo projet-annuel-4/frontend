@@ -41,18 +41,6 @@ export class ChatService {
   }
 
   startConversation(email: String): Observable<any> {
-/*
-    const token = this.tokenStorageService.getToken();
-
-    const headers = new HttpHeaders().set('Authorization',  `Bearer ${token}`);
-    const contentType =  new HttpHeaders(this.httpOptions.headers.get('Content-Type'));
-    const requestOptions = {
-      headers,
-      contentType
-    };
-
- */
-
     return this.httpClient.post(`${chat_service.CHAT}/?user-email=${this.userEmail}&friend-email=${email}`, "", this.httpOptions)
       .pipe(map((friend: FriendProfile) => {
         console.log("friend.id : " + friend.id);

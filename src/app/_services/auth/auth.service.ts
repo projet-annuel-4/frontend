@@ -8,9 +8,6 @@ import { map } from 'rxjs/operators';
 import { SignInResponse } from '../../_dtos/auth/SignInResponse';
 import { SignInRequest } from '../../_dtos/auth/SignInRequest';
 import { SignUpRequest } from '../../_dtos/auth/SignUpRequest';
-import { ApiResponse } from '../../_dtos/common/ApiResponse';
-import { UserService } from '../user/user.service';
-import { UserProfile } from '../../_dtos/user/UserProfile';
 import {ForgotPasswordRequest} from "../../_dtos/auth/ForgotPasswordRequest";
 import {User} from "../../_dtos/user/User";
 import {FollowService} from "../follow/follow.service";
@@ -84,10 +81,6 @@ export class AuthService {
 
   registerWithGithub(){
 
-  }
-
-  logout() {
-    this.tokenStorage.signOut();
   }
 
   forgotPassword(email: string){
