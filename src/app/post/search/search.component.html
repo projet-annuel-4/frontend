@@ -36,7 +36,7 @@
   <nb-card-body *ngIf="postsFound !== undefined; else elseBlock">
     <span *ngFor="let post of postsFound">
       <app-post-card [post]="post"></app-post-card>
-  </span>
+    </span>
   </nb-card-body>
 
   <ng-template #elseBlock>

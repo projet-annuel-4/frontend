@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import {User} from "../../_dtos/user/User";
 import {UserUpdateRequest} from "../../_dtos/user/UserUpdateRequest";
+import {SignInResponse} from "../../_dtos/auth/SignInResponse";
 
 @Injectable()
 export class UserService {
@@ -25,12 +26,12 @@ export class UserService {
     }))
   }
 
-
-  update(userUpdate: UserUpdateRequest): Observable<User>{
-    return this.httpClient.put<User>(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/edit`, userUpdate, this.httpOptions)
-      .pipe(map((user: User) =>{
-        this.storage.saveUser(user);
-        return user;
+  update(userUpdate: UserUpdateRequest){
+    return this.httpClient.put(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/edit`, userUpdate, this.httpOptions)
+      .pipe(map((response: SignInResponse) =>{
+        this.storage.saveUser(new User(response.id, response.firstName, response.lastName, response.email,
+          0, 0, response.imgUrl));
+        return response;
       }))
   }
 

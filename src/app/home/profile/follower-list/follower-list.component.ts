@@ -18,7 +18,6 @@ export class FollowerListComponent implements OnInit {
 
     this.followService.getAllFollowers(this.tokenStorage.getUser().id).subscribe(followers => {
       this.followers = followers;
-      console.log(this.followers[0].firstname);
     });
 
   }

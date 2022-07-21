@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {AuthService} from "../../_services/auth/auth.service";
 import {Router} from "@angular/router";
-import {NbDialogService} from "@nebular/theme";
-import {SignUpRequest} from "../../_dtos/auth/SignUpRequest";
 import {UserService} from "../../_services/user/user.service";
 import {UserUpdateRequest} from "../../_dtos/user/UserUpdateRequest";
 import {FileManagementService} from "../../_services/file-management/file-management.service";
 import {FileRequest} from "../../_dtos/file/FileRequest";
+import {ImageRequest} from "../../_dtos/image/ImageRequest";
+import {User} from "../../_dtos/user/User";
 
 @Component({
   selector: 'app-profile-update',
@@ -15,6 +15,8 @@ import {FileRequest} from "../../_dtos/file/FileRequest";
   styleUrls: ['./profile-update.component.scss']
 })
 export class ProfileUpdateComponent implements OnInit {
+
+  user: User;
 
   signUpFrom: FormGroup;
   file: File;
@@ -30,12 +32,13 @@ export class ProfileUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.userService.getProfile();
   }
 
   update() {
     if (this.signUpFrom.valid) {
 
-      this.onUpload();
+      if(this.file !== undefined) this.onUpload();
 
       const data = this.signUpFrom.value;
       //this.loading = true;
@@ -45,6 +48,8 @@ export class ProfileUpdateComponent implements OnInit {
           //this.loading = true;
           console.log("subscribe");
           this.router.navigate(['../profile']).then()
+        }, error => {
+          alert(error['firstNameError']);
         }
       );
 
@@ -73,12 +78,9 @@ export class ProfileUpdateComponent implements OnInit {
     }
 
     //TODO : Upload la photo de profile
+    const imageRequest = new ImageRequest(this.file.type, "profile", this.user.id.toString(),"");
 
-    //link == id de l'utilisateur
-    const fileRequest = new FileRequest(null, null, this.file.type,
-                                            this.file.name, "", "");
-
-    this.fileManagementService.uploadFile(fileRequest, this.file).subscribe(then => {
+    this.fileManagementService.uploadImage(imageRequest, this.file).subscribe(then => {
       console.log("image uploade (askip)");
     });
 

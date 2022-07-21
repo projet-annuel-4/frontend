@@ -8,6 +8,8 @@ import {FollowerListComponent} from "../follower-list/follower-list.component";
 import {SubscriptionListComponent} from "../subscription-list/subscription-list.component";
 import {NbDialogService} from "@nebular/theme";
 import {CodeService} from "../../../_services/code_execution/code.service";
+import {FollowService} from "../../../_services/follow/follow.service";
+import {TokenStorageService} from "../../../_services/token/token-storage.service";
 
 @Component({
   selector: 'app-friend-profile',
@@ -22,12 +24,30 @@ export class FriendProfileComponent implements OnInit {
   postsLiked: Post[];
   friendAnswers: Post[];
 
+  followedByTheUser: boolean;
+
+  buttonText: string = "";
+
+  //TODO : Trouver un autre moyen de savoir si le friend est suivi par le user connecté
+
   constructor(private userService: UserService, private route: ActivatedRoute, private postService: PostService,
-              private dialogService: NbDialogService, private codeService:CodeService) { }
+              private dialogService: NbDialogService, private codeService:CodeService,
+              private followService: FollowService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params): void => {
+      this.followedByTheUser = params.isFollowed;
+      console.log("followedByTheUser : " + this.followedByTheUser);
+
+      if(this.followedByTheUser == true){
+        this.buttonText = "follow"
+      } else {
+        this.buttonText = "unfollow"
+      }
+
+
       if(params.friendId !== undefined){
+
         this.postService.getUserById(params.friendId).subscribe(friend => {
           this.friendProfile = friend;
           this.initFriendPost();
@@ -52,9 +72,11 @@ export class FriendProfileComponent implements OnInit {
   }
 
 
+  //TODO : Liste des follower du friend
   viewFollowers(){
     this.dialogService.open(FollowerListComponent);
   }
+  //TODO : Liste des subscriptions du friend
   viewSubscriptions(){
     this.dialogService.open(SubscriptionListComponent);
   }
@@ -71,5 +93,33 @@ export class FriendProfileComponent implements OnInit {
   }
 
 
+  follow(){
+    this.followService.follow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
+      this.followedByTheUser = true;
+    })
+  }
+
+  unfollow(){
+    this.followService.unfollow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
+      this.followedByTheUser = false;
+    })
+  }
+
+  follow_unfollow(){
+    this.followedByTheUser = !this.followedByTheUser;
+    if(this.followedByTheUser == true){
+      this.followService.follow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
+        this.followedByTheUser = true;
+        this.buttonText = "unfollow"
+      })
+
+    } else {
+      this.followService.unfollow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
+        this.followedByTheUser = false;
+        this.buttonText = "follow"
+      })
+
+    }
+  }
 
 }

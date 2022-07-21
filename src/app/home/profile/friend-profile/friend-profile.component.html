@@ -9,14 +9,19 @@
         <div>Mail : {{friendProfile.email}}</div>
       </nb-card-body>
 
-      <nb-card-footer style="text-align: center">
-        <div (click)="viewFollowers()" >
-          <img  src="favicon.ico" width="28" height="30" alt="" >
+      <nb-card-footer>
+        <div>
+          <img  src="favicon.ico" width="28" height="30" alt="" (click)="viewFollowers()">
           Followers: {{friendProfile.nbFollowers}}
         </div>
-        <div (click)="viewSubscriptions()">
-          <img  src="favicon.ico" width="28" height="30" alt="" >
+        <div>
+          <img  src="favicon.ico" width="28" height="30" alt="" (click)="viewSubscriptions()">
           Subs : {{friendProfile.nbSubscriptions}}
+        </div>
+        <div style="text-align: right">
+          <button nbButton (click)="follow_unfollow()">
+            {{buttonText}}
+          </button>
         </div>
       </nb-card-footer>
     </nb-card>
