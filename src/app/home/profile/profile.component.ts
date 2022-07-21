@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
     console.log(this.profile.lastname)
 
     this.postService.getAllByUser(this.profile.id).subscribe(posts => {
-      this.userPost = posts.reverse();
+      this.userPost = posts;
     },error => {
 
     });

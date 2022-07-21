@@ -22,14 +22,21 @@ export class SearchComponent implements OnInit {
   constructor(private postService: PostService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    
+
   }
 
   search(){
-    console.log("content : " + this.filter.content)
+    /*
     if(this.filter.title === undefined && this.filter.content === undefined
       && this.filter.tagName === undefined && this.filter.creationDate === undefined){
       alert("One params min");
+      return;
+    }
+     */
+
+    if(this.filter.title === undefined || this.filter.content === undefined
+      || this.filter.tagName === undefined || this.filter.creationDate === undefined){
+      alert("All params are required");
       return;
     }
 
