@@ -13,6 +13,8 @@ import {User} from "../../_dtos/user/User";
 })
 export class ChatDetailComponent implements OnInit {
 
+  //TODO : Web Socket
+
   messages: NbMessage[] = [];
   friendId: string;
   friendProfile: FriendProfile;
