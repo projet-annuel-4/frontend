@@ -10,6 +10,7 @@ import { ChatDetailComponent } from './chat-detail/chat-detail.component';
 import { ChatBannerComponent } from './chat-banner/chat-banner.component';
 import { ProfileComponent } from './profile/profile.component';
 import {ProfileUpdateComponent} from "./profile-update/profile-update.component";
+import {FriendProfileComponent} from "./profile/friend-profile/friend-profile.component";
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
         path: 'profile', children:[
           { path: '', component: ProfileComponent },
           {path: 'update', component: ProfileUpdateComponent}
+        ]
+      },
+      {
+        path: 'friend', children:[
+          {path: ':friendId', component: FriendProfileComponent}
         ]
       },
       //{ path: 'loading', component: LoadingComponent },

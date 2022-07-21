@@ -105,4 +105,8 @@ export class PostService {
     return this.http.get<Post[]>(`${post_service.BASE_URL}/user/${user_id}/answers`, this.httpOptions);
   }
 
+  getUserById(user_id: number): Observable<User>{
+    return this.http.get<User>(`${post_service.BASE_URL}/user/${user_id}`, this.httpOptions);
+  }
+
 }

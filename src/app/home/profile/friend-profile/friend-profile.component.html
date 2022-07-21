@@ -1,0 +1,87 @@
+<nb-layout>
+  <nb-layout-column>
+    <nb-card>
+      <nb-card-body style="text-align:center">
+        <img class="profile-image" src="favicon.ico" width="150" height="150" alt="" >
+        <!--<img class="profile-image" src="{{profile.imgUrl}}" width="150" height="150" alt=""> -->
+        <br>
+        <div>{{friendProfile.firstname}} {{friendProfile.lastname.toUpperCase()}}</div>
+        <div>Mail : {{friendProfile.email}}</div>
+      </nb-card-body>
+
+      <nb-card-footer style="text-align: center">
+        <div (click)="viewFollowers()" >
+          <img  src="favicon.ico" width="28" height="30" alt="" >
+          Followers: {{friendProfile.nbFollowers}}
+        </div>
+        <div (click)="viewSubscriptions()">
+          <img  src="favicon.ico" width="28" height="30" alt="" >
+          Subs : {{friendProfile.nbSubscriptions}}
+        </div>
+      </nb-card-footer>
+    </nb-card>
+
+
+    <nb-tabset >
+
+      <nb-tab tabTitle="Posts">
+        <div *ngFor="let post of friendPost">
+          <nb-card>
+            <nb-card-body routerLink="../post/{{post.id}}/detail">
+              <nb-card-header> Title : {{post.title}} </nb-card-header>
+
+              <div style="padding: 2%">
+                <pre><code>{{formatContentP(post.content)}}</code></pre>
+              </div>
+
+              <div>
+                Tags : <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
+              </div>
+
+            </nb-card-body>
+
+          </nb-card>
+        </div>
+      </nb-tab>
+
+      <nb-tab tabTitle="Answers">
+        <div *ngFor="let friendAnswer of friendAnswers">
+          <nb-card>
+            <nb-card-body routerLink="../post/{{friendAnswer.id}}/detail">
+              <nb-card-header> Title : {{friendAnswer.title}} </nb-card-header>
+
+              <div style="padding: 2%">
+                <pre><code>{{formatContentP(friendAnswer.content)}}</code></pre>
+              </div>
+
+              <div>
+                Tags : <span *ngFor="let tag of friendAnswer.tags">| {{tag.name}} </span>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </nb-tab>
+
+      <nb-tab tabTitle="Like">
+        <div *ngFor="let postLiked of postsLiked">
+          <nb-card>
+            <nb-card-body routerLink="../post/{{postLiked.id}}/detail">
+              <nb-card-header> Title : {{postLiked.title}} </nb-card-header>
+
+              <div style="padding: 2%">
+                <pre><code>{{postLiked.content}}</code></pre>
+              </div>
+
+              <div>
+                Tags : <span *ngFor="let tag of postLiked.tags">| {{tag.name}} </span>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </nb-tab>
+
+    </nb-tabset>
+  </nb-layout-column>
+</nb-layout>

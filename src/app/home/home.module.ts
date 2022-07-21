@@ -25,6 +25,7 @@ import { SubscriptionListComponent } from './profile/subscription-list/subscript
 import { ProfileUpdateComponent } from './profile-update/profile-update.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NewGroupComponent} from "./chat-list/new-chat/new-group.component";
+import { FriendProfileComponent } from './profile/friend-profile/friend-profile.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import {NewGroupComponent} from "./chat-list/new-chat/new-group.component";
         SubscriptionItemComponent,
         SubscriptionListComponent,
         ProfileUpdateComponent,
-        NewGroupComponent
+        NewGroupComponent,
+        FriendProfileComponent
     ],
   imports: [
     CommonModule, HomeRoutingModule, SharedModule, NbTabsetModule, ReactiveFormsModule, FormsModule,

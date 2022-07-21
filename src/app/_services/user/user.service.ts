@@ -43,6 +43,10 @@ export class UserService {
     this.storage.signOut();
   }
 
+  getById(user_id: number): Observable<User>{
+    return this.httpClient.get<User>(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/${user_id}`, this.httpOptions);
+  }
+
   getByEmail(email: string): Observable<User> {
     return this.httpClient.get<User>(`${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/mail/${email}`, this.httpOptions);
   }

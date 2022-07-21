@@ -45,12 +45,13 @@ export const code_execution_service = {
 
 export const post_service = {
   //TODO : Mettre à jour le port une fois l'api-gateway configurée
-    BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.POST}`
+    //BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.POST}`
+    BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.POST}`
 }
 
 
 export const follower_service = {
-  BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.FOLLOW}`
+  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/post/${environment.FOLLOW}`
 }
 
 export const group_service = {

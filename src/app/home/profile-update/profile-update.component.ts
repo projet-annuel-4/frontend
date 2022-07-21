@@ -73,6 +73,8 @@ export class ProfileUpdateComponent implements OnInit {
     }
 
     //TODO : Upload la photo de profile
+
+    //link == id de l'utilisateur
     const fileRequest = new FileRequest(null, null, this.file.type,
                                             this.file.name, "", "");
 
