@@ -5,8 +5,7 @@
 export const environment = {
   production: false,
 
-  DOMAIN: 'http://localhost:8072', /* api gateway */
-  //DOMAIN: 'http://localhost:8096', /* post-service URL */
+  DOMAIN: 'http://localhost:8072',
   API_VERSION: 'api/v1',
 
   AUTH: `auth`,
@@ -29,9 +28,7 @@ export const auth_service = {
 }
 
 export const chat_service = {
-
   CHAT: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}`
-
 }
 
 export const user_service = {
@@ -44,8 +41,6 @@ export const code_execution_service = {
 }
 
 export const post_service = {
-  //TODO : Mettre à jour le port une fois l'api-gateway configurée
-    //BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.POST}`
     BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.POST}`
 }
 
