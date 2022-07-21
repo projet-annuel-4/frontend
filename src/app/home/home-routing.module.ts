@@ -13,8 +13,9 @@ import {ProfileUpdateComponent} from "./profile-update/profile-update.component"
 import {FriendProfileComponent} from "./profile/friend-profile/friend-profile.component";
 
 const routes: Routes = [
+  {path: '', redirectTo:'profile', pathMatch: 'full'},
   {
-    path: '', component: HomeComponent, /*canActivate: [AuthGuard],*/ children: [
+    path: '', component: HomeComponent, canActivate: [AuthGuard], children: [
       {
         path: 'chat', component: ChatComponent, children: [
           { path: '', component: ChatBannerComponent },
