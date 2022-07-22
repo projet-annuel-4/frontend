@@ -54,7 +54,7 @@ export const group_service = {
 }
 
 export const file_service = {
-  BASE_URL: `${environment.DOMAIN}/files-management/${environment.API_VERSION}/${environment.FILE}`
+  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.FILE}`
 }
 /*
  * For easier debugging in development mode, you can import the following file

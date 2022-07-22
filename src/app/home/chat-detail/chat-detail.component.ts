@@ -5,6 +5,7 @@ import { FriendProfile } from 'src/app/_dtos/chat/FriendProfile';
 import { UserService } from 'src/app/_services/user/user.service';
 import { NbMessage } from 'src/app/_dtos/chat/NbMessage';
 import {User} from "../../_dtos/user/User";
+import {MessageService} from "../../_services/message/message.service";
 
 @Component({
   selector: 'app-chat-detail',
@@ -21,7 +22,7 @@ export class ChatDetailComponent implements OnInit {
   myProfile: User;
 
   constructor(private chatService: ChatService, private router: Router, private route: ActivatedRoute,
-              private userService: UserService) {  }
+              private userService: UserService,public messageService: MessageService) {  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params): void => {
@@ -61,6 +62,12 @@ export class ChatDetailComponent implements OnInit {
       formData.append('files', files);
       this.chatService.createMessageFile(this.friendId, event.message, formData).subscribe()
     }
+  }
+
+  sendMessageTest(event){
+    console.log("event.message : " + event.message);
+    this.messageService.sendMessage(event.message);
+
   }
 
 

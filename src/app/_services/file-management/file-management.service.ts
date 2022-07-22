@@ -55,14 +55,19 @@ export class FileManagementService {
     return this.http.get<Directory>(`${file_service.BASE_URL}/directory/${directory_id}/?type=${type}`, this.fileOptions);
   }
 
-  uploadImage(imageRequest: ImageRequest, file: File){
+  uploadImage(imageRequest: ImageRequest, file: File): Observable<string>{
+
+    const jsonImageRequest = JSON.stringify(imageRequest);
+    console.log(jsonImageRequest);
+
     const data:FormData = new FormData();
     data.append("image", file);
-    data.append("details", new Blob([JSON.stringify(imageRequest)],{
-      type: "application/json"
-    }));
+    data.append(
+      "details",
+      new Blob([jsonImageRequest], {type: 'application/json'})
+    );
 
-    return this.http.post(`${file_service.BASE_URL}/image`, data, this.fileOptions);
+    return this.http.post<string>(`${file_service.BASE_URL}/image`, data);
   }
 
 

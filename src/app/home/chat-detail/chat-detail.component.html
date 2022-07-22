@@ -5,7 +5,15 @@
             [longitude]="msg.longitude" [avatar]="msg.avatar">
         </nb-chat-message>
 
-        <nb-chat-form [dropFiles]="true" (send)="sendMessage($event)">
+        <!--<nb-chat-form [dropFiles]="true" (send)="sendMessage($event)">-->
+        <nb-chat-form [dropFiles]="true" (send)="sendMessageTest($event)">
         </nb-chat-form>
     </nb-chat>
+
+  <div class="content">
+    <div *ngFor="let msg of messageService.msg">
+      {{msg}}
+    </div>
+  </div>
+
 </div>
