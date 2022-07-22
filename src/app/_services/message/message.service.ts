@@ -38,7 +38,7 @@ export class MessageService {
 
   sendMessage(message) {
     console.log("messsage : " + message)
-    this.stompClient.send("localhost\:8072/api/v1/chat/send/message" , {}, message);
+    this.stompClient.send("/api/v1/chat/send/message" , {}, message);
   }
 
 
