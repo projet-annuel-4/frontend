@@ -1,44 +1,53 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '../data/data.service';
 import * as SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
-import { environment } from 'src/environments/environment';
-import { UserService } from '../user/user.service';
-import { UserMessage } from '../../_dtos/chat/UserMessage';
-import { FriendProfile } from '../../_dtos/chat/FriendProfile';
-import { TokenStorageService } from '../token/token-storage.service';
+import {ChatDetailComponent} from "../../home/chat-detail/chat-detail.component";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
 
-  SockJS;
-  Stomp;
+  greetings: string[] = [];
+  disabled = true;
+  newmessage: string;
+  private stompClient = null;
 
   constructor() {
-    this.initializeWebSocketConnection();
   }
 
-  public stompClient;
-  public msg = [];
-  initializeWebSocketConnection() {
-    const serverUrl = 'http://localhost:8200/websocket';
-    const ws = new SockJS(serverUrl);
-    this.stompClient = Stomp.over(ws);
-    const that = this;
-    this.stompClient.connect({}, function(frame) {
-      that.stompClient.subscribe('/message', (message) => {
-        if (message.body) {
-          that.msg.push(message.body);
-        }
+  setConnected(connected: boolean) {
+    this.disabled = !connected;
+
+    if (connected) {
+      this.greetings = [];
+    }
+  }
+
+  connect() {
+    const socket = new SockJS('http://localhost:8200/websocket');
+    this.stompClient = Stomp.over(socket);
+
+    const _this = this;
+    this.stompClient.connect({}, function (frame) {
+      console.log('Connected: ' + frame);
+
+      _this.stompClient.subscribe('/start/initial', function (hello) {
+        console.log(JSON.parse(hello.body));
+
+        _this.showMessage(JSON.parse(hello.body));
       });
     });
   }
 
-  sendMessage(message) {
-    console.log("messsage : " + message)
-    this.stompClient.send("/api/v1/chat/send/message" , {}, message);
+  sendMessage() {
+    this.stompClient.send('/current/resume', {}, JSON.stringify(this.newmessage));
+    this.newmessage = "";
+
+  }
+
+  showMessage(message) {
+    this.greetings.push(message);
   }
 
 

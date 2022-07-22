@@ -17,12 +17,11 @@ export class NotificationService {
   //https://haseeamarathunga.medium.com/create-a-spring-boot-angular-websocket-using-sockjs-and-stomp-cb339f766a98
 
   constructor(private dataService: DataService, private userService: UserService, private storageService: TokenStorageService) {
-    //this.topic = `/notifications/${this.userService.getProfile().id}`
-    this.topic = `/notifications/${6}`
+    this.topic = `/notifications/${this.userService.getProfile().id}`
   }
 
   subscribe() {
-    const ws = new SockJS(`${environment.DOMAIN}/ws`);
+    const ws = new SockJS(`http://localhost:8200/websocket`);
     this.stompClient = Stomp.over(ws);
     this.stompClient.debug = () => {};
     const _this = this;
