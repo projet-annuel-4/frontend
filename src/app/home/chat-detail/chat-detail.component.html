@@ -1,20 +1,6 @@
-<!--
-<div class="h-100">
-    <nb-chat *ngIf="friendProfile" [title]="friendProfile.name" status="basic" scrollBottom="true" style="height: 90vh;">
-        <nb-chat-message *ngFor="let msg of messages" [type]="msg.type" [message]="msg.text" [reply]="msg.reply"
-            [sender]="msg.sender" [date]="msg.date" [files]="msg.files" [quote]="msg.quote" [latitude]="msg.latitude"
-            [longitude]="msg.longitude" [avatar]="msg.avatar">
-        </nb-chat-message>
-
-      <nb-chat-form [dropFiles]="true" (send)="sendMessage($event)">
-        </nb-chat-form>
-    </nb-chat>
-</div>
--->
-
 <div class="h-100">
   <nb-chat *ngIf="friendProfile" [title]="friendProfile.name" status="basic" scrollBottom="true" style="height: 90vh;">
-    <nb-chat-message *ngFor="let msg of greetindsNb" [type]="msg.type" [message]="msg.text" [reply]="msg.reply"
+    <nb-chat-message *ngFor="let msg of socketMessages" [type]="msg.type" [message]="msg.text" [reply]="msg.reply"
                      [sender]="msg.sender" [date]="msg.date" [files]="msg.files" [quote]="msg.quote" [latitude]="msg.latitude"
                      [longitude]="msg.longitude" [avatar]="msg.avatar">
     </nb-chat-message>
@@ -22,14 +8,4 @@
     <nb-chat-form [dropFiles]="true" (send)="sendMessageWS2($event)">
     </nb-chat-form>
   </nb-chat>
-</div>
-
-
-
-
-
-<div *ngFor="let string of greetings">
-  <div class="container">
-    <p>{{string}}</p>
-  </div>
 </div>
