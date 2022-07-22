@@ -17,21 +17,18 @@ import {UserMessage} from "../../_dtos/chat/UserMessage";
 })
 export class ChatDetailComponent implements OnInit {
 
-  //TODO : Web Socket
-  //////// Test WS /////
-  socketMessages: NbMessage[] = [];
-  disabled = true;
-  newmessage: string;
-  private stompClient = null;
-  ///////
-
   messages: NbMessage[] = [];
   friendId: string;
   friendProfile: FriendProfile;
   myProfile: User;
 
+
+  socketMessages: NbMessage[] = [];
+  newMessage: string;
+  private stompClient = null;
+
   constructor(private chatService: ChatService, private router: Router, private route: ActivatedRoute,
-              private userService: UserService,public messageService: MessageService) {  }
+              private userService: UserService) {  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params): void => {
@@ -113,7 +110,7 @@ export class ChatDetailComponent implements OnInit {
        *   "/resume" --> @MessageMapping
        */
       this.stompClient.send('/app/resume', {}, JSON.stringify(nm));
-      this.newmessage = "";
+      this.newMessage = "";
 
     })
   }

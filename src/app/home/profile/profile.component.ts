@@ -21,6 +21,8 @@ export class ProfileComponent implements OnInit {
   postsLiked: Post[];
   userAnswers: Post[];
 
+  //TODO : Récupérer la photo de profile depuis le bucket S3
+
   constructor(private userService: UserService, private postService: PostService, private router: Router,
               private dialogService: NbDialogService, private codeService:CodeService) {
 

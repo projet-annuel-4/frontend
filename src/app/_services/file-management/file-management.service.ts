@@ -7,6 +7,7 @@ import {FileResponse} from "../../_dtos/file/FileResponse";
 import {Directory} from "../../_dtos/directory/Directory";
 import {FileRequest} from "../../_dtos/file/FileRequest";
 import {ImageRequest} from "../../_dtos/image/ImageRequest";
+import {ImageResponse} from "../../_dtos/image/ImageResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -71,8 +72,8 @@ export class FileManagementService {
   }
 
 
-  downloadImage(image_id: number): Observable<FileResponse>{
-    return this.http.get<FileResponse>(`${file_service.BASE_URL}/image/${image_id}`, this.fileOptions);
+  downloadImage(image_id: number): Observable<ImageResponse>{
+    return this.http.get<ImageResponse>(`${file_service.BASE_URL}/image/${image_id}`, this.fileOptions);
   }
 
   deleteImage(image_id: number): Observable<FileResponse>{

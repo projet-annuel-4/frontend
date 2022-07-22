@@ -24,7 +24,7 @@ export class ProjectExecutionComponent implements OnInit {
 
 
   options = {
-    theme: 'vs-dark', // TODO : Voir pour Theme custom -> https://github.com/brijeshb42/monaco-themes
+    theme: 'vs-dark',
     lineNumbers: 'on',
     minimap: {
       enabled: true

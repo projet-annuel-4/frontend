@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
-import {ChatDetailComponent} from "../../home/chat-detail/chat-detail.component";
 
 @Injectable({
   providedIn: 'root'

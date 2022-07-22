@@ -16,11 +16,6 @@ export class FollowerItemComponent implements OnInit {
 
   constructor(private router: Router) { }
 
-  //TODO : Crée la page de profile du Friend
-
-  //TODO: Click sur le Friend redirige vers le profile
-  // routerlink etc....
-
   ngOnInit(): void {
     this.name = this.follower.firstname + " " + this.follower.lastname;
   }

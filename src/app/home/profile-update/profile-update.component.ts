@@ -77,7 +77,6 @@ export class ProfileUpdateComponent implements OnInit {
       return;
     }
 
-    //TODO : Upload la photo de profile
     const imageRequest = new ImageRequest(this.file.type, "profile", this.user.id.toString(),"null");
 
     this.fileManagementService.uploadImage(imageRequest, this.file).subscribe(then => {
