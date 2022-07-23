@@ -14,9 +14,9 @@ import {Filters} from "../../_dtos/post/Search/Filters";
 })
 export class SearchComponent implements OnInit {
   titleToggle = true;
-  contentToggle: boolean = true;
-  tagToggle: boolean = true;
-  creationDateToggle: boolean = true;
+  contentToggle: boolean = false;
+  tagToggle: boolean = false;
+  creationDateToggle: boolean = false;
 
   filter = new PostFilterRequest();
   postsFound: Post[];
