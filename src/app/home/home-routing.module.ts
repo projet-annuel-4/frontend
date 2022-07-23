@@ -29,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: 'friend', children:[
-          {path: ':friendId/:isFollowed', component: FriendProfileComponent}
+          {path: ':friendId/profile', component: FriendProfileComponent}
         ]
       },
       { path: 'settings', component: SettingsComponent }

@@ -26,34 +26,37 @@ export class FriendProfileComponent implements OnInit {
 
   followedByTheUser: boolean;
 
-  buttonText: string = "";
+  buttonText: string;
 
-  //TODO : Trouver un autre moyen de savoir si le friend est suivi par le user connecté
+  //TODO : Charger la photo de profil du friend
 
+  //TODO : Pouvoir liker les posts du Friend
   constructor(private userService: UserService, private route: ActivatedRoute, private postService: PostService,
               private dialogService: NbDialogService, private codeService:CodeService,
               private followService: FollowService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params): void => {
-      this.followedByTheUser = params.isFollowed;
-      console.log("followedByTheUser : " + this.followedByTheUser);
-
-      if(this.followedByTheUser == true){
-        this.buttonText = "follow"
-      } else {
-        this.buttonText = "unfollow"
-      }
-
-
       if(params.friendId !== undefined){
+          this.postService.getUserById(params.friendId).subscribe(friend => {
+            this.friendProfile = friend;
+            this.initFriendPost();
+          });
 
-        this.postService.getUserById(params.friendId).subscribe(friend => {
-          this.friendProfile = friend;
-          this.initFriendPost();
-        });
+          //Est ce le user follow ce friend ??
+          this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(subscriptions => {
+            subscriptions.forEach(sub => {
+              if (sub.id == params.friendId) {
+                this.followedByTheUser = true;
+              } else {
+                this.followedByTheUser = false;
+              }
+              this.updateButton();
+            })
+          });
       }
     });
+
   }
 
 
@@ -92,33 +95,27 @@ export class FriendProfileComponent implements OnInit {
     return newContent;
   }
 
-
-  follow(){
-    this.followService.follow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
-      this.followedByTheUser = true;
-    })
-  }
-
-  unfollow(){
-    this.followService.unfollow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
-      this.followedByTheUser = false;
-    })
-  }
-
   follow_unfollow(){
     this.followedByTheUser = !this.followedByTheUser;
     if(this.followedByTheUser == true){
       this.followService.follow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
         this.followedByTheUser = true;
-        this.buttonText = "unfollow"
-      })
+      });
 
     } else {
       this.followService.unfollow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
         this.followedByTheUser = false;
-        this.buttonText = "follow"
-      })
+      });
+    }
 
+    this.updateButton();
+  }
+
+  updateButton(){
+    if(this.followedByTheUser == true){
+      this.buttonText = "unfollow";
+    } else {
+      this.buttonText = "follow";
     }
   }
 
