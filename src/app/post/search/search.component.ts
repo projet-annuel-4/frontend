@@ -17,10 +17,10 @@ export class SearchComponent implements OnInit {
   creationDateToggle: boolean = true;
 
   filter = new PostFilterRequest();
-
   postsFound: Post[];
 
-  userFound: User[];
+  userFirstname: string;
+  usersFound: User[];
 
   constructor(private postService: PostService, private datePipe: DatePipe) { }
 
@@ -63,9 +63,10 @@ export class SearchComponent implements OnInit {
   }
 
 
-
-  //TODO : recherche par user
   searchUser(){
+    this.postService.getUserByFirstname(this.userFirstname).subscribe( user => {
+      this.usersFound = user;
+    });
 
   }
 

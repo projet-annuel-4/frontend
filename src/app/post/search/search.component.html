@@ -11,7 +11,7 @@
           <input nbInput shape="round" id="content" placeholder="Content" [(ngModel)]="filter.content">
         </span>
 
-            <span style="padding-right: 10px">
+        <span style="padding-right: 10px">
           <label class="label" for="tag">Tag : </label>
           <input nbInput shape="round" id="tag" placeholder="TS" [(ngModel)]="filter.tagName">
         </span>
@@ -28,15 +28,15 @@
     </nb-card>
 
     <nb-card>
-      <nb-card-body *ngIf="postsFound !== undefined; else elseBlock">
+      <nb-card-body *ngIf="postsFound !== undefined; else postElseBlock">
         <span *ngFor="let post of postsFound">
           <app-post-card [post]="post"></app-post-card>
         </span>
       </nb-card-body>
 
-      <ng-template #elseBlock>
+      <ng-template #postElseBlock>
         <nb-card-body style="text-align: center">
-          No Post
+          No Post Found
         </nb-card-body>
       </ng-template>
     </nb-card>
@@ -47,20 +47,36 @@
     <nb-card>
       <nb-card-body>
         <span style="padding-right: 10px">
-          <label class="label" for="username">username : </label>
-          <input nbInput shape="round" id="username" placeholder="Title" [(ngModel)]="filter.title">
+          <label class="label" for="username">User : </label>
+          <input nbInput shape="round" id="username" placeholder="Username" [(ngModel)]="userFirstname">
         </span>
       </nb-card-body>
+      <nb-card-footer>
+        <button nbButton (click)="searchUser()">Search</button>
+      </nb-card-footer>
     </nb-card>
 
 
     <nb-card>
-      <nb-card-body *ngIf="userFound !== undefined">
-        <span *ngFor="let user of userFound">
-          <div>{{user.firstname}}</div>
-          <div>{{user.lastname}}</div>
+      <nb-card-body *ngIf="usersFound !== undefined; else userElseBlock">
+        <span *ngFor="let user of usersFound">
+          <div style="padding: 10px" routerLink="/friend/{{user.id}}/false">
+            <nb-user *ngIf="user != null"
+                     name="{{user.firstname}} {{user.lastname}}"
+                     picture=""
+            size="giant">
+          </nb-user>
+          </div>
+
         </span>
       </nb-card-body>
+
+      <ng-template #userElseBlock>
+        <nb-card-body style="text-align: center">
+          No User Found
+        </nb-card-body>
+      </ng-template>
+
     </nb-card>
   </nb-tab>
 
