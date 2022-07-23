@@ -4,6 +4,8 @@ import {PostFilterRequest} from "../../_dtos/post/PostFilterRequest";
 import {Post} from "../../_dtos/post/Post";
 import {DatePipe} from "@angular/common";
 import {User} from "../../_dtos/user/User";
+import {SearchFilter} from "../../_dtos/post/Search/SearchFilter";
+import {Filters} from "../../_dtos/post/Search/Filters";
 
 @Component({
   selector: 'app-search',
@@ -28,29 +30,31 @@ export class SearchComponent implements OnInit {
 
   }
 
-  search(){
-    /*
-    if(this.filter.title === undefined && this.filter.content === undefined
-      && this.filter.tagName === undefined && this.filter.creationDate === undefined){
-      alert("One params min");
-      return;
-    }
-     */
-    if(this.filter.title === undefined || this.filter.content === undefined
-      || this.filter.tagName === undefined || this.filter.creationDate === undefined){
-      alert("All params are required");
-      return;
-    }
+  searchPost(){
+    this.postService.getAllByFilters(this.checkFilterValue()).subscribe(posts => {
+      this.postsFound = posts
+    });
+  }
 
-    this.checkFilterValue();
+  checkFilterValue(){
+    const filters = [];
 
-    this.postService.getAllWithFilters(this.filter).subscribe(posts => {
-      this.postsFound = posts;
+    if(this.filter.title) filters.push(new SearchFilter("title", 4, this.filter.title, [""]));
+    if(this.filter.content) filters.push(new SearchFilter("content", 4, this.filter.content, [""]));
+    if(this.filter.tagName) filters.push(new SearchFilter("tags", 4, "", [this.filter.tagName]));
+
+    return new Filters(filters);
+  }
+
+  searchUser(){
+    this.postService.getUserByFirstname(this.userFirstname).subscribe( user => {
+      this.usersFound = user;
     });
   }
 
 
-  checkFilterValue(){
+
+  OLDcheckFilterValue(){
     this.filter.title === undefined ?  this.filter.title = "": this.filter.title;
     this.filter.content === undefined ?  this.filter.content = "": this.filter.content;
     this.filter.tagName === undefined ?  this.filter.tagName = "": this.filter.tagName;
@@ -62,19 +66,9 @@ export class SearchComponent implements OnInit {
     }
   }
 
-
-  searchUser(){
-    this.postService.getUserByFirstname(this.userFirstname).subscribe( user => {
-      this.usersFound = user;
-    });
-
-  }
-
-
   dateToString(date: Date){
     return this.datePipe.transform(date, 'yyyy-MM-dd 00:00:00');
   }
-
 
 
 }

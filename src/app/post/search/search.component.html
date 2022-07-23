@@ -2,28 +2,55 @@
   <nb-tab tabTitle="Post">
     <nb-card>
       <nb-card-header>
-        <span style="padding-right: 10px">
+        <span *ngIf="titleToggle" style="padding-right: 10px">
           <label class="label" for="title">Title : </label>
           <input nbInput shape="round" id="title" placeholder="Title" [(ngModel)]="filter.title">
         </span>
-            <span style="padding-right: 10px">
+
+        <span *ngIf="contentToggle" style="padding-right: 10px">
           <label class="label" for="content" >Content : </label>
           <input nbInput shape="round" id="content" placeholder="Content" [(ngModel)]="filter.content">
         </span>
 
-        <span style="padding-right: 10px">
+        <span *ngIf="tagToggle" style="padding-right: 10px">
           <label class="label" for="tag">Tag : </label>
           <input nbInput shape="round" id="tag" placeholder="TS" [(ngModel)]="filter.tagName">
         </span>
-
-        <span style="padding-right: 10px">
+<!--
+        <span *ngIf="creationDateToggle" style="padding: 10px">
           <label class="label" for="creationDate" >CreationDate : </label>
           <input nbInput type="date" shape="round" id="creationDate"
                  placeholder="date" [(ngModel)]="filter.creationDate">
         </span>
+-->
       </nb-card-header>
+
+      <nb-card-body>
+        <span class="displayButton">
+          <button nbButton size="small"
+                  (click)="titleToggle = !titleToggle">affiche title</button>
+        </span>
+
+        <span class="displayButton">
+          <button
+            nbButton size="small"
+            (click)="contentToggle = !contentToggle">affiche content</button>
+        </span>
+
+        <span class="displayButton">
+          <button nbButton size="small"
+                  (click)="tagToggle = !tagToggle">affiche tag</button>
+        </span>
+<!--
+        <span class="displayButton">
+            <button nbButton size="small"
+                    (click)="creationDateToggle = !creationDateToggle">affiche creation date</button>
+        </span>
+-->
+      </nb-card-body>
+
       <nb-card-footer>
-        <button nbButton (click)="search()">Search</button>
+        <button nbButton (click)="searchPost()">Search</button>
       </nb-card-footer>
     </nb-card>
 
@@ -43,6 +70,7 @@
   </nb-tab>
 
 
+
   <nb-tab tabTitle="User">
     <nb-card>
       <nb-card-body>
@@ -55,7 +83,6 @@
         <button nbButton (click)="searchUser()">Search</button>
       </nb-card-footer>
     </nb-card>
-
 
     <nb-card>
       <nb-card-body *ngIf="usersFound !== undefined; else userElseBlock">

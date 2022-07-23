@@ -8,6 +8,8 @@ import {User} from "../../_dtos/user/User";
 import {CommentRequest} from "../../_dtos/post/CommentRequest";
 import {PostFilterRequest} from "../../_dtos/post/PostFilterRequest";
 import {PostRequest} from "../../_dtos/post/PostRequest";
+import {SearchFilter} from "../../_dtos/post/Search/SearchFilter";
+import {Filters} from "../../_dtos/post/Search/Filters";
 
 
 @Injectable({
@@ -99,6 +101,10 @@ export class PostService {
 
   getAllWithFilters(filters: PostFilterRequest): Observable<Post[]> {
     return this.http.post<Post[]>(`${post_service.BASE_URL}/filters`, filters, this.httpOptions);
+  }
+
+  getAllByFilters(filters: Filters): Observable<Post[]>{
+    return this.http.post<Post[]>(`${post_service.BASE_URL}/getAllByFilters`, filters, this.httpOptions);
   }
 
   getAllUserAnswers(user_id: number): Observable<Post[]>{
