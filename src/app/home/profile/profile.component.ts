@@ -25,8 +25,6 @@ export class ProfileComponent implements OnInit {
 
   image;
 
-  //TODO : Récupérer la photo de profile depuis le bucket S3
-
   constructor(private userService: UserService, private postService: PostService, private router: Router,
               private dialogService: NbDialogService, private codeService:CodeService, private fileService: FileManagementService,
               private sanitizer: DomSanitizer) {

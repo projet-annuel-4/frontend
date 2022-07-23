@@ -1,4 +1,7 @@
 export class CodeExecution {
-  language: string;
+  id: string;
   code: string;
+  language: string;
+  mode = "PIECE";
+  test = false;
 }

@@ -37,7 +37,7 @@ export const user_service = {
 }
 
 export const code_execution_service = {
-  SEND: ``
+  SEND: `http://localhost:3001/${environment.API_VERSION}/codeExecutor/submit`
 }
 
 export const post_service = {
