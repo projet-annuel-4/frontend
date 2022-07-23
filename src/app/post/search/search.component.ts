@@ -3,6 +3,7 @@ import {PostService} from "../../_services/post/post.service";
 import {PostFilterRequest} from "../../_dtos/post/PostFilterRequest";
 import {Post} from "../../_dtos/post/Post";
 import {DatePipe} from "@angular/common";
+import {User} from "../../_dtos/user/User";
 
 @Component({
   selector: 'app-search',
@@ -19,6 +20,8 @@ export class SearchComponent implements OnInit {
 
   postsFound: Post[];
 
+  userFound: User[];
+
   constructor(private postService: PostService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
@@ -33,7 +36,6 @@ export class SearchComponent implements OnInit {
       return;
     }
      */
-
     if(this.filter.title === undefined || this.filter.content === undefined
       || this.filter.tagName === undefined || this.filter.creationDate === undefined){
       alert("All params are required");
@@ -58,6 +60,13 @@ export class SearchComponent implements OnInit {
     } else {
       this.filter.creationDate += " 00:00:00";
     }
+  }
+
+
+
+  //TODO : recherche par user
+  searchUser(){
+
   }
 
 

@@ -72,8 +72,8 @@ export class FileManagementService {
   }
 
 
-  downloadImage(image_id: number): Observable<ImageResponse>{
-    return this.http.get<ImageResponse>(`${file_service.BASE_URL}/image/${image_id}`, this.fileOptions);
+  downloadImage(user_id: number): Observable<ImageResponse>{
+    return this.http.get<ImageResponse>(`${file_service.BASE_URL}/image/${user_id}`);
   }
 
   deleteImage(image_id: number): Observable<FileResponse>{

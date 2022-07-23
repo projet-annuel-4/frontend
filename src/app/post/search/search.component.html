@@ -1,47 +1,69 @@
-<nb-card>
-  <nb-card-header>
-    <span *ngIf="titleToggle" style="padding-right: 10px">
-      <label class="label" for="title">Title : </label>
-      <input nbInput shape="round" id="title" placeholder="Title" [(ngModel)]="filter.title">
-    </span>
-    <span *ngIf="contentToggle" style="padding-right: 10px">
-      <label class="label" for="content" >Content : </label>
-      <input nbInput shape="round" id="content" placeholder="Content" [(ngModel)]="filter.content">
-    </span>
-    <span *ngIf="tagToggle" style="padding-right: 10px">
-      <label class="label" for="tag">Tag : </label>
-      <input nbInput shape="round" id="tag" placeholder="TS" [(ngModel)]="filter.tagName">
-    </span>
-    <span *ngIf="creationDateToggle" style="padding-right: 10px">
-      <label class="label" for="creationDate" >CreationDate : </label>
-      <input nbInput type="date" shape="round" id="creationDate"
-             placeholder="date" [(ngModel)]="filter.creationDate">
-    </span>
-  </nb-card-header>
-<!--
-  <nb-card-body>
-    <button nbButton size="small" (click)="titleToggle = !titleToggle">affiche title</button>
-    <button nbButton size="small" (click)="contentToggle = !contentToggle">affiche content</button>
-    <button nbButton size="small" (click)="tagToggle = !tagToggle">affiche tag</button>
-    <button nbButton size="small" (click)="creationDateToggle = !creationDateToggle">affiche creation date</button>
-  </nb-card-body>
--->
-  <nb-card-footer>
-    <button nbButton (click)="search()">Search</button>
-  </nb-card-footer>
-</nb-card>
+<nb-tabset>
+  <nb-tab tabTitle="Post">
+    <nb-card>
+      <nb-card-header>
+        <span style="padding-right: 10px">
+          <label class="label" for="title">Title : </label>
+          <input nbInput shape="round" id="title" placeholder="Title" [(ngModel)]="filter.title">
+        </span>
+            <span style="padding-right: 10px">
+          <label class="label" for="content" >Content : </label>
+          <input nbInput shape="round" id="content" placeholder="Content" [(ngModel)]="filter.content">
+        </span>
+
+            <span style="padding-right: 10px">
+          <label class="label" for="tag">Tag : </label>
+          <input nbInput shape="round" id="tag" placeholder="TS" [(ngModel)]="filter.tagName">
+        </span>
+
+        <span style="padding-right: 10px">
+          <label class="label" for="creationDate" >CreationDate : </label>
+          <input nbInput type="date" shape="round" id="creationDate"
+                 placeholder="date" [(ngModel)]="filter.creationDate">
+        </span>
+      </nb-card-header>
+      <nb-card-footer>
+        <button nbButton (click)="search()">Search</button>
+      </nb-card-footer>
+    </nb-card>
+
+    <nb-card>
+      <nb-card-body *ngIf="postsFound !== undefined; else elseBlock">
+        <span *ngFor="let post of postsFound">
+          <app-post-card [post]="post"></app-post-card>
+        </span>
+      </nb-card-body>
+
+      <ng-template #elseBlock>
+        <nb-card-body style="text-align: center">
+          No Post
+        </nb-card-body>
+      </ng-template>
+    </nb-card>
+  </nb-tab>
 
 
-<nb-card>
-  <nb-card-body *ngIf="postsFound !== undefined; else elseBlock">
-    <span *ngFor="let post of postsFound">
-      <app-post-card [post]="post"></app-post-card>
-    </span>
-  </nb-card-body>
+  <nb-tab tabTitle="User">
+    <nb-card>
+      <nb-card-body>
+        <span style="padding-right: 10px">
+          <label class="label" for="username">username : </label>
+          <input nbInput shape="round" id="username" placeholder="Title" [(ngModel)]="filter.title">
+        </span>
+      </nb-card-body>
+    </nb-card>
 
-  <ng-template #elseBlock>
-    <nb-card-body style="text-align: center">
-      No Post
-    </nb-card-body>
-  </ng-template>
-</nb-card>
+
+    <nb-card>
+      <nb-card-body *ngIf="userFound !== undefined">
+        <span *ngFor="let user of userFound">
+          <div>{{user.firstname}}</div>
+          <div>{{user.lastname}}</div>
+        </span>
+      </nb-card-body>
+    </nb-card>
+  </nb-tab>
+
+
+</nb-tabset>
+

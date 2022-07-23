@@ -8,6 +8,8 @@ import {NbDialogService} from "@nebular/theme";
 import {FollowerListComponent} from "./follower-list/follower-list.component";
 import {SubscriptionListComponent} from "./subscription-list/subscription-list.component";
 import {CodeService} from "../../_services/code_execution/code.service";
+import {FileManagementService} from "../../_services/file-management/file-management.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-profile',
@@ -21,10 +23,13 @@ export class ProfileComponent implements OnInit {
   postsLiked: Post[];
   userAnswers: Post[];
 
+  image;
+
   //TODO : Récupérer la photo de profile depuis le bucket S3
 
   constructor(private userService: UserService, private postService: PostService, private router: Router,
-              private dialogService: NbDialogService, private codeService:CodeService) {
+              private dialogService: NbDialogService, private codeService:CodeService, private fileService: FileManagementService,
+              private sanitizer: DomSanitizer) {
 
   }
 
@@ -48,6 +53,12 @@ export class ProfileComponent implements OnInit {
     this.postService.getAllUserAnswers(this.profile.id).subscribe(userAnswers => {
       this.userAnswers = userAnswers;
     }, error => {});
+
+
+    this.fileService.downloadImage(this.profile.id).subscribe( res => {
+      let objectURL = 'data:image/png;base64,' + res.file;
+      this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    })
 
   }
 

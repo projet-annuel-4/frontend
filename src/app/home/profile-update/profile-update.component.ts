@@ -5,9 +5,9 @@ import {Router} from "@angular/router";
 import {UserService} from "../../_services/user/user.service";
 import {UserUpdateRequest} from "../../_dtos/user/UserUpdateRequest";
 import {FileManagementService} from "../../_services/file-management/file-management.service";
-import {FileRequest} from "../../_dtos/file/FileRequest";
 import {ImageRequest} from "../../_dtos/image/ImageRequest";
 import {User} from "../../_dtos/user/User";
+import {TokenStorageService} from "../../_services/token/token-storage.service";
 
 @Component({
   selector: 'app-profile-update',
@@ -23,7 +23,7 @@ export class ProfileUpdateComponent implements OnInit {
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder,
               private userService: UserService, private router: Router,
-              private fileManagementService: FileManagementService) {
+              private fileManagementService: FileManagementService, private tokenStorage: TokenStorageService) {
     this.signUpFrom = this.formBuilder.group({
       imgUrl: [],
       firstname: [],
@@ -79,9 +79,13 @@ export class ProfileUpdateComponent implements OnInit {
 
     const imageRequest = new ImageRequest(this.file.type, "profile", this.user.id.toString(),"null");
 
-    this.fileManagementService.uploadImage(imageRequest, this.file).subscribe(then => {
-      console.log(then);
-      console.log("image uploade (askip)");
+    this.fileManagementService.uploadImage(imageRequest, this.file).subscribe(imageUrl => {
+      console.log("image upload (askip)");
+      console.log("imageUrl : " + imageUrl);
+
+      let user = this.tokenStorage.getUser();
+      user.imgUrl = imageUrl;
+      this.tokenStorage.saveUser(user);
     });
 
   }

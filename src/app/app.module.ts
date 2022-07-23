@@ -15,7 +15,7 @@ import {
     NbAccordionModule,
     NbInputModule,
     NbUserModule,
-    NbTableModule, NbToggleModule, NbSearchModule
+    NbTableModule, NbToggleModule, NbSearchModule, NbTabsetModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
@@ -130,6 +130,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
         NbTableModule,
         NbToggleModule,
         NbSearchModule,
+        NbTabsetModule,
     ],
   providers: [
     NbSearchModule,DatePipe,
