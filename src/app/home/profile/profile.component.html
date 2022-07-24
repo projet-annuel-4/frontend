@@ -3,22 +3,24 @@
   <nb-layout-column class="col-3">
     <nb-card>
       <nb-card-body style="text-align:center">
-        <!--<img class="profile-image" src="favicon.ico" width="150" height="150" alt="" >-->
-        <img class="profile-image" [src]="image" width="150" height="150" alt="">
+
+        <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150" height="150" alt="">
+        <ng-template #noProfileImage>
+          <img class="profile-image" src="assets/profil.png" width="150" height="150" alt="">
+        </ng-template>
+
         <br>
         <div>{{profile.firstname}} {{profile.lastname.toUpperCase()}}</div>
-        <div>Mail : {{profile.email}}</div>
+        <div>{{profile.email}}</div>
       </nb-card-body>
 
       <nb-card-footer>
           <div (click)="viewFollowers()">
-            <img  src="favicon.ico" width="28" height="30" alt="" >
-            Followers: {{profile.nbFollowers}}
+            {{profile.nbFollowers}} Followers
           </div>
         <hr>
           <div (click)="viewSubscriptions()">
-            <img  src="favicon.ico" width="28" height="30" alt="" >
-            Subs : {{profile.nbSubscriptions}}
+            {{profile.nbSubscriptions}} Subscriptions
           </div>
       </nb-card-footer>
     </nb-card>

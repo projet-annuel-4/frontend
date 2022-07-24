@@ -2,21 +2,25 @@
   <nb-layout-column>
     <nb-card>
       <nb-card-body style="text-align:center">
-        <img class="profile-image" src="favicon.ico" width="150" height="150" alt="" >
-        <!--<img class="profile-image" src="{{profile.imgUrl}}" width="150" height="150" alt=""> -->
+
+        <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150" height="150" alt="">
+        <ng-template #noProfileImage>
+          <img class="profile-image" src="assets/profil.png" width="150" height="150" alt="">
+        </ng-template>
+
         <br>
         <div>{{friendProfile.firstname}} {{friendProfile.lastname.toUpperCase()}}</div>
-        <div>Mail : {{friendProfile.email}}</div>
+        <div>{{friendProfile.email}}</div>
       </nb-card-body>
 
       <nb-card-footer>
         <div>
           <img  src="favicon.ico" width="28" height="30" alt="" (click)="viewFollowers()">
-          Followers: {{friendProfile.nbFollowers}}
+            {{friendProfile.nbFollowers}} Followers
         </div>
         <div>
           <img  src="favicon.ico" width="28" height="30" alt="" (click)="viewSubscriptions()">
-          Subs : {{friendProfile.nbSubscriptions}}
+            {{friendProfile.nbSubscriptions}} Subscriptions
         </div>
         <div style="text-align: right">
           <button nbButton (click)="follow_unfollow()">
@@ -27,12 +31,12 @@
     </nb-card>
 
 
-    <nb-tabset >
+    <nb-tabset>
 
       <nb-tab tabTitle="Posts">
-        <div *ngFor="let post of friendPost">
-          <nb-card>
-            <nb-card-body routerLink="../post/{{post.id}}/detail">
+        <span *ngIf="friendPost !== undefined; else postElseBlock">
+          <nb-card *ngFor="let post of friendPost">
+            <nb-card-body routerLink="/post/{{post.id}}/detail">
               <nb-card-header> Title : {{post.title}} </nb-card-header>
 
               <div style="padding: 2%">
@@ -42,16 +46,20 @@
               <div>
                 Tags : <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
               </div>
-
             </nb-card-body>
-
           </nb-card>
-        </div>
+        </span>
+
+        <ng-template #postElseBlock>
+          <nb-card-body style="text-align: center">
+            No Post Found
+          </nb-card-body>
+        </ng-template>
       </nb-tab>
 
       <nb-tab tabTitle="Answers">
-        <div *ngFor="let friendAnswer of friendAnswers">
-          <nb-card>
+        <nb-card *ngIf="friendAnswers !== undefined; else answersElseBlock">
+          <span *ngFor="let friendAnswer of friendAnswers">
             <nb-card-body routerLink="../post/{{friendAnswer.id}}/detail">
               <nb-card-header> Title : {{friendAnswer.title}} </nb-card-header>
 
@@ -62,14 +70,20 @@
               <div>
                 Tags : <span *ngFor="let tag of friendAnswer.tags">| {{tag.name}} </span>
               </div>
-
             </nb-card-body>
-          </nb-card>
-        </div>
+          </span>
+        </nb-card>
+
+        <ng-template #answersElseBlock>
+          <nb-card-body style="text-align: center">
+            No Post Found
+          </nb-card-body>
+        </ng-template>
+
       </nb-tab>
 
       <nb-tab tabTitle="Like">
-        <div *ngFor="let postLiked of postsLiked">
+        <div *ngFor="let postLiked of friendPostsLiked">
           <nb-card>
             <nb-card-body routerLink="../post/{{postLiked.id}}/detail">
               <nb-card-header> Title : {{postLiked.title}} </nb-card-header>

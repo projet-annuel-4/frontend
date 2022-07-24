@@ -21,7 +21,6 @@ export class FollowerItemComponent implements OnInit {
   }
 
   goToFriendPage(){
-    localStorage.setItem('isFollowed', 'true');
     this.router.navigate(['friend/' + this.follower.id + '/' + 'profile']).then();
   }
 

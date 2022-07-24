@@ -10,6 +10,8 @@ import {NbDialogService} from "@nebular/theme";
 import {CodeService} from "../../../_services/code_execution/code.service";
 import {FollowService} from "../../../_services/follow/follow.service";
 import {TokenStorageService} from "../../../_services/token/token-storage.service";
+import {FileManagementService} from "../../../_services/file-management/file-management.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-friend-profile',
@@ -19,21 +21,22 @@ import {TokenStorageService} from "../../../_services/token/token-storage.servic
 export class FriendProfileComponent implements OnInit {
 
   friendProfile: User;
+  image;
 
   friendPost: Post[];
-  postsLiked: Post[];
+  friendPostsLiked: Post[];
   friendAnswers: Post[];
 
   followedByTheUser: boolean;
 
   buttonText: string;
 
-  //TODO : Charger la photo de profil du friend
 
   //TODO : Pouvoir liker les posts du Friend
   constructor(private userService: UserService, private route: ActivatedRoute, private postService: PostService,
               private dialogService: NbDialogService, private codeService:CodeService,
-              private followService: FollowService, private tokenStorage: TokenStorageService) { }
+              private followService: FollowService, private tokenStorage: TokenStorageService,
+              private fileService: FileManagementService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params): void => {
@@ -54,6 +57,12 @@ export class FriendProfileComponent implements OnInit {
               this.updateButton();
             })
           });
+
+
+        this.fileService.downloadImage(this.friendProfile.id).subscribe( res => {
+          let objectURL = 'data:image/png;base64,' + res.file;
+          this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        })
       }
     });
 
@@ -66,7 +75,7 @@ export class FriendProfileComponent implements OnInit {
     },error => {});
 
     this.postService.getPostLikedByUser(this.friendProfile.id).subscribe(postsLiked => {
-      this.postsLiked = postsLiked;
+      this.friendPostsLiked = postsLiked;
     }, error => {});
 
     this.postService.getAllUserAnswers(this.friendProfile.id).subscribe(userAnswers => {
