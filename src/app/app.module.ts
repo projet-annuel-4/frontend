@@ -1,21 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {InjectionToken, NgModule} from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-    NbThemeModule,
-    NbLayoutModule,
-    NbMenuModule,
-    NbDialogModule,
-    NbSelectModule,
-    NbCardModule,
-    NbContextMenuModule,
-    NbIconModule,
-    NbButtonModule,
-    NbAccordionModule,
-    NbInputModule,
-    NbUserModule,
-    NbTableModule, NbToggleModule, NbSearchModule, NbTabsetModule
+  NbThemeModule,
+  NbLayoutModule,
+  NbMenuModule,
+  NbDialogModule,
+  NbSelectModule,
+  NbCardModule,
+  NbContextMenuModule,
+  NbIconModule,
+  NbButtonModule,
+  NbAccordionModule,
+  NbInputModule,
+  NbUserModule,
+  NbTableModule, NbToggleModule, NbSearchModule, NbTabsetModule, NbToastrService, NbToastrModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
@@ -131,9 +131,10 @@ const monacoConfig: NgxMonacoEditorConfig = {
         NbToggleModule,
         NbSearchModule,
         NbTabsetModule,
+        NbToastrModule.forRoot()
     ],
   providers: [
-    NbSearchModule,DatePipe,
+    NbSearchModule, DatePipe, NbToastrService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 
   ],

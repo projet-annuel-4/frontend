@@ -4,7 +4,7 @@ import { UserService } from 'src/app/_services/user/user.service';
 import {Post} from "../../_dtos/post/Post";
 import {PostService} from "../../_services/post/post.service";
 import {User} from "../../_dtos/user/User";
-import {NbDialogService} from "@nebular/theme";
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 import {FollowerListComponent} from "./follower-list/follower-list.component";
 import {SubscriptionListComponent} from "./subscription-list/subscription-list.component";
 import {CodeService} from "../../_services/code_execution/code.service";
@@ -25,9 +25,11 @@ export class ProfileComponent implements OnInit {
 
   image;
 
+  positions = NbGlobalPhysicalPosition;
+
   constructor(private userService: UserService, private postService: PostService, private router: Router,
               private dialogService: NbDialogService, private codeService:CodeService, private fileService: FileManagementService,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer, private nbToastrService:NbToastrService) {
 
   }
 
@@ -39,7 +41,7 @@ export class ProfileComponent implements OnInit {
     console.log(this.profile.lastname)
 
     this.postService.getAllByUser(this.profile.id).subscribe(posts => {
-      this.userPost = posts;
+      this.userPost = posts.reverse();
     },error => {
 
     });
@@ -83,23 +85,12 @@ export class ProfileComponent implements OnInit {
   }
 
 
-
-  //TODO : Debug le delete cote API
   deletePost(post_id: string) {
     if (confirm("You are going to delete a post")) {
-      //this.postService.delete(parseInt(post_id)).subscribe()
-
-      //For demo
-      this.userPost.forEach(post => {
-        if (post.id == post_id) {
-          let i = this.userPost.indexOf(post)
-          this.userPost.splice(i, 1);
-        }
-      })
-      //
+      this.postService.delete(parseInt(post_id)).subscribe();
+      this.nbToastrService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
     }
-
-
   }
+
 
 }

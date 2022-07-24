@@ -83,8 +83,8 @@ export class PostService {
     return this.http.get<Post[]>(`${post_service.BASE_URL}/userId/${user_id}/postLiked`, this.httpOptions);
   }
 
-  delete(post_id: number): Observable<User[]> {
-    return this.http.delete<User[]>(`${post_service.BASE_URL}/${post_id}`, this.httpOptions);
+  delete(post_id: number): Observable<string>{
+    return this.http.delete<string>(`${post_service.BASE_URL}/${post_id}`, this.httpOptions);
   }
 
   comment(comment: CommentRequest): Observable<any>{

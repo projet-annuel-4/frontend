@@ -1,12 +1,17 @@
 <nb-layout>
 
   <nb-layout-column class="col-3">
+
+    <button id="createButton" nbButton shape="round" size="small" routerLink="/post/create">
+      <img width="30" height="30" src="/assets/add.png">
+    </button>
+
     <nb-card>
       <nb-card-body style="text-align:center">
 
         <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150" height="150" alt="">
         <ng-template #noProfileImage>
-          <img class="profile-image" src="assets/profil.png" width="150" height="150" alt="">
+          <img class="profile-image" src="assets/profile.png" width="150" height="150" alt="">
         </ng-template>
 
         <br>
