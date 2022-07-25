@@ -3,9 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth/auth.service';
 import { Router } from '@angular/router';
 import { SignUpRequest } from 'src/app/_dtos/auth/SignUpRequest';
-import { ApiResponse } from 'src/app/_dtos/common/ApiResponse';
 import { NbDialogService } from '@nebular/theme';
-import { DialogSuccessComponent } from 'src/app/shared/dialog/dialog-alert/dialog-success.component';
 
 @Component({
   selector: 'app-signup',

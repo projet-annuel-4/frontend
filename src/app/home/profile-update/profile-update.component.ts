@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {AuthService} from "../../_services/auth/auth.service";
 import {Router} from "@angular/router";
-import {NbDialogService} from "@nebular/theme";
-import {SignUpRequest} from "../../_dtos/auth/SignUpRequest";
 import {UserService} from "../../_services/user/user.service";
 import {UserUpdateRequest} from "../../_dtos/user/UserUpdateRequest";
 import {FileManagementService} from "../../_services/file-management/file-management.service";
-import {FileRequest} from "../../_dtos/file/FileRequest";
+import {ImageRequest} from "../../_dtos/image/ImageRequest";
+import {User} from "../../_dtos/user/User";
+import {TokenStorageService} from "../../_services/token/token-storage.service";
 
 @Component({
   selector: 'app-profile-update',
@@ -16,12 +16,14 @@ import {FileRequest} from "../../_dtos/file/FileRequest";
 })
 export class ProfileUpdateComponent implements OnInit {
 
+  user: User;
+
   signUpFrom: FormGroup;
   file: File;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder,
               private userService: UserService, private router: Router,
-              private fileManagementService: FileManagementService) {
+              private fileManagementService: FileManagementService, private tokenStorage: TokenStorageService) {
     this.signUpFrom = this.formBuilder.group({
       imgUrl: [],
       firstname: [],
@@ -30,12 +32,13 @@ export class ProfileUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.userService.getProfile();
   }
 
   update() {
     if (this.signUpFrom.valid) {
 
-      this.onUpload();
+      if(this.file !== undefined) this.onUpload();
 
       const data = this.signUpFrom.value;
       //this.loading = true;
@@ -45,6 +48,8 @@ export class ProfileUpdateComponent implements OnInit {
           //this.loading = true;
           console.log("subscribe");
           this.router.navigate(['../profile']).then()
+        }, error => {
+          alert(error['firstNameError']);
         }
       );
 
@@ -72,10 +77,15 @@ export class ProfileUpdateComponent implements OnInit {
       return;
     }
 
-    //TODO : Upload la photo de profile
-    this.fileManagementService.uploadFile(new FileRequest(null, null, this.file.name, "", "", ""),
-                                            this.file).subscribe(then => {
-      console.log("image uploade (askip)");
+    const imageRequest = new ImageRequest(this.file.type, "profile", this.user.id.toString(),"null");
+
+    this.fileManagementService.uploadImage(imageRequest, this.file).subscribe(imageUrl => {
+      console.log("image upload (askip)");
+      console.log("imageUrl : " + imageUrl);
+
+      let user = this.tokenStorage.getUser();
+      user.imgUrl = imageUrl;
+      this.tokenStorage.saveUser(user);
     });
 
   }

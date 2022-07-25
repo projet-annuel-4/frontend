@@ -9,14 +9,16 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { TokenComponent } from './token/token.component';
 
 const routes: Routes = [
-  {path: 'auth', component: AuthComponent, children:[
+  {
+    path: 'auth', component: AuthComponent, children:[
       {path: 'signing', component: SigningComponent},
       {path: 'signup', component: SignupComponent},
       {path: 'forgot', component: ForgotPasswordComponent},
       {path: 'reset', component: ResetPasswordComponent},
       {path: 'token', component: TokenComponent},
       {path: '', redirectTo:'signing', pathMatch: 'full'}
-  ]}
+    ]
+  }
 ];
 
 @NgModule({

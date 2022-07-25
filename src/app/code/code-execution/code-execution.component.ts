@@ -50,17 +50,29 @@ export class CodeExecutionComponent implements OnInit {
 
   sendCode(codeId: string, language: string, code: string){
 
+    this.codeToExecute.id = codeId;
     this.codeToExecute.language = language;
     this.codeToExecute.code = code;
 
+/*
+    console.log("codeId : " + codeId);
+    console.log("language : " + this.codeToExecute.language);
+    console.log("code : " + this.codeToExecute.code);
+
+ */
     this.codeService.sendCode(this.codeToExecute).subscribe(
       res => {
+        console.log(res.id);
+        console.log(res.status);
+        console.log(res.output[0]);
 
         this.codes.forEach(code => {
           if(code.id === codeId) {
-            code.output = res.message;
-            code.isRunnable = res.success;
+            code.output = res.output[0];
+            if(res.status == "done") code.isRunnable = true;
+            if(res.status == "false") code.isRunnable = false;
           }
+
           // Si un des codes n'est pas runnable on localstorage pour passer l'information
           //  au composant de création
           if(!code.isRunnable) {
@@ -70,9 +82,11 @@ export class CodeExecutionComponent implements OnInit {
 
       },
       error => {
-        alert(error['error']);
+        console.log(error);
       }
     );
+
+
 
   }
 

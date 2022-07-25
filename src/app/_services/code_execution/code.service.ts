@@ -7,6 +7,7 @@ import {CodeExecution} from "../../_dtos/code_execution/CodeExecution";
 import {code_execution_service} from "../../../environments/environment";
 import {Code} from "../../_dtos/code_execution/Code";
 import {v4 as uuidv4} from 'uuid';
+import {CodeExecutionResponse} from "../../_dtos/code_execution/CodeExecutionResponse";
 
 @Injectable({providedIn: 'root'})
 export class CodeService {
@@ -14,10 +15,16 @@ export class CodeService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {}
+  constructor(private http: HttpClient) {}
 
-  sendCode(code:CodeExecution): Observable<ApiResponse>{
-    return this.http.post(`${code_execution_service.SEND}`, code , this.httpOptions) as Observable<ApiResponse>;
+  sendCode(code:CodeExecution): Observable<CodeExecutionResponse>{
+    console.log(code.id);
+    console.log(code.code);
+    console.log(code.language);
+    console.log(code.mode);
+    console.log(code.test);
+    //code.id = "2";
+    return this.http.post<CodeExecutionResponse>(`${code_execution_service.SEND}`, code , this.httpOptions);
   }
 
 

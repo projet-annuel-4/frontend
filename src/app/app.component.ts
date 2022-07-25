@@ -24,13 +24,12 @@ export class AppComponent implements OnInit{
 
   items = [
     { title: 'Profile', icon: 'person-outline'},
+    { title: 'Search', icon: ''},
     { title: 'Chat', icon: ''},
     { title: 'Feed' },
-    { title: 'Logout', icon: 'unlock-outline'},
+    { title: 'Logout', icon: 'unlock-outline'}
   ];
 
-
-  //TODO: Chercher une icone pour l'app
 
   constructor(private nbMenuService: NbMenuService, @Inject(NB_WINDOW) private window,
               private tokenStorageService: TokenStorageService, private router: Router,
@@ -48,6 +47,10 @@ export class AppComponent implements OnInit{
             this.router.navigate(['../profile']).then();
             break;
 
+          case 'Search':
+            this.router.navigate(['../post/search']).then();
+            break;
+
           case 'Chat':
             this.router.navigate(['../chat/']).then();
             break;
@@ -57,9 +60,10 @@ export class AppComponent implements OnInit{
             break;
 
           case 'Logout':
-            confirm("Sure ?");
-            this.tokenStorageService.signOut();
-            this.router.navigate(['auth/signing']).then();
+            if(confirm("Sure ?")){
+              this.tokenStorageService.signOut();
+              this.router.navigate(['auth/signing']).then();
+            }
             break;
 
           default:
@@ -72,7 +76,6 @@ export class AppComponent implements OnInit{
 
 
   changeTheme(){
-    //TODO : Debug
     //https://akveo.github.io/nebular/docs/components/toggle/overview#nbtogglecomponent
 
     this.toggleTheme = !this.toggleTheme;

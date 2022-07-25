@@ -19,12 +19,9 @@ export class CommentComponent implements OnInit {
   answer: Post;
   content:string;
 
-  //TODO : Enlever la possiblité de mettre un titre à la réponse ??
-
   constructor(private formBuilder: FormBuilder, private postService: PostService, private route: ActivatedRoute,
               private tokenStorage: TokenStorageService, private router: Router) {
     this.answerForm = this.formBuilder.group({
-      title: [],
       content: [],
       tagName: [],
       attachmentUrl: [],

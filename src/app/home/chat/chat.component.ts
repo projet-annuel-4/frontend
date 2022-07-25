@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/_services/notification/notification.service';
-import { DataService } from 'src/app/_services/data/data.service';
-import { ChatService } from 'src/app/_services/chat/chat.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'home-chat',
@@ -11,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private notificationService: NotificationService, private chatService: ChatService, private router: Router) { }
+  constructor(private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.notificationService.subscribe()

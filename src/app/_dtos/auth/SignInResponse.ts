@@ -1,8 +1,8 @@
 export class SignInResponse {
     accessToken: string
     tokenType: string
-    firstname?: string
-    lastname?: string
+    firstName?: string
+    lastName?: string
     email?: string
     nbFollowers?: number;
     nbSubscriptions?: number;

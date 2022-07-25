@@ -8,9 +8,6 @@ import { map } from 'rxjs/operators';
 import { SignInResponse } from '../../_dtos/auth/SignInResponse';
 import { SignInRequest } from '../../_dtos/auth/SignInRequest';
 import { SignUpRequest } from '../../_dtos/auth/SignUpRequest';
-import { ApiResponse } from '../../_dtos/common/ApiResponse';
-import { UserService } from '../user/user.service';
-import { UserProfile } from '../../_dtos/user/UserProfile';
 import {ForgotPasswordRequest} from "../../_dtos/auth/ForgotPasswordRequest";
 import {User} from "../../_dtos/user/User";
 import {FollowService} from "../follow/follow.service";
@@ -43,17 +40,21 @@ export class AuthService {
         this.tokenStorage.saveToken(response.accessToken);
         console.log("Login token  : " + this.tokenStorage.getToken());
 
-        this.tokenStorage.saveUser(new User(response.id, response.firstname, response.lastname, response.email,
-                                            response.nbFollowers, response.nbSubscriptions, response.imgUrl));
-
+        this.tokenStorage.saveUser(new User(response.id, response.firstName, response.lastName, response.email,
+          0, 0, response.imgUrl));
 
         this.followService.getAllFollowers(response.id).subscribe( followers => {
-          this.tokenStorage.getUser().nbFollowers = followers.length;
+          let user = this.tokenStorage.getUser();
+          user.nbFollowers = followers.length;
+          this.tokenStorage.saveUser(user);
         });
 
         this.followService.getAllSubscriptions(response.id).subscribe( subscriptions => {
-          this.tokenStorage.getUser().nbSubscriptions = subscriptions.length;
+          let user = this.tokenStorage.getUser();
+          user.nbSubscriptions = subscriptions.length;
+          this.tokenStorage.saveUser(user);
         });
+
 
         console.log("Login User id : " + this.tokenStorage.getUser().id);
         console.log("Login User firstname : " + this.tokenStorage.getUser().firstname);
@@ -82,12 +83,8 @@ export class AuthService {
 
   }
 
-  logout() {
-    this.tokenStorage.signOut();
-  }
-
-  forgotPassword(forgotPasswordRequest: ForgotPasswordRequest){
-    return this.http.put(`${auth_service.FORGOT_PASSWORD}`, forgotPasswordRequest, this.httpOptions);
+  forgotPassword(email: string){
+    return this.http.post(`${auth_service.FORGOT_PASSWORD}/${email}`, this.httpOptions);
   }
 
   updatePassword(forgotPasswordRequest: ForgotPasswordRequest){

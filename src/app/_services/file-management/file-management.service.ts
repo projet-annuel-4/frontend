@@ -1,12 +1,13 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {TokenStorageService} from "../token/token-storage.service";
 import {Observable} from "rxjs";
 import {file_service} from "../../../environments/environment";
 import {DirectoryRequest} from "../../_dtos/directory/DirectoryRequest";
 import {FileResponse} from "../../_dtos/file/FileResponse";
 import {Directory} from "../../_dtos/directory/Directory";
 import {FileRequest} from "../../_dtos/file/FileRequest";
+import {ImageRequest} from "../../_dtos/image/ImageRequest";
+import {ImageResponse} from "../../_dtos/image/ImageResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,9 @@ export class FileManagementService {
 
   fileOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' })
+  };
+  testOptions = {
+    headers: new HttpHeaders({ 'Content-Type': ''})
   };
 
   constructor(private http: HttpClient) {}
@@ -51,4 +55,29 @@ export class FileManagementService {
   downloadDirectoryFiles(directory_id: number, type: string): Observable<Directory>{
     return this.http.get<Directory>(`${file_service.BASE_URL}/directory/${directory_id}/?type=${type}`, this.fileOptions);
   }
+
+  uploadImage(imageRequest: ImageRequest, file: File): Observable<string>{
+
+    const jsonImageRequest = JSON.stringify(imageRequest);
+    console.log(jsonImageRequest);
+
+    const data:FormData = new FormData();
+    data.append("image", file);
+    data.append(
+      "details",
+      new Blob([jsonImageRequest], {type: 'application/json'})
+    );
+
+    return this.http.post<string>(`${file_service.BASE_URL}/image`, data);
+  }
+
+
+  downloadImage(user_id: number): Observable<ImageResponse>{
+    return this.http.get<ImageResponse>(`${file_service.BASE_URL}/image/${user_id}`);
+  }
+
+  deleteImage(image_id: number): Observable<FileResponse>{
+    return this.http.delete<FileResponse>(`${file_service.BASE_URL}/image/${image_id}`, this.fileOptions);
+  }
+
 }

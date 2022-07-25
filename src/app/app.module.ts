@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {InjectionToken, NgModule} from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -15,7 +15,7 @@ import {
   NbAccordionModule,
   NbInputModule,
   NbUserModule,
-  NbTableModule, NbToggleModule
+  NbTableModule, NbToggleModule, NbSearchModule, NbTabsetModule, NbToastrService, NbToastrModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
@@ -37,6 +37,9 @@ import { PostDetailComponent } from './post/post-detail/post-detail.component';
 import { CommentComponent } from './post/comment/comment.component';
 import {CodeNotRunnableComponent} from "./code/code-not-runnable.component";
 import { FeedPostComponent } from './post/feed-post/feed-post.component';
+import { SearchComponent } from './post/search/search.component';
+import { PostCardComponent } from './post/post-card/post-card.component';
+import {DatePipe} from "@angular/common";
 
 
 /************** Config Monaco *************/
@@ -97,35 +100,41 @@ const monacoConfig: NgxMonacoEditorConfig = {
     PostDetailComponent,
     CommentComponent,
     CodeNotRunnableComponent,
-    FeedPostComponent
+    FeedPostComponent,
+    SearchComponent,
+    PostCardComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    //NbThemeModule.forRoot({name: 'cosmic'}),
-    NbThemeModule.forRoot({name: 'dark'}),
-    NbMenuModule.forRoot(),
-    NbDialogModule.forRoot(),
-    NbLayoutModule,
-    NbEvaIconsModule,
-    NbSelectModule,
-    AppRoutingModule,
-    AuthModule,
-    HomeModule,
-    NbCardModule,
-    FormsModule,
-    NbContextMenuModule,
-    MonacoEditorModule.forRoot(),
-    NbIconModule,
-    NbButtonModule,
-    ReactiveFormsModule,
-    NbInputModule,
-    NbAccordionModule,
-    NbUserModule,
-    NbTableModule,
-    NbToggleModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        //NbThemeModule.forRoot({name: 'cosmic'}),
+        NbThemeModule.forRoot({name: 'dark'}),
+        NbMenuModule.forRoot(),
+        NbDialogModule.forRoot(),
+        NbLayoutModule,
+        NbEvaIconsModule,
+        NbSelectModule,
+        AppRoutingModule,
+        AuthModule,
+        HomeModule,
+        NbCardModule,
+        FormsModule,
+        NbContextMenuModule,
+        MonacoEditorModule.forRoot(),
+        NbIconModule,
+        NbButtonModule,
+        ReactiveFormsModule,
+        NbInputModule,
+        NbAccordionModule,
+        NbUserModule,
+        NbTableModule,
+        NbToggleModule,
+        NbSearchModule,
+        NbTabsetModule,
+        NbToastrModule.forRoot()
+    ],
   providers: [
+    NbSearchModule, DatePipe, NbToastrService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 
   ],

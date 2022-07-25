@@ -3,7 +3,7 @@ export class FileRequest {
   direcoryId: number;
   type: string;
   title: string;
-  link: string;
+  link: string; // id du user
   description: string;
 
 

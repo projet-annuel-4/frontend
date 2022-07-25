@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../_dtos/user/User";
 import {FollowService} from "../../../_services/follow/follow.service";
 import {TokenStorageService} from "../../../_services/token/token-storage.service";
-import {Router} from "@angular/router";
 import {NbDialogRef} from "@nebular/theme";
 
 @Component({

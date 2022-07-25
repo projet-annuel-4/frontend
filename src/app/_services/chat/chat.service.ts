@@ -40,27 +40,7 @@ export class ChatService {
       }))
   }
 
-  //TODO : Supprimer ???
-  fetchMessages(covId: string): Observable<any> {
-    return this.httpClient.get(`${environment.DOMAIN}/${environment.API_VERSION}/chat/${covId}/messages?user-email=${this.userEmail}`, this.httpOptions)
-      .pipe(map((msgs: UserMessage[]) => {
-        this.dataService.updateUserMessages(msgs);
-      }))
-  }
-
   startConversation(email: String): Observable<any> {
-/*
-    const token = this.tokenStorageService.getToken();
-
-    const headers = new HttpHeaders().set('Authorization',  `Bearer ${token}`);
-    const contentType =  new HttpHeaders(this.httpOptions.headers.get('Content-Type'));
-    const requestOptions = {
-      headers,
-      contentType
-    };
-
- */
-
     return this.httpClient.post(`${chat_service.CHAT}/?user-email=${this.userEmail}&friend-email=${email}`, "", this.httpOptions)
       .pipe(map((friend: FriendProfile) => {
         console.log("friend.id : " + friend.id);
@@ -81,7 +61,6 @@ export class ChatService {
 
   createMessageText(cid: string, content: string): Observable<UserMessage> {
     return this.httpClient
-
       .post(`${chat_service.CHAT}/${cid}/messages/text?content=${content}&user-email=${this.userEmail}`,{}, this.httpOptions)
       .pipe(map((userMessage: UserMessage) => {
         this.dataService.updateUserMessages([userMessage]);
@@ -89,10 +68,9 @@ export class ChatService {
       }))
   }
 
-  // TODO : Voir les params avec la route du Chat Service
   createMessageFile(cid: string, content: string, data:FormData): Observable<UserMessage> {
     return this.httpClient
-      .post(`${chat_service.CHAT}/${cid}/messages/files?content=${content}&user-email=${this.userEmail}`, data)
+      .post(`${chat_service.CHAT}/${cid}/messages/files?content=${content}&user-email=${this.userEmail}`, data, this.fileOptions)
       .pipe(map((v: UserMessage) => {
         this.dataService.updateUserMessages([v]);
         return v;

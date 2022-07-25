@@ -8,6 +8,8 @@ import {User} from "../../_dtos/user/User";
 import {CommentRequest} from "../../_dtos/post/CommentRequest";
 import {PostFilterRequest} from "../../_dtos/post/PostFilterRequest";
 import {PostRequest} from "../../_dtos/post/PostRequest";
+import {SearchFilter} from "../../_dtos/post/Search/SearchFilter";
+import {Filters} from "../../_dtos/post/Search/Filters";
 
 
 @Injectable({
@@ -81,8 +83,8 @@ export class PostService {
     return this.http.get<Post[]>(`${post_service.BASE_URL}/userId/${user_id}/postLiked`, this.httpOptions);
   }
 
-  delete(post_id: number): Observable<User[]> {
-    return this.http.delete<User[]>(`${post_service.BASE_URL}/${post_id}`, this.httpOptions);
+  delete(post_id: number): Observable<string>{
+    return this.http.delete<string>(`${post_service.BASE_URL}/${post_id}`, this.httpOptions);
   }
 
   comment(comment: CommentRequest): Observable<any>{
@@ -98,24 +100,23 @@ export class PostService {
   }
 
   getAllWithFilters(filters: PostFilterRequest): Observable<Post[]> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' });
-    const requestParams = new HttpParams()
-                                .set("title", filters.title)
-                                .set("content", filters.content)
-                                .set("tagName", filters.tagName)
-                                .set("creationDate", filters.creationDate.toString())
+    return this.http.post<Post[]>(`${post_service.BASE_URL}/filters`, filters, this.httpOptions);
+  }
 
-    const requestOptions = {
-      header : this.httpOptions,
-      params : requestParams,
-      //body : filters
-    };
-
-    return this.http.get<Post[]>(`${post_service.BASE_URL}/filters`, requestOptions);
+  getAllByFilters(filters: Filters): Observable<Post[]>{
+    return this.http.post<Post[]>(`${post_service.BASE_URL}/getAllByFilters`, filters, this.httpOptions);
   }
 
   getAllUserAnswers(user_id: number): Observable<Post[]>{
     return this.http.get<Post[]>(`${post_service.BASE_URL}/user/${user_id}/answers`, this.httpOptions);
+  }
+
+  getUserById(user_id: number): Observable<User>{
+    return this.http.get<User>(`${post_service.BASE_URL}/user/${user_id}`, this.httpOptions);
+  }
+
+  getUserByFirstname(firstname: string): Observable<User[]>{
+    return this.http.get<User[]>(`${post_service.BASE_URL}/user/firstname/${firstname}`, this.httpOptions);
   }
 
 }

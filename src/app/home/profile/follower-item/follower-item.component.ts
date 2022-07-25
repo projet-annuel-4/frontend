@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../_dtos/user/User";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-follower-item',
@@ -11,11 +12,17 @@ export class FollowerItemComponent implements OnInit {
   @Input()
   follower: User;
 
-  constructor() { }
+  name: string;
+
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+    this.name = this.follower.firstname + " " + this.follower.lastname;
   }
 
+  goToFriendPage(){
+    this.router.navigate(['friend/' + this.follower.id + '/' + 'profile']).then();
+  }
 
 
 }
