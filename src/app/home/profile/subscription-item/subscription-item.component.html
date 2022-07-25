@@ -1,16 +1,19 @@
-<div>
-  <nb-user style="padding-right: 155px"
-           [name]="subscription.firstname"
-           [title]="subscription.lastname">
-  </nb-user>
+<nb-card (click)="goToSubscriptionPage()">
+  <nb-card-body>
+    <nb-user style="padding-right: 155px"
+             [name]="subscription.firstname"
+             [title]="subscription.lastname">
+    </nb-user>
 
-  <button
-    class="unfollow"
-    nbButton
-    status="danger"
-    size="small"
-    (click)="unfollow()">
+    <button
+      nbButton
+      status="danger"
+      size="small"
+      (click)="unfollow()">
 
-    unfollow
-  </button>
-</div>
+      unfollow
+    </button>
+  </nb-card-body>
+</nb-card>
+
+

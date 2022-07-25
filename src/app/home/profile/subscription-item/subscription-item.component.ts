@@ -3,6 +3,7 @@ import {User} from "../../../_dtos/user/User";
 import {FollowService} from "../../../_services/follow/follow.service";
 import {TokenStorageService} from "../../../_services/token/token-storage.service";
 import {NbDialogRef} from "@nebular/theme";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-subscription-item',
@@ -15,9 +16,18 @@ export class SubscriptionItemComponent implements OnInit {
   subscription: User;
 
   constructor(private followService: FollowService, private tokenStorage: TokenStorageService,
-              protected ref: NbDialogRef<SubscriptionItemComponent>) { }
+              protected ref: NbDialogRef<SubscriptionItemComponent>, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+
+  goToSubscriptionPage(){
+    if(this.subscription.id == this.tokenStorage.getUser().id){
+      this.router.navigate(['/profile']).then();
+    } else {
+      this.router.navigate(['friend/' + this.subscription.id + '/' + 'profile']).then();
+    }
   }
 
   unfollow(){

@@ -12,13 +12,29 @@ export class FollowerListComponent implements OnInit {
 
   followers: User[];
 
-  constructor(private followService: FollowService, private tokenStorage: TokenStorageService) { }
+  fromFriendPage: boolean;
+
+  constructor(private followService: FollowService, private tokenStorage: TokenStorageService) {}
 
   ngOnInit(): void {
+    this.fromFriendPage = localStorage.getItem('fromFriendPage') as unknown as boolean;
 
-    this.followService.getAllFollowers(this.tokenStorage.getUser().id).subscribe(followers => {
-      this.followers = followers;
-    });
+    console.log("-----------" + this.fromFriendPage);
+    console.log("-----------" + localStorage.getItem('friendId'));
+
+
+    if(this.fromFriendPage){
+      this.followService.getAllFollowers(localStorage.getItem('friendId') as unknown as number).subscribe(followers => {
+        this.followers = followers;
+      });
+    } else {
+      this.followService.getAllFollowers(this.tokenStorage.getUser().id).subscribe(followers => {
+        this.followers = followers;
+      });
+    }
+
+    localStorage.removeItem('fromFriendPage');
+    localStorage.removeItem('friendId');
 
   }
 

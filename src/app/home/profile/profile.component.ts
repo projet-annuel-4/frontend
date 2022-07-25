@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private userService: UserService, private postService: PostService, private router: Router,
               private dialogService: NbDialogService, private codeService:CodeService, private fileService: FileManagementService,
-              private sanitizer: DomSanitizer, private nbToastrService:NbToastrService) {
+              private sanitizer: DomSanitizer, private nbToasterService:NbToastrService) {
 
   }
 
@@ -39,6 +39,8 @@ export class ProfileComponent implements OnInit {
     console.log(this.profile.id)
     console.log(this.profile.firstname)
     console.log(this.profile.lastname)
+    console.log(this.profile.nbFollowers)
+    console.log(this.profile.nbSubscriptions)
 
     this.postService.getAllByUser(this.profile.id).subscribe(posts => {
       this.userPost = posts.reverse();
@@ -88,7 +90,7 @@ export class ProfileComponent implements OnInit {
   deletePost(post_id: string) {
     if (confirm("You are going to delete a post")) {
       this.postService.delete(parseInt(post_id)).subscribe();
-      this.nbToastrService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
+      this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
     }
   }
 

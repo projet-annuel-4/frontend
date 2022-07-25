@@ -21,11 +21,11 @@
 
       <nb-card-footer>
           <div (click)="viewFollowers()">
-            {{profile.nbFollowers}} Followers
+            {{profile.nbFollowers || 0}} Followers
           </div>
         <hr>
           <div (click)="viewSubscriptions()">
-            {{profile.nbSubscriptions}} Subscriptions
+            {{profile.nbSubscriptions || 0}} Subscriptions
           </div>
       </nb-card-footer>
     </nb-card>

@@ -14,13 +14,11 @@
       </nb-card-body>
 
       <nb-card-footer>
-        <div>
-          <img  src="favicon.ico" width="28" height="30" alt="" (click)="viewFollowers()">
-            {{friendProfile.nbFollowers}} Followers
+        <div (click)="viewFollowers()">
+            {{friendProfile.nbFollowers || 0}} Followers
         </div>
-        <div>
-          <img  src="favicon.ico" width="28" height="30" alt="" (click)="viewSubscriptions()">
-            {{friendProfile.nbSubscriptions}} Subscriptions
+        <div (click)="viewSubscriptions()">
+            {{friendProfile.nbSubscriptions || 0}} Subscriptions
         </div>
         <div style="text-align: right">
           <button nbButton (click)="follow_unfollow()">

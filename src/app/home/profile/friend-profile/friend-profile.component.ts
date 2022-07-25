@@ -59,7 +59,7 @@ export class FriendProfileComponent implements OnInit {
           });
 
 
-        this.fileService.downloadImage(this.friendProfile.id).subscribe( res => {
+        this.fileService.downloadImage(params.friendId).subscribe( res => {
           let objectURL = 'data:image/png;base64,' + res.file;
           this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         })
@@ -86,10 +86,14 @@ export class FriendProfileComponent implements OnInit {
 
   //TODO : Liste des follower du friend
   viewFollowers(){
+    localStorage.setItem('fromFriendPage', 'true');
+    localStorage.setItem('friendId', this.friendProfile.id.toString());
     this.dialogService.open(FollowerListComponent);
   }
   //TODO : Liste des subscriptions du friend
   viewSubscriptions(){
+    localStorage.setItem('fromFriendPage', 'true');
+    localStorage.setItem('friendId', this.friendProfile.id.toString());
     this.dialogService.open(SubscriptionListComponent);
   }
 
