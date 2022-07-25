@@ -3,19 +3,19 @@ import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-    NbThemeModule,
-    NbLayoutModule,
-    NbMenuModule,
-    NbDialogModule,
-    NbSelectModule,
-    NbCardModule,
-    NbContextMenuModule,
-    NbIconModule,
-    NbButtonModule,
-    NbAccordionModule,
-    NbInputModule,
-    NbUserModule,
-    NbTableModule, NbToggleModule, NbSearchModule
+  NbThemeModule,
+  NbLayoutModule,
+  NbMenuModule,
+  NbDialogModule,
+  NbSelectModule,
+  NbCardModule,
+  NbContextMenuModule,
+  NbIconModule,
+  NbButtonModule,
+  NbAccordionModule,
+  NbInputModule,
+  NbUserModule,
+  NbTableModule, NbToggleModule, NbSearchModule, NbListModule, NbTabsetModule, NbTreeGridModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
@@ -40,6 +40,17 @@ import { FeedPostComponent } from './post/feed-post/feed-post.component';
 import { SearchComponent } from './post/search/search.component';
 import { PostCardComponent } from './post/post-card/post-card.component';
 import {DatePipe} from "@angular/common";
+import { GroupHomeComponent } from './group/group-home/group-home.component';
+import { GroupCardComponent } from './group/group-card/group-card.component';
+import { GroupProfileComponent } from './group/group-profile/group-profile.component';
+import { ProjectMembersCardComponent } from './group/group-profile/project-members-card/project-members-card.component';
+import { GroupProjectsCardComponent } from './group/group-profile/group-projects-card/group-projects-card.component';
+import { ProjectPageComponent } from './project/project-page/project-page.component';
+import { ProjectTreeComponent } from './project/project-page/project-tree/project-tree.component';
+import { ActionPanelComponent } from './project/project-page/action-panel/action-panel.component';
+import { CreateCommitComponent } from './project/project-page/create-commit/create-commit.component';
+import { CreateFileComponent } from './project/project-page/create-file/create-file.component';
+import { RevertCommitComponent } from './project/project-page/revert-commit/revert-commit.component';
 
 
 /************** Config Monaco *************/
@@ -102,35 +113,49 @@ const monacoConfig: NgxMonacoEditorConfig = {
     CodeNotRunnableComponent,
     FeedPostComponent,
     SearchComponent,
-    PostCardComponent
+    PostCardComponent,
+    GroupHomeComponent,
+    GroupCardComponent,
+    GroupProfileComponent,
+    ProjectMembersCardComponent,
+    GroupProjectsCardComponent,
+    ProjectPageComponent,
+    ProjectTreeComponent,
+    ActionPanelComponent,
+    CreateCommitComponent,
+    CreateFileComponent,
+    RevertCommitComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        //NbThemeModule.forRoot({name: 'cosmic'}),
-        NbThemeModule.forRoot({name: 'dark'}),
-        NbMenuModule.forRoot(),
-        NbDialogModule.forRoot(),
-        NbLayoutModule,
-        NbEvaIconsModule,
-        NbSelectModule,
-        AppRoutingModule,
-        AuthModule,
-        HomeModule,
-        NbCardModule,
-        FormsModule,
-        NbContextMenuModule,
-        MonacoEditorModule.forRoot(),
-        NbIconModule,
-        NbButtonModule,
-        ReactiveFormsModule,
-        NbInputModule,
-        NbAccordionModule,
-        NbUserModule,
-        NbTableModule,
-        NbToggleModule,
-        NbSearchModule,
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    //NbThemeModule.forRoot({name: 'cosmic'}),
+    NbThemeModule.forRoot({name: 'dark'}),
+    NbMenuModule.forRoot(),
+    NbDialogModule.forRoot(),
+    NbLayoutModule,
+    NbEvaIconsModule,
+    NbSelectModule,
+    AppRoutingModule,
+    AuthModule,
+    HomeModule,
+    NbCardModule,
+    FormsModule,
+    NbContextMenuModule,
+    MonacoEditorModule.forRoot(),
+    NbIconModule,
+    NbButtonModule,
+    ReactiveFormsModule,
+    NbInputModule,
+    NbAccordionModule,
+    NbUserModule,
+    NbTableModule,
+    NbToggleModule,
+    NbSearchModule,
+    NbListModule,
+    NbTabsetModule,
+    NbTreeGridModule,
+  ],
   providers: [
     NbSearchModule,DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -16,7 +16,7 @@ import {CodeService} from "../../_services/code_execution/code.service";
 })
 export class ProfileComponent implements OnInit {
 
-  profile: User
+  profile: User;
   userPost: Post[];
   postsLiked: Post[];
   userAnswers: Post[];

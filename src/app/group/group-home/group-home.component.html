@@ -1,0 +1,11 @@
+<nb-card class="col-md-6 center">
+  <nb-card-header>Groups</nb-card-header>
+  <nb-card-body>
+    <nb-list>
+      <nb-list-item *ngFor="let group of groups">
+        <app-group-card class="col-md-12" [group] = group></app-group-card>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+  <nb-card-footer><button>Create group</button></nb-card-footer>
+</nb-card>

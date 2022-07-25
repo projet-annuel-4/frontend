@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
 
+  LOCAL_MEHDI_PROJECT: 'http://localhost:8500',
   DOMAIN: 'http://localhost:8072', /* api gateway */
   //DOMAIN: 'http://localhost:8096', /* post-service URL */
   API_VERSION: 'api/v1',
@@ -49,6 +50,7 @@ export const post_service = {
 }
 
 
+
 export const follower_service = {
   BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.FOLLOW}`
 }
@@ -59,6 +61,10 @@ export const group_service = {
 
 export const file_service = {
   BASE_URL: `${environment.DOMAIN}/files-management/${environment.API_VERSION}/${environment.FILE}`
+}
+
+export const project_service = {
+  BASE_URL: `${environment.LOCAL_MEHDI_PROJECT}/${environment.API_VERSION}`
 }
 /*
  * For easier debugging in development mode, you can import the following file

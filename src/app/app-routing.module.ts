@@ -8,16 +8,16 @@ import {CreateComponent} from "./post/create/create.component";
 import {PostDetailComponent} from "./post/post-detail/post-detail.component";
 import {CommentComponent} from "./post/comment/comment.component";
 import {SearchComponent} from "./post/search/search.component";
+import {GroupHomeComponent} from "./group/group-home/group-home.component";
+import {GroupProfileComponent} from "./group/group-profile/group-profile.component";
+import {ProjectPageComponent} from "./project/project-page/project-page.component";
 
 const routes: Routes = [
   {path: '', redirectTo:'auth/signing', pathMatch: 'full'},
 
-  {
-    path: 'execution', children:[
-      {path: 'code', component: CodeExecutionComponent},
-      {path: 'project', component: ProjectExecutionComponent}
-    ]
-  },
+  { path: 'group', component : GroupHomeComponent },
+  { path: 'group/:groupId', component: GroupProfileComponent},
+  { path: 'group/:groupId/project/:projectId/branch/:branchId', component: ProjectPageComponent},
   {
     path: 'post', children:[
       {path: 'feed', component: FeedComponent},
