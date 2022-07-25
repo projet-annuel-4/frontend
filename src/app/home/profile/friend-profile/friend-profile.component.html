@@ -32,19 +32,24 @@
     <nb-tabset>
 
       <nb-tab tabTitle="Posts">
-        <span *ngIf="friendPost !== undefined; else postElseBlock">
-          <nb-card *ngFor="let post of friendPost">
-            <nb-card-body routerLink="/post/{{post.id}}/detail">
-              <nb-card-header> Title : {{post.title}} </nb-card-header>
-
-              <div style="padding: 2%">
-                <pre><code>{{formatContentP(post.content)}}</code></pre>
-              </div>
-
-              <div>
-                Tags : <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
-              </div>
+        <span *ngIf="posts !== undefined; else postElseBlock">
+          <nb-card *ngFor="let post of posts | keyvalue">
+<!-- Impossible d'appeler le composant 'feed-post' Erreur : Maximum call stack size exceeded Error -->
+            <nb-card-header> Title : {{post.key.title}} </nb-card-header>
+            <nb-card-body routerLink="/post/{{post.key.id}}/detail">
+              <pre><code>{{formatContentP(post.key.content)}}</code></pre>
+                Tags :
+              <span *ngFor="let tag of post.key.tags">| {{tag.name}} </span>
             </nb-card-body>
+            <nb-card-footer>
+              <button
+                (click)="like_dislike(post.key.id)"
+                [ngClass]="{'green' : post.value.isLiked, 'white': !post.value.isLiked}">
+                <nb-icon icon="heart-outline"></nb-icon>
+              </button>
+              {{post.key.nbLike}}
+            </nb-card-footer>
+<!---->
           </nb-card>
         </span>
 

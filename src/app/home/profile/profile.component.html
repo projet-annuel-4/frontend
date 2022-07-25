@@ -40,28 +40,35 @@
     <nb-tabset>
 
       <nb-tab tabTitle="My Posts">
-        <div *ngFor="let post of userPost">
+        <div *ngFor="let post of posts | keyvalue">
           <nb-card>
-            <nb-card-body routerLink="../post/{{post.id}}/detail">
-              <nb-card-header> Title : {{post.title}} </nb-card-header>
+            <nb-card-body routerLink="../post/{{post.key.id}}/detail">
+              <nb-card-header> Title : {{post.key.title}} </nb-card-header>
 
               <div style="padding: 2%">
-                 <pre><code>{{formatContentP(post.content)}}</code></pre>
+                 <pre><code>{{formatContentP(post.key.content)}}</code></pre>
               </div>
 
-              <div>
-                Tags : <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
+              <div *ngIf="post.key.tags !== undefined">
+                Tags : <span *ngFor="let tag of post.key.tags">| {{tag.name}} </span>
               </div>
 
+              <div style="padding-top: 10px">
+                <button nbButton
+                        status="danger"
+                        size="tiny"
+                        (click)="deletePost(post.key.id)">
+                  Delete
+                </button>
+              </div>
             </nb-card-body>
-
             <nb-card-footer>
-              <button nbButton
-                      status="danger"
-                      size="tiny"
-                      (click)="deletePost(post.id)">
-                Delete
+              <button
+                (click)="like_dislike(post.key.id)"
+                [ngClass]="{'green' : post.value.isLiked, 'white': !post.value.isLiked}">
+                <nb-icon icon="heart-outline"></nb-icon>
               </button>
+              {{post.key.nbLike}}
             </nb-card-footer>
           </nb-card>
         </div>
@@ -97,28 +104,37 @@
 
 
       <nb-tab tabTitle="Like">
-        <div *ngFor="let postLiked of postsLiked">
+        <div *ngFor="let postLiked of postsLiked | keyvalue">
           <nb-card>
-            <nb-card-body routerLink="../post/{{postLiked.id}}/detail">
-              <nb-card-header> Title : {{postLiked.title}} </nb-card-header>
+            <nb-card-body routerLink="../post/{{postLiked.key.id}}/detail">
+              <nb-card-header> Title : {{postLiked.key.title}} </nb-card-header>
 
               <div style="padding: 2%">
-                <pre><code>{{postLiked.content}}</code></pre>
+                <pre><code>{{postLiked.key.content}}</code></pre>
               </div>
 
               <div>
-                Tags : <span *ngFor="let tag of postLiked.tags">| {{tag.name}} </span>
+                Tags : <span *ngFor="let tag of postLiked.key.tags">| {{tag.name}} </span>
+              </div>
+
+              <div style="padding-top: 10px">
+                <button nbButton
+                        status="danger"
+                        size="tiny"
+                        (click)="deletePost(postLiked.key.id)">
+                  Delete
+                </button>
               </div>
 
             </nb-card-body>
 
             <nb-card-footer>
-              <button nbButton
-                      status="danger"
-                      size="tiny"
-                      (click)="deletePost(postLiked.id)">
-                Delete
+              <button
+                (click)="like_dislike(postLiked.key.id)"
+                [ngClass]="{'green' : postLiked.value.isLiked, 'white': !postLiked.value.isLiked}">
+                <nb-icon icon="heart-outline"></nb-icon>
               </button>
+              {{postLiked.key.nbLike}}
             </nb-card-footer>
           </nb-card>
         </div>

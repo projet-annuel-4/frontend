@@ -27,6 +27,10 @@ export class FriendProfileComponent implements OnInit {
   friendPostsLiked: Post[];
   friendAnswers: Post[];
 
+  posts: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
+  postsAlreadyLiked: Post[];
+
+
   followedByTheUser: boolean;
 
   buttonText: string;
@@ -71,7 +75,11 @@ export class FriendProfileComponent implements OnInit {
 
   initFriendPost(){
     this.postService.getAllByUser(this.friendProfile.id).subscribe(posts => {
-      this.friendPost = posts.reverse();
+      posts.forEach(post => {
+        this.posts.set(post, {isLiked: false});
+      });
+      this.posts = new Map(Array.from(this.posts).reverse()); //reverse
+      this.markPostAlreadyLikeByUser();
     },error => {});
 
     this.postService.getPostLikedByUser(this.friendProfile.id).subscribe(postsLiked => {
@@ -84,13 +92,24 @@ export class FriendProfileComponent implements OnInit {
   }
 
 
-  //TODO : Liste des follower du friend
+  markPostAlreadyLikeByUser(){
+    this.postService.getPostLikedByUser(this.tokenStorage.getUser().id).subscribe(postsLiked => {
+      this.postsAlreadyLiked = postsLiked
+      this.posts.forEach((value, post) => {
+        this.postsAlreadyLiked.forEach(postLiked => {
+          if(post.id == postLiked.id) value.isLiked = true;
+        });
+      });
+    });
+  }
+
+
   viewFollowers(){
     localStorage.setItem('fromFriendPage', 'true');
     localStorage.setItem('friendId', this.friendProfile.id.toString());
     this.dialogService.open(FollowerListComponent);
   }
-  //TODO : Liste des subscriptions du friend
+
   viewSubscriptions(){
     localStorage.setItem('fromFriendPage', 'true');
     localStorage.setItem('friendId', this.friendProfile.id.toString());
@@ -122,6 +141,28 @@ export class FriendProfileComponent implements OnInit {
     }
 
     this.updateButton();
+  }
+
+  like_dislike(post_id: string){
+    this.posts.forEach((value, post) =>{
+      if(post.id == post_id){
+        value.isLiked = !value.isLiked;
+
+        if(value.isLiked){
+          this.postService.like(parseInt(post_id), this.tokenStorage.getUser().id).subscribe(then => {
+            //this.status = this.ENABLE;
+            post.nbLike += 1;
+            //window.location.reload();
+          });
+        } else {
+          this.postService.dislike(parseInt(post_id), this.tokenStorage.getUser().id).subscribe(then => {
+            //this.status = this.DISABLE;
+            //window.location.reload();
+            post.nbLike -= 1;
+          });
+        }
+      }
+    });
   }
 
   updateButton(){

@@ -19,9 +19,13 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class ProfileComponent implements OnInit {
 
   profile: User
-  userPost: Post[];
-  postsLiked: Post[];
+
+  posts: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
+  //postsLiked: Post[];
+  postsLiked: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
   userAnswers: Post[];
+
+  postsAlreadyLiked: Post[];
 
   image;
 
@@ -43,13 +47,21 @@ export class ProfileComponent implements OnInit {
     console.log(this.profile.nbSubscriptions)
 
     this.postService.getAllByUser(this.profile.id).subscribe(posts => {
-      this.userPost = posts.reverse();
+      posts.forEach(post => {
+        this.posts.set(post, {isLiked: false});
+      });
+      this.posts = new Map(Array.from(this.posts).reverse()); //reverse
+      this.posts = this.markPostAlreadyLikeByUser(this.posts);
     },error => {
 
     });
 
-    this.postService.getPostLikedByUser(this.profile.id).subscribe(postsLiked => {
-      this.postsLiked = postsLiked;
+    this.postService.getPostLikedByUser(this.profile.id).subscribe(posts => {
+      posts.forEach(post => {
+        this.postsLiked.set(post, {isLiked: false});
+      });
+      this.postsLiked = new Map(Array.from(this.postsLiked).reverse()); //reverse
+      this.postsLiked = this.markPostAlreadyLikeByUser(this.postsLiked);
     }, error => {});
 
     this.postService.getAllUserAnswers(this.profile.id).subscribe(userAnswers => {
@@ -92,6 +104,41 @@ export class ProfileComponent implements OnInit {
       this.postService.delete(parseInt(post_id)).subscribe();
       this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
     }
+  }
+
+
+
+
+
+  markPostAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>){
+    this.postService.getPostLikedByUser(this.profile.id).subscribe(postsLiked => {
+      this.postsAlreadyLiked = postsLiked
+      posts.forEach((value, post) => {
+        this.postsAlreadyLiked.forEach(postLiked => {
+          if(post.id == postLiked.id) value.isLiked = true;
+        });
+      });
+    });
+
+    return posts;
+  }
+
+  like_dislike(post_id: string){
+    this.posts.forEach((value, post) =>{
+      if(post.id == post_id){
+        value.isLiked = !value.isLiked;
+
+        if(value.isLiked){
+          this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
+            post.nbLike += 1;
+          });
+        } else {
+          this.postService.dislike(parseInt(post_id), this.profile.id).subscribe(then => {
+            post.nbLike -= 1;
+          });
+        }
+      }
+    });
   }
 
 
