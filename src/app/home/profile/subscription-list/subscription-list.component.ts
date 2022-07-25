@@ -23,18 +23,14 @@ export class SubscriptionListComponent implements OnInit {
     console.log("----" + localStorage.getItem('friendId'));
 
     if(this.fromFriendPage){
-      this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(subscriptions => {
-        this.subscriptions = subscriptions;
-      });
-    } else {
       this.followService.getAllSubscriptions(localStorage.getItem('friendId') as unknown as number).subscribe(subscriptions => {
         this.subscriptions = subscriptions;
       });
+    } else {
+      this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(subscriptions => {
+        this.subscriptions = subscriptions;
+      });
     }
-
-    this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(subscriptions => {
-      this.subscriptions = subscriptions;
-    });
 
     localStorage.removeItem('fromFriendPage');
     localStorage.removeItem('friendId');
