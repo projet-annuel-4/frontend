@@ -38,13 +38,26 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.profile = this.userService.getProfile();
+    /*
     console.log(this.profile.id)
     console.log(this.profile.firstname)
     console.log(this.profile.lastname)
     console.log(this.profile.nbFollowers)
     console.log(this.profile.nbSubscriptions)
+
+     */
+
+    this.postService.getUserById(this.profile.id).subscribe(user => {
+      this.profile = user;
+
+      console.log(user);
+      console.log(user.id);
+      console.log(user.firstname);
+      console.log(user.lastname);
+      console.log(user.nbFollowers);
+      console.log(user.nbSubscriptions);
+    });
 
     this.postService.getAllByUser(this.profile.id).subscribe(posts => {
       posts.forEach(post => {
