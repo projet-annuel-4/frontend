@@ -1,12 +1,22 @@
-FROM node:lts as node
-WORKDIR /app
-COPY . .
-RUN npm install -g npm@8.14.0
-RUN npm install -g @angular/cli
-RUN npm install --legacy-peer-deps
-RUN npm run build --prod
+#
+# Build stage
+#
+FROM node:16-alpine
 
-FROM nginx:alpine
-COPY nginx.conf /etc/nginx/conf.d/
-COPY --from=node /app/dist/frontend /usr/share/nginx/html
-EXPOSE 80
+# Setting working directory. All the path will be relative to WORKDIR
+WORKDIR /usr/src/app
+
+# Installing dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copying source files
+COPY . .
+
+# Building app
+RUN npm run build
+
+EXPOSE 4200
+# Running the app
+CMD [ "npm", "start" ]
+

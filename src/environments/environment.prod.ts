@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
 
-  DOMAIN: 'http://social-code.fr/backend',
+  DOMAIN: 'http://localhost:8080',
   API_VERSION: 'api/v1',
 
   AUTH: `auth`,
