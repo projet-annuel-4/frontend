@@ -14,7 +14,10 @@ RUN npm install
 COPY . .
 
 # Building app
-RUN npm run build
+RUN npm install -g npm@8.14.0
+RUN npm install -g @angular/cli
+RUN npm install --legacy-peer-deps
+RUN npm run build --prod
 
 EXPOSE 4200
 # Running the app
