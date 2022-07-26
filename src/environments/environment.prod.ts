@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  DOMAIN: 'http://backend:8080',
+  DOMAIN: 'http://api-getway:8080',
   API_VERSION: 'api/v1',
 
   AUTH: `auth`,
