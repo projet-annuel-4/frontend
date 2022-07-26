@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
 
   DOMAIN: 'http://api-getway:8080',
   API_VERSION: 'api/v1',

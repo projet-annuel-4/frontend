@@ -21,7 +21,7 @@ export class FollowerListComponent implements OnInit {
 
     console.log("-----------" + this.fromFriendPage);
     console.log("-----------" + localStorage.getItem('friendId'));
-
+ console.log("zqùelmd:;jqlk:vj;?Z%PFML.?ML/")
 
     if(this.fromFriendPage){
       this.followService.getAllFollowers(localStorage.getItem('friendId') as unknown as number).subscribe(followers => {
