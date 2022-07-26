@@ -3,10 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
+  production: false,
 
-  //DOMAIN: 'http://localhost:8072',
-  DOMAIN: 'http://api-getway:8080',
+  DOMAIN: 'http://localhost:8072',
   API_VERSION: 'api/v1',
 
   AUTH: `auth`,

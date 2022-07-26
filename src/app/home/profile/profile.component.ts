@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   profile: User
 
   posts: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
-  //postsLiked: Post[];
+
   postsLiked: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
   userAnswers: Post[];
 
@@ -40,6 +40,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.profile = this.userService.getProfile();
 
+    this.init();
+  }
+
+  init(){
     this.postService.getUserById(this.profile.id).subscribe(user => {
       this.profile = user;
     });
@@ -48,7 +52,7 @@ export class ProfileComponent implements OnInit {
       posts.forEach(post => {
         this.posts.set(post, {isLiked: false});
       });
-      //this.posts = new Map(Array.from(this.posts).reverse()); //reverse
+      this.posts = new Map(Array.from(this.posts).reverse()); //reverse
       this.posts = this.markPostAlreadyLikeByUser(this.posts);
     },error => {
 
@@ -71,7 +75,6 @@ export class ProfileComponent implements OnInit {
       let objectURL = 'data:image/png;base64,' + res.file;
       this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     })
-
   }
 
   viewFollowers(){
@@ -101,9 +104,9 @@ export class ProfileComponent implements OnInit {
     console.log("post_id : " + post_id);
     if (confirm("You are going to delete a post")) {
       this.postService.delete(parseInt(post_id)).subscribe(then => {
-        this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
+        this.init();
       });
-
+      this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
     }
   }
 
