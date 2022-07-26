@@ -4,6 +4,7 @@ import {Post} from "../../_dtos/post/Post";
 import {PostService} from "../../_services/post/post.service";
 import {User} from "../../_dtos/user/User";
 import {Tag} from "../../_dtos/post/Tag";
+import {CodeService} from "../../_services/code_execution/code.service";
 
 @Component({
   selector: 'app-post-detail',
@@ -15,7 +16,8 @@ export class PostDetailComponent implements OnInit {
   post: Post;
   answers: Post[];
 
-  constructor(private postService: PostService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private postService: PostService, private route: ActivatedRoute,
+              private router: Router, public codeService: CodeService) { }
 
   ngOnInit(): void {
 

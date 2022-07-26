@@ -42,11 +42,12 @@
       <nb-tab tabTitle="My Posts">
         <div *ngFor="let post of posts | keyvalue">
           <nb-card>
-            <nb-card-body routerLink="../post/{{post.key.id}}/detail">
+            <nb-card-body>
               <nb-card-header> Title : {{post.key.title}} </nb-card-header>
 
-              <div style="padding: 2%">
-                 <pre><code>{{formatContentP(post.key.content)}}</code></pre>
+              <div style="padding: 2%"
+                   routerLink="../post/{{post.key.id}}/detail">
+                 <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
               </div>
 
               <div *ngIf="post.key.tags !== undefined">

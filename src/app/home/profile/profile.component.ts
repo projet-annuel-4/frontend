@@ -32,38 +32,23 @@ export class ProfileComponent implements OnInit {
   positions = NbGlobalPhysicalPosition;
 
   constructor(private userService: UserService, private postService: PostService, private router: Router,
-              private dialogService: NbDialogService, private codeService:CodeService, private fileService: FileManagementService,
+              private dialogService: NbDialogService,public codeService:CodeService, private fileService: FileManagementService,
               private sanitizer: DomSanitizer, private nbToasterService:NbToastrService) {
 
   }
 
   ngOnInit(): void {
     this.profile = this.userService.getProfile();
-    /*
-    console.log(this.profile.id)
-    console.log(this.profile.firstname)
-    console.log(this.profile.lastname)
-    console.log(this.profile.nbFollowers)
-    console.log(this.profile.nbSubscriptions)
-
-     */
 
     this.postService.getUserById(this.profile.id).subscribe(user => {
       this.profile = user;
-
-      console.log(user);
-      console.log(user.id);
-      console.log(user.firstname);
-      console.log(user.lastname);
-      console.log(user.nbFollowers);
-      console.log(user.nbSubscriptions);
     });
 
     this.postService.getAllByUser(this.profile.id).subscribe(posts => {
       posts.forEach(post => {
         this.posts.set(post, {isLiked: false});
       });
-      this.posts = new Map(Array.from(this.posts).reverse()); //reverse
+      //this.posts = new Map(Array.from(this.posts).reverse()); //reverse
       this.posts = this.markPostAlreadyLikeByUser(this.posts);
     },error => {
 
@@ -113,14 +98,14 @@ export class ProfileComponent implements OnInit {
 
 
   deletePost(post_id: string) {
+    console.log("post_id : " + post_id);
     if (confirm("You are going to delete a post")) {
-      this.postService.delete(parseInt(post_id)).subscribe();
-      this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
+      this.postService.delete(parseInt(post_id)).subscribe(then => {
+        this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
+      });
+
     }
   }
-
-
-
 
 
   markPostAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>){

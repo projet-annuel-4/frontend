@@ -1,7 +1,17 @@
 <nb-card status="info">
-  <nb-card-header>Title : {{post.title}}</nb-card-header>
+
+  <nb-card-header>
+    <div>
+      <nb-user
+        name="{{post.user.firstname}} {{post.user.lastname}}"
+        routerLink="/friend/{{post.user.id}}/profile">
+      </nb-user>
+
+      Title : {{post.title}}
+    </div>
+  </nb-card-header>
   <nb-card-body>
-    <div>Content : {{post.content}}</div>
+    <pre><code>{{this.codeService.formatContent(post.content)}}</code></pre>
     Tags :
     <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
   </nb-card-body>

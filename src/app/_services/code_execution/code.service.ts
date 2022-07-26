@@ -92,4 +92,16 @@ export class CodeService {
     return {codes, codesFound};
   }
 
+
+  formatContent(content: string){
+    let newContent = content;
+    let codes = this.codePreview(content);
+
+    codes.codesFound.forEach((codeStr, i) => {
+      newContent = newContent.replace(codeStr, '\n' + codes.codes[i].content + '\n');
+    });
+
+    return newContent;
+  }
+
 }

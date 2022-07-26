@@ -13,12 +13,12 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-    <input nbInput fullWidth name="search" placeholder="Search">
+    <nb-list>
+      <nb-list-item *ngFor="let friend of friends" (click)="chatClicked(friend.id)">
+        <nb-user [name]="friend.firstName + ' ' +  friend.lastName" [title]="friend.lastMsg" [picture]="friend.imgUrl">
+        </nb-user>
+      </nb-list-item>
+    </nb-list>
   </nb-card-body>
-  <nb-list>
-    <nb-list-item *ngFor="let friend of friends" (click)="chatClicked(friend.id)">
-      <nb-user [name]="friend.firstName + ' ' +  friend.lastName" [title]="friend.lastMsg" [picture]="friend.imgUrl">
-      </nb-user>
-    </nb-list-item>
-  </nb-list>
+
 </nb-card>

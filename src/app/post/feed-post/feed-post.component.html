@@ -1,8 +1,14 @@
 <nb-card>
-  <nb-card-header>Title : {{post.key.title}}</nb-card-header>
+  <nb-card-header>
+    <nb-user
+      name="{{post.key.user.firstname}} {{post.key.user.lastname}}"
+      routerLink="/friend/{{post.key.user.id}}/profile">
+    </nb-user>
+    Title : {{post.key.title}}
+  </nb-card-header>
   <nb-card-body class="</nb-layout-column>" routerLink="../{{post.key.id}}/detail">
 
-    <pre><code>{{formatContent(post.key.content)}}</code></pre>
+    <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
     Tags :
     <span *ngFor="let tag of post.key.tags">{{tag.name}} | </span>
 

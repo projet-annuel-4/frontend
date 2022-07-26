@@ -50,11 +50,13 @@ export class ChatListComponent implements OnInit {
         switch (title) {
           case 'New Chat':
             this.dialogService.open(NewChatComponent).onClose.subscribe((email) => {
-              this.chatService.startConversation(email).subscribe(
-                (r) => { console.log(r) },
-                (err) => { console.log(err) }
-              )
-            })
+              this.userService.getByEmail(email).subscribe(user => {
+                this.chatService.startConversation(user.email).subscribe(
+                  (r) => { console.log(r['statusText']) },
+                  (err) => { console.log(err) }
+                )
+              }, error => alert("User not found"))
+            });
             break;
           case 'New Group':
             this.dialogService.open(NewGroupComponent);

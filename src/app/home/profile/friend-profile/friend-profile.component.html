@@ -37,7 +37,7 @@
 <!-- Impossible d'appeler le composant 'feed-post' Erreur : Maximum call stack size exceeded Error -->
             <nb-card-header> Title : {{post.key.title}} </nb-card-header>
             <nb-card-body routerLink="/post/{{post.key.id}}/detail">
-              <pre><code>{{formatContentP(post.key.content)}}</code></pre>
+              <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
                 Tags :
               <span *ngFor="let tag of post.key.tags">| {{tag.name}} </span>
             </nb-card-body>
