@@ -61,12 +61,12 @@ export const file_service = {
 }
 
 export const project_service = {
-  BASE_URL: `${environment.LOCAL_MEHDI_PROJECT}/${environment.API_VERSION}`
+  BASE_URL: `http://localhost:8500/${environment.API_VERSION}`
 
 }
 
 export const project_file_service = {
-  BASE_URL: `${environment.LOCAL_MEHDI_PROJECT}/${environment.API_VERSION}/project`
+  BASE_URL: `http://localhost:8500/${environment.API_VERSION}/project`
 
 }
 /*
