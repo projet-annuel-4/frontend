@@ -46,6 +46,16 @@ export class CreateComponent implements OnInit {
 
       let tagsName:string[] = [];
 
+      if(data["title"] === null || data["title"] === undefined){
+        alert("Title cannot be empty");
+        return;
+      }
+
+      if(data["content"] === null){
+        alert("Content cannot be empty");
+        return;
+      }
+
       if(data["tagName"] !== null){
         tagsName = data["tagName"].split(",");
         tagsName.forEach(tagName => tagName.trim());

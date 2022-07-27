@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-//  DOMAIN: 'http://localhost:8072',
-  DOMAIN: 'http://social-code.fr/backend',
+  DOMAIN: 'http://localhost:8072',
+  //DOMAIN: 'http://social-code.fr/backend',
 
   API_VERSION: 'api/v1',
 
