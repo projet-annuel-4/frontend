@@ -24,7 +24,7 @@ declare let monaco: any;
 export class ProjectPageComponent implements OnInit, OnChanges {
 
   editorOptions = {theme: 'vs-dark', language: 'python', readonly: true};
-  code: string= 'Bienvenue séléctionnez un fichier ou créer en un :)';
+  code: string= 'Welcome ! Select or create a file :)';
   selectedFile: Filess = null;
   fileModified:boolean = false;
   branchId:number;
@@ -81,7 +81,6 @@ export class ProjectPageComponent implements OnInit, OnChanges {
       () => {document.getElementById('monaco-editor').style.display ='block';}
     );
     this.fileModified = false;
-    console.log("in proj page : " + this.fileModified);
   }
 
   convertByteArrayToString(data: ArrayBuffer): string {
@@ -90,12 +89,10 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   setFileChanged($event: Event) {
-    console.log("coucou");
     this.fileModified = true;
   }
 
   saveFile() {
-    console.log('lalalalal');
     const fileContent = this.code;
     const blob = new Blob([fileContent], { type: 'text/plain' });
     const file = new File([blob], "foo.txt", {type: "text/plain"} );
@@ -105,7 +102,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
       () => {},
       () => {},
       () => {
-        alert('le fichier à bien été enregistré!');
+        alert('The file has been saved');
         this.atLeastOneFileModified = true;
       }
     );
@@ -116,7 +113,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
       this.fileService.deleteFile(this.branchId, this.selectedFile.id).subscribe(
         () => {},
         () => {},
-        () => {alert('le fichier à bien été supprimé');this.child.uppdateFilesV2()}
+        () => {alert('File deleted successfully');this.child.uppdateFilesV2()}
       );
     }
   }
@@ -127,7 +124,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   commit() {
     if ( this.atLeastOneFileModified === false){
-      alert("Aucun fichier n'a été modifier depuis le dernier commit");
+      alert("No files change since the last commit");
       return;
     }
     let branchId;
@@ -166,7 +163,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     let createFileComponent = this.dialogService.open(CreateFileComponent);
     createFileComponent.onClose.subscribe(
       () => {},
-      () => {alert("la")},
+      () => {alert("Error")},
       () => {this.child.uppdateFiles() }
     );
 

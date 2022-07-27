@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {NbDialogRef} from "@nebular/theme";
-import {UserService} from "../../../_services/user/user.service";
-import {GroupService} from "../../../_services/group/group.service";
 import {CommitService} from "../../../_services/project/commitService";
 import {CreateCommitRequest} from "../../../_dtos/project/CreateCommitRequest";
 

@@ -66,11 +66,6 @@ export class ProfileUpdateComponent implements OnInit {
 
 
   onUpload(){
-    console.log("file.name : " + this.file.name);
-    console.log("file.type : " + this.file.type);
-    console.log("file.size : " + this.file.size);
-    console.log("file.lastModified : " + this.file.lastModified);
-
     if(this.file.type != "image/png" && this.file.type != "image/jpg"
       && this.file.type != "image/jpeg"){
       alert("Type of photo accepted : .png, .jpg, .jpeg");
@@ -80,9 +75,6 @@ export class ProfileUpdateComponent implements OnInit {
     const imageRequest = new ImageRequest(this.file.type, "profile", this.user.id.toString(),"null");
 
     this.fileManagementService.uploadImage(imageRequest, this.file).subscribe(imageUrl => {
-      console.log("image upload (askip)");
-      console.log("imageUrl : " + imageUrl);
-
       let user = this.tokenStorage.getUser();
       user.imgUrl = imageUrl;
       this.tokenStorage.saveUser(user);

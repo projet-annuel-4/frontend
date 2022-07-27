@@ -1,9 +1,14 @@
 <div class="row">
   <app-project-tree [branchId]="branchId" [filechange]=fileModified (fileSelectedEvent)="setSelectedFile($event)" class="col-md-2"></app-project-tree>
 
-  <div class="col-md-8" style="height: 650px" >
+  <div class="col-md-8" style="height: 650px">
     <div id="fileName">Bienvenue</div>
-    <ngx-monaco-editor id="monaco-editor" style=" height: 100%; z-index: 1" [disabled] [options]="editorOptions" [(ngModel)]="code" (ngModelChange)="setFileChanged($event)">
+    <ngx-monaco-editor id="monaco-editor"
+                       style=" height: 100%;
+                       z-index: 1"
+                       [disabled]
+                       [options]="editorOptions"
+                       [(ngModel)]="code" (ngModelChange)="setFileChanged($event)">
 
     </ngx-monaco-editor>
 

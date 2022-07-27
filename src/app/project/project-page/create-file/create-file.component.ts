@@ -1,13 +1,9 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {NbDialogRef} from "@nebular/theme";
-import {CommitService} from "../../../_services/project/commitService";
-import {CreateCommitRequest} from "../../../_dtos/project/CreateCommitRequest";
 import {FileService} from "../../../_services/project/fileService";
 import {CreateFileRequest} from "../../../_dtos/project/CreateFileRequest";
 import {ActivatedRoute, Params, Route, Router} from "@angular/router";
-import {ProjectTreeComponent} from "../project-tree/project-tree.component";
 import {delay} from "rxjs/operators";
-import {Error} from "../../../_dtos/Error";
 
 @Component({
   selector: 'app-create-file',
@@ -31,7 +27,7 @@ export class CreateFileComponent implements OnInit {
       (data) => {localStorage.setItem('createdFile', JSON.stringify(data))},
       (error) => { alert(error.error.message); return},
       () => {
-        alert('le fichier à bien été créer');
+        alert('File has been saved successfully');
         localStorage.removeItem('branchId');
         delay(2000);
         this.ref.close();

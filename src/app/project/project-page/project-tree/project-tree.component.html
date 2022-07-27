@@ -3,7 +3,7 @@
   <nb-card-body style="max-height: 250px">
     <nb-list>
       <nb-list-item *ngFor="let file of files" class="file">
-        <button (click)="setSelectedFileEvent(file.id)"> {{file.name}} </button>
+        <button nbButton (click)="setSelectedFileEvent(file.id)"> {{file.name}} </button>
       </nb-list-item>
     </nb-list>
   </nb-card-body>
