@@ -124,15 +124,6 @@
                 Tags : <span *ngFor="let tag of postLiked.key.tags">| {{tag.name}} </span>
               </div>
 
-              <div style="padding-top: 10px">
-                <button nbButton
-                        status="danger"
-                        size="tiny"
-                        (click)="deletePost(postLiked.key.id)">
-                  Delete
-                </button>
-              </div>
-
             </nb-card-body>
 
             <nb-card-footer>

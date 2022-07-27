@@ -130,11 +130,13 @@ export class ProfileComponent implements OnInit {
           this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
             value.isLiked = true;
             post.nbLike += 1;
+            this.init();
           });
         } else {
           this.postService.dislike(parseInt(post_id), this.profile.id).subscribe(then => {
             value.isLiked = false;
             post.nbLike -= 1;
+            this.init();
           });
         }
       }
