@@ -6,7 +6,9 @@ export const environment = {
   production: false,
 
   DOMAIN: 'http://localhost:8072',
-  //DOMAIN: 'http://social-code.fr/backend',
+
+  LOCAL_MEHDI_PROJECT: 'http://localhost:8500',
+
   API_VERSION: 'api/v1',
 
   AUTH: `auth`,
@@ -46,6 +48,7 @@ export const post_service = {
 }
 
 
+
 export const follower_service = {
   BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/post/${environment.FOLLOW}`
 }
@@ -56,6 +59,16 @@ export const group_service = {
 
 export const file_service = {
   BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.FILE}`
+}
+
+export const project_service = {
+  BASE_URL: `${environment.LOCAL_MEHDI_PROJECT}/${environment.API_VERSION}`
+
+}
+
+export const project_file_service = {
+  BASE_URL: `${environment.LOCAL_MEHDI_PROJECT}/${environment.API_VERSION}/project`
+
 }
 /*
  * For easier debugging in development mode, you can import the following file

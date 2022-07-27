@@ -1,0 +1,25 @@
+<nb-card class="dialog-card">
+  <nb-card-header>
+    <div>File </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-list >
+      <nb-list-item *ngFor="let commit of commits">
+        <div>
+          <input class="commitCheckBox"
+                 id = "commit_{{commit.id}}"
+                 (click)="checkInput(commit.id)"
+                 type="checkbox"
+                 value="{{commit.id}}">
+          <label for="commit_{{commit.id}}">{{commit.name}}</label>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button nbButton (click)="revertCommit()"> Revert</button>
+    <button nbButton (click)="close()"> Close</button>
+  </nb-card-footer>
+</nb-card>

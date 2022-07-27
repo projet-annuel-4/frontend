@@ -6,7 +6,7 @@
     </select>
   </nb-layout-header>
   <nb-layout-column class="colored-column-basic">
-      <ngx-monaco-editor style="height: 100%" [options]="options" [(ngModel)]="codeExecutionModel.code" (onInit)="onInit($event)"> </ngx-monaco-editor>
+      <ngx-monaco-editor style="height: 100%" [options]="editorOptions" [(ngModel)]="code" > </ngx-monaco-editor>
   </nb-layout-column>
   <nb-layout-footer>
     <button nbButton outline (click)="sendCode()"> Run </button>

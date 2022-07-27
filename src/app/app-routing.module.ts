@@ -10,13 +10,17 @@ import {CommentComponent} from "./post/comment/comment.component";
 import {SearchComponent} from "./post/search/search.component";
 import {AuthGuard} from "./_helpers/auth.guard";
 
+import {GroupHomeComponent} from "./group/group-home/group-home.component";
+import {GroupProfileComponent} from "./group/group-profile/group-profile.component";
+import {ProjectPageComponent} from "./project/project-page/project-page.component";
+
 const routes: Routes = [
-  {
-    path: 'execution', canActivate: [AuthGuard], children:[
-      {path: 'code', component: CodeExecutionComponent},
-      {path: 'project', component: ProjectExecutionComponent}
-    ]
-  },
+  {path: '', redirectTo:'auth/signing', pathMatch: 'full'},
+
+  { path: 'group', component : GroupHomeComponent },
+  { path: 'group/:groupId', component: GroupProfileComponent},
+  { path: 'group/:groupId/project/:projectId/branch/:branchId', component: ProjectPageComponent},
+
   {
     path: 'post', canActivate: [AuthGuard], children:[
       {path: 'feed', component: FeedComponent},

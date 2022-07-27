@@ -23,6 +23,9 @@ export class ProfileComponent implements OnInit {
   posts: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
 
   postsLiked: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
+
+  userPost: Post[];
+
   userAnswers: Post[];
 
   postsAlreadyLiked: Post[];
