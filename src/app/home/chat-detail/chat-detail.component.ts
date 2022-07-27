@@ -9,6 +9,8 @@ import {MessageService} from "../../_services/message/message.service";
 import { Stomp } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import {UserMessage} from "../../_dtos/chat/UserMessage";
+import {NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
+import {NotificationService} from "../../_services/notification/notification.service";
 
 @Component({
   selector: 'app-chat-detail',
@@ -16,6 +18,7 @@ import {UserMessage} from "../../_dtos/chat/UserMessage";
   styleUrls: ['./chat-detail.component.scss']
 })
 export class ChatDetailComponent implements OnInit {
+  toastPositions = NbGlobalPhysicalPosition;
 
   messages: NbMessage[] = [];
   friendId: string;
@@ -28,7 +31,8 @@ export class ChatDetailComponent implements OnInit {
   private stompClient = null;
 
   constructor(private chatService: ChatService, private router: Router, private route: ActivatedRoute,
-              private userService: UserService) {  }
+              private userService: UserService, private nbToasterService:NbToastrService,
+              private notificationService : NotificationService) {  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params): void => {
@@ -129,6 +133,8 @@ export class ChatDetailComponent implements OnInit {
       nm.updateUser(this.friendProfile.name, this.friendProfile.imgUrl, false)
     }
     this.socketMessages.push(nm);
+
+    this.notificationService.notification(+message['sender'], nm.text);
   }
 
 

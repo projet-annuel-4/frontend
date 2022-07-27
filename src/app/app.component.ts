@@ -24,7 +24,7 @@ export class AppComponent implements OnInit{
 
   items = [
     { title: 'Profile', icon: 'person-outline'},
-    { title: 'Group', icon: ''},
+    { title: 'Group'},
     { title: 'Search', icon: ''},
     { title: 'Chat', icon: ''},
     { title: 'Feed' },

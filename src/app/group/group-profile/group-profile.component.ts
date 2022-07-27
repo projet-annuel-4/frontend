@@ -16,6 +16,8 @@ export class GroupProfileComponent implements OnInit {
   group: Group = new Group(1, "coucou", []);
   groupId: number;
 
+  image;
+
   constructor(private projectService: ProjectService, private route: ActivatedRoute) {
 
     this.group.members = [

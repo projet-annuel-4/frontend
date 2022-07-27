@@ -22,7 +22,6 @@ export class GroupProjectsCardComponent implements OnInit {
   }
 
   goTo(projectId: number): void {
-
     this.projectService.getBranchIdByProjectId(projectId).subscribe(project => {
       this.router.navigate([ this.router.url + '/project/', projectId, "branch", project]).then();
     })

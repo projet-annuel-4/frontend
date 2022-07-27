@@ -11,7 +11,7 @@ export class ChatComponent implements OnInit {
   constructor(private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this.notificationService.subscribe()
+    //this.notificationService.subscribe()
   }
 
 }

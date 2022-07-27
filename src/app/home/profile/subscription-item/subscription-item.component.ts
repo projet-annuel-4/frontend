@@ -21,10 +21,6 @@ export class SubscriptionItemComponent implements OnInit {
               protected ref: NbDialogRef<SubscriptionItemComponent>, private router: Router) { }
 
   ngOnInit(): void {
-    console.log("sub : " + this.subscription.id);
-    console.log("user : " + this.tokenStorage.getUser().id);
-
-    this.friendId = +localStorage.getItem('friendId');
   }
 
 
