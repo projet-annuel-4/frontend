@@ -4,7 +4,7 @@
     <div>
       <nb-user
         name="{{post.user.firstname}} {{post.user.lastname}}"
-        routerLink="/friend/{{post.user.id}}/profile">
+        (click)="goToProfile()">
       </nb-user>
 
       Title : {{post.title}}

@@ -48,7 +48,7 @@ export class CodeExecutionComponent implements OnInit {
   }
 
 
-  sendCode(codeId: string, language: string, code: string){
+  sendCode(codeId: number, language: string, code: string){
 
     this.codeToExecute.id = codeId;
     this.codeToExecute.language = language;

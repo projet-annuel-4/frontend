@@ -1,5 +1,5 @@
 export class CodeExecution {
-  id: string;
+  id: number;
   code: string;
   language: string;
   mode = "PIECE";

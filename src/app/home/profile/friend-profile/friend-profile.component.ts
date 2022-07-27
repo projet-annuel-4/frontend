@@ -48,7 +48,7 @@ export class FriendProfileComponent implements OnInit {
           this.postService.getUserById(params.friendId).subscribe(friend => {
             this.friendProfile = friend;
             this.initFriendPost();
-            });
+          });
 
           //Est ce le user follow ce friend ??
           this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(subscriptions => {
@@ -69,6 +69,10 @@ export class FriendProfileComponent implements OnInit {
         })
       }
     });
+
+  }
+
+  initFriend(){
 
   }
 

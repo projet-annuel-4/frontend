@@ -5,6 +5,7 @@ import {PostService} from "../../_services/post/post.service";
 import {User} from "../../_dtos/user/User";
 import {Tag} from "../../_dtos/post/Tag";
 import {CodeService} from "../../_services/code_execution/code.service";
+import {TokenStorageService} from "../../_services/token/token-storage.service";
 
 @Component({
   selector: 'app-post-detail',
@@ -17,7 +18,7 @@ export class PostDetailComponent implements OnInit {
   answers: Post[];
 
   constructor(private postService: PostService, private route: ActivatedRoute,
-              private router: Router, public codeService: CodeService) { }
+              private router: Router, public codeService: CodeService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
 
@@ -43,6 +44,14 @@ export class PostDetailComponent implements OnInit {
 
   }
 
+
+  goToProfile(){
+    if(this.post.user.id == this.tokenStorage.getUser().id){
+      this.router.navigate(['/profile']).then();
+    } else {
+      this.router.navigate(['friend/' + this.post.user.id + '/' + 'profile']).then();
+    }
+  }
 
   goToAnswerDetail(post_id: string){
     this.router.navigate(["post/" + post_id + "/detail"]).then()

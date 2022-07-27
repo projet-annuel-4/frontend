@@ -68,7 +68,7 @@ export class CodeService {
     let languageMatch = codeRegex.exec(codeString);
 
     return new Code(
-      uuidv4(),
+      Math.floor(Math.random() * 1_000_000),
       this.cleanLanguage(languageMatch[0]),
       this.cleanCode(codeString, languageMatch[0]),
       "",
