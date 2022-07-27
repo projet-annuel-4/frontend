@@ -35,7 +35,6 @@ export class FriendProfileComponent implements OnInit {
   buttonText: string;
 
 
-  //TODO : Pouvoir liker les posts du Friend
   constructor(private userService: UserService, private route: ActivatedRoute, private postService: PostService,
               private dialogService: NbDialogService, public codeService:CodeService,
               private followService: FollowService, private tokenStorage: TokenStorageService,
