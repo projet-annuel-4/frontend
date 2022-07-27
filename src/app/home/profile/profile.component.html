@@ -108,7 +108,13 @@
         <div *ngFor="let postLiked of postsLiked | keyvalue">
           <nb-card>
             <nb-card-body routerLink="../post/{{postLiked.key.id}}/detail">
-              <nb-card-header> Title : {{postLiked.key.title}} </nb-card-header>
+              <nb-card-header>
+                <nb-user
+                  name="{{postLiked.key.user.firstname}} {{postLiked.key.user.lastname}}"
+                  routerLink="/friend/{{postLiked.key.user.id}}/profile">
+                </nb-user>
+                Title : {{postLiked.key.title}}
+              </nb-card-header>
 
               <div style="padding: 2%">
                 <pre><code>{{postLiked.key.content}}</code></pre>
@@ -116,15 +122,6 @@
 
               <div>
                 Tags : <span *ngFor="let tag of postLiked.key.tags">| {{tag.name}} </span>
-              </div>
-
-              <div style="padding-top: 10px">
-                <button nbButton
-                        status="danger"
-                        size="tiny"
-                        (click)="deletePost(postLiked.key.id)">
-                  Delete
-                </button>
               </div>
 
             </nb-card-body>

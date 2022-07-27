@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NgxEditorModel} from "../lib/types";
+//import {NgxEditorModel} from "../lib/types";
 import {CodeService} from "../../_services/code_execution/code.service";
 import {CodeExecution} from "../../_dtos/code_execution/CodeExecution";
 
@@ -15,11 +15,12 @@ declare var monaco: any;
 export class ProjectExecutionComponent implements OnInit {
 
   codeExecutionModel = new CodeExecution();
+  editorOptions = {theme: 'vs-dark', language: 'python'};
+  code: string= 'function x() {\nconsole.log("Hello world!");\n}';
 
   constructor(private codeExecution: CodeService) { }
 
   editor:any;
-  code:string;
   toggleLanguage = true;
 
 
@@ -40,10 +41,10 @@ export class ProjectExecutionComponent implements OnInit {
   ].join('\n');
 
 
-  model: NgxEditorModel = {
-    value: this.jsonCode,
-    language: 'json'
-  };
+  // model: NgxEditorModel = {
+  //   value: this.jsonCode,
+  //   language: 'json'
+  // };
 
 
 
@@ -54,11 +55,11 @@ export class ProjectExecutionComponent implements OnInit {
   onInit(editor){
     this.editor = editor;
     console.log(editor);
-    this.model = {
-      value: this.jsonCode,
-      language: 'json',
-      uri: monaco.Uri.parse('a://b/foo.json')
-    };
+    // this.model = {
+    //   value: "coucou c'est moi",
+    //   language: 'json',
+    //   uri: monaco.Uri.parse('a://b/foo.json')
+    // };
   }
 
 
