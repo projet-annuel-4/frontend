@@ -36,11 +36,7 @@ export class SignupComponent implements OnInit {
       //this.loading = true;
       this._authService.register(new SignUpRequest(data['firstname'], data['lastname'], data['email'],
                                                           data['password'], data['password2'], "captchtest")).subscribe(
-        response => {
-          //this.loading = true;
-          console.log("subscribe");
-          this.router.navigate(['../signing']).then()
-        }
+        () => {this.router.navigate(['../signing']).then()},
       );
 
     } else {

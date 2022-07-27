@@ -6,7 +6,7 @@
              (click)="goToSubscriptionPage()">
     </nb-user>
 
-    <button
+    <button *ngIf="this.friendId === this.tokenStorage.getUser().id"
       nbButton
       status="danger"
       size="small"

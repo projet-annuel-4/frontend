@@ -15,10 +15,16 @@ export class SubscriptionItemComponent implements OnInit {
   @Input()
   subscription: User;
 
-  constructor(private followService: FollowService, private tokenStorage: TokenStorageService,
+  friendId: number
+
+  constructor(private followService: FollowService, public tokenStorage: TokenStorageService,
               protected ref: NbDialogRef<SubscriptionItemComponent>, private router: Router) { }
 
   ngOnInit(): void {
+    console.log("sub : " + this.subscription.id);
+    console.log("user : " + this.tokenStorage.getUser().id);
+
+    this.friendId = +localStorage.getItem('friendId');
   }
 
 

@@ -33,7 +33,7 @@ export class SubscriptionListComponent implements OnInit {
     }
 
     localStorage.removeItem('fromFriendPage');
-    localStorage.removeItem('friendId');
+    //localStorage.removeItem('friendId');
   }
 
 

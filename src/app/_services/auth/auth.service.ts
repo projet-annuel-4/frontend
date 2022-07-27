@@ -67,8 +67,8 @@ export class AuthService {
 
   }
 
-  register(signUpRequest: SignUpRequest): Observable<string> {
-    return this.http.post<string>(`${auth_service.REGISTRATION}`, signUpRequest, this.httpOptions);
+  register(signUpRequest: SignUpRequest) {
+    return this.http.post(`${auth_service.REGISTRATION}`, signUpRequest, this.httpOptions);
   }
 
   registerWithFacebook(){
