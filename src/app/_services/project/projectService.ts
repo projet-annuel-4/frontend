@@ -12,9 +12,9 @@ import {UpdateProjectRequest} from "../../_dtos/project/UpdateProjectRequest";
 })
 
 export class ProjectService{
-    // create project
-    // delete project
-    // update project
+  // create project
+  // delete project
+  // update project
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' })
   };
@@ -33,6 +33,13 @@ export class ProjectService{
   getProjectByIdGroup(groupId: number): Observable<Project[]> {
     return this.http.get<Project[]>(`${project_service.BASE_URL}/project/${groupId}/getProjects`, this.httpOptions);
   }
+
+  getBranchIdByProjectId(projectId: number): Observable<number> {
+    return this.http.get<number>(`${project_service.BASE_URL}/project/branch/${projectId}/getBranch`, this.httpOptions);
+  }
+
+
+
 
   deleteProject(projectId: number, request: UpdateProjectRequest): Observable<Project> {
     return this.http.post<Project>(`${project_service.BASE_URL}/project/deleteProject/${projectId}`, request, this.httpOptions);

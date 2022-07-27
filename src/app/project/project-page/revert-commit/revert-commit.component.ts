@@ -4,6 +4,7 @@ import {FileService} from "../../../_services/project/fileService";
 import {CommitService} from "../../../_services/project/commitService";
 import {CreateFileRequest} from "../../../_dtos/project/CreateFileRequest";
 import {Commit} from "../../../_dtos/project/Commit";
+import {ActivatedRoute, Params} from "@angular/router";
 
 @Component({
   selector: 'app-revert-commit',
@@ -14,11 +15,10 @@ export class RevertCommitComponent implements OnInit {
 
   commits: Commit[];
 
-  constructor(protected ref: NbDialogRef<RevertCommitComponent>, private commitService: CommitService) { }
+  constructor(protected ref: NbDialogRef<RevertCommitComponent>, private commitService: CommitService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.loadCommit();
-    this.sortCommits();
   }
 
   loadCommit(): void {
@@ -29,21 +29,32 @@ export class RevertCommitComponent implements OnInit {
   }
 
   sortCommits(): void {
-    this.commits.sort( (commitA, commitB ) => commitA.creationDate.getTime() - commitB.creationDate.getTime());
+    this.commits.sort( (commitA, commitB ) => new Date(commitA.creationDate).getTime() - new Date(commitB.creationDate).getTime());
   }
 
   revertCommit() {
     const fileRequest = new CreateFileRequest((document.getElementById('fileName')as HTMLInputElement).value);
-    const branchId: string = localStorage.getItem('branchId');
-    const commitId = 1;
-    this.commitService.revert(+branchId, commitId);
-    localStorage.removeItem('branchId');
-    localStorage.removeItem('commitId');
+
+    const commitId = localStorage.getItem('commitId');
+    console.log("commit : " + commitId);
+    const branchId = localStorage.getItem('branchId');
+    this.commitService.revert(+branchId, parseInt(commitId)).subscribe(
+      () => {},
+      () => {},
+      () => {
+        localStorage.removeItem('branchId');
+        localStorage.removeItem('commitId');
+        alert("Projet à bien été revert");
+        window.location.reload();
+      }
+    );
+
     this.ref.close();
   }
 
   checkInput(id: number) {
-    alert('ici');
+
+    localStorage.setItem('commitId', id.toString());
     let checkbox = (document.getElementsByClassName('commitCheckBox') as HTMLCollectionOf<HTMLInputElement>);
     for( let i = 0; i < checkbox.length; i++) {
       checkbox[i].checked = false;

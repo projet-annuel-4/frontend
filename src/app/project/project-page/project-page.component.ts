@@ -1,17 +1,19 @@
 import {ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-//import {NgxEditorModel} from "../lib/types";
+
 import {NbDialogService} from "@nebular/theme";
 import {CreateCommitComponent} from "./create-commit/create-commit.component";
 import {CreateFileComponent} from "./create-file/create-file.component";
 import {ActivatedRoute, Params} from "@angular/router";
 import {RevertCommitComponent} from "./revert-commit/revert-commit.component";
 import {FileService} from "../../_services/project/fileService";
-import {Subject} from "rxjs";
+
 import {ProjectTreeComponent} from "./project-tree/project-tree.component";
 import {Filess} from "../../_dtos/project/Filess";
 
 
-declare var monaco: any;
+declare let monaco: any;
+
+
 
 
 @Component({
@@ -34,6 +36,8 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   onSelectedFileChange(selectedFile: number) {
     console.log('here');
   }
+
+
 
   constructor(private cf: ChangeDetectorRef,
               private dialogService: NbDialogService,
@@ -71,7 +75,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     this.code ='';
     document.getElementById('monaco-editor').style.display ='none';
     document.getElementById('fileName').innerHTML = file.name;
-    this.fileService.getFileData(this.selectedFile.id).subscribe(
+    this.fileService.getFileData(this.branchId, this.selectedFile.id).subscribe(
       data => this.code = this.convertByteArrayToString(data)   ,
       () => {},
       () => {document.getElementById('monaco-editor').style.display ='block';}
@@ -97,7 +101,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     const file = new File([blob], "foo.txt", {type: "text/plain"} );
     const data: FormData = new FormData();
     data.append("file", file);
-    this.fileService.saveFile(1, 1, data).subscribe(
+    this.fileService.saveFile(this.branchId, this.selectedFile.id, data).subscribe(
       () => {},
       () => {},
       () => {
@@ -147,6 +151,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     let branchId;
     this.route.params.subscribe((params: Params): void => {
       branchId = params.branchId;
+
     });
     localStorage.setItem('branchId', branchId);
     this.dialogService.open(RevertCommitComponent);

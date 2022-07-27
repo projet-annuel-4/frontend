@@ -46,7 +46,7 @@ export const code_execution_service = {
 
 export const post_service = {
   //TODO : Mettre à jour le port une fois l'api-gateway configurée
-    BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.POST}`
+  BASE_URL: `http://localhost:8096/${environment.API_VERSION}/${environment.POST}`
 }
 
 
@@ -65,6 +65,12 @@ export const file_service = {
 
 export const project_service = {
   BASE_URL: `${environment.LOCAL_MEHDI_PROJECT}/${environment.API_VERSION}`
+
+}
+
+export const project_file_service = {
+  BASE_URL: `${environment.LOCAL_MEHDI_PROJECT}/${environment.API_VERSION}/project`
+
 }
 /*
  * For easier debugging in development mode, you can import the following file

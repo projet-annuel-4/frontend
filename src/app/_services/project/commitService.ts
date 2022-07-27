@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Filess} from "../../_dtos/project/Filess";
-import {project_service} from "../../../environments/environment";
+import {project_file_service, project_service} from "../../../environments/environment";
 import {Commit} from "../../_dtos/project/Commit";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {TokenStorageService} from "../token/token-storage.service";
@@ -24,15 +24,15 @@ export class CommitService {
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {}
 
   create(branchId: number, request: CreateCommitRequest): Observable<Commit> {
-    return this.http.post<Commit>(`${project_service.BASE_URL}/branch/${branchId}/commit`, request, this.httpOptions);
+    return this.http.post<Commit>(`${project_file_service.BASE_URL}/branch/${branchId}/commit`, request, this.httpOptions);
   }
 
   getAllCommit( branchId: number): Observable<Commit[]> {
     console.log(`${project_service.BASE_URL}/branch/${branchId}/commit/getAll`);
-    return this.http.get<Commit[]>(`${project_service.BASE_URL}/branch/${branchId}/commit/getAllCommit`, this.httpOptions);
+    return this.http.get<Commit[]>(`${project_file_service.BASE_URL}/branch/${branchId}/commit/getAllCommit`, this.httpOptions);
   }
 
-  revert(commitId: number, branchId: number): Observable<any> {
-    return this.http.get<any>(`${project_service.BASE_URL}/branch/${branchId}/commit/${commitId}/revert`, this.httpOptions);
+  revert(branchId: number, commitId: number): Observable<any> {
+    return this.http.post<any>(`${project_file_service.BASE_URL}/branch/${branchId}/commit/${commitId}/revert`, this.httpOptions);
   }
 }

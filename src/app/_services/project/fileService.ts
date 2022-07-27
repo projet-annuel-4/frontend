@@ -4,7 +4,7 @@ import {TokenStorageService} from "../token/token-storage.service";
 import {PostRequest} from "../../_dtos/post/PostRequest";
 import {Observable} from "rxjs";
 import {Post} from "../../_dtos/post/Post";
-import {post_service, project_service} from "../../../environments/environment";
+import {post_service, project_file_service} from "../../../environments/environment";
 import {Filess} from "../../_dtos/project/Filess";
 import { FileRequest } from 'src/app/_dtos/file/FileRequest';
 import {CreateFileRequest} from "../../_dtos/project/CreateFileRequest";
@@ -26,28 +26,28 @@ export class FileService{
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {}
 
   create(branchId: number, file: CreateFileRequest): Observable<Filess> {
-    return this.http.post<Filess>(`${project_service.BASE_URL}/branch/1/file/create`, file);
+    return this.http.post<Filess>(`${project_file_service.BASE_URL}/branch/${branchId}/file/create`, file);
   }
 
-  getById(fileId: number): Observable<Filess> {
-    return this.http.get<Filess>(`${project_service.BASE_URL}/branch/1/file/${fileId}/get`, this.httpOptions);
+  getById(branchId: number, fileId: number): Observable<Filess> {
+    return this.http.get<Filess>(`${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/get`, this.httpOptions);
   }
 
-  getFileData(fileId: number): Observable<ArrayBuffer> {
-    return this.http.get<any>(`${project_service.BASE_URL}/branch/1/file/${fileId}/getFileData?type=actual`,
+  getFileData(branchId: number, fileId: number): Observable<ArrayBuffer> {
+    return this.http.get<any>(`${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/getFileData?type=actual`,
       { responseType: 'arraybuffer' as 'json'});
   }
 
   getAllFileFromBranch(branchId: number): Observable<Filess[]> {
-    return this.http.get<Filess[]>(`${project_service.BASE_URL}/branch/${branchId}/file/getAll`, this.httpOptions);
+    return this.http.get<Filess[]>(`${project_file_service.BASE_URL}/branch/${branchId}/file/getAll`, this.httpOptions);
   }
 
   saveFile(branchId: number, fileId: number, data: FormData): Observable<Filess> {
-    return this.http.post<Filess>(`${project_service.BASE_URL}/branch/${branchId}/file/${fileId}/save`, data);
+    return this.http.post<Filess>(`${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/save`, data);
   }
 
   deleteFile(branchId: number, fileId: number): Observable<Filess> {
-    return this.http.delete<Filess>(`${project_service.BASE_URL}/branch/${branchId}/file/${fileId}/get`);
+    return this.http.delete<Filess>(`${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/get`);
   }
   // get file
   // get allfile from project
