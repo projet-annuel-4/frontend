@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
-import {CodeExecutionComponent} from "./code/code-execution/code-execution.component";
-import {ProjectExecutionComponent} from "./code/project-execution/project-execution.component";
 import {FeedComponent} from "./post/feed/feed.component";
 import {CreateComponent} from "./post/create/create.component";
 import {PostDetailComponent} from "./post/post-detail/post-detail.component";
@@ -15,11 +13,11 @@ import {GroupProfileComponent} from "./group/group-profile/group-profile.compone
 import {ProjectPageComponent} from "./project/project-page/project-page.component";
 
 const routes: Routes = [
-  {path: '', redirectTo:'auth/signing', pathMatch: 'full'},
+  {path: '', canActivate: [AuthGuard], redirectTo:'/profile', pathMatch: 'full'},
 
-  { path: 'group', component : GroupHomeComponent },
-  { path: 'group/:groupId', component: GroupProfileComponent},
-  { path: 'group/:groupId/project/:projectId/branch/:branchId', component: ProjectPageComponent},
+  { path: 'group', canActivate: [AuthGuard], component : GroupHomeComponent },
+  { path: 'group/:groupId', canActivate: [AuthGuard], component: GroupProfileComponent},
+  { path: 'group/:groupId/project/:projectId/branch/:branchId', canActivate: [AuthGuard], component: ProjectPageComponent},
 
   {
     path: 'post', canActivate: [AuthGuard], children:[

@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-  DOMAIN: 'http://localhost:8072',
-  //DOMAIN: 'http://social-code.fr/backend',
+  //DOMAIN: 'http://localhost:8072',
+  DOMAIN: 'http://social-code.fr/backend',
 
   API_VERSION: 'api/v1',
 
@@ -39,7 +39,8 @@ export const user_service = {
 }
 
 export const code_execution_service = {
-  SEND: `http://localhost:3001/${environment.API_VERSION}/codeExecutor/submit`
+  SEND: `${environment.DOMAIN}/${environment.API_VERSION}/codeExecutor/submit`
+  //SEND: `http://localhost:3001/${environment.API_VERSION}/codeExecutor/submit`
 }
 
 export const post_service = {

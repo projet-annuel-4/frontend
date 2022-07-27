@@ -134,7 +134,14 @@ export class ChatDetailComponent implements OnInit {
     }
     this.socketMessages.push(nm);
 
-    this.notificationService.notification(+message['sender'], nm.text);
+    /*
+    if(message['sender'] != this.myProfile.id.toString()) {
+      this.nbToasterService.show(nm.text, "New Message", {position: this.toastPositions.TOP_RIGHT, status: "success"});
+    }
+
+     */
+
+    this.notificationService.notification(message['sender'], nm.text);
   }
 
 

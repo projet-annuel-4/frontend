@@ -24,10 +24,12 @@ export class NotificationService {
 
 
   notification(senderId: number, message: string){
+    console.log("zemfkjb;egebebeb");
     if(senderId != this.tokenStorageService.getUser().id) {
       this.nbToasterService.show(message, "New Message", {position: this.toastPositions.TOP_RIGHT, status: "success"});
     }
   }
+
 
 
 /*
