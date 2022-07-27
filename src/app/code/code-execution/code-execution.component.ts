@@ -62,11 +62,14 @@ export class CodeExecutionComponent implements OnInit {
  */
     this.codeService.sendCode(this.codeToExecute).subscribe(
       res => {
+        /*
         console.log(res.id);
         console.log(res.status);
-        console.log(res.output[0]);
+        console.log(res.output[0]);*/
 
-        this.codes.forEach(code => {
+        let console = document.getElementById("console_"+codeId) as HTMLTextAreaElement;
+        console.value = res.output[0];
+        /*this.codes.forEach(code => {
           if(code.id === codeId) {
             code.output = res.output[0];
             if(res.status == "done") code.isRunnable = true;
@@ -78,7 +81,7 @@ export class CodeExecutionComponent implements OnInit {
           if(!code.isRunnable) {
             localStorage.setItem(this.CODE_RUNNABLE_KEY, "false");
           }
-        });
+        });*/
 
       },
       error => {
