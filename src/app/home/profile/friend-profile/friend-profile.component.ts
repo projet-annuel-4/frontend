@@ -23,7 +23,6 @@ export class FriendProfileComponent implements OnInit {
   friendProfile: User;
   image;
 
-  friendPost: Post[];
   friendPostsLiked: Post[];
   friendAnswers: Post[];
 
@@ -31,7 +30,7 @@ export class FriendProfileComponent implements OnInit {
   postsAlreadyLiked: Post[];
 
 
-  followedByTheUser: boolean;
+  followedByTheUser: boolean = false;
 
   buttonText: string;
 
@@ -45,23 +44,8 @@ export class FriendProfileComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params): void => {
       if(params.friendId !== undefined){
-          this.postService.getUserById(params.friendId).subscribe(friend => {
-            this.friendProfile = friend;
-            this.initFriendPost();
-          });
 
-          //Est ce le user follow ce friend ??
-          this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(subscriptions => {
-            subscriptions.forEach(sub => {
-              if (sub.id == params.friendId) {
-                this.followedByTheUser = true;
-              } else {
-                this.followedByTheUser = false;
-              }
-              this.updateButton();
-            })
-          });
-
+        this.initFriend(params.friendId);
 
         this.fileService.downloadImage(params.friendId).subscribe( res => {
           let objectURL = 'data:image/png;base64,' + res.file;
@@ -72,8 +56,12 @@ export class FriendProfileComponent implements OnInit {
 
   }
 
-  initFriend(){
-
+  initFriend(friendId: string){
+    this.postService.getUserById(parseInt(friendId)).subscribe(friend => {
+      this.friendProfile = friend;
+      this.initFriendPost();
+      this.isFollowed(parseInt(friendId));
+    });
   }
 
 
@@ -93,6 +81,15 @@ export class FriendProfileComponent implements OnInit {
     this.postService.getAllUserAnswers(this.friendProfile.id).subscribe(userAnswers => {
       this.friendAnswers = userAnswers;
     }, error => {});
+  }
+
+  isFollowed(friendId: number){
+    this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(subscriptions => {
+      subscriptions.forEach(sub => {
+        if (sub.id == friendId) this.followedByTheUser = true;
+      });
+      this.updateButton();
+    });
   }
 
 
@@ -132,19 +129,21 @@ export class FriendProfileComponent implements OnInit {
   }
 
   follow_unfollow(){
-    this.followedByTheUser = !this.followedByTheUser;
-    if(this.followedByTheUser == true){
+    if(!this.followedByTheUser){
+
       this.followService.follow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
         this.followedByTheUser = true;
+        this.friendProfile.nbFollowers += 1;
+        this.updateButton();
       });
 
     } else {
       this.followService.unfollow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
         this.followedByTheUser = false;
+        this.friendProfile.nbFollowers -= 1;
+        this.updateButton();
       });
     }
-
-    this.updateButton();
   }
 
   like_dislike(post_id: string){
