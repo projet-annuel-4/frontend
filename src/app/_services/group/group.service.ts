@@ -30,6 +30,10 @@ export class GroupService {
     return this.http.patch(`${group_service.BASE_URL}/${user_id}/add-members`, this.httpOptions);
   }
 
+  getInfoGroup(groupId: number): Observable<Group>{
+  return this.http.get<Group>(`${group_service.BASE_URL}/${groupId}`);
+  }
+
   deleteMembers(user_id: number){
     return this.http.patch(`${group_service.BASE_URL}/${user_id}/delete-members`, this.httpOptions);
   }
