@@ -30,7 +30,8 @@ export const auth_service = {
 }
 
 export const chat_service = {
-  CHAT: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}`
+  CHAT: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}`,
+  WEB_SOCKET: `http://social-code.fr/socket/websocket`
 }
 
 export const user_service = {
@@ -39,7 +40,7 @@ export const user_service = {
 }
 
 export const code_execution_service = {
-  SEND: `${environment.DOMAIN}/${environment.API_VERSION}/codeExecutor/submit`
+  SEND: `${environment.DOMAIN}/${environment.API_VERSION}/executor/submit`
   //SEND: `http://localhost:3001/${environment.API_VERSION}/codeExecutor/submit`
 }
 

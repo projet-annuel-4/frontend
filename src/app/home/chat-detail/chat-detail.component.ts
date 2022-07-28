@@ -11,6 +11,7 @@ import * as SockJS from 'sockjs-client';
 import {UserMessage} from "../../_dtos/chat/UserMessage";
 import {NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 import {NotificationService} from "../../_services/notification/notification.service";
+import {chat_service} from "../../../environments/environment";
 
 @Component({
   selector: 'app-chat-detail',
@@ -81,7 +82,8 @@ export class ChatDetailComponent implements OnInit {
 
   /** Test Web Socket **/
   connect() {
-    const socket = new SockJS('http://localhost:8200/websocket');
+    //const socket = new SockJS('http://localhost:8200/websocket');
+    const socket = new SockJS(`${chat_service.WEB_SOCKET}`);
     this.stompClient = Stomp.over(socket);
 
     const _this = this;
