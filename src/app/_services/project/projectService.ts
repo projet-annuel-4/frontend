@@ -6,6 +6,7 @@ import {Commit} from "../../_dtos/project/Commit";
 import {project_service} from "../../../environments/environment";
 import {Project} from "../../_dtos/project/Project";
 import {UpdateProjectRequest} from "../../_dtos/project/UpdateProjectRequest";
+import {CreateProjectRequest} from "../../_dtos/project/CreateProjectRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class ProjectService{
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {}
 
 
-  createProject(): Observable<Project> {
-    return this.http.post<Project>(`${project_service.BASE_URL}/project/createProject`, null, this.httpOptions);
+  createProject(request: CreateProjectRequest): Observable<Project> {
+    return this.http.post<Project>(`${project_service.BASE_URL}/project/createProject`, request);
   }
 
   updateProject(projectId: number): Observable<any> {

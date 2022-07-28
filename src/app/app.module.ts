@@ -52,6 +52,7 @@ import { ActionPanelComponent } from './project/project-page/action-panel/action
 import { CreateCommitComponent } from './project/project-page/create-commit/create-commit.component';
 import { CreateFileComponent } from './project/project-page/create-file/create-file.component';
 import { RevertCommitComponent } from './project/project-page/revert-commit/revert-commit.component';
+import { CreateProjectComponent } from './group/group-profile/create-project/create-project.component';
 
 
 /************** Config Monaco *************/
@@ -125,7 +126,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
     ActionPanelComponent,
     CreateCommitComponent,
     CreateFileComponent,
-    RevertCommitComponent
+    RevertCommitComponent,
+    CreateProjectComponent
   ],
 
   imports: [
