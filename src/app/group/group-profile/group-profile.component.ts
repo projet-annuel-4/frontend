@@ -30,6 +30,7 @@ export class GroupProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    alert("coucou");
     this.route.params.subscribe((params: Params): void => {
       this.groupId = params.groupId;
     });
