@@ -79,6 +79,7 @@ export class NewGroupComponent {
 
   memberToCreateGroupRequest(){
     let ids: Set<number> = new Set<number>();
+    ids.add(this.userService.getProfile().id);
     this.members.forEach(member => ids.add(member.id));
     this.createGroupRequest.members = Array.from(ids);
   }
