@@ -62,12 +62,12 @@ export const file_service = {
 }
 
 export const project_service = {
-  BASE_URL: `http://localhost:8500/${environment.API_VERSION}`
+  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}`
 
 }
 
 export const project_file_service = {
-  BASE_URL: `http://localhost:8500/${environment.API_VERSION}/project`
+  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/project`
 
 }
 /*
