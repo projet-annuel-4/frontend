@@ -31,6 +31,7 @@ export class GroupHomeComponent implements OnInit {
 
   createGroup(){
     this.dialogService.open(NewGroupComponent);
+    this.initUserGroups();
   }
 
 
