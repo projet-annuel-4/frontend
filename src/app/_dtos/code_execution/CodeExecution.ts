@@ -3,5 +3,5 @@ export class CodeExecution {
   code: string;
   language: string;
   mode = "PIECE";
-  test = false;
+  test = true;
 }
