@@ -24,6 +24,7 @@ export class GroupHomeComponent implements OnInit {
   initUserGroups(){
     this.groupService.getGroupsByMembersEmail().subscribe(groups => {
       this.groups = groups;
+
     });
   }
 

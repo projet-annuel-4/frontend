@@ -38,6 +38,7 @@
 
       <nb-tab tabTitle="Project">
         <nb-list>
+          <button nbButton> Create Project</button>
           <nb-list-item *ngFor="let project of group.project">
             <app-group-projects-card class="col-md-12" [project]="project"  ></app-group-projects-card>
           </nb-list-item>

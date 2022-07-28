@@ -13,16 +13,17 @@ import {ActivatedRoute, Params} from "@angular/router";
 })
 export class GroupProfileComponent implements OnInit {
 
-  group: Group = new Group(1, "coucou", []);
+  //group: Group = new Group(1, "coucou", []);
+  group: Group;
   groupId: number;
 
   image;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute) {
 
-    this.group.members = [
+    /*this.group.members = [
       new User(1 , 'mon test', 'mon tast', 'montext@gmail.com', 0, 0, null)
-    ];
+    ];*/
 
   }
 
@@ -38,6 +39,13 @@ export class GroupProfileComponent implements OnInit {
       data => this.group.project = data,
       () => this.group.project = null,
     );
+  }
+
+
+  createProject(){
+    this.projectService.createProject().subscribe(project => {
+      this.group.project.push(project)
+    });
   }
 
 }

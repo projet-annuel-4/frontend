@@ -55,7 +55,7 @@ export const follower_service = {
 }
 
 export const group_service = {
-  BASE_URL: `${environment.DOMAIN}/${environment.USERS_GROUPS}/groups`
+  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/groups`
 }
 
 export const file_service = {

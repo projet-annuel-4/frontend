@@ -39,8 +39,6 @@ export class ProjectService{
   }
 
 
-
-
   deleteProject(projectId: number, request: UpdateProjectRequest): Observable<Project> {
     return this.http.post<Project>(`${project_service.BASE_URL}/project/deleteProject/${projectId}`, request, this.httpOptions);
   }
