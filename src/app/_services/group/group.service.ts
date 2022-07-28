@@ -31,7 +31,7 @@ export class GroupService {
   }
 
   getInfoGroup(groupId: number): Observable<Group>{
-  return this.http.get<Group>(`${group_service.BASE_URL}/${groupId}`);
+  return this.http.get<Group>(`${group_service.BASE_URL}/${groupId}`, this.httpOptions);
   }
 
   deleteMembers(user_id: number){
