@@ -1,15 +1,25 @@
 <nb-layout>
   <nb-layout-header class="fixed-header">
+    <div class="navbar">
+      <a routerLink="../profile">Profile</a>
+      <a routerLink="../group">Group</a>
+      <a routerLink="../post/search">Search</a>
+      <a routerLink="../chat">Chat</a>
+      <a routerLink="../post/feed">Feed</a>
+    </div>
+
     <nb-user *ngIf="user != null"
              name="{{user.firstname}} {{user.lastname}}"
              picture=""
              [nbContextMenu]="items"
              nbContextMenuTag="my-context-menu">
     </nb-user>
+    <!--
     <nb-toggle class="themeToggle"
                [(ngModel)]="toggleTheme"
                (click)="changeTheme()">
     </nb-toggle>
+    -->
   </nb-layout-header>
   <nb-layout-column>
 
