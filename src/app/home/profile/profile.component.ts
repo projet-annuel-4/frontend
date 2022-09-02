@@ -127,7 +127,7 @@ export class ProfileComponent implements OnInit {
   }
 
   like_dislike(post_id: string){
-    this.postsLiked.forEach((value, post) =>{
+    this.posts.forEach((value, post) =>{
       if(post.id == post_id){
         if(!value.isLiked){
           this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
