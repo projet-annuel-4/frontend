@@ -54,8 +54,9 @@
             </nb-card-header>
 
             <nb-card-body>
-              <div style="padding: 2%"
-                   routerLink="../post/{{post.key.id}}/detail">
+              <!--<div style="padding: 2%"
+                   routerLink="../post/{{post.key.id}}/detail"> -->
+              <div (click)="viewPostDetail()">
                  <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
               </div>
 
