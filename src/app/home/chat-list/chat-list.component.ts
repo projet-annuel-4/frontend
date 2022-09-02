@@ -19,8 +19,7 @@ export class ChatListComponent implements OnInit {
   friends: FriendProfile[];
   menu = [
     { title: 'New Chat', icon: 'person-add-outline' },
-    { title: 'New Group', icon: 'plus-outline' },
-    { title: 'Code Execution', icon: '' },
+    { title: 'New Group', icon: 'plus-outline' }
   ];
 
   profile: User;
@@ -60,10 +59,6 @@ export class ChatListComponent implements OnInit {
             break;
           case 'New Group':
             this.dialogService.open(NewGroupComponent);
-            break;
-
-          case 'Code Execution':
-            this.router.navigateByUrl("/execution/project").then();
             break;
 
           default:
