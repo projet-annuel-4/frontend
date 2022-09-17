@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Post} from "../../_dtos/post/Post";
 import {PostService} from "../../_services/post/post.service";
-import {User} from "../../_dtos/user/User";
-import {Tag} from "../../_dtos/post/Tag";
 import {CodeService} from "../../_services/code_execution/code.service";
 import {TokenStorageService} from "../../_services/token/token-storage.service";
 

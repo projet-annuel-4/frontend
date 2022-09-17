@@ -22,6 +22,9 @@ export class AppComponent implements OnInit{
 
   user: User;
 
+  //TODO : Une fois le nouvelle navbar op, tout supprimer sauf le Logout
+  //items = [{title: 'Logout', icon: 'unlock-outline'}]
+
   items = [
     { title: 'Profile', icon: 'person-outline'},
     { title: 'Group'},
