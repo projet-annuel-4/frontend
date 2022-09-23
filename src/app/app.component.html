@@ -1,6 +1,6 @@
 <nb-layout>
   <nb-layout-header class="fixed-header">
-    <div class="navbar">
+    <div class="navbar" *ngIf="user != null">
       <a routerLink="../profile">Profile</a>
       <a routerLink="../chat">Chat</a>
       <a routerLink="../post/search">Search</a>

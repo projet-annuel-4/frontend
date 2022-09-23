@@ -69,6 +69,7 @@ export class AppComponent implements OnInit{
           case 'Logout':
             if(confirm("Sure ?")){
               this.tokenStorageService.signOut();
+              window.location.reload();
               this.router.navigate(['auth/signing']).then();
             }
             break;
