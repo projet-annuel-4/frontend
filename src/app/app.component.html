@@ -3,18 +3,19 @@
     <input class="menu-btn" type="checkbox" id="menu-btn" />
     <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
     <ul class="menu">
-      <li><a routerLink="../profile">Profile</a></li>
-      <li><a routerLink="../chat">Chat</a></li>
-      <li><a routerLink="../post/search">Search</a></li>
-      <li><a routerLink="../post/feed">Feed</a></li>
       <li><a routerLink="../group">Group</a></li>
+      <li><a routerLink="../post/feed">Feed</a></li>
+      <li><a routerLink="../post/search">Search</a></li>
+      <li><a routerLink="../chat">Chat</a></li>
+      <li><a routerLink="../profile">Profile</a></li>
     </ul>
 
     <nb-user *ngIf="user != null"
              name="{{user.firstname}} {{user.lastname}}"
              picture=""
              [nbContextMenu]="items"
-             nbContextMenuTag="my-context-menu">
+             nbContextMenuTag="my-context-menu"
+             style="padding-left: 1%">
     </nb-user>
     <!--
     <nb-toggle class="themeToggle"
