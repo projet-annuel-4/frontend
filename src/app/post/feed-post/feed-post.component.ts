@@ -50,12 +50,10 @@ export class FeedPostComponent implements OnInit {
       this.postService.like(parseInt(post_id), this.user.id).subscribe(then => {
         this.status = this.ENABLE;
         this.post.key.nbLike += 1;
-        //window.location.reload();
       });
     } else {
       this.postService.dislike(parseInt(post_id), this.user.id).subscribe(then => {
         this.status = this.DISABLE;
-        //window.location.reload();
         this.post.key.nbLike -= 1;
       });
     }

@@ -2,6 +2,10 @@
   <nb-tab tabTitle="Post">
     <nb-card>
       <nb-card-header>
+        <span class="searchButton" (click)="searchPost()">
+          <nb-icon icon="search-outline"></nb-icon>
+        </span>
+
         <span *ngIf="titleToggle" style="padding-right: 10px">
           <label class="label" for="title">Title : </label>
           <input nbInput shape="round" id="title" placeholder="Title" [(ngModel)]="filter.title">
@@ -49,9 +53,7 @@
 -->
       </nb-card-body>
 
-      <nb-card-footer>
-        <button nbButton (click)="searchPost()">Search</button>
-      </nb-card-footer>
+
     </nb-card>
 
     <nb-card>
@@ -74,14 +76,15 @@
   <nb-tab tabTitle="User">
     <nb-card>
       <nb-card-body>
+        <span class="searchButton" (click)="searchUser()">
+          <nb-icon icon="search-outline"></nb-icon>
+        </span>
+
         <span style="padding-right: 10px">
           <label class="label" for="username">User : </label>
           <input nbInput shape="round" id="username" placeholder="Username" [(ngModel)]="userFirstname">
         </span>
       </nb-card-body>
-      <nb-card-footer>
-        <button nbButton (click)="searchUser()">Search</button>
-      </nb-card-footer>
     </nb-card>
 
     <nb-card>

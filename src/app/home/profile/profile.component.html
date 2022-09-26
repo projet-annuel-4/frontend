@@ -42,11 +42,21 @@
       <nb-tab tabTitle="My Posts">
         <div *ngFor="let post of posts | keyvalue">
           <nb-card>
-            <nb-card-body>
-              <nb-card-header> Title : {{post.key.title}} </nb-card-header>
+            <nb-card-header>
+              Title : {{post.key.title}}
+              <button nbButton
+                      style="float: right"
+                      status="danger"
+                      size="tiny"
+                      (click)="deletePost(post.key.id)">
+                Delete
+              </button>
+            </nb-card-header>
 
-              <div style="padding: 2%"
-                   routerLink="../post/{{post.key.id}}/detail">
+            <nb-card-body>
+              <!--<div style="padding: 2%"
+                   routerLink="../post/{{post.key.id}}/detail"> -->
+              <div (click)="viewPostDetail()">
                  <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
               </div>
 
@@ -54,23 +64,18 @@
                 Tags : <span *ngFor="let tag of post.key.tags">| {{tag.name}} </span>
               </div>
 
-              <div style="padding-top: 10px">
-                <button nbButton
-                        status="danger"
-                        size="tiny"
-                        (click)="deletePost(post.key.id)">
-                  Delete
-                </button>
-              </div>
+
             </nb-card-body>
+
             <nb-card-footer>
-              <button
+              <span
                 (click)="like_dislike(post.key.id)"
                 [ngClass]="{'green' : post.value.isLiked, 'white': !post.value.isLiked}">
                 <nb-icon icon="heart-outline"></nb-icon>
-              </button>
+              </span>
               {{post.key.nbLike}}
             </nb-card-footer>
+
           </nb-card>
         </div>
       </nb-tab>
@@ -78,9 +83,18 @@
       <nb-tab tabTitle="Answers">
         <div *ngFor="let userAnswer of userAnswers">
           <nb-card>
-            <nb-card-body routerLink="../post/{{userAnswer.id}}/detail">
-              <nb-card-header> Title : {{userAnswer.title}} </nb-card-header>
+            <nb-card-header>
+              Title : {{userAnswer.title}}
+              <button nbButton
+                      style="float: right"
+                      status="danger"
+                      size="tiny"
+                      (click)="deletePost(userAnswer.id)">
+                Delete
+              </button>
+            </nb-card-header>
 
+            <nb-card-body routerLink="../post/{{userAnswer.id}}/detail">
               <div style="padding: 2%">
                 <pre><code>{{formatContentP(userAnswer.content)}}</code></pre>
               </div>
@@ -88,17 +102,7 @@
               <div>
                 Tags : <span *ngFor="let tag of userAnswer.tags">| {{tag.name}} </span>
               </div>
-
             </nb-card-body>
-
-            <nb-card-footer>
-              <button nbButton
-                      status="danger"
-                      size="tiny"
-                      (click)="deletePost(userAnswer.id)">
-                Delete
-              </button>
-            </nb-card-footer>
           </nb-card>
         </div>
       </nb-tab>
@@ -107,15 +111,20 @@
       <nb-tab tabTitle="Like">
         <div *ngFor="let postLiked of postsLiked | keyvalue">
           <nb-card>
-            <nb-card-body routerLink="../post/{{postLiked.key.id}}/detail">
-              <nb-card-header>
-                <nb-user
-                  name="{{postLiked.key.user.firstname}} {{postLiked.key.user.lastname}}"
-                  routerLink="/friend/{{postLiked.key.user.id}}/profile">
-                </nb-user>
-                Title : {{postLiked.key.title}}
-              </nb-card-header>
+            <nb-card-header>
+              <nb-user
+                class="hoverEffect"
+                name="{{postLiked.key.user.firstname}} {{postLiked.key.user.lastname}}"
+                routerLink="/friend/{{postLiked.key.user.id}}/profile">
+              </nb-user>
+              <br>
+              Title : {{postLiked.key.title}}
+            </nb-card-header>
 
+            <nb-card-body
+              class="hoverEffect"
+              routerLink="../post/{{postLiked.key.id}}/detail"
+            >
               <div style="padding: 2%">
                 <pre><code>{{postLiked.key.content}}</code></pre>
               </div>

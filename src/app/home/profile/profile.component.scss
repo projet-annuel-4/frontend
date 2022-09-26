@@ -41,9 +41,14 @@
 }
 
 .green {
+  //background-image: url("");
   background-color: green;
 }
 
 .white {
   background-color: white;
+}
+
+.hoverEffect:hover {
+  cursor: pointer;
 }
