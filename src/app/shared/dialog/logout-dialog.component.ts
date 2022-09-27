@@ -7,7 +7,7 @@ import {Router} from "@angular/router";
 @Component({
 
   //TODO : embellir en despi
-  
+
   template: `
     <nb-card class="dialog-card" style="padding-left: 50px; padding-right: 50px">
       <nb-card-header style="padding-left: 50px; padding-right: 50px">
