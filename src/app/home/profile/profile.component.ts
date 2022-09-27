@@ -10,7 +10,6 @@ import {SubscriptionListComponent} from "./subscription-list/subscription-list.c
 import {CodeService} from "../../_services/code_execution/code.service";
 import {FileManagementService} from "../../_services/file-management/file-management.service";
 import {DomSanitizer} from "@angular/platform-browser";
-import {NewGroupComponent} from "../chat-list/new-chat/new-group.component";
 import {PostDetailComponent} from "../../post/post-detail/post-detail.component";
 
 @Component({
@@ -144,7 +143,7 @@ export class ProfileComponent implements OnInit {
   }
 
   like_dislike(post_id: string){
-    this.posts.forEach((value, post) =>{
+    this.postsLiked.forEach((value, post) =>{
       if(post.id == post_id){
         if(!value.isLiked){
           this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
