@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-  DOMAIN: 'http://localhost:8072',
-  //DOMAIN: 'http://social-code.fr/backend',
+  // DOMAIN: 'http://localhost:8072',
+  DOMAIN: 'http://social-code.fr/backend',
 
   API_VERSION: 'api/v1',
 
@@ -31,8 +31,7 @@ export const auth_service = {
 
 export const chat_service = {
   CHAT: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}`,
-  //WEB_SOCKET: `http://social-code.fr/socket/websocket`
-  WEB_SOCKET: `http://localhost:8200/websocket`
+  WEB_SOCKET: `http://social-code.fr/socket/websocket`
 }
 
 export const user_service = {
