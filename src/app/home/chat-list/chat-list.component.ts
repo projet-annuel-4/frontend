@@ -5,9 +5,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/_services/user/user.service';
 import { ChatService } from 'src/app/_services/chat/chat.service';
 import { FriendProfile } from 'src/app/_dtos/chat/FriendProfile';
-import { NewChatComponent } from './new-chat/new-chat.component';
+import { NewChatComponent } from '../../shared/dialog/new-chat.component';
 import {User} from "../../_dtos/user/User";
-import {NewGroupComponent} from "./new-chat/new-group.component";
+import {NewGroupComponent} from "../../shared/dialog/new-group.component";
 
 @Component({
   selector: 'home-chat-list',

@@ -15,7 +15,7 @@ import {
   NbAccordionModule,
   NbInputModule,
   NbUserModule,
-  NbTableModule, NbToggleModule, NbSearchModule, NbListModule, NbTabsetModule, NbTreeGridModule, NbToastrModule
+  NbTableModule, NbToggleModule, NbSearchModule, NbListModule, NbTabsetModule, NbTreeGridModule, NbToastrModule,
 
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -53,6 +53,7 @@ import { CreateCommitComponent } from './project/project-page/create-commit/crea
 import { CreateFileComponent } from './project/project-page/create-file/create-file.component';
 import { RevertCommitComponent } from './project/project-page/revert-commit/revert-commit.component';
 import { CreateProjectComponent } from './group/group-profile/create-project/create-project.component';
+import {LogoutDialogComponent} from "./shared/dialog/logout-dialog.component";
 
 
 /************** Config Monaco *************/
@@ -127,7 +128,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
     CreateCommitComponent,
     CreateFileComponent,
     RevertCommitComponent,
-    CreateProjectComponent
+    CreateProjectComponent,
+    LogoutDialogComponent
   ],
 
   imports: [

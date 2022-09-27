@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 import {NbDialogRef} from "@nebular/theme";
-import {CreateGroupRequest} from "../../../_dtos/group/CreateGroupRequest";
-import {UserService} from "../../../_services/user/user.service";
-import {GroupService} from "../../../_services/group/group.service";
-import {User} from "../../../_dtos/user/User";
+import {CreateGroupRequest} from "../../_dtos/group/CreateGroupRequest";
+import {UserService} from "../../_services/user/user.service";
+import {GroupService} from "../../_services/group/group.service";
+import {User} from "../../_dtos/user/User";
 
 @Component({
   template: `
