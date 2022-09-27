@@ -47,7 +47,7 @@ export class SignupComponent implements OnInit {
       );
 
     } else {
-      alert("All fields must be completed");
+      this.nbToasterService.show('All fields must be completed', ``, { position:this.positions.TOP_RIGHT, status:"danger" });
     }
 
   }

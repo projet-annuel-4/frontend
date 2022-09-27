@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {NbDialogRef} from "@nebular/theme";
+import {NbDialogRef, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 import {CreateGroupRequest} from "../../_dtos/group/CreateGroupRequest";
 import {UserService} from "../../_services/user/user.service";
 import {GroupService} from "../../_services/group/group.service";
@@ -40,27 +40,29 @@ export class NewGroupComponent {
   mail: string;
   members: Set<User> = new Set<User>();
 
+  positions = NbGlobalPhysicalPosition;
+
   constructor(protected ref: NbDialogRef<NewGroupComponent>, private userService: UserService,
-              private groupService: GroupService) {}
+              private groupService: GroupService, private nbToasterService:NbToastrService) {}
 
 
   addMembers(){
     this.userService.getByEmail(this.mail).subscribe(user => {
       if(this.members.has(user)){
-        alert(user.email + " is already add");
+        this.nbToasterService.show(user.email + " is already add", `Warning`, { position:this.positions.TOP_RIGHT, status:"warning" });
         return;
       }
       this.members.add(user);
       this.mail = "";
     }, error => {
-      alert("User " + this.mail + " not found");
+      this.nbToasterService.show("User " + this.mail + " not found", `Warning`, { position:this.positions.TOP_RIGHT, status:"warning" });
     });
   }
 
 
   createGroup(){
     if(this.members.size == 0){
-      alert("A group with only you is not very funny");
+      this.nbToasterService.show('A group with only you is not very funny', `Warning`, { position:this.positions.TOP_RIGHT, status:"warning" });
       return;
     }
 

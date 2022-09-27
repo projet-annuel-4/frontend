@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 
-import {NbDialogService} from "@nebular/theme";
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 import {CreateCommitComponent} from "./create-commit/create-commit.component";
 import {CreateFileComponent} from "./create-file/create-file.component";
 import {ActivatedRoute, Params} from "@angular/router";
@@ -29,6 +29,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   fileModified:boolean = false;
   branchId:number;
   atLeastOneFileModified: boolean = false;
+  positions = NbGlobalPhysicalPosition;
 
   @ViewChild(ProjectTreeComponent ) child: ProjectTreeComponent ;
   @ViewChild(CreateCommitComponent ) createCommitchild: CreateCommitComponent ;
@@ -42,8 +43,8 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   constructor(private cf: ChangeDetectorRef,
               private dialogService: NbDialogService,
               private route: ActivatedRoute,
-              private fileService: FileService) {
-
+              private fileService: FileService,
+              private nbToasterService:NbToastrService) {
   }
 
 
@@ -102,7 +103,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
       () => {},
       () => {},
       () => {
-        alert('The file has been saved');
+        this.nbToasterService.show('The file has been saved', `Done`, { position:this.positions.TOP_RIGHT, status:"success" })
         this.atLeastOneFileModified = true;
       }
     );
@@ -113,7 +114,10 @@ export class ProjectPageComponent implements OnInit, OnChanges {
       this.fileService.deleteFile(this.branchId, this.selectedFile.id).subscribe(
         () => {},
         () => {},
-        () => {alert('File deleted successfully');this.child.uppdateFilesV2()}
+        () => {
+          this.nbToasterService.show('File deleted successfully', `Done`, { position:this.positions.TOP_RIGHT, status:"success" })
+          this.child.uppdateFilesV2()
+        }
       );
     }
   }
@@ -123,8 +127,8 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   commit() {
-    if ( this.atLeastOneFileModified === false){
-      alert("No files change since the last commit");
+    if (this.atLeastOneFileModified === false){
+      this.nbToasterService.show('No files change since the last commit', ``, { position:this.positions.TOP_RIGHT, status:"info" })
       return;
     }
     let branchId;

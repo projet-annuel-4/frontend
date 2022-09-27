@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {NbDialogRef} from "@nebular/theme";
+import {NbDialogRef, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 import {FileService} from "../../../_services/project/fileService";
 import {CreateFileRequest} from "../../../_dtos/project/CreateFileRequest";
 import {ActivatedRoute, Params, Route, Router} from "@angular/router";
@@ -12,9 +12,10 @@ import {delay} from "rxjs/operators";
 })
 export class CreateFileComponent implements OnInit {
 
+  positions = NbGlobalPhysicalPosition;
 
   constructor(protected ref: NbDialogRef<CreateFileComponent>, private fileService: FileService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute, private nbToasterService:NbToastrService) { }
 
   ngOnInit(): void {
   }
@@ -27,13 +28,12 @@ export class CreateFileComponent implements OnInit {
       (data) => {localStorage.setItem('createdFile', JSON.stringify(data))},
       (error) => { alert(error.error.message); return},
       () => {
-        alert('File has been saved successfully');
+        this.nbToasterService.show('File has been saved successfully', `Done`, { position:this.positions.TOP_RIGHT, status:"success" })
         localStorage.removeItem('branchId');
         delay(2000);
         this.ref.close();
       },
     );
-
 
   }
 
