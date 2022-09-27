@@ -26,7 +26,10 @@ export class CreateFileComponent implements OnInit {
     const branchId: string = localStorage.getItem('branchId');
     this.fileService.create(+branchId, fileRequest).subscribe(
       (data) => {localStorage.setItem('createdFile', JSON.stringify(data))},
-      (error) => { alert(error.error.message); return},
+      (error) => {
+        this.nbToasterService.show(error.error.message, `Error`, { position:this.positions.TOP_RIGHT, status:"danger" })
+        return
+      },
       () => {
         this.nbToasterService.show('File has been saved successfully', `Done`, { position:this.positions.TOP_RIGHT, status:"success" })
         localStorage.removeItem('branchId');

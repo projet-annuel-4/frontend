@@ -46,7 +46,7 @@ export class SigningComponent implements OnInit {
         },(err:any)=>{
           this.loading = false;
           this.errorMessage = err;
-          alert(err['statusText']);
+          this.nbToasterService.show(err['statusText'], `Error`, { position:this.positions.TOP_RIGHT, status:"danger" })
         }
       );
     } else {

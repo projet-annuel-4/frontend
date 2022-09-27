@@ -1,6 +1,7 @@
 import {Component, OnInit, Output, EventEmitter, Input, OnChanges} from '@angular/core';
 import {Filess} from "../../../_dtos/project/Filess";
 import {FileService} from "../../../_services/project/fileService";
+import {NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 
 @Component({
   selector: 'app-project-tree',
@@ -18,7 +19,9 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
   customColumn = 'name';
   allColumns = [ this.customColumn ];
 
-  constructor(private fileService: FileService) { }
+  positions = NbGlobalPhysicalPosition;
+
+  constructor(private fileService: FileService, private nbToasterService:NbToastrService) { }
 
   ngOnInit(): void {
     this.loadFiles();
@@ -30,7 +33,7 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
   loadFiles() {
     const promise = this.fileService.getAllFileFromBranch(this.branchId).toPromise();
     promise.then((data) => {this.files = data})
-      .catch(() => alert('une erreur est survenue'));
+      .catch(() => this.nbToasterService.show('An error has occurred', `Error`, { position:this.positions.TOP_RIGHT, status:"danger" }));
   }
 
   uppdateFiles() {

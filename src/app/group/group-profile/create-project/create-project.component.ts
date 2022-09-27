@@ -29,7 +29,10 @@ export class CreateProjectComponent implements OnInit {
                                                   +localStorage.getItem('groupId'));
     this.projectService.createProject(projectRequest).subscribe(
       (data) => {localStorage.setItem('createdProject', JSON.stringify(data)); },
-      (error) => { alert(error.error.message); return; },
+      (error) => {
+        this.nbToasterService.show(error.error.message, `Error`, { position:this.positions.TOP_RIGHT, status:"danger" })
+        return;
+        },
       () => {
         this.nbToasterService.show('Project has been saved successfully', `Done`, { position:this.positions.TOP_RIGHT, status:"success" })
 

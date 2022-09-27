@@ -167,7 +167,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     let createFileComponent = this.dialogService.open(CreateFileComponent);
     createFileComponent.onClose.subscribe(
       () => {},
-      () => {alert("Error")},
+      () => {this.nbToasterService.show('', `Error`, { position:this.positions.TOP_RIGHT, status:"danger" })},
       () => {this.child.uppdateFiles() }
     );
 

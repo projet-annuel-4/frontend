@@ -51,8 +51,7 @@ export class ProfileUpdateComponent implements OnInit {
           //this.loading = true;
           this.router.navigate(['../profile']).then()
         }, error => {
-          alert(error['firstNameError']);
-          this.nbToasterService.show('', `Error`, { position:this.positions.TOP_RIGHT, status:"danger" });
+          this.nbToasterService.show(error['firstNameError'], `Error`, { position:this.positions.TOP_RIGHT, status:"danger" });
         }
       );
 
