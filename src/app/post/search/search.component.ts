@@ -26,8 +26,6 @@ export class SearchComponent implements OnInit {
 
   constructor(private postService: PostService, private datePipe: DatePipe) { }
 
-  //TODO : Bouger le bouton de recherche
-
   ngOnInit(): void {
 
   }

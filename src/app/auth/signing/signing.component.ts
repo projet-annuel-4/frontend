@@ -36,7 +36,9 @@ export class SigningComponent implements OnInit {
 
       this.authService.login(new SignInRequest(data['email'], data['password'])).subscribe(
         (response: SignInResponse) => {
-          this.router.navigate(["profile"]).then();
+          this.router.navigate(["profile"]).then(() => {
+            window.location.reload();
+          });
           this.loading = false;
         },(err:any)=>{
           this.loading = false;
