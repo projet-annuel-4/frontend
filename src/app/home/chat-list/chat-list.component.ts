@@ -18,7 +18,7 @@ export class ChatListComponent implements OnInit {
 
   friends: FriendProfile[];
 
-  //TODO : changer les boutons
+  //TODO : changer le bouton
   menu = [
     { title: 'New Chat', icon: 'person-add-outline' },
     { title: 'New Group', icon: 'plus-outline' }

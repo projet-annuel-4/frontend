@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
 
   //TODO : utiliser les images "black_heart et red_heart" pour le bouton "like"
 
-  //TODO: duplication du post au moment du like
+  //TODO: fix la duplication du post au moment du like
 
 
 
@@ -95,8 +95,6 @@ export class ProfileComponent implements OnInit {
   viewSubscriptions(){
     this.dialogService.open(SubscriptionListComponent);
   }
-  //TODO : Voir pour passer l'écran de détail du post en Dialog
-  //        (comme la liste des follower et la création de group
 
   viewPostDetail(){
     this.dialogService.open(PostDetailComponent);
@@ -143,7 +141,7 @@ export class ProfileComponent implements OnInit {
   }
 
   like_dislike(post_id: string){
-    this.postsLiked.forEach((value, post) =>{
+    this.posts.forEach((value, post) =>{
       if(post.id == post_id){
         if(!value.isLiked){
           this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
