@@ -46,6 +46,10 @@ export class ProfileComponent implements OnInit {
 
   //TODO : utiliser les images "black_heart et red_heart" pour le bouton "like"
 
+  //TODO: duplication du post au moment du like
+
+
+
   ngOnInit(): void {
     this.profile = this.userService.getProfile();
 
