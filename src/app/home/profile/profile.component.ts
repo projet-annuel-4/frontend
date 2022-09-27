@@ -118,6 +118,7 @@ export class ProfileComponent implements OnInit {
 
 
   deletePost(post_id: string) {
+    // TODO : confirm custom
     if (confirm("You are going to delete a post")) {
       this.postService.delete(parseInt(post_id)).subscribe(then => {
         this.init();
