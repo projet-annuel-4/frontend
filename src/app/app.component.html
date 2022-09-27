@@ -1,5 +1,5 @@
 <nb-layout>
-  <nb-layout-header class="header">
+  <nb-layout-header class="header" *ngIf="user != null">
     <input class="menu-btn" type="checkbox" id="menu-btn" />
     <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
     <ul class="menu">
@@ -10,8 +10,7 @@
       <li><a routerLink="../profile">Profile</a></li>
     </ul>
 
-    <nb-user *ngIf="user != null"
-             name="{{user.firstname}} {{user.lastname}}"
+    <nb-user name="{{user.firstname}} {{user.lastname}}"
              picture=""
              [nbContextMenu]="items"
              nbContextMenuTag="my-context-menu"
