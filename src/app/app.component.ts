@@ -24,6 +24,8 @@ export class AppComponent implements OnInit{
 
   items = [{title: 'Logout', icon: 'unlock-outline'}]
 
+  //TODO : le menu ne disparait pas a la déconnexion
+
 
   constructor(private nbMenuService: NbMenuService, @Inject(NB_WINDOW) private window,
               private tokenStorageService: TokenStorageService, private router: Router,
