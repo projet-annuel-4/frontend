@@ -9,6 +9,7 @@ import {FileService} from "../../_services/project/fileService";
 
 import {ProjectTreeComponent} from "./project-tree/project-tree.component";
 import {Filess} from "../../_dtos/project/Filess";
+import {DeleteFileDialogComponent} from "../../shared/dialog/delete-file-dialog.component";
 
 
 declare let monaco: any;
@@ -110,17 +111,18 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   deleteFile() {
-    // TODO : confirm custom
-    if( confirm('Etes vous sur de supprimer ce fichier ?')) {
-      this.fileService.deleteFile(this.branchId, this.selectedFile.id).subscribe(
-        () => {},
-        () => {},
-        () => {
-          this.nbToasterService.show('File deleted successfully', `Done`, { position:this.positions.TOP_RIGHT, status:"success" })
-          this.child.uppdateFilesV2()
-        }
-      );
-    }
+    this.dialogService.open(DeleteFileDialogComponent).onClose.subscribe(confirmation => {
+      if(confirmation) {
+        this.fileService.deleteFile(this.branchId, this.selectedFile.id).subscribe(
+          () => {},
+          () => {},
+          () => {
+            this.nbToasterService.show('File deleted successfully', `Done`, { position:this.positions.TOP_RIGHT, status:"success" })
+            this.child.uppdateFilesV2()
+          }
+        );
+      }
+    });
   }
 
   showDiff() {
