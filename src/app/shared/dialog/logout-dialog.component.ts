@@ -5,29 +5,30 @@ import {Router} from "@angular/router";
 
 
 @Component({
-
-  //TODO : embellir en despi
-
   template: `
-    <nb-card class="dialog-card" style="padding-left: 50px; padding-right: 50px">
-      <nb-card-header style="padding-left: 50px; padding-right: 50px">
-        <h5>Logout</h5>
+    <nb-card class="dialog-card">
+      <nb-card-header>
+        <h6>Logout</h6>
       </nb-card-header>
 
-      <nb-card-body style="padding-left: 50px; padding-right: 50px">
+      <nb-card-body style="text-align: center; padding-bottom: 0;">
         <p>Are you sure ?</p>
       </nb-card-body>
 
       <nb-card-footer>
-        <button nbButton
-                size="tiny"
-                (click)="logout()"> Yes
-        </button>
-        <button nbButton
-                size="tiny"
-                status="danger"
-                (click)="cancel()"> Cancel
-        </button>
+        <span style="padding-right: 50px">
+          <button nbButton
+                  size="tiny"
+                  (click)="logout()"> Yes
+          </button>
+        </span>
+        <span>
+          <button nbButton
+                  size="tiny"
+                  status="danger"
+                  (click)="cancel()"> Cancel
+          </button>
+        </span>
       </nb-card-footer>
     </nb-card>
   `,
@@ -49,7 +50,5 @@ export class LogoutDialogComponent {
   cancel(){
     this.ref.close();
   }
-
-
 
 }
