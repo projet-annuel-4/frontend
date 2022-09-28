@@ -3,6 +3,7 @@ import {Filess} from "../../../_dtos/project/Filess";
 import {FileService} from "../../../_services/project/fileService";
 import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 import {DeleteFileDialogComponent} from "../../../shared/dialog/delete-file-dialog.component";
+import {FileUnsavedChangeComponent} from "../../../shared/dialog/file-unsaved-change.component";
 
 @Component({
   selector: 'app-project-tree',
@@ -61,7 +62,7 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
     console.log("ici : " + this.filechange);
     if (this.filechange) {
 
-      this.dialogService.open(DeleteFileDialogComponent).onClose.subscribe(confirmation => {
+      this.dialogService.open(FileUnsavedChangeComponent).onClose.subscribe(confirmation => {
         if (confirmation) return this.fileSelectedEvent.emit(file);
       });
 
