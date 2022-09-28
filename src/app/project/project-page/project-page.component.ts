@@ -110,6 +110,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   deleteFile() {
+    // TODO : confirm custom
     if( confirm('Etes vous sur de supprimer ce fichier ?')) {
       this.fileService.deleteFile(this.branchId, this.selectedFile.id).subscribe(
         () => {},

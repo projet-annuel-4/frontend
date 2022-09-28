@@ -11,6 +11,7 @@ import {CodeService} from "../../_services/code_execution/code.service";
 import {FileManagementService} from "../../_services/file-management/file-management.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {PostDetailComponent} from "../../post/post-detail/post-detail.component";
+import {DeletePostDialogComponent} from "../../shared/dialog/delete-post-dialog.component";
 
 @Component({
   selector: 'app-profile',
@@ -118,13 +119,16 @@ export class ProfileComponent implements OnInit {
 
 
   deletePost(post_id: string) {
-    // TODO : confirm custom
-    if (confirm("You are going to delete a post")) {
-      this.postService.delete(parseInt(post_id)).subscribe(then => {
-        this.init();
-      });
-      this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
-    }
+    this.dialogService.open(DeletePostDialogComponent).onClose.subscribe(deletionConfirmed => {
+      console.log(deletionConfirmed);
+      if (deletionConfirmed) {
+        this.postService.delete(parseInt(post_id)).subscribe(then => {
+          this.init();
+        });
+
+        this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
+      }
+    });
   }
 
 

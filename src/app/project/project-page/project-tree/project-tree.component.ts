@@ -58,6 +58,7 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
     }
     console.log("ici : " + this.filechange);
     if (this.filechange) {
+      // TODO : confirm custom
       if (confirm('le fichier a été modifié, si vous changer de fichier les donnés seront perdues, etes vous sur ?')) {
         return this.fileSelectedEvent.emit(file);
       }
