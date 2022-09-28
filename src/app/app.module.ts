@@ -55,6 +55,7 @@ import { RevertCommitComponent } from './project/project-page/revert-commit/reve
 import { CreateProjectComponent } from './group/group-profile/create-project/create-project.component';
 import {LogoutDialogComponent} from "./shared/dialog/logout-dialog.component";
 import {DeletePostDialogComponent} from "./shared/dialog/delete-post-dialog.component";
+import {DeleteFileDialogComponent} from "./shared/dialog/delete-file-dialog.component";
 
 
 /************** Config Monaco *************/
@@ -132,6 +133,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
     CreateProjectComponent,
     LogoutDialogComponent,
     DeletePostDialogComponent,
+    DeleteFileDialogComponent
   ],
 
   imports: [

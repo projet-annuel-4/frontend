@@ -1,7 +1,8 @@
 import {Component, OnInit, Output, EventEmitter, Input, OnChanges} from '@angular/core';
 import {Filess} from "../../../_dtos/project/Filess";
 import {FileService} from "../../../_services/project/fileService";
-import {NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
+import {DeleteFileDialogComponent} from "../../../shared/dialog/delete-file-dialog.component";
 
 @Component({
   selector: 'app-project-tree',
@@ -21,7 +22,8 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
 
   positions = NbGlobalPhysicalPosition;
 
-  constructor(private fileService: FileService, private nbToasterService:NbToastrService) { }
+  constructor(private fileService: FileService, private nbToasterService:NbToastrService,
+              private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
     this.loadFiles();
@@ -58,10 +60,11 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
     }
     console.log("ici : " + this.filechange);
     if (this.filechange) {
-      // TODO : confirm custom
-      if (confirm('le fichier a été modifié, si vous changer de fichier les donnés seront perdues, etes vous sur ?')) {
-        return this.fileSelectedEvent.emit(file);
-      }
+
+      this.dialogService.open(DeleteFileDialogComponent).onClose.subscribe(confirmation => {
+        if (confirmation) return this.fileSelectedEvent.emit(file);
+      });
+
     } else {
       this.fileSelectedEvent.emit(file);
     }
