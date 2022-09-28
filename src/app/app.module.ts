@@ -56,6 +56,7 @@ import { CreateProjectComponent } from './group/group-profile/create-project/cre
 import {LogoutDialogComponent} from "./shared/dialog/logout-dialog.component";
 import {DeletePostDialogComponent} from "./shared/dialog/delete-post-dialog.component";
 import {DeleteFileDialogComponent} from "./shared/dialog/delete-file-dialog.component";
+import {FileUnsavedChangeComponent} from "./shared/dialog/file-unsaved-change.component";
 
 
 /************** Config Monaco *************/
@@ -133,7 +134,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
     CreateProjectComponent,
     LogoutDialogComponent,
     DeletePostDialogComponent,
-    DeleteFileDialogComponent
+    DeleteFileDialogComponent,
+    FileUnsavedChangeComponent
   ],
 
   imports: [

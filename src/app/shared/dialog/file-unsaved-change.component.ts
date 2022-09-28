@@ -6,11 +6,14 @@ import {Component} from "@angular/core";
   template: `
     <nb-card class="dialog-card">
       <nb-card-header>
-        <h6>File deletion</h6>
+        <h6>Unsaved change</h6>
       </nb-card-header>
 
       <nb-card-body style="text-align: center; padding-bottom: 0;">
-        <p>You are going to delete a post</p>
+        <p>
+          The file has been modified, if you change the file the data will be lost,
+          are you sure?
+        </p>
       </nb-card-body>
 
       <nb-card-footer>
@@ -32,9 +35,9 @@ import {Component} from "@angular/core";
   `,
 })
 
-export class DeleteFileDialogComponent {
+export class FileUnsavedChangeComponent {
 
-  constructor(protected ref: NbDialogRef<DeleteFileDialogComponent>) {}
+  constructor(protected ref: NbDialogRef<FileUnsavedChangeComponent>) {}
 
   delete(){
     this.ref.close(true);
