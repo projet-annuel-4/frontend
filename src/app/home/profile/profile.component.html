@@ -61,7 +61,7 @@
               </div>
 
               <div *ngIf="post.key.tags !== undefined">
-                Tags : <span *ngFor="let tag of post.key.tags">| {{tag.name}} </span>
+                Tags : <span *ngFor="let tag of post.key.tags" class="tag">{{tag.name}}</span>
               </div>
 
 
