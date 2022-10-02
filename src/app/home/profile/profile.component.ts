@@ -42,8 +42,6 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  //TODO : refaire les tags
-
   //TODO : utiliser les images "black_heart et red_heart" pour le bouton "like"
 
   //TODO: fix la duplication du post au moment du like
