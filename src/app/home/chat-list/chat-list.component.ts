@@ -17,20 +17,12 @@ import {NewGroupComponent} from "../../shared/dialog/new-group.component";
 export class ChatListComponent implements OnInit {
 
   friends: FriendProfile[];
-
-  //TODO : changer le bouton
-  menu = [
-    { title: 'New Chat', icon: 'person-add-outline' },
-    { title: 'New Group', icon: 'plus-outline' }
-  ];
-
   profile: User;
   positions = NbGlobalPhysicalPosition;
 
   constructor(private menuService: NbMenuService, private router: Router, private dialogService: NbDialogService,
               private userService: UserService, private chatService: ChatService, private route: ActivatedRoute,
               private nbToasterService:NbToastrService) {
-
   }
 
   ngOnInit(): void {
@@ -40,36 +32,23 @@ export class ChatListComponent implements OnInit {
       this.friends = friends;
     });
 
-    this.menuListener();
   }
 
-  menuListener() {
-    this.menuService.onItemClick()
-      .pipe(
-        filter(({ tag }) => tag === 'context-chat-more'),
-        map(({ item: { title } }) => title),
-      )
-      .subscribe(title => {
-        switch (title) {
-          case 'New Chat':
-            this.dialogService.open(NewChatComponent).onClose.subscribe((email) => {
-              this.userService.getByEmail(email).subscribe(user => {
-                this.chatService.startConversation(user.email).subscribe(
-                  (r) => { console.log(r['statusText']) },
-                  (err) => { console.log(err) }
-                )
-              }, error => this.nbToasterService.show('User not found', `Error`, { position:this.positions.TOP_RIGHT, status:"warning" }))
-            });
-            break;
-          case 'New Group':
-            this.dialogService.open(NewGroupComponent);
-            break;
-
-          default:
-            break;
-        }
-      })
+  newChatClicked(){
+    this.dialogService.open(NewChatComponent).onClose.subscribe((email) => {
+      this.userService.getByEmail(email).subscribe(user => {
+        this.chatService.startConversation(user.email).subscribe(
+          (r) => { console.log(r['statusText']) },
+          (err) => { console.log(err) }
+        )
+      }, error => this.nbToasterService.show('User not found', `Error`, { position:this.positions.TOP_RIGHT, status:"warning" }))
+    });
   }
+
+  newGroupClicked(){
+    this.dialogService.open(NewGroupComponent);
+  }
+
 
   chatClicked(id: String){
     this.router.navigate([id], { relativeTo: this.route, skipLocationChange:true }).then()

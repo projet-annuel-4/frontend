@@ -8,7 +8,15 @@
         <h6 class="pl-3 pr-3">{{profile.firstname}}</h6>
       </div>
       <div class="col-auto">
-        <nb-icon icon="more-vertical-outline" [nbContextMenu]="menu" nbContextMenuPlacement="left" nbContextMenuTag="context-chat-more"></nb-icon>
+        <div class="dropdown" style="float:right;">
+          <img class="three-point" src="/assets/three-point-menu.png" height="32" width="32" alt="">
+          <div class="dropdown-content">
+            <a (click)="newChatClicked()">
+              <img src="/assets/add-chat.png" height="25" width="25" alt="" style="padding-right: 2px">
+              New Chat
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </nb-card-header>
