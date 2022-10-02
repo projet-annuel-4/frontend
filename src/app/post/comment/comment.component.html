@@ -2,8 +2,8 @@
   <nb-card-header>Title : {{post.title}}</nb-card-header>
   <nb-card-body>
     <div>Content : {{post.content}}</div>
-    Tags :
-    <span *ngFor="let tag of post.tags">| {{tag.name}} </span>
+
+    <span class="tag" *ngFor="let tag of post.tags">| {{tag.name}} </span>
   </nb-card-body>
 </nb-card>
 

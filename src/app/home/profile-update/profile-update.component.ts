@@ -8,6 +8,7 @@ import {FileManagementService} from "../../_services/file-management/file-manage
 import {ImageRequest} from "../../_dtos/image/ImageRequest";
 import {User} from "../../_dtos/user/User";
 import {TokenStorageService} from "../../_services/token/token-storage.service";
+import {NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 
 @Component({
   selector: 'app-profile-update',
@@ -21,8 +22,10 @@ export class ProfileUpdateComponent implements OnInit {
   signUpFrom: FormGroup;
   file: File;
 
+  positions = NbGlobalPhysicalPosition;
+
   constructor(private authService: AuthService, private formBuilder: FormBuilder,
-              private userService: UserService, private router: Router,
+              private userService: UserService, private router: Router, private nbToasterService:NbToastrService,
               private fileManagementService: FileManagementService, private tokenStorage: TokenStorageService) {
     this.signUpFrom = this.formBuilder.group({
       imgUrl: [],
@@ -46,15 +49,14 @@ export class ProfileUpdateComponent implements OnInit {
         data['imgUrl'])).subscribe(
         response => {
           //this.loading = true;
-          console.log("subscribe");
           this.router.navigate(['../profile']).then()
         }, error => {
-          alert(error['firstNameError']);
+          this.nbToasterService.show(error['firstNameError'], `Error`, { position:this.positions.TOP_RIGHT, status:"danger" });
         }
       );
 
     } else {
-      alert("All fields must be completed");
+      this.nbToasterService.show('All fields must be completed', ``, { position:this.positions.TOP_RIGHT, status:"danger" });
     }
 
   }
@@ -68,7 +70,7 @@ export class ProfileUpdateComponent implements OnInit {
   onUpload(){
     if(this.file.type != "image/png" && this.file.type != "image/jpg"
       && this.file.type != "image/jpeg"){
-      alert("Type of photo accepted : .png, .jpg, .jpeg");
+      this.nbToasterService.show('Type of photo accepted : .png, .jpg, .jpeg', ``, { position:this.positions.TOP_RIGHT, status:"warning" });
       return;
     }
 

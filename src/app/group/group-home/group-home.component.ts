@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Group} from "../../_dtos/group/Group";
 import {GroupService} from "../../_services/group/group.service";
 import {NbDialogService} from "@nebular/theme";
-import {NewGroupComponent} from "../../home/chat-list/new-chat/new-group.component";
+import {NewGroupComponent} from "../../shared/dialog/new-group.component";
 
 @Component({
   selector: 'app-group-home',

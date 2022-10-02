@@ -3,6 +3,7 @@ import {NB_WINDOW, NbDialogService, NbMenuService, NbThemeService} from "@nebula
 import {TokenStorageService} from "./_services/token/token-storage.service";
 import {Router} from "@angular/router";
 import {User} from "./_dtos/user/User";
+import {LogoutDialogComponent} from "./shared/dialog/logout-dialog.component";
 
 @Component({
   selector: 'app-root',
@@ -57,12 +58,7 @@ export class AppComponent implements OnInit{
             break;
 
           case 'Logout':
-            if(confirm("Sure ?")){
-              this.tokenStorageService.signOut();
-              this.router.navigate(['auth/signing']).then(() => {
-                window.location.reload();
-              })
-            }
+            this.dialogService.open(LogoutDialogComponent);
             break;
 
           default:

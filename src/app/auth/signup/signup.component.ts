@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth/auth.service';
 import { Router } from '@angular/router';
 import { SignUpRequest } from 'src/app/_dtos/auth/SignUpRequest';
-import { NbDialogService } from '@nebular/theme';
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +15,10 @@ export class SignupComponent implements OnInit {
   //loading: Boolean = false;
   signUpFrom: FormGroup;
 
-  constructor(private _authService: AuthService, private formBuilder: FormBuilder, private router: Router, private dialogService: NbDialogService) {
+  positions = NbGlobalPhysicalPosition;
+
+  constructor(private _authService: AuthService, private formBuilder: FormBuilder, private router: Router,
+              private dialogService: NbDialogService, private nbToasterService:NbToastrService) {
     this.signUpFrom = this.formBuilder.group({
       firstname: [],
       lastname: [],
@@ -34,13 +37,17 @@ export class SignupComponent implements OnInit {
 
       const data = this.signUpFrom.value;
       //this.loading = true;
+
       this._authService.register(new SignUpRequest(data['firstname'], data['lastname'], data['email'],
-                                                          data['password'], data['password2'], "captchtest")).subscribe(
-        () => {this.router.navigate(['../signing']).then()},
+                                                   data['password'], data['password2'], "captchtest")).subscribe(
+        () => {
+          this.nbToasterService.show('Connection successful, an email has been sent', ``, { position:this.positions.TOP_RIGHT, status:"success" });
+          this.router.navigate(['../auth/signing']).then();
+        },
       );
 
     } else {
-      alert("All fields must be completed");
+      this.nbToasterService.show('All fields must be completed', ``, { position:this.positions.TOP_RIGHT, status:"danger" });
     }
 
   }

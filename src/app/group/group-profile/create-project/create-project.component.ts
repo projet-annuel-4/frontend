@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NbDialogRef} from "@nebular/theme";
+import {NbDialogRef, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 import {FileService} from "../../../_services/project/fileService";
 import {ActivatedRoute} from "@angular/router";
 import {CreateFileRequest} from "../../../_dtos/project/CreateFileRequest";
@@ -14,8 +14,10 @@ import {CreateProjectRequest} from "../../../_dtos/project/CreateProjectRequest"
 })
 export class CreateProjectComponent implements OnInit {
 
+  positions = NbGlobalPhysicalPosition;
+
   constructor(protected ref: NbDialogRef<CreateProjectComponent>, private projectService: ProjectService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute, private nbToasterService:NbToastrService) { }
 
   ngOnInit(): void {
   }
@@ -27,9 +29,13 @@ export class CreateProjectComponent implements OnInit {
                                                   +localStorage.getItem('groupId'));
     this.projectService.createProject(projectRequest).subscribe(
       (data) => {localStorage.setItem('createdProject', JSON.stringify(data)); },
-      (error) => { alert(error.error.message); return; },
+      (error) => {
+        this.nbToasterService.show(error.error.message, `Error`, { position:this.positions.TOP_RIGHT, status:"danger" })
+        return;
+        },
       () => {
-        alert('Project has been saved successfully');
+        this.nbToasterService.show('Project has been saved successfully', `Done`, { position:this.positions.TOP_RIGHT, status:"success" })
+
         localStorage.removeItem('groupId');
         delay(2000);
         this.ref.close();

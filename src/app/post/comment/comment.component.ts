@@ -6,6 +6,7 @@ import {PostRequest} from "../../_dtos/post/PostRequest";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {CommentRequest} from "../../_dtos/post/CommentRequest";
 import {TokenStorageService} from "../../_services/token/token-storage.service";
+import {NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 
 @Component({
   selector: 'app-comment',
@@ -19,8 +20,10 @@ export class CommentComponent implements OnInit {
   answer: Post;
   content:string;
 
+  positions = NbGlobalPhysicalPosition;
+
   constructor(private formBuilder: FormBuilder, private postService: PostService, private route: ActivatedRoute,
-              private tokenStorage: TokenStorageService, private router: Router) {
+              private tokenStorage: TokenStorageService, private router: Router, private nbToasterService:NbToastrService) {
     this.answerForm = this.formBuilder.group({
       content: [],
       tagName: [],
@@ -56,7 +59,7 @@ export class CommentComponent implements OnInit {
       }
 
       if(tagsName.length > 5) {
-        alert("5 tags max");
+        this.nbToasterService.show('5 tags max', `Warning`, { position:this.positions.TOP_RIGHT, status:"warning" })
         return;
       }
 

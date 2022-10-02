@@ -54,14 +54,14 @@
             </nb-card-header>
 
             <nb-card-body>
-              <!--<div style="padding: 2%"
-                   routerLink="../post/{{post.key.id}}/detail"> -->
-              <div (click)="viewPostDetail()">
+              <div style="padding: 2%"
+                   routerLink="../post/{{post.key.id}}/detail">
+              <!--<div (click)="viewPostDetail()">-->
                  <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
               </div>
 
               <div *ngIf="post.key.tags !== undefined">
-                Tags : <span *ngFor="let tag of post.key.tags">| {{tag.name}} </span>
+                <span *ngFor="let tag of post.key.tags" class="tag">{{tag.name}}</span>
               </div>
 
 
@@ -100,7 +100,7 @@
               </div>
 
               <div>
-                Tags : <span *ngFor="let tag of userAnswer.tags">| {{tag.name}} </span>
+                <span class="tag" *ngFor="let tag of userAnswer.tags">| {{tag.name}} </span>
               </div>
             </nb-card-body>
           </nb-card>

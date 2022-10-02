@@ -10,8 +10,8 @@
   <nb-card-body class="</nb-layout-column>" routerLink="../{{post.key.id}}/detail">
 
     <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
-    Tags :
-    <span *ngFor="let tag of post.key.tags">{{tag.name}} | </span>
+
+    <span class="tag" *ngFor="let tag of post.key.tags">{{tag.name}} | </span>
 
   </nb-card-body>
 

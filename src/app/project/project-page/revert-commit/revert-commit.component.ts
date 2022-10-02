@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NbDialogRef} from "@nebular/theme";
+import {NbDialogRef, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 import {FileService} from "../../../_services/project/fileService";
 import {CommitService} from "../../../_services/project/commitService";
 import {CreateFileRequest} from "../../../_dtos/project/CreateFileRequest";
@@ -15,7 +15,10 @@ export class RevertCommitComponent implements OnInit {
 
   commits: Commit[];
 
-  constructor(protected ref: NbDialogRef<RevertCommitComponent>, private commitService: CommitService, private route: ActivatedRoute) { }
+  positions = NbGlobalPhysicalPosition;
+
+  constructor(protected ref: NbDialogRef<RevertCommitComponent>, private commitService: CommitService, private route: ActivatedRoute,
+              private nbToasterService:NbToastrService) { }
 
   ngOnInit(): void {
     this.loadCommit();
@@ -44,7 +47,7 @@ export class RevertCommitComponent implements OnInit {
       () => {
         localStorage.removeItem('branchId');
         localStorage.removeItem('commitId');
-        alert("Projet à bien été revert");
+        this.nbToasterService.show('Project has been revert', `Done`, { position:this.positions.TOP_RIGHT, status:"success" })
         window.location.reload();
       }
     );

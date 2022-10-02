@@ -17,14 +17,14 @@ import { DataService } from '../_services/data/data.service';
 import { LoadingComponent } from './loading/loading.component';
 import { ChatDetailComponent } from './chat-detail/chat-detail.component';
 import { ChatBannerComponent } from './chat-banner/chat-banner.component';
-import { NewChatComponent } from './chat-list/new-chat/new-chat.component';
+import { NewChatComponent } from '../shared/dialog/new-chat.component';
 import { FollowerListComponent } from './profile/follower-list/follower-list.component';
 import { FollowerItemComponent } from './profile/follower-item/follower-item.component';
 import { SubscriptionItemComponent } from './profile/subscription-item/subscription-item.component';
 import { SubscriptionListComponent } from './profile/subscription-list/subscription-list.component';
 import { ProfileUpdateComponent } from './profile-update/profile-update.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NewGroupComponent} from "./chat-list/new-chat/new-group.component";
+import {NewGroupComponent} from "../shared/dialog/new-group.component";
 import { FriendProfileComponent } from './profile/friend-profile/friend-profile.component';
 
 @NgModule({

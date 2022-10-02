@@ -10,8 +10,8 @@ import {SubscriptionListComponent} from "./subscription-list/subscription-list.c
 import {CodeService} from "../../_services/code_execution/code.service";
 import {FileManagementService} from "../../_services/file-management/file-management.service";
 import {DomSanitizer} from "@angular/platform-browser";
-import {NewGroupComponent} from "../chat-list/new-chat/new-group.component";
 import {PostDetailComponent} from "../../post/post-detail/post-detail.component";
+import {DeletePostDialogComponent} from "../../shared/dialog/delete-post-dialog.component";
 
 @Component({
   selector: 'app-profile',
@@ -42,11 +42,9 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  //TODO : refaire les tags
-
   //TODO : utiliser les images "black_heart et red_heart" pour le bouton "like"
 
-  //TODO: duplication du post au moment du like
+  //TODO: fix la duplication du post au moment du like
 
 
 
@@ -96,8 +94,6 @@ export class ProfileComponent implements OnInit {
   viewSubscriptions(){
     this.dialogService.open(SubscriptionListComponent);
   }
-  //TODO : Voir pour passer l'écran de détail du post en Dialog
-  //        (comme la liste des follower et la création de group
 
   viewPostDetail(){
     this.dialogService.open(PostDetailComponent);
@@ -121,12 +117,14 @@ export class ProfileComponent implements OnInit {
 
 
   deletePost(post_id: string) {
-    if (confirm("You are going to delete a post")) {
-      this.postService.delete(parseInt(post_id)).subscribe(then => {
-        this.init();
-      });
-      this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
-    }
+    this.dialogService.open(DeletePostDialogComponent).onClose.subscribe(deletionConfirmed => {
+      if (deletionConfirmed) {
+        this.postService.delete(parseInt(post_id)).subscribe(then => {
+          this.init();
+        });
+        this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
+      }
+    });
   }
 
 

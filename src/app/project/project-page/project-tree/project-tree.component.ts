@@ -1,6 +1,9 @@
 import {Component, OnInit, Output, EventEmitter, Input, OnChanges} from '@angular/core';
 import {Filess} from "../../../_dtos/project/Filess";
 import {FileService} from "../../../_services/project/fileService";
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
+import {DeleteFileDialogComponent} from "../../../shared/dialog/delete-file-dialog.component";
+import {FileUnsavedChangeComponent} from "../../../shared/dialog/file-unsaved-change.component";
 
 @Component({
   selector: 'app-project-tree',
@@ -18,7 +21,10 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
   customColumn = 'name';
   allColumns = [ this.customColumn ];
 
-  constructor(private fileService: FileService) { }
+  positions = NbGlobalPhysicalPosition;
+
+  constructor(private fileService: FileService, private nbToasterService:NbToastrService,
+              private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
     this.loadFiles();
@@ -30,7 +36,7 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
   loadFiles() {
     const promise = this.fileService.getAllFileFromBranch(this.branchId).toPromise();
     promise.then((data) => {this.files = data})
-      .catch(() => alert('une erreur est survenue'));
+      .catch(() => this.nbToasterService.show('An error has occurred', `Error`, { position:this.positions.TOP_RIGHT, status:"danger" }));
   }
 
   uppdateFiles() {
@@ -55,9 +61,11 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
     }
     console.log("ici : " + this.filechange);
     if (this.filechange) {
-      if (confirm('le fichier a été modifié, si vous changer de fichier les donnés seront perdues, etes vous sur ?')) {
-        return this.fileSelectedEvent.emit(file);
-      }
+
+      this.dialogService.open(FileUnsavedChangeComponent).onClose.subscribe(confirmation => {
+        if (confirmation) return this.fileSelectedEvent.emit(file);
+      });
+
     } else {
       this.fileSelectedEvent.emit(file);
     }

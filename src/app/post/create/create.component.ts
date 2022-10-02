@@ -5,7 +5,7 @@ import {PostRequest} from "../../_dtos/post/PostRequest";
 import {Router} from "@angular/router";
 import {User} from "../../_dtos/user/User";
 import {TokenStorageService} from "../../_services/token/token-storage.service";
-import {NbDialogService} from "@nebular/theme";
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 import {CodeNotRunnableComponent} from "../../code/code-not-runnable.component";
 
 @Component({
@@ -22,9 +22,10 @@ export class CreateComponent implements OnInit {
 
   CODE_RUNNABLE_KEY = 'code-runnable';
 
+  positions = NbGlobalPhysicalPosition;
 
   constructor(private formBuilder: FormBuilder, private postService: PostService, private router: Router,
-              private tokenStorage: TokenStorageService, private dialogService: NbDialogService) {
+              private tokenStorage: TokenStorageService, private dialogService: NbDialogService, private nbToasterService:NbToastrService) {
     this.postForm = this.formBuilder.group({
       title: [],
       content: [],
@@ -47,12 +48,12 @@ export class CreateComponent implements OnInit {
       let tagsName:string[] = [];
 
       if(data["title"] === null || data["title"] === undefined){
-        alert("Title cannot be empty");
+        this.nbToasterService.show('Title cannot be empty', `Warning`, { position:this.positions.TOP_RIGHT, status:"warning" })
         return;
       }
 
       if(data["content"] === null){
-        alert("Content cannot be empty");
+        this.nbToasterService.show('Content cannot be empty', `Warning`, { position:this.positions.TOP_RIGHT, status:"warning" })
         return;
       }
 
@@ -62,7 +63,7 @@ export class CreateComponent implements OnInit {
       }
 
       if(tagsName.length > 5) {
-        alert("5 tags max");
+        this.nbToasterService.show('5 tags max', `Warning`, { position:this.positions.TOP_RIGHT, status:"warning" })
         return;
       }
 
