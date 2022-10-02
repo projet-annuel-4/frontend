@@ -10,14 +10,13 @@ body {
     font-family: "Roboto", sans-serif;
 }
 
-//TODO : Revoir les tags
-
 .tag {
   height: 200px;
   width: 300px;
-  background: #e3e3e3;
-  border-radius: 50%;
+  background: #576baa;
+  border-radius: 10%;
   font-weight: bold;
   line-height: 40px;
   text-align: center;
+  padding: 4px;
 }
