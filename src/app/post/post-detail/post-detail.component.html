@@ -14,7 +14,7 @@
   <nb-card-body>
     <pre><code>{{this.codeService.formatContent(post.content)}}</code></pre>
 
-    <span class="tag" *ngFor="let tag of post.tags">| {{tag.name}} </span>
+    <span class="tag" *ngFor="let tag of post.tags"> {{tag.name}} </span>
   </nb-card-body>
 
   <nb-layout-column>

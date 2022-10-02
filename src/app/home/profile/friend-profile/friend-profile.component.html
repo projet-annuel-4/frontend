@@ -39,7 +39,7 @@
             <nb-card-body routerLink="/post/{{post.key.id}}/detail">
               <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
 
-              <span class="tag" *ngFor="let tag of post.key.tags">| {{tag.name}} </span>
+              <span class="tag" *ngFor="let tag of post.key.tags"> {{tag.name}} </span>
             </nb-card-body>
             <nb-card-footer>
               <button
@@ -71,7 +71,7 @@
               </div>
 
               <div>
-                <span class="tag" *ngFor="let tag of friendAnswer.tags">| {{tag.name}} </span>
+                <span class="tag" *ngFor="let tag of friendAnswer.tags"> {{tag.name}} </span>
               </div>
             </nb-card-body>
           </span>
@@ -96,7 +96,7 @@
               </div>
 
               <div>
-                <span class="tag" *ngFor="let tag of postLiked.tags">| {{tag.name}} </span>
+                <span class="tag" *ngFor="let tag of postLiked.tags"> {{tag.name}} </span>
               </div>
 
             </nb-card-body>

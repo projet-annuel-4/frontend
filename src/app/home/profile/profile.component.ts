@@ -44,10 +44,7 @@ export class ProfileComponent implements OnInit {
 
   //TODO : utiliser les images "black_heart et red_heart" pour le bouton "like"
 
-  //TODO: fix la duplication du post au moment du like
-
-
-
+  
   ngOnInit(): void {
     this.profile = this.userService.getProfile();
 
@@ -66,7 +63,6 @@ export class ProfileComponent implements OnInit {
       this.posts = new Map(Array.from(this.posts).reverse()); //reverse
       this.posts = this.markPostAlreadyLikeByUser(this.posts);
     },error => {
-
     });
 
     this.postService.getPostLikedByUser(this.profile.id).subscribe(posts => {
@@ -148,13 +144,11 @@ export class ProfileComponent implements OnInit {
           this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
             value.isLiked = true;
             post.nbLike += 1;
-            this.init();
           });
         } else {
           this.postService.dislike(parseInt(post_id), this.profile.id).subscribe(then => {
             value.isLiked = false;
             post.nbLike -= 1;
-            this.init();
           });
         }
       }
