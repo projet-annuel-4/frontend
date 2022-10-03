@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  
+
   ngOnInit(): void {
     this.profile = this.userService.getProfile();
 
