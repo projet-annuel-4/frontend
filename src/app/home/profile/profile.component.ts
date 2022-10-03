@@ -20,7 +20,7 @@ import {DeletePostDialogComponent} from "../../shared/dialog/delete-post-dialog.
 })
 export class ProfileComponent implements OnInit {
 
-  profile: User
+  profile: User;
 
   posts: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
 
