@@ -42,10 +42,12 @@
 
 .green {
   //background-image: url("src/assets/red_heart.png");
-  background-color: green;
+  //background-color: green;
+  -o-background-image: url("src/assets/red_heart.png");
 }
 
 .white {
+  -o-background-image: url("src/assets/black_heart.png");
   background-color: white;
 }
 
