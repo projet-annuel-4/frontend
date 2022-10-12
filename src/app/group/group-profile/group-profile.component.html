@@ -12,12 +12,12 @@
       </nb-card-body>
 
       <nb-card-footer>
-        <div >
-          Members: {{group.members.length}}
+        <div>
+          Members: {{group.members?.length}}
         </div>
         <hr>
         <div>
-          Project : {{group.project.length}}
+          Project : {{group.project?.length}}
         </div>
         <div>
           <button class="alert-primary" (click)="createProject()"> Create project </button>
@@ -43,7 +43,7 @@
         <nb-list>
           <button (click)="createProject()"> Create Project</button>
           <nb-list-item *ngFor="let project of group.project">
-            <app-group-projects-card class="col-md-12" [project]="project"  ></app-group-projects-card>
+            <app-group-projects-card class="col-md-12" [project]="project"></app-group-projects-card>
           </nb-list-item>
         </nb-list>
       </nb-tab>

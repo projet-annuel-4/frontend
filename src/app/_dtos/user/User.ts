@@ -1,8 +1,8 @@
 export class User {
-  id:number;
+  id: number;
   firstname: string;
-  lastname:string;
-  email:string;
+  lastname: string;
+  email: string;
   nbFollowers: number;
   nbSubscriptions: number;
   imgUrl: string;
