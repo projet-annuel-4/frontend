@@ -16,11 +16,10 @@
   </nb-card-body>
 
   <nb-card-footer>
-    <button
-      (click)="like_dislike(post.key.id)"
-      [ngClass]="{'green' : post.value.isLiked, 'white': !post.value.isLiked}">
-      <nb-icon icon="heart-outline"></nb-icon>
-    </button>
+    <span (click)="like_dislike(post.key.id)">
+      <img *ngIf="!post.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20">
+      <img *ngIf="post.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20">
+    </span>
     {{post.key.nbLike}}
   </nb-card-footer>
 </nb-card>
