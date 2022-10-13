@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Group} from "../../_dtos/group/Group";
-import {GroupService} from "../../_services/group/group.service";
-import {NbDialogService} from "@nebular/theme";
-import {NewGroupComponent} from "../../shared/dialog/new-group.component";
+import {Group} from '../../_dtos/group/Group';
+import {GroupService} from '../../_services/group/group.service';
+import {NbDialogService} from '@nebular/theme';
+import {NewGroupComponent} from '../../shared/dialog/new-group.component';
 
 @Component({
   selector: 'app-group-home',
@@ -11,7 +11,7 @@ import {NewGroupComponent} from "../../shared/dialog/new-group.component";
 })
 export class GroupHomeComponent implements OnInit {
 
-  //groups: Group[] = [ new Group(1, "coucou", []) , new Group(2, "coucou2", []), new Group(3, "couco3", [])];
+  // groups: Group[] = [ new Group(1, "coucou", []) , new Group(2, "coucou2", []), new Group(3, "couco3", [])];
 
   groups: Group[];
 
@@ -21,7 +21,7 @@ export class GroupHomeComponent implements OnInit {
     this.initUserGroups();
   }
 
-  initUserGroups(){
+  initUserGroups() {
     this.groupService.getGroupsByMembersEmail().subscribe(groups => {
       this.groups = groups;
 
@@ -29,7 +29,7 @@ export class GroupHomeComponent implements OnInit {
   }
 
 
-  createGroup(){
+  createGroup() {
     this.dialogService.open(NewGroupComponent);
     this.initUserGroups();
   }

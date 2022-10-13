@@ -1,22 +1,19 @@
-import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {TokenStorageService} from "../token/token-storage.service";
-import {PostRequest} from "../../_dtos/post/PostRequest";
-import {Observable} from "rxjs";
-import {Post} from "../../_dtos/post/Post";
-import {post_service, project_file_service} from "../../../environments/environment";
-import {Filess} from "../../_dtos/project/Filess";
-import { FileRequest } from 'src/app/_dtos/file/FileRequest';
-import {CreateFileRequest} from "../../_dtos/project/CreateFileRequest";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {TokenStorageService} from '../token/token-storage.service';
+import {Observable} from 'rxjs';
+import {project_file_service} from '../../../environments/environment';
+import {Files} from '../../_dtos/project/Filess';
+import {CreateFileRequest} from '../../_dtos/project/CreateFileRequest';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class FileService{
+export class FileService {
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
 
   httpOptionsFile = {
@@ -25,12 +22,12 @@ export class FileService{
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {}
 
-  create(branchId: number, file: CreateFileRequest): Observable<Filess> {
-    return this.http.post<Filess>(`${project_file_service.BASE_URL}/branch/${branchId}/file/create`, file);
+  create(projectId: number, file: CreateFileRequest): Observable<Files> {
+    return this.http.post<Files>(`${project_file_service.BASE_URL}/${projectId}/file/createFile`, file);
   }
 
-  getById(branchId: number, fileId: number): Observable<Filess> {
-    return this.http.get<Filess>(`${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/get`, this.httpOptions);
+  getById(branchId: number, fileId: number): Observable<Files> {
+    return this.http.get<Files>(`${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/get`, this.httpOptions);
   }
 
   getFileData(branchId: number, fileId: number): Observable<ArrayBuffer> {
@@ -38,19 +35,15 @@ export class FileService{
       { responseType: 'arraybuffer' as 'json'});
   }
 
-  getAllFileFromBranch(branchId: number): Observable<Filess[]> {
-    return this.http.get<Filess[]>(`${project_file_service.BASE_URL}/branch/${branchId}/file/getAll`, this.httpOptions);
+  getAllFileFromProject(projectId: number): Observable<Files[]> {
+    return this.http.get<Files[]>(`${project_file_service.BASE_URL}/${projectId}/file/getTree`, this.httpOptions);
   }
 
-  saveFile(branchId: number, fileId: number, data: FormData): Observable<Filess> {
-    return this.http.post<Filess>(`${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/save`, data);
+  saveFile(branchId: number, fileId: number, data: FormData): Observable<Files> {
+    return this.http.post<Files>(`${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/save`, data);
   }
 
-  deleteFile(branchId: number, fileId: number): Observable<Filess> {
-    return this.http.delete<Filess>(`${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/get`);
+  deleteFile(branchId: number, fileId: number): Observable<Files> {
+    return this.http.delete<Files>(`${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/get`);
   }
-  // get file
-  // get allfile from project
-  // save file
-  // create file
 }

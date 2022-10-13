@@ -1,5 +1,5 @@
 <div class="row">
-  <app-project-tree [branchId]="branchId" [filechange]=fileModified (fileSelectedEvent)="setSelectedFile($event)" class="col-md-2"></app-project-tree>
+  <app-project-tree [projectId]="projectId"  [fileChange]=fileModified (fileSelectedEvent)="setSelectedFile($event)" class="col-md-2"></app-project-tree>
 
   <div class="col-md-8" style="height: 650px">
     <div id="fileName">Bienvenue</div>

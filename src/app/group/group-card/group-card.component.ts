@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Group} from "../../_dtos/group/Group";
-import {Router} from "@angular/router";
+import {Group} from '../../_dtos/group/Group';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-group-card',
@@ -9,8 +9,7 @@ import {Router} from "@angular/router";
 })
 export class GroupCardComponent implements OnInit {
 
-  @Input()
-  group : Group;
+  @Input() group: Group;
 
   constructor(private router: Router) { }
 

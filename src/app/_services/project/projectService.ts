@@ -7,6 +7,7 @@ import {project_service} from "../../../environments/environment";
 import {Project} from "../../_dtos/project/Project";
 import {UpdateProjectRequest} from "../../_dtos/project/UpdateProjectRequest";
 import {CreateProjectRequest} from "../../_dtos/project/CreateProjectRequest";
+import {Branch} from "../../_dtos/project/Branch";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ProjectService{
   // delete project
   // update project
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {}
@@ -31,12 +32,16 @@ export class ProjectService{
     return this.http.get<any>(`${project_service.BASE_URL}/project/updateProject/${projectId}`, this.httpOptions);
   }
 
+  getProjectById(projectId: number): Observable<Project> {
+    return this.http.get<Project>(`${project_service.BASE_URL}/project/${projectId}/getProjects`, this.httpOptions);
+  }
+
   getProjectByIdGroup(groupId: number): Observable<Project[]> {
     return this.http.get<Project[]>(`${project_service.BASE_URL}/project/${groupId}/getProjects`, this.httpOptions);
   }
 
-  getBranchIdByProjectId(projectId: number): Observable<number> {
-    return this.http.get<number>(`${project_service.BASE_URL}/project/${projectId}/branch/getActualBranch`, this.httpOptions);
+  getActualBranchByProjectId(projectId: number): Observable<Branch> {
+    return this.http.get<Branch>(`${project_service.BASE_URL}/project/${projectId}/branch/getActualBranch`, this.httpOptions);
   }
 
 

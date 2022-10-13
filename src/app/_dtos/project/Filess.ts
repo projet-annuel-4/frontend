@@ -1,4 +1,4 @@
-export class Filess {
+export class Files {
   id: number;
   name: string;
   type: boolean;

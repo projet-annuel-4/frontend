@@ -1,9 +1,8 @@
 import {Component, OnInit, Output, EventEmitter, Input, OnChanges} from '@angular/core';
-import {Filess} from "../../../_dtos/project/Filess";
-import {FileService} from "../../../_services/project/fileService";
-import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
-import {DeleteFileDialogComponent} from "../../../shared/dialog/delete-file-dialog.component";
-import {FileUnsavedChangeComponent} from "../../../shared/dialog/file-unsaved-change.component";
+import {Files} from '../../../_dtos/project/Filess';
+import {FileService} from '../../../_services/project/fileService';
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
+import {FileUnsavedChangeComponent} from '../../../shared/dialog/file-unsaved-change.component';
 
 @Component({
   selector: 'app-project-tree',
@@ -12,18 +11,18 @@ import {FileUnsavedChangeComponent} from "../../../shared/dialog/file-unsaved-ch
 })
 export class ProjectTreeComponent implements OnInit, OnChanges {
 
-  @Output() fileSelectedEvent = new EventEmitter<Filess>();
-  @Input() filechange;
-  @Input() branchId;
+  @Output() fileSelectedEvent = new EventEmitter<Files>();
+  @Input() fileChange;
+  @Input() projectId;
 
-  files: Filess[];
+  files: Files[];
 
   customColumn = 'name';
   allColumns = [ this.customColumn ];
 
   positions = NbGlobalPhysicalPosition;
 
-  constructor(private fileService: FileService, private nbToasterService:NbToastrService,
+  constructor(private fileService: FileService, private nbToasterService: NbToastrService,
               private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
@@ -34,15 +33,15 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
   }
 
   loadFiles() {
-    const promise = this.fileService.getAllFileFromBranch(this.branchId).toPromise();
-    promise.then((data) => {this.files = data})
-      .catch(() => this.nbToasterService.show('An error has occurred', `Error`, { position:this.positions.TOP_RIGHT, status:"danger" }));
+    const promise = this.fileService.getAllFileFromProject(this.projectId).toPromise();
+    promise.then((data) => {this.files = data; console.log(data); })
+      .catch(() => this.nbToasterService.show('An error has occurred', `Error`, { position: this.positions.TOP_RIGHT, status: 'danger' }));
   }
 
-  uppdateFiles() {
+  updateFiles() {
     setTimeout(() => {
       this.loadFiles();
-      const fileObj: Filess = JSON.parse(localStorage.getItem('createdFile'));
+      const fileObj: Files = JSON.parse(localStorage.getItem('createdFile'));
       this.files.push(fileObj);
       localStorage.removeItem('createdFile');
     }, 600);
@@ -53,17 +52,17 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
   }
 
   setSelectedFileEvent(value: number) {
-    let file: Filess;
-    for ( let i = 0; i < this.files.length; i++) {
+    let file: Files;
+    for( let i = 0; i < this.files.length; i++) {
       if (this.files[i].id === value) {
         file = this.files[i];
       }
     }
-    console.log("ici : " + this.filechange);
-    if (this.filechange) {
+    console.log('ici : ' + this.fileChange);
+    if (this.fileChange) {
 
       this.dialogService.open(FileUnsavedChangeComponent).onClose.subscribe(confirmation => {
-        if (confirmation) return this.fileSelectedEvent.emit(file);
+        if (confirmation) { return this.fileSelectedEvent.emit(file); }
       });
 
     } else {

@@ -1,8 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Project} from "../../../_dtos/project/Project";
-import {Branch} from "../../../_dtos/project/Branch";
-import {Router} from "@angular/router";
-import {ProjectService} from "../../../_services/project/projectService";
+import {Project} from '../../../_dtos/project/Project';
+import {Router} from '@angular/router';
+import {ProjectService} from '../../../_services/project/projectService';
 
 @Component({
   selector: 'app-group-projects-card',
@@ -22,10 +21,9 @@ export class GroupProjectsCardComponent implements OnInit {
   }
 
   goTo(projectId: number): void {
-    this.projectService.getBranchIdByProjectId(projectId).subscribe(project => {
-      this.router.navigate([ this.router.url + '/project/', projectId, "branch", project]).then();
-    })
-
+    this.projectService.getActualBranchByProjectId(projectId).subscribe(branch => {
+      this.router.navigate([ this.router.url + '/project/', projectId, 'branch', branch.name]).then();
+    });
   }
 
 }
