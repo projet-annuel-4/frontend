@@ -5,6 +5,7 @@ import {group_service} from "../../../environments/environment";
 import {CreateGroupRequest} from "../../_dtos/group/CreateGroupRequest";
 import {Observable} from "rxjs";
 import {Group} from "../../_dtos/group/Group";
+import {User} from "../../_dtos/user/User";
 
 @Injectable({
   providedIn: 'root'
@@ -46,4 +47,7 @@ export class GroupService {
     return this.http.get<Group[]>(`${group_service.BASE_URL}/member/${this.tokenStorage.getUser().email}`, this.httpOptions);
   }
 
+  getGroupMembers(groupId: number): Observable<User[]>{
+    return this.http.get<User[]>(`${group_service.BASE_URL}/${groupId}/members`, this.httpOptions);
+  }
 }

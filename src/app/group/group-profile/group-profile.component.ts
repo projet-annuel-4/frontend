@@ -5,6 +5,7 @@ import {ActivatedRoute, Params} from "@angular/router";
 import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 import {CreateProjectComponent} from "./create-project/create-project.component";
 import {GroupService} from "../../_services/group/group.service";
+import {group} from "@angular/animations";
 
 @Component({
   selector: 'app-group-profile',
@@ -38,10 +39,11 @@ export class GroupProfileComponent implements OnInit {
     });
 
     this.groupService.getInfoGroup(this.groupId).subscribe(
-      group => this.group = group,
+      data => this.group = data,
       () => {},
-      () => {this.loadProjects(); }
+      () => { this.loadProjects(); console.log(this.group); }
     );
+
   }
 
   loadProjects() {
@@ -62,7 +64,7 @@ export class GroupProfileComponent implements OnInit {
     createProjectComponent.onClose.subscribe(
       () => {},
       () => {
-        this.nbToasterService.show('', `Error`, { position:this.positions.TOP_RIGHT, status:"danger" })
+        this.nbToasterService.show('', `Error`, { position: this.positions.TOP_RIGHT, status: 'danger' });
       },
       () => {this.loadProjects(); }
     );

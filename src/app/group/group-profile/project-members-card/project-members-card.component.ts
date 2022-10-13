@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../../../_dtos/user/User";
-import {GroupService} from "../../../_services/group/group.service";
+import {User} from '../../../_dtos/user/User';
+import {GroupService} from '../../../_services/group/group.service';
 
 @Component({
   selector: 'app-project-members-card',
@@ -15,9 +15,11 @@ export class ProjectMembersCardComponent implements OnInit {
   constructor(private groupService: GroupService) { }
 
   ngOnInit(): void {
+    console.log( this.member);
+    console.log( this.member.firstName);
   }
 
-  removeMember(){
+  removeMember() {
     this.groupService.deleteMembers(this.member.id).subscribe();
   }
 

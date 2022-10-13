@@ -36,7 +36,7 @@ export class ProjectService{
   }
 
   getBranchIdByProjectId(projectId: number): Observable<number> {
-    return this.http.get<number>(`${project_service.BASE_URL}/project/branch/${projectId}/getBranch`, this.httpOptions);
+    return this.http.get<number>(`${project_service.BASE_URL}/project/${projectId}/branch/getActualBranch`, this.httpOptions);
   }
 
 

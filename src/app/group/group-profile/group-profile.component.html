@@ -8,16 +8,16 @@
           <img class="profile-image" src="assets/profile.png" width="150" height="150" alt="">
         </ng-template>
         <br>
-        <div>{{group.name}}</div>
+        <div>{{group?.name}}</div>
       </nb-card-body>
 
       <nb-card-footer>
         <div>
-          Members: {{group.members?.length}}
+          Members: {{group?.members?.length}}
         </div>
         <hr>
         <div>
-          Project : {{group.project?.length}}
+          Project : {{group?.project?.length}}
         </div>
         <div>
           <button class="alert-primary" (click)="createProject()"> Create project </button>
@@ -33,7 +33,7 @@
 
       <nb-tab tabTitle="Members">
         <nb-list>
-          <nb-list-item *ngFor="let member of group.members">
+          <nb-list-item *ngFor="let member of group?.members">
             <app-project-members-card class="col-md-12" [member]="member"></app-project-members-card>
           </nb-list-item>
         </nb-list>
@@ -42,7 +42,7 @@
       <nb-tab tabTitle="Project">
         <nb-list>
           <button (click)="createProject()"> Create Project</button>
-          <nb-list-item *ngFor="let project of group.project">
+          <nb-list-item *ngFor="let project of group?.project">
             <app-group-projects-card class="col-md-12" [project]="project"></app-group-projects-card>
           </nb-list-item>
         </nb-list>

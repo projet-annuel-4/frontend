@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../../../_dtos/user/User";
-import {Router} from "@angular/router";
-import {TokenStorageService} from "../../../_services/token/token-storage.service";
+import {User} from '../../../_dtos/user/User';
+import {Router} from '@angular/router';
+import {TokenStorageService} from '../../../_services/token/token-storage.service';
 
 @Component({
   selector: 'app-follower-item',
@@ -18,11 +18,12 @@ export class FollowerItemComponent implements OnInit {
   constructor(private router: Router, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.name = this.follower.firstname + " " + this.follower.lastname;
+    this.name = this.follower.firstName + ' ' + this.follower.lastName;
   }
 
-  goToFriendPage(){
-    if(this.follower.id == this.tokenStorage.getUser().id){
+  goToFriendPage() {
+    // tslint:disable-next-line:triple-equals
+    if (this.follower.id == this.tokenStorage.getUser().id) {
       this.router.navigate(['/profile']).then();
     } else {
       this.router.navigate(['friend/' + this.follower.id + '/' + 'profile']).then();
