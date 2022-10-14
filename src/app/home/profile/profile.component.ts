@@ -113,9 +113,12 @@ export class ProfileComponent implements OnInit {
   deletePost(post_id: string) {
     this.dialogService.open(DeletePostDialogComponent).onClose.subscribe(deletionConfirmed => {
       if (deletionConfirmed) {
-        this.postService.delete(parseInt(post_id)).subscribe(then => {
-          this.init();
-        });
+        this.postService.delete(parseInt(post_id)).subscribe(
+          () =>{},
+          () => {},
+          () => {
+            window.location.reload();
+          });
         this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
       }
     });
