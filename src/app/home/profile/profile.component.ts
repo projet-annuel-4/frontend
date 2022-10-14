@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserService } from 'src/app/_services/user/user.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {UserService} from 'src/app/_services/user/user.service';
 import {Post} from "../../_dtos/post/Post";
 import {PostService} from "../../_services/post/post.service";
 import {User} from "../../_dtos/user/User";
@@ -23,10 +23,10 @@ export class ProfileComponent implements OnInit {
   profile: User
 
   posts: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
+  tempUserPost: Post[];
 
   postsLiked: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
-
-  userPost: Post[];
+  tempPostLiked: Post[];
 
   userAnswers: Post[];
 
@@ -39,17 +39,18 @@ export class ProfileComponent implements OnInit {
   constructor(private userService: UserService, private postService: PostService, private router: Router,
               private dialogService: NbDialogService,public codeService:CodeService, private fileService: FileManagementService,
               private sanitizer: DomSanitizer, private nbToasterService:NbToastrService) {
-
   }
 
 
   ngOnInit(): void {
     this.profile = this.userService.getProfile();
 
+    //this.oldInit();
     this.init();
   }
 
-  init(){
+  //TODO : Supprimer une fois le fix constaté sur la version déployée
+  oldInit(){
     this.postService.getUserById(this.profile.id).subscribe(user => {
       this.profile = user;
     });
@@ -57,26 +58,19 @@ export class ProfileComponent implements OnInit {
     this.postService.getAllByUser(this.profile.id).subscribe(posts => {
       posts.forEach(post => {
         this.posts.set(post, {isLiked: false});
-      });
 
-    },
-      error => {},
-      () => {
         this.posts = new Map(Array.from(this.posts).reverse()); //reverse
         this.posts = this.markPostAlreadyLikeByUser(this.posts);
       });
+    },error => {});
 
     this.postService.getPostLikedByUser(this.profile.id).subscribe(posts => {
       posts.forEach(post => {
         this.postsLiked.set(post, {isLiked: false});
       });
-
-    }, error => {},
-      () =>{
-        this.postsLiked = new Map(Array.from(this.postsLiked).reverse()); //reverse
-        this.postsLiked = this.markPostAlreadyLikeByUser(this.postsLiked);
-      }
-    );
+      this.postsLiked = new Map(Array.from(this.postsLiked).reverse()); //reverse
+      this.postsLiked = this.markPostAlreadyLikeByUser(this.postsLiked);
+    },error => {});
 
     this.postService.getAllUserAnswers(this.profile.id).subscribe(userAnswers => {
       this.userAnswers = userAnswers;
@@ -89,6 +83,43 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  init(){
+    this.postService.getUserById(this.profile.id).subscribe(user => {
+      this.profile = user;
+    });
+
+    this.postService.getAllByUser(this.profile.id).subscribe(
+      posts => {this.tempUserPost = posts},
+      error => {},
+      () => {
+        this.posts = this.postTabToPostMap(this.tempUserPost);
+        this.posts = this.reverseMap(this.posts);
+        this.posts = this.markPostAlreadyLikeByUser(this.posts);
+      }
+    );
+
+    this.postService.getPostLikedByUser(this.profile.id).subscribe(
+      posts => {
+        this.tempPostLiked = posts
+      },
+      error => {},
+      () =>{
+        this.postsLiked = this.postTabToPostMap(this.tempPostLiked);
+        this.postsLiked = this.reverseMap(this.postsLiked)
+        this.postsLiked = this.markPostAlreadyLikeByUser(this.postsLiked);
+      }
+    );
+
+    this.postService.getAllUserAnswers(this.profile.id).subscribe(userAnswers => {
+      this.userAnswers = userAnswers;
+    }, error => {});
+
+    this.fileService.downloadImage(this.profile.id).subscribe( res => {
+      let objectURL = 'data:image/png;base64,' + res.file;
+      this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    });
+  }
+
   viewFollowers(){
     this.dialogService.open(FollowerListComponent);
   }
@@ -99,7 +130,6 @@ export class ProfileComponent implements OnInit {
   viewPostDetail(){
     this.dialogService.open(PostDetailComponent);
   }
-
 
   formatContentP(content: string){
     let newContent = content;
@@ -131,7 +161,6 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-
   markPostAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>){
     this.postService.getPostLikedByUser(this.profile.id).subscribe(postsLiked => {
       this.postsAlreadyLiked = postsLiked
@@ -161,6 +190,21 @@ export class ProfileComponent implements OnInit {
         }
       }
     });
+  }
+
+  reverseMap(mapToReverse: Map<Post, {isLiked: boolean}>): Map<Post, {isLiked: boolean}>{
+    return new Map(Array.from(mapToReverse).reverse());
+  }
+
+  /**
+   * convert a tab post to a Map with default value
+   */
+  postTabToPostMap(postTab: Post[]): Map<Post, {isLiked: boolean}> {
+    let tempMap = new Map<Post, {isLiked: boolean}>();
+    postTab.forEach(post => {
+      tempMap.set(post, {isLiked: false});
+    });
+    return tempMap;
   }
 
 
