@@ -58,18 +58,25 @@ export class ProfileComponent implements OnInit {
       posts.forEach(post => {
         this.posts.set(post, {isLiked: false});
       });
-      this.posts = new Map(Array.from(this.posts).reverse()); //reverse
-      this.posts = this.markPostAlreadyLikeByUser(this.posts);
-    },error => {
-    });
+
+    },
+      error => {},
+      () => {
+        this.posts = new Map(Array.from(this.posts).reverse()); //reverse
+        this.posts = this.markPostAlreadyLikeByUser(this.posts);
+      });
 
     this.postService.getPostLikedByUser(this.profile.id).subscribe(posts => {
       posts.forEach(post => {
         this.postsLiked.set(post, {isLiked: false});
       });
-      this.postsLiked = new Map(Array.from(this.postsLiked).reverse()); //reverse
-      this.postsLiked = this.markPostAlreadyLikeByUser(this.postsLiked);
-    }, error => {});
+
+    }, error => {},
+      () =>{
+        this.postsLiked = new Map(Array.from(this.postsLiked).reverse()); //reverse
+        this.postsLiked = this.markPostAlreadyLikeByUser(this.postsLiked);
+      }
+    );
 
     this.postService.getAllUserAnswers(this.profile.id).subscribe(userAnswers => {
       this.userAnswers = userAnswers;
