@@ -1,8 +1,7 @@
-export class Error{
+export class Error {
   error: string
 
-
   constructor(error: string) {
-    this.error = error;
+    this.error = error
   }
 }

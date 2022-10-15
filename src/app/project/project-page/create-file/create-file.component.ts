@@ -1,45 +1,55 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NbDialogRef, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
-import {FileService} from '../../../_services/project/fileService';
-import {CreateFileRequest} from '../../../_dtos/project/CreateFileRequest';
-import {ActivatedRoute, Params, Route, Router} from '@angular/router';
-import {delay} from 'rxjs/operators';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
+import { NbDialogRef, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme'
+import { FileService } from '../../../_services/project/fileService'
+import { CreateFileRequest } from '../../../_dtos/project/CreateFileRequest'
+import { ActivatedRoute, Params, Route, Router } from '@angular/router'
+import { delay } from 'rxjs/operators'
 
 @Component({
   selector: 'app-create-file',
   templateUrl: './create-file.component.html',
-  styleUrls: ['./create-file.component.scss']
+  styleUrls: ['./create-file.component.scss'],
 })
 export class CreateFileComponent implements OnInit {
-  @Input() projectId;
-  positions = NbGlobalPhysicalPosition;
+  @Input() projectId
+  positions = NbGlobalPhysicalPosition
 
-  constructor(protected ref: NbDialogRef<CreateFileComponent>, private fileService: FileService,
-              private route: ActivatedRoute, private nbToasterService: NbToastrService) {
-  }
+  constructor(
+    protected ref: NbDialogRef<CreateFileComponent>,
+    private fileService: FileService,
+    private route: ActivatedRoute,
+    private nbToasterService: NbToastrService
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   createFile() {
-    const fileRequest = new CreateFileRequest((document.getElementById('createFileName') as HTMLInputElement).value);
+    const fileRequest = new CreateFileRequest(
+      (document.getElementById('createFileName') as HTMLInputElement).value
+    )
     this.fileService.create(this.projectId, fileRequest).subscribe(
-      (data) => {localStorage.setItem('createdFile', JSON.stringify(data)); },
-      (error) => {
-        this.nbToasterService.show(error.error.message, `Error`, { position: this.positions.TOP_RIGHT, status: 'danger' });
-        return;
+      data => {
+        localStorage.setItem('createdFile', JSON.stringify(data))
+      },
+      error => {
+        this.nbToasterService.show(error.error.message, `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+        })
+        return
       },
       () => {
-        this.nbToasterService.show('File has been saved successfully', `Done`, { position: this.positions.TOP_RIGHT, status: 'success' });
-        delay(2000);
-        this.ref.close();
-      },
-    );
-
+        this.nbToasterService.show('File has been saved successfully', `Done`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'success',
+        })
+        delay(2000)
+        this.ref.close()
+      }
+    )
   }
 
   close() {
-    this.ref.close();
+    this.ref.close()
   }
-
 }

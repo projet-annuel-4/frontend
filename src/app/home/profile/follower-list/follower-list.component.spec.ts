@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FollowerListComponent } from './follower-list.component';
+import { FollowerListComponent } from './follower-list.component'
 
 describe('FollowerListComponent', () => {
-  let component: FollowerListComponent;
-  let fixture: ComponentFixture<FollowerListComponent>;
+  let component: FollowerListComponent
+  let fixture: ComponentFixture<FollowerListComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FollowerListComponent ]
-    })
-    .compileComponents();
-  }));
+      declarations: [FollowerListComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FollowerListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(FollowerListComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

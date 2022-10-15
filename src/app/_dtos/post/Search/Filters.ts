@@ -1,10 +1,9 @@
-import {SearchFilter} from "./SearchFilter";
+import { SearchFilter } from './SearchFilter'
 
 export class Filters {
-  filters: SearchFilter[];
-
+  filters: SearchFilter[]
 
   constructor(filters: SearchFilter[]) {
-    this.filters = filters;
+    this.filters = filters
   }
 }

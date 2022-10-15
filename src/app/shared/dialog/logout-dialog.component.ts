@@ -1,8 +1,7 @@
-import {NbDialogRef} from "@nebular/theme";
-import {Component} from "@angular/core";
-import {TokenStorageService} from "../../_services/token/token-storage.service";
-import {Router} from "@angular/router";
-
+import { NbDialogRef } from '@nebular/theme'
+import { Component } from '@angular/core'
+import { TokenStorageService } from '../../_services/token/token-storage.service'
+import { Router } from '@angular/router'
 
 @Component({
   template: `
@@ -17,38 +16,30 @@ import {Router} from "@angular/router";
 
       <nb-card-footer>
         <span style="padding-right: 50px">
-          <button nbButton
-                  size="tiny"
-                  (click)="logout()"> Yes
-          </button>
+          <button nbButton size="tiny" (click)="logout()">Yes</button>
         </span>
         <span>
-          <button nbButton
-                  size="tiny"
-                  status="danger"
-                  (click)="cancel()"> Cancel
-          </button>
+          <button nbButton size="tiny" status="danger" (click)="cancel()">Cancel</button>
         </span>
       </nb-card-footer>
     </nb-card>
   `,
 })
-
 export class LogoutDialogComponent {
+  constructor(
+    protected ref: NbDialogRef<LogoutDialogComponent>,
+    private tokenStorageService: TokenStorageService,
+    private router: Router
+  ) {}
 
-  constructor(protected ref: NbDialogRef<LogoutDialogComponent>, private tokenStorageService: TokenStorageService,
-              private router: Router ) {
-  }
-
-  logout(){
-    this.tokenStorageService.signOut();
+  logout() {
+    this.tokenStorageService.signOut()
     this.router.navigate(['auth/signing']).then(() => {
-      window.location.reload();
+      window.location.reload()
     })
   }
 
-  cancel(){
-    this.ref.close();
+  cancel() {
+    this.ref.close()
   }
-
 }

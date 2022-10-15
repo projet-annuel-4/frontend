@@ -1,6 +1,6 @@
 export class CodeExecutionResponse {
-  id: string;
-  output: [string];
-  error: [];
-  status: string;
+  id: string
+  output: [string]
+  error: []
+  status: string
 }

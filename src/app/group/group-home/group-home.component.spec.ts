@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { GroupHomeComponent } from './group-home.component';
+import { GroupHomeComponent } from './group-home.component'
 
 describe('GroupHomeComponent', () => {
-  let component: GroupHomeComponent;
-  let fixture: ComponentFixture<GroupHomeComponent>;
+  let component: GroupHomeComponent
+  let fixture: ComponentFixture<GroupHomeComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupHomeComponent ]
-    })
-    .compileComponents();
-  }));
+      declarations: [GroupHomeComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GroupHomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(GroupHomeComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

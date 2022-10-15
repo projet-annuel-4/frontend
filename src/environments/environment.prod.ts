@@ -15,9 +15,8 @@ export const environment = {
   POST: `post`,
   FOLLOW: `followLink`,
   USERS_GROUPS: `users-group`,
-  FILE: `files`
-
-};
+  FILE: `files`,
+}
 
 export const auth_service = {
   LOGIN: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/login`,
@@ -28,33 +27,32 @@ export const auth_service = {
 }
 
 export const chat_service = {
-  CHAT: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}`
+  CHAT: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}`,
 }
 
 export const user_service = {
   INFO: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/info`,
-  UPDATE: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/edit`
+  UPDATE: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/edit`,
 }
 
 export const code_execution_service = {
-  SEND: `http://localhost:3001/${environment.API_VERSION}/codeExecutor/submit`
+  SEND: `http://localhost:3001/${environment.API_VERSION}/codeExecutor/submit`,
 }
 
 export const post_service = {
-  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.POST}`
+  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.POST}`,
 }
 
-
 export const follower_service = {
-  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/post/${environment.FOLLOW}`
+  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/post/${environment.FOLLOW}`,
 }
 
 export const group_service = {
-  BASE_URL: `${environment.DOMAIN}/${environment.USERS_GROUPS}/groups`
+  BASE_URL: `${environment.DOMAIN}/${environment.USERS_GROUPS}/groups`,
 }
 
 export const file_service = {
-  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.FILE}`
+  BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.FILE}`,
 }
 /*
  * For easier debugging in development mode, you can import the following file
