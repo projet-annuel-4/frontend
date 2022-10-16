@@ -20,13 +20,6 @@
           <label class="label" for="tag">Tag : </label>
           <input nbInput shape="round" id="tag" placeholder="TS" [(ngModel)]="filter.tagName">
         </span>
-<!--
-        <span *ngIf="creationDateToggle" style="padding: 10px">
-          <label class="label" for="creationDate" >CreationDate : </label>
-          <input nbInput type="date" shape="round" id="creationDate"
-                 placeholder="date" [(ngModel)]="filter.creationDate">
-        </span>
--->
       </nb-card-header>
 
       <nb-card-body>
@@ -45,12 +38,7 @@
           <button nbButton size="small"
                   (click)="tagToggle = !tagToggle">affiche tag</button>
         </span>
-<!--
-        <span class="displayButton">
-            <button nbButton size="small"
-                    (click)="creationDateToggle = !creationDateToggle">affiche creation date</button>
-        </span>
--->
+
       </nb-card-body>
 
 
@@ -82,7 +70,7 @@
 
         <span style="padding-right: 10px">
           <label class="label" for="username">User : </label>
-          <input nbInput shape="round" id="username" placeholder="Username" [(ngModel)]="userFirstname">
+          <input nbInput shape="round" id="username" placeholder="Username" [(ngModel)]="userFirstName">
         </span>
       </nb-card-body>
     </nb-card>
@@ -92,7 +80,7 @@
         <span *ngFor="let user of usersFound">
           <div style="padding: 10px" routerLink="/friend/{{user.id}}/profile">
             <nb-user *ngIf="user != null"
-                     name="{{user.firstname}} {{user.lastname}}"
+                     name="{{user.firstName}} {{user.lastName}}"
                      picture=""
             size="giant">
           </nb-user>

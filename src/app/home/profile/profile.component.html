@@ -3,7 +3,7 @@
   <nb-layout-column class="col-3">
 
     <button id="createButton" nbButton shape="round" size="small" routerLink="/post/create">
-      <img width="30" height="30" src="/assets/add.png">
+      <img width="30" height="30" src="/assets/add.png" alt="createButton">
     </button>
 
     <nb-card>
@@ -56,7 +56,6 @@
             <nb-card-body>
               <div style="padding: 2%"
                    routerLink="../post/{{post.key.id}}/detail">
-              <!--<div (click)="viewPostDetail()">-->
                  <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
               </div>
 
@@ -113,7 +112,7 @@
             <nb-card-header>
               <nb-user
                 class="hoverEffect"
-                name="{{postLiked.key.user.firstname}} {{postLiked.key.user.lastname}}"
+                name="{{postLiked.key.user.firstName}} {{postLiked.key.user.lastName}}"
                 routerLink="/friend/{{postLiked.key.user.id}}/profile">
               </nb-user>
               <br>

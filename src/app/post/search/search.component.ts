@@ -14,14 +14,14 @@ import { Filters } from '../../_dtos/post/Search/Filters'
 })
 export class SearchComponent implements OnInit {
   titleToggle = true
-  contentToggle: boolean = false
-  tagToggle: boolean = false
-  creationDateToggle: boolean = false
+  contentToggle = false
+  tagToggle = false
+  creationDateToggle = false
 
   filter = new PostFilterRequest()
   postsFound: Post[]
 
-  userFirstname: string
+  userFirstName: string
   usersFound: User[]
 
   constructor(private postService: PostService, private datePipe: DatePipe) {}
@@ -37,22 +37,31 @@ export class SearchComponent implements OnInit {
   checkFilterValue() {
     const filters = []
 
-    if (this.filter.title) filters.push(new SearchFilter('title', 4, this.filter.title, ['']))
-    if (this.filter.content) filters.push(new SearchFilter('content', 4, this.filter.content, ['']))
-    if (this.filter.tagName) filters.push(new SearchFilter('tags', 4, '', [this.filter.tagName]))
+    if (this.filter.title) {
+      filters.push(new SearchFilter('title', 4, this.filter.title, ['']))
+    }
+    if (this.filter.content) {
+      filters.push(new SearchFilter('content', 4, this.filter.content, ['']))
+    }
+    if (this.filter.tagName) {
+      filters.push(new SearchFilter('tags', 4, '', [this.filter.tagName]))
+    }
 
     return new Filters(filters)
   }
 
   searchUser() {
-    this.postService.getUserByFirstname(this.userFirstname).subscribe(user => {
+    this.postService.getUserByFirstName(this.userFirstName).subscribe(user => {
       this.usersFound = user
     })
   }
 
   OLDcheckFilterValue() {
+    // tslint:disable-next-line:no-unused-expression
     this.filter.title === undefined ? (this.filter.title = '') : this.filter.title
+    // tslint:disable-next-line:no-unused-expression
     this.filter.content === undefined ? (this.filter.content = '') : this.filter.content
+    // tslint:disable-next-line:no-unused-expression
     this.filter.tagName === undefined ? (this.filter.tagName = '') : this.filter.tagName
 
     if (this.filter.creationDate === undefined) {

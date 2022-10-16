@@ -24,8 +24,8 @@ export class SignupComponent implements OnInit {
     private nbToasterService: NbToastrService
   ) {
     this.signUpFrom = this.formBuilder.group({
-      firstname: [],
-      lastname: [],
+      firstName: [],
+      lastName: [],
       email: [],
       password: [],
       password2: [],
@@ -42,8 +42,27 @@ export class SignupComponent implements OnInit {
       this._authService
         .register(
           new SignUpRequest(
-            data['firstname'],
-            data['lastname'],
+            data['firstName'],
+            data['lastName'],
+            data['email'],
+            data['password'],
+            data['password2'],
+            'captchtest'
+          )
+        )
+        .subscribe(() => {
+          this.nbToasterService.show('Connection successful, an email has been sent', ``, {
+            position: this.positions.TOP_RIGHT,
+            status: 'success',
+          })
+          this.router.navigate(['../auth/signing']).then()
+        })
+
+      this._authService
+        .register(
+          new SignUpRequest(
+            data['firstName'],
+            data['lastName'],
             data['email'],
             data['password'],
             data['password2'],

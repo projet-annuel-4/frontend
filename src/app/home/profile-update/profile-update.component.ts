@@ -34,8 +34,8 @@ export class ProfileUpdateComponent implements OnInit {
   ) {
     this.signUpFrom = this.formBuilder.group({
       imgUrl: [],
-      firstname: [],
-      lastname: [],
+      firstName: [],
+      lastName: [],
     })
   }
 
@@ -50,7 +50,7 @@ export class ProfileUpdateComponent implements OnInit {
       const data = this.signUpFrom.value
       //this.loading = true;
       this.userService
-        .update(new UserUpdateRequest(data['firstname'], data['lastname'], data['imgUrl']))
+        .update(new UserUpdateRequest(data['firstName'], data['lastName'], data['imgUrl']))
         .subscribe(
           response => {
             //this.loading = true;
