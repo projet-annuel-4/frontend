@@ -16,7 +16,7 @@ export class ProjectMembersCardComponent implements OnInit {
 
   ngOnInit(): void {
     console.log( this.member);
-    console.log( this.member.firstName);
+    console.log( this.member.firstname);
   }
 
   removeMember() {

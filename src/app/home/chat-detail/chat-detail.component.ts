@@ -54,7 +54,7 @@ export class ChatDetailComponent implements OnInit {
       let messages = msgs.map(msg => {
         let nm = new NbMessage(msg)
         if (msg.senderId == this.myProfile.id.toString()) {
-          nm.updateUser(this.myProfile.firstName, this.myProfile.imgUrl, true)
+          nm.updateUser(this.myProfile.firstname, this.myProfile.imgUrl, true)
         }
         else {
           nm.updateUser(this.friendProfile.name, this.friendProfile.imgUrl, false)
@@ -129,7 +129,7 @@ export class ChatDetailComponent implements OnInit {
     let nm = new NbMessage(userMessage);
 
     if (message['sender'] == this.myProfile.id.toString()) {
-      nm.updateUser(this.myProfile.lastName, this.myProfile.imgUrl, true)
+      nm.updateUser(this.myProfile.lastname, this.myProfile.imgUrl, true)
     }
     else {
       nm.updateUser(this.friendProfile.name, this.friendProfile.imgUrl, false)

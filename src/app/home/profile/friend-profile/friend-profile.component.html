@@ -9,7 +9,7 @@
         </ng-template>
 
         <br>
-        <div>{{friendProfile.firstName}} {{friendProfile.lastName.toUpperCase()}}</div>
+        <div>{{friendProfile.firstname}} {{friendProfile.lastname.toUpperCase()}}</div>
         <div>{{friendProfile.email}}</div>
       </nb-card-body>
 
@@ -66,7 +66,7 @@
               <nb-card-header> Title : {{friendAnswer.title}} </nb-card-header>
 
               <div style="padding: 2%">
-                <pre><code>{{formatContentP(friendAnswer.content)}}</code></pre>
+                <pre><code>{{this.codeService.formatContent(friendAnswer.content)}}</code></pre>
               </div>
 
               <div>
@@ -91,7 +91,7 @@
               <nb-card-header> Title : {{postLiked.title}} </nb-card-header>
 
               <div style="padding: 2%">
-                <pre><code>{{postLiked.content}}</code></pre>
+                <pre><code>{{this.codeService.formatContent(postLiked.content)}}</code></pre>
               </div>
 
               <div>

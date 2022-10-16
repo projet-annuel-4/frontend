@@ -18,7 +18,7 @@ export class FollowerItemComponent implements OnInit {
   constructor(private router: Router, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.name = this.follower.firstName + ' ' + this.follower.lastName;
+    this.name = this.follower.firstname + ' ' + this.follower.lastname;
   }
 
   goToFriendPage() {

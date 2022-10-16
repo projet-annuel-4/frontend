@@ -27,13 +27,12 @@ export class FriendProfileComponent implements OnInit {
   friendAnswers: Post[];
 
   posts: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
+  tempUserPost: Post[];
   postsAlreadyLiked: Post[];
-
 
   followedByTheUser: boolean = false;
 
   buttonText: string;
-
 
   constructor(private userService: UserService, private route: ActivatedRoute, private postService: PostService,
               private dialogService: NbDialogService, public codeService:CodeService,
@@ -43,35 +42,34 @@ export class FriendProfileComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params): void => {
       if(params.friendId !== undefined){
-
         this.initFriend(params.friendId);
-
-        this.fileService.downloadImage(params.friendId).subscribe( res => {
-          let objectURL = 'data:image/png;base64,' + res.file;
-          this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-        })
+        this.loadProfilePicture(params.friendId);
       }
     });
 
   }
 
   initFriend(friendId: string){
-    this.postService.getUserById(parseInt(friendId)).subscribe(friend => {
-      this.friendProfile = friend;
-      this.initFriendPost();
-      this.isFollowed(parseInt(friendId));
-    });
+    this.postService.getUserById(parseInt(friendId)).subscribe(
+      friend => {this.friendProfile = friend},
+      () => {},
+      () => {
+        this.initFriendPost();
+        this.isFollowed(parseInt(friendId));
+      });
   }
 
 
   initFriendPost(){
-    this.postService.getAllByUser(this.friendProfile.id).subscribe(posts => {
-      posts.forEach(post => {
-        this.posts.set(post, {isLiked: false});
-      });
-      this.posts = new Map(Array.from(this.posts).reverse()); //reverse
-      this.markPostAlreadyLikeByUser();
-    },error => {});
+    this.postService.getAllByUser(this.friendProfile.id).subscribe(
+      posts => {this.tempUserPost = posts;},
+      error => {},
+      () => {
+        this.posts = this.postService.postTabToPostMap(this.tempUserPost);
+        this.posts = this.reverseMap(this.posts);
+        this.markPostAlreadyLikeByUser();
+      }
+    );
 
     this.postService.getPostLikedByUser(this.friendProfile.id).subscribe(postsLiked => {
       this.friendPostsLiked = postsLiked;
@@ -82,12 +80,19 @@ export class FriendProfileComponent implements OnInit {
     }, error => {});
   }
 
+  loadProfilePicture(friendId: string){
+    this.fileService.downloadImage(parseInt(friendId)).subscribe( res => {
+      let objectURL = 'data:image/png;base64,' + res.file;
+      this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    })
+  }
+
   isFollowed(friendId: number){
     this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(subscriptions => {
       subscriptions.forEach(sub => {
-        if (sub.id == friendId) this.followedByTheUser = true;
+        if(sub.id == friendId) this.followedByTheUser = true;
       });
-      this.updateButton();
+      this.updateSubscribeButton();
     });
   }
 
@@ -133,14 +138,14 @@ export class FriendProfileComponent implements OnInit {
       this.followService.follow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
         this.followedByTheUser = true;
         this.friendProfile.nbFollowers += 1;
-        this.updateButton();
+        this.updateSubscribeButton();
       });
 
     } else {
       this.followService.unfollow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
         this.followedByTheUser = false;
         this.friendProfile.nbFollowers -= 1;
-        this.updateButton();
+        this.updateSubscribeButton();
       });
     }
   }
@@ -163,12 +168,16 @@ export class FriendProfileComponent implements OnInit {
     });
   }
 
-  updateButton(){
+  updateSubscribeButton(){
     if(this.followedByTheUser == true){
       this.buttonText = "unfollow";
     } else {
       this.buttonText = "follow";
     }
+  }
+
+  reverseMap(mapToReverse: Map<Post, {isLiked: boolean}>): Map<Post, {isLiked: boolean}>{
+    return new Map(Array.from(mapToReverse).reverse());
   }
 
 }
