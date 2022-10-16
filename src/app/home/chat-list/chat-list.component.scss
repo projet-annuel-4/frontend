@@ -1,28 +1,27 @@
-nb-card{
-    padding: 0 !important;
-    height: 100%;
+nb-card {
+  padding: 0 !important;
+  height: 100%;
 
-    nb-card-body{
-        overflow: unset;
-    }
-    nb-list{
-        height: 60vh;
+  nb-card-body {
+    overflow: unset;
+  }
+  nb-list {
+    height: 60vh;
 
-        nb-list-item:hover {
-            background-color:#4C4C4C09;
-            cursor: pointer;
-        }
+    nb-list-item:hover {
+      background-color: #4c4c4c09;
+      cursor: pointer;
     }
+  }
 }
 
-.action:hover{
+.action:hover {
   background-color: #576baa;
   cursor: pointer;
 }
 
-
 .dropbtn {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 16px;
   font-size: 16px;
@@ -41,7 +40,7 @@ nb-card{
   right: 0;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -52,7 +51,9 @@ nb-card{
   display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1;}
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
 
 .dropdown:hover .dropdown-content {
   display: block;
@@ -61,7 +62,6 @@ nb-card{
 .dropdown:hover .dropbtn {
   background-color: #3e8e41;
 }
-
 
 .three-point {
   cursor: pointer;

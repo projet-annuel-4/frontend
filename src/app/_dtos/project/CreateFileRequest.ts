@@ -1,7 +1,7 @@
 export class CreateFileRequest {
-  fileNameUrl: string;
+  fileNameUrl: string
 
   constructor(fileNameUrl: string) {
-    this.fileNameUrl = fileNameUrl;
+    this.fileNameUrl = fileNameUrl
   }
 }

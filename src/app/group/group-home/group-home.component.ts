@@ -1,38 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import {Group} from '../../_dtos/group/Group';
-import {GroupService} from '../../_services/group/group.service';
-import {NbDialogService} from '@nebular/theme';
-import {NewGroupComponent} from '../../shared/dialog/new-group.component';
+import { Component, OnInit } from '@angular/core'
+import { Group } from '../../_dtos/group/Group'
+import { GroupService } from '../../_services/group/group.service'
+import { NbDialogService } from '@nebular/theme'
+import { NewGroupComponent } from '../../shared/dialog/new-group.component'
 
 @Component({
   selector: 'app-group-home',
   templateUrl: './group-home.component.html',
-  styleUrls: ['./group-home.component.scss']
+  styleUrls: ['./group-home.component.scss'],
 })
 export class GroupHomeComponent implements OnInit {
-
   // groups: Group[] = [ new Group(1, "coucou", []) , new Group(2, "coucou2", []), new Group(3, "couco3", [])];
 
-  groups: Group[];
+  groups: Group[]
 
-  constructor(private groupService: GroupService, private dialogService: NbDialogService) { }
+  constructor(private groupService: GroupService, private dialogService: NbDialogService) {}
 
   ngOnInit(): void {
-    this.initUserGroups();
+    this.initUserGroups()
   }
 
   initUserGroups() {
     this.groupService.getGroupsByMembersEmail().subscribe(groups => {
-      this.groups = groups;
-
-    });
+      this.groups = groups
+    })
   }
-
 
   createGroup() {
-    this.dialogService.open(NewGroupComponent);
-    this.initUserGroups();
+    this.dialogService.open(NewGroupComponent)
+    this.initUserGroups()
   }
-
-
 }

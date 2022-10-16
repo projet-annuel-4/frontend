@@ -1,51 +1,39 @@
 <!--<nb-card status="info">-->
 <nb-card>
-
   <nb-card-header>
     <div>
-      <nb-user
-        name="{{post.user.firstName}} {{post.user.lastName}}"
-        (click)="goToProfile()">
+      <nb-user name="{{ post.user.firstName }} {{ post.user.lastName }}" (click)="goToProfile()">
       </nb-user>
-      <br>
-      Title : {{post.title}}
+      <br />
+      Title : {{ post.title }}
     </div>
   </nb-card-header>
   <nb-card-body>
     <pre><code>{{this.codeService.formatContent(post.content)}}</code></pre>
 
-    <span class="tag" *ngFor="let tag of post.tags"> {{tag.name}} </span>
+    <span class="tag" *ngFor="let tag of post.tags"> {{ tag.name }} </span>
   </nb-card-body>
 
   <nb-layout-column>
-    <button nbButton
-            status="basic"
-            size="small"
-            routerLink="/post/{{post.id}}/comment"> Comment </button>
+    <button nbButton status="basic" size="small" routerLink="/post/{{ post.id }}/comment">
+      Comment
+    </button>
   </nb-layout-column>
 
   <nb-card-footer>
     <nb-accordion (click)="getAnswers()">
       <nb-accordion-item>
-
         <nb-accordion-item-header>Answers</nb-accordion-item-header>
         <nb-accordion-item-body *ngFor="let answer of answers">
           <nb-card>
             <nb-card-body (click)="goToAnswerDetail(answer.id)">
-              <div>Content : {{answer.content}}</div>
+              <div>Content : {{ answer.content }}</div>
 
-              <span class="tag" *ngFor="let answerTag of answer.tags"> {{answerTag.name}} </span>
+              <span class="tag" *ngFor="let answerTag of answer.tags"> {{ answerTag.name }} </span>
             </nb-card-body>
           </nb-card>
         </nb-accordion-item-body>
-
       </nb-accordion-item>
     </nb-accordion>
-
   </nb-card-footer>
-
-
-
-
 </nb-card>
-

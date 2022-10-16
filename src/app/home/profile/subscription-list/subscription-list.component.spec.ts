@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SubscriptionListComponent } from './subscription-list.component';
+import { SubscriptionListComponent } from './subscription-list.component'
 
 describe('SubscriptionListComponent', () => {
-  let component: SubscriptionListComponent;
-  let fixture: ComponentFixture<SubscriptionListComponent>;
+  let component: SubscriptionListComponent
+  let fixture: ComponentFixture<SubscriptionListComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubscriptionListComponent ]
-    })
-    .compileComponents();
-  }));
+      declarations: [SubscriptionListComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SubscriptionListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(SubscriptionListComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

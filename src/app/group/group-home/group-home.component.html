@@ -4,12 +4,10 @@
     <nb-card-body>
       <nb-list>
         <nb-list-item *ngFor="let group of groups">
-          <app-group-card class="col-md-12" [group] = group></app-group-card>
+          <app-group-card class="col-md-12" [group]="group"></app-group-card>
         </nb-list-item>
       </nb-list>
     </nb-card-body>
     <nb-card-footer><button nbButton (click)="createGroup()">Create group</button></nb-card-footer>
   </nb-card>
 </div>
-
-

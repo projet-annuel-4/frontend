@@ -1,32 +1,32 @@
 <nb-layout>
-
   <nb-layout-column class="col-3">
-
     <button id="createButton" nbButton shape="round" size="small" routerLink="/post/create">
-      <img width="30" height="30" src="/assets/add.png">
+      <img width="30" height="30" src="/assets/add.png" alt="createButton" />
     </button>
 
     <nb-card>
-      <nb-card-body style="text-align:center">
-
-        <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150" height="150" alt="">
+      <nb-card-body style="text-align: center">
+        <img
+          *ngIf="image !== undefined; else noProfileImage"
+          class="profile-image"
+          [src]="image"
+          width="150"
+          height="150"
+          alt=""
+        />
         <ng-template #noProfileImage>
-          <img class="profile-image" src="assets/profile.png" width="150" height="150" alt="">
+          <img class="profile-image" src="assets/profile.png" width="150" height="150" alt="" />
         </ng-template>
 
-        <br>
-        <div>{{profile.firstName}} {{profile.lastName?.toUpperCase()}}</div>
-        <div>{{profile.email}}</div>
+        <br />
+        <div>{{ profile.firstName }} {{ profile.lastName?.toUpperCase() }}</div>
+        <div>{{ profile.email }}</div>
       </nb-card-body>
 
       <nb-card-footer>
-          <div (click)="viewFollowers()">
-            {{profile.nbFollowers || 0}} Followers
-          </div>
-        <hr>
-          <div (click)="viewSubscriptions()">
-            {{profile.nbSubscriptions || 0}} Subscriptions
-          </div>
+        <div (click)="viewFollowers()">{{ profile.nbFollowers || 0 }} Followers</div>
+        <hr />
+        <div (click)="viewSubscriptions()">{{ profile.nbSubscriptions || 0 }} Subscriptions</div>
       </nb-card-footer>
     </nb-card>
 
@@ -35,46 +35,53 @@
     </nb-card>
   </nb-layout-column>
 
-
   <nb-layout-column>
     <nb-tabset>
-
       <nb-tab tabTitle="My Posts">
         <div *ngFor="let post of posts | keyvalue">
           <nb-card>
             <nb-card-header>
-              Title : {{post.key.title}}
-              <button nbButton
-                      style="float: right"
-                      status="danger"
-                      size="tiny"
-                      (click)="deletePost(post.key.id)">
+              Title : {{ post.key.title }}
+              <button
+                nbButton
+                style="float: right"
+                status="danger"
+                size="tiny"
+                (click)="deletePost(post.key.id)"
+              >
                 Delete
               </button>
             </nb-card-header>
 
             <nb-card-body>
-              <div style="padding: 2%"
-                   routerLink="../post/{{post.key.id}}/detail">
-              <!--<div (click)="viewPostDetail()">-->
-                 <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
+              <div style="padding: 2%" routerLink="../post/{{ post.key.id }}/detail">
+                <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
               </div>
 
               <div *ngIf="post.key.tags !== undefined">
-                <span *ngFor="let tag of post.key.tags" class="tag">{{tag.name}}</span>
+                <span *ngFor="let tag of post.key.tags" class="tag">{{ tag.name }}</span>
               </div>
-
-
             </nb-card-body>
 
             <nb-card-footer>
               <span (click)="like_dislike(post.key.id)">
-                <img *ngIf="!post.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20">
-                <img *ngIf="post.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20">
+                <img
+                  *ngIf="!post.value.isLiked"
+                  src="assets/black_heart.png"
+                  alt=""
+                  height="20"
+                  width="20"
+                />
+                <img
+                  *ngIf="post.value.isLiked"
+                  src="assets/red_heart.png"
+                  alt=""
+                  height="20"
+                  width="20"
+                />
               </span>
-              {{post.key.nbLike}}
+              {{ post.key.nbLike }}
             </nb-card-footer>
-
           </nb-card>
         </div>
       </nb-tab>
@@ -83,29 +90,30 @@
         <div *ngFor="let userAnswer of userAnswers">
           <nb-card>
             <nb-card-header>
-              Title : {{userAnswer.title}}
-              <button nbButton
-                      style="float: right"
-                      status="danger"
-                      size="tiny"
-                      (click)="deletePost(userAnswer.id)">
+              Title : {{ userAnswer.title }}
+              <button
+                nbButton
+                style="float: right"
+                status="danger"
+                size="tiny"
+                (click)="deletePost(userAnswer.id)"
+              >
                 Delete
               </button>
             </nb-card-header>
 
-            <nb-card-body routerLink="../post/{{userAnswer.id}}/detail">
+            <nb-card-body routerLink="../post/{{ userAnswer.id }}/detail">
               <div style="padding: 2%">
                 <pre><code>{{formatContentP(userAnswer.content)}}</code></pre>
               </div>
 
               <div>
-                <span class="tag" *ngFor="let tag of userAnswer.tags"> {{tag.name}} </span>
+                <span class="tag" *ngFor="let tag of userAnswer.tags"> {{ tag.name }} </span>
               </div>
             </nb-card-body>
           </nb-card>
         </div>
       </nb-tab>
-
 
       <nb-tab tabTitle="Like">
         <div *ngFor="let postLiked of postsLiked | keyvalue">
@@ -113,40 +121,46 @@
             <nb-card-header>
               <nb-user
                 class="hoverEffect"
-                name="{{postLiked.key.user.firstname}} {{postLiked.key.user.lastname}}"
-                routerLink="/friend/{{postLiked.key.user.id}}/profile">
+                name="{{ postLiked.key.user.firstName }} {{ postLiked.key.user.lastName }}"
+                routerLink="/friend/{{ postLiked.key.user.id }}/profile"
+              >
               </nb-user>
-              <br>
-              Title : {{postLiked.key.title}}
+              <br />
+              Title : {{ postLiked.key.title }}
             </nb-card-header>
 
-            <nb-card-body
-              class="hoverEffect"
-              routerLink="../post/{{postLiked.key.id}}/detail"
-            >
+            <nb-card-body class="hoverEffect" routerLink="../post/{{ postLiked.key.id }}/detail">
               <div style="padding: 2%">
                 <pre><code>{{postLiked.key.content}}</code></pre>
               </div>
 
               <div>
-                Tags : <span *ngFor="let tag of postLiked.key.tags"> {{tag.name}} </span>
+                Tags : <span *ngFor="let tag of postLiked.key.tags"> {{ tag.name }} </span>
               </div>
-
             </nb-card-body>
 
             <nb-card-footer>
               <span (click)="like_dislike(postLiked.key.id)">
-                <img *ngIf="!postLiked.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20">
-                <img *ngIf="postLiked.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20">
+                <img
+                  *ngIf="!postLiked.value.isLiked"
+                  src="assets/black_heart.png"
+                  alt=""
+                  height="20"
+                  width="20"
+                />
+                <img
+                  *ngIf="postLiked.value.isLiked"
+                  src="assets/red_heart.png"
+                  alt=""
+                  height="20"
+                  width="20"
+                />
               </span>
-              {{postLiked.key.nbLike}}
+              {{ postLiked.key.nbLike }}
             </nb-card-footer>
           </nb-card>
         </div>
       </nb-tab>
-
     </nb-tabset>
   </nb-layout-column>
-
-
 </nb-layout>

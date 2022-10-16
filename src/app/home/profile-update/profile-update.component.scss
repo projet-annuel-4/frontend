@@ -9,11 +9,11 @@
   margin-right: auto;
 
   .top-layer {
-    background-color:#4c4c4c;
+    background-color: #4c4c4c;
     border-radius: 50%;
-    opacity:0;
+    opacity: 0;
 
-    nb-icon{
+    nb-icon {
       margin-top: 70px;
       color: #fff;
       font-size: 3rem;
@@ -21,14 +21,12 @@
     }
   }
 
-  .top-layer:hover{
-    opacity:0.6;
+  .top-layer:hover {
+    opacity: 0.6;
     cursor: pointer;
 
-    nb-icon{
+    nb-icon {
       opacity: 1;
     }
   }
-
 }
-

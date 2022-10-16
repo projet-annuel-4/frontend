@@ -1,4 +1,4 @@
-export class ApiResponse{
-    success:boolean
-    message:string
+export class ApiResponse {
+  success: boolean
+  message: string
 }

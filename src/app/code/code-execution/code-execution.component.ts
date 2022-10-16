@@ -1,31 +1,27 @@
-import {Component, Input, OnInit, Type} from '@angular/core';
-import {CodeService} from "../../_services/code_execution/code.service";
-import {CodeExecution} from "../../_dtos/code_execution/CodeExecution";
-import {Code} from "../../_dtos/code_execution/Code";
-import {v4 as uuidv4} from 'uuid';
+import { Component, Input, OnInit, Type } from '@angular/core'
+import { CodeService } from '../../_services/code_execution/code.service'
+import { CodeExecution } from '../../_dtos/code_execution/CodeExecution'
+import { Code } from '../../_dtos/code_execution/Code'
+import { v4 as uuidv4 } from 'uuid'
 
 @Component({
   selector: 'app-code-execution',
   templateUrl: './code-execution.component.html',
-  styleUrls: ['./code-execution.component.scss']
+  styleUrls: ['./code-execution.component.scss'],
 })
 export class CodeExecutionComponent implements OnInit {
-
   @Input()
-  inputContent;
+  inputContent
 
-  codesString = [];
-  codeToExecute = new CodeExecution();
-  codes: Code[] = [];
+  codesString = []
+  codeToExecute = new CodeExecution()
+  codes: Code[] = []
 
-  CODE_RUNNABLE_KEY = 'code-runnable';
+  CODE_RUNNABLE_KEY = 'code-runnable'
 
+  constructor(private codeService: CodeService) {}
 
-  constructor(private codeService: CodeService) { }
-
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   /* Template content with code *
     j'ai ça
@@ -37,24 +33,21 @@ export class CodeExecutionComponent implements OnInit {
 
    */
 
+  previewCode(inoutContent: string) {
+    this.codes = []
 
-  previewCode(inoutContent: string){
-    this.codes = [];
+    const preview = this.codeService.codePreview(inoutContent)
 
-    const preview = this.codeService.codePreview(inoutContent);
-
-    this.codes = preview.codes;
-    this.codesString = preview.codesFound;
+    this.codes = preview.codes
+    this.codesString = preview.codesFound
   }
 
+  sendCode(codeId: number, language: string, code: string) {
+    this.codeToExecute.id = codeId
+    this.codeToExecute.language = language
+    this.codeToExecute.code = code
 
-  sendCode(codeId: number, language: string, code: string){
-
-    this.codeToExecute.id = codeId;
-    this.codeToExecute.language = language;
-    this.codeToExecute.code = code;
-
-/*
+    /*
     console.log("codeId : " + codeId);
     console.log("language : " + this.codeToExecute.language);
     console.log("code : " + this.codeToExecute.code);
@@ -67,8 +60,8 @@ export class CodeExecutionComponent implements OnInit {
         console.log(res.status);
         console.log(res.output[0]);*/
 
-        let console = document.getElementById("console_"+codeId) as HTMLTextAreaElement;
-        console.value = res.output[0];
+        let console = document.getElementById('console_' + codeId) as HTMLTextAreaElement
+        console.value = res.output[0]
         /*this.codes.forEach(code => {
           if(code.id === codeId) {
             code.output = res.output[0];
@@ -82,15 +75,10 @@ export class CodeExecutionComponent implements OnInit {
             localStorage.setItem(this.CODE_RUNNABLE_KEY, "false");
           }
         });*/
-
       },
       error => {
-        console.log(error);
+        console.log(error)
       }
-    );
-
-
-
+    )
   }
-
 }

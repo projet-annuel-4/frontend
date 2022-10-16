@@ -1,17 +1,19 @@
 <nb-layout>
   <nb-layout-header>
-    <select placeholder="Choose your language" (click)="updateOptions()" [(ngModel)]="codeExecutionModel.language" >
+    <select
+      placeholder="Choose your language"
+      (click)="updateOptions()"
+      [(ngModel)]="codeExecutionModel.language"
+    >
       <option value="javascript">JavaScript</option>
       <option value="java">JAVA</option>
     </select>
   </nb-layout-header>
   <nb-layout-column class="colored-column-basic">
-      <ngx-monaco-editor style="height: 100%" [options]="editorOptions" [(ngModel)]="code" > </ngx-monaco-editor>
+    <ngx-monaco-editor style="height: 100%" [options]="editorOptions" [(ngModel)]="code">
+    </ngx-monaco-editor>
   </nb-layout-column>
   <nb-layout-footer>
-    <button nbButton outline (click)="sendCode()"> Run </button>
+    <button nbButton outline (click)="sendCode()">Run</button>
   </nb-layout-footer>
 </nb-layout>
-
-
-

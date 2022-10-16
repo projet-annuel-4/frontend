@@ -1,6 +1,5 @@
-import {NbDialogRef} from "@nebular/theme";
-import {Component} from "@angular/core";
-
+import { NbDialogRef } from '@nebular/theme'
+import { Component } from '@angular/core'
 
 @Component({
   template: `
@@ -15,33 +14,23 @@ import {Component} from "@angular/core";
 
       <nb-card-footer>
         <span style="padding-right: 50px">
-          <button nbButton
-                  size="tiny"
-                  (click)="delete()"> delete
-          </button>
+          <button nbButton size="tiny" (click)="delete()">delete</button>
         </span>
         <span>
-          <button nbButton
-                  size="tiny"
-                  status="danger"
-                  (click)="cancel()"> Cancel
-          </button>
+          <button nbButton size="tiny" status="danger" (click)="cancel()">Cancel</button>
         </span>
       </nb-card-footer>
     </nb-card>
   `,
 })
-
 export class DeletePostDialogComponent {
-
   constructor(protected ref: NbDialogRef<DeletePostDialogComponent>) {}
 
-  delete(){
-    this.ref.close(true);
+  delete() {
+    this.ref.close(true)
   }
 
   cancel() {
-    this.ref.close();
+    this.ref.close()
   }
-
 }

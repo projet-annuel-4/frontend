@@ -1,39 +1,34 @@
 <nb-card>
-
-  <nb-card-header>
-    Code Preview
-  </nb-card-header>
+  <nb-card-header> Code Preview </nb-card-header>
 
   <nb-card-body>
     <div *ngFor="let code of codes">
       <!-- <textarea readonly rows="5" cols="50"> {{code}} </textarea> -->
-      <textarea readonly rows="5" cols="50">{{code.content}}</textarea>
-      <button nbButton
-              size="tiny"
-              (click)="sendCode(code.id, code.language, code.content)">
+      <textarea readonly rows="5" cols="50">{{ code.content }}</textarea>
+      <button nbButton size="tiny" (click)="sendCode(code.id, code.language, code.content)">
         Run
       </button>
-      <br>
-      <nb-accordion >
+      <br />
+      <nb-accordion>
         <nb-accordion-item>
           <nb-accordion-item-header></nb-accordion-item-header>
           <nb-accordion-item-body>
-            <textarea id="console_{{code.id}}"readonly
-                      rows="12" cols="50"
-                      style="background-color:dimgrey;">{{code.output}}</textarea>
+            <textarea
+              id="console_{{ code.id }}"
+              readonly
+              rows="12"
+              cols="50"
+              style="background-color: dimgrey"
+              >{{ code.output }}</textarea
+            >
           </nb-accordion-item-body>
         </nb-accordion-item>
       </nb-accordion>
-      <br>
+      <br />
     </div>
 
-    <button (click)="previewCode(inputContent)"> Preview </button>
-
+    <button (click)="previewCode(inputContent)">Preview</button>
   </nb-card-body>
 
-  <nb-card-footer>  </nb-card-footer>
-
-
-
+  <nb-card-footer> </nb-card-footer>
 </nb-card>
-

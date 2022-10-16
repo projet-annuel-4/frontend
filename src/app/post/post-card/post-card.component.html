@@ -1,14 +1,14 @@
 <nb-card>
-  <nb-card-body routerLink="../{{post.id}}/detail">
-    <nb-card-header> Title : {{post.title}} </nb-card-header>
+  <nb-card-body routerLink="../{{ post.id }}/detail">
+    <nb-card-header> Title : {{ post.title }} </nb-card-header>
 
     <div style="padding: 2%">
-      Content : <code>{{post.content}}</code>
+      Content : <code>{{ post.content }}</code>
       <!-- Content : <code>{{formatContentP(post.content)}}</code> -->
     </div>
 
     <div>
-      <span class="tag" *ngFor="let tag of post.tags"> {{tag.name}} </span>
+      <span class="tag" *ngFor="let tag of post.tags"> {{ tag.name }} </span>
     </div>
   </nb-card-body>
 </nb-card>

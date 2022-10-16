@@ -10,11 +10,13 @@
       <li><a routerLink="../profile">Profile</a></li>
     </ul>
 
-    <nb-user name="{{user.firstName}} {{user.lastName}}"
-             picture=""
-             [nbContextMenu]="items"
-             nbContextMenuTag="my-context-menu"
-             style="padding-left: 1%">
+    <nb-user
+      name="{{ user.firstName }} {{ user.lastName }}"
+      picture=""
+      [nbContextMenu]="items"
+      nbContextMenuTag="my-context-menu"
+      style="padding-left: 1%"
+    >
     </nb-user>
     <!--
     <nb-toggle class="themeToggle"
@@ -24,14 +26,11 @@
     -->
   </nb-layout-header>
   <nb-layout-column>
-
-    <br>
-    <br>
-    <br>
-    <br>
+    <br />
+    <br />
+    <br />
+    <br />
 
     <router-outlet></router-outlet>
-
   </nb-layout-column>
 </nb-layout>
-

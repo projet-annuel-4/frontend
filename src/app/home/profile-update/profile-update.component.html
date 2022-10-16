@@ -3,63 +3,62 @@
     <div class="container">
       <div class="row row-eq-height no-gutters justify-content-center mt-5 mb-4">
         <div class="col-md-auto col-lg-auto col-xl-7">
-
           <nb-card [nbSpinner]="" nbSpinnerStatus="primary">
             <nb-card-header>
               <h3 id="title" class="text-center">Edit Profile</h3>
             </nb-card-header>
             <nb-card-body>
               <form [formGroup]="signUpFrom" (ngSubmit)="update()">
-
                 <label class="label" for="input-imgUrl">Avatar:</label>
-                <div class="profile-image" [ngStyle]="{'background-image': 'url()'}">
+                <div class="profile-image" [ngStyle]="{ 'background-image': 'url()' }">
                   <div class="top-layer h-100 w-100 text-center">
-                    <nb-icon icon="edit" ></nb-icon>
+                    <nb-icon icon="edit"></nb-icon>
                   </div>
                 </div>
-                <input style="text-align: center"
-                       id="input-imgUrl"
-                       type="file"
-                       accept=".png, .jpg, .jpeg"
-                       formControlName="imgUrl"
-                       (change)="onChange($event)"/>
+                <input
+                  style="text-align: center"
+                  id="input-imgUrl"
+                  type="file"
+                  accept=".png, .jpg, .jpeg"
+                  formControlName="imgUrl"
+                  (change)="onChange($event)"
+                />
 
                 <div class="form-control-group mb-3">
                   <label class="label" for="input-firstname">First Name:</label>
-                  <input nbInput fullWidth id="input-firstname" placeholder="First Name" fieldSize="large" formControlName="firstname">
+                  <input
+                    nbInput
+                    fullWidth
+                    id="input-firstname"
+                    placeholder="First Name"
+                    fieldSize="large"
+                    formControlName="firstName"
+                  />
                 </div>
 
                 <div class="form-control-group mb-3">
                   <label class="label" for="input-lastname">Last Name:</label>
-                  <input nbInput fullWidth id="input-lastname" placeholder="Last Name" fieldSize="large" formControlName="lastname">
+                  <input
+                    nbInput
+                    fullWidth
+                    id="input-lastname"
+                    placeholder="Last Name"
+                    fieldSize="large"
+                    formControlName="lastName"
+                  />
                 </div>
 
-                <button nbButton
-                        fullWidth
-                        outline
-                        status="primary"
-                        size="large">
-                  Update
-                </button>
-
+                <button nbButton fullWidth outline status="primary" size="large">Update</button>
               </form>
             </nb-card-body>
             <nb-card-footer>
-              <button nbButton
-                      fullWidth
-                      outline
-                      status="danger"
-                      size="small"
-                      routerLink="/profile">
+              <button nbButton fullWidth outline status="danger" size="small" routerLink="/profile">
                 Cancel
               </button>
             </nb-card-footer>
           </nb-card>
-
         </div>
       </div>
     </div>
   </nb-layout-column>
 </nb-layout>
-
-
