@@ -119,4 +119,16 @@ export class PostService {
     return this.http.get<User[]>(`${post_service.BASE_URL}/user/firstname/${firstname}`, this.httpOptions);
   }
 
+
+  /**
+   * convert a tab post to a Map with default value
+   */
+  postTabToPostMap(postTab: Post[]): Map<Post, {isLiked: boolean}> {
+    let tempMap = new Map<Post, {isLiked: boolean}>();
+    postTab.forEach(post => {
+      tempMap.set(post, {isLiked: false});
+    });
+    return tempMap;
+  }
+
 }

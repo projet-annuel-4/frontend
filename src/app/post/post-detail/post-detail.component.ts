@@ -13,7 +13,11 @@ import {TokenStorageService} from "../../_services/token/token-storage.service";
 export class PostDetailComponent implements OnInit {
 
   post: Post;
+  postIsLiked: boolean;
+
   answers: Post[];
+
+  postAlreadyLiked: Post[];
 
   constructor(private postService: PostService, private route: ActivatedRoute,
               private router: Router, public codeService: CodeService, private tokenStorage: TokenStorageService) { }
@@ -22,11 +26,11 @@ export class PostDetailComponent implements OnInit {
 
     this.route.params.subscribe((params: Params): void => {
       if(params.postId !== undefined){
-        this.postService.getById(params.postId).subscribe(post => {
-          this.post = post;
-          console.log("id: " + post.id);
-          console.log("content: " + post.content);
-        });
+        this.postService.getById(params.postId).subscribe(
+          post => this.post = post,
+          () => {},
+          () => this.markPostAlreadyLikeByUser(this.post.id)
+        );
       }
     });
   }
@@ -34,12 +38,8 @@ export class PostDetailComponent implements OnInit {
 
   getAnswers(){
     this.postService.getAllPostAnswers(parseInt(this.post.id)).subscribe(answers => {
-      answers.forEach(answer => {
-        console.log("answer.id : " + answer.id)
-      });
       this.answers = answers;
     });
-
   }
 
 
@@ -53,6 +53,34 @@ export class PostDetailComponent implements OnInit {
 
   goToAnswerDetail(post_id: string){
     this.router.navigate(["post/" + post_id + "/detail"]).then()
+  }
+
+
+  markPostAlreadyLikeByUser(postId: string){
+    this.postService.getPostLikedByUser(this.tokenStorage.getUser().id).subscribe(
+      posts => {this.postAlreadyLiked = posts;},
+      () => {},
+      () => {
+        this.postAlreadyLiked.forEach(post => {
+          if(post.id == postId) this.postIsLiked = true;
+        });
+      }
+    );
+  }
+
+
+  like_dislike(postId: string){
+    if(!this.postIsLiked){
+      this.postService.like(parseInt(postId), this.tokenStorage.getUser().id).subscribe(then => {
+        this.postIsLiked = true;
+        this.post.nbLike += 1;
+      });
+    } else {
+      this.postService.dislike(parseInt(postId), this.tokenStorage.getUser().id).subscribe(then => {
+        this.postIsLiked = false;
+        this.post.nbLike -= 1;
+      });
+    }
   }
 
 

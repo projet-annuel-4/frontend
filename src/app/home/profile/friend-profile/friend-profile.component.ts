@@ -148,18 +148,14 @@ export class FriendProfileComponent implements OnInit {
   like_dislike(post_id: string){
     this.posts.forEach((value, post) =>{
       if(post.id == post_id){
-        value.isLiked = !value.isLiked;
-
-        if(value.isLiked){
+        if(!value.isLiked){
           this.postService.like(parseInt(post_id), this.tokenStorage.getUser().id).subscribe(then => {
-            //this.status = this.ENABLE;
+            value.isLiked = true;
             post.nbLike += 1;
-            //window.location.reload();
           });
         } else {
           this.postService.dislike(parseInt(post_id), this.tokenStorage.getUser().id).subscribe(then => {
-            //this.status = this.DISABLE;
-            //window.location.reload();
+            value.isLiked = false;
             post.nbLike -= 1;
           });
         }

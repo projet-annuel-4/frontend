@@ -62,7 +62,7 @@ export class ProfileComponent implements OnInit {
         this.posts.set(post, {isLiked: false});
 
         this.posts = new Map(Array.from(this.posts).reverse()); //reverse
-        this.posts = this.markPostAlreadyLikeByUser(this.posts);
+        this.posts = this.markPostsAlreadyLikeByUser(this.posts);
       });
     },error => {});
 
@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit {
         this.postsLiked.set(post, {isLiked: false});
       });
       this.postsLiked = new Map(Array.from(this.postsLiked).reverse()); //reverse
-      this.postsLiked = this.markPostAlreadyLikeByUser(this.postsLiked);
+      this.postsLiked = this.markPostsAlreadyLikeByUser(this.postsLiked);
     },error => {});
 
     this.postService.getAllUserAnswers(this.profile.id).subscribe(userAnswers => {
@@ -94,9 +94,10 @@ export class ProfileComponent implements OnInit {
       posts => {this.tempUserPost = posts},
       error => {},
       () => {
-        this.posts = this.postTabToPostMap(this.tempUserPost);
+        //this.posts = this.postTabToPostMap(this.tempUserPost);
+        this.posts = this.postService.postTabToPostMap(this.tempUserPost);
         this.posts = this.reverseMap(this.posts);
-        this.posts = this.markPostAlreadyLikeByUser(this.posts);
+        this.posts = this.markPostsAlreadyLikeByUser(this.posts);
       }
     );
 
@@ -106,9 +107,10 @@ export class ProfileComponent implements OnInit {
       },
       error => {},
       () =>{
-        this.postsLiked = this.postTabToPostMap(this.tempPostLiked);
+        //this.postsLiked = this.postTabToPostMap(this.tempPostLiked);
+        this.postsLiked = this.postService.postTabToPostMap(this.tempPostLiked);
         this.postsLiked = this.reverseMap(this.postsLiked)
-        this.postsLiked = this.markPostAlreadyLikeByUser(this.postsLiked);
+        this.postsLiked = this.markPostsAlreadyLikeByUser(this.postsLiked);
       }
     );
 
@@ -163,7 +165,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  markPostAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>){
+  markPostsAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>){
     this.postService.getPostLikedByUser(this.profile.id).subscribe(postsLiked => {
       this.postsAlreadyLiked = postsLiked
       posts.forEach((value, post) => {
@@ -196,17 +198,6 @@ export class ProfileComponent implements OnInit {
 
   reverseMap(mapToReverse: Map<Post, {isLiked: boolean}>): Map<Post, {isLiked: boolean}>{
     return new Map(Array.from(mapToReverse).reverse());
-  }
-
-  /**
-   * convert a tab post to a Map with default value
-   */
-  postTabToPostMap(postTab: Post[]): Map<Post, {isLiked: boolean}> {
-    let tempMap = new Map<Post, {isLiked: boolean}>();
-    postTab.forEach(post => {
-      tempMap.set(post, {isLiked: false});
-    });
-    return tempMap;
   }
 
 
