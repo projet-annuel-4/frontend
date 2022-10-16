@@ -41,9 +41,15 @@
         <nb-accordion-item-header>Answers</nb-accordion-item-header>
         <nb-accordion-item-body *ngFor="let answer of answers">
           <nb-card>
+            <nb-card-header>
+              <nb-user
+                class="hoverEffect"
+                name="{{answer.user.firstname}} {{answer.user.lastname}}"
+                routerLink="/friend/{{answer.user.id}}/profile">
+              </nb-user>
+            </nb-card-header>
             <nb-card-body class="hoverEffect" (click)="goToAnswerDetail(answer.id)">
               <div>Content : {{this.codeService.formatContent(answer.content)}}</div>
-
               <span class="tag" *ngFor="let answerTag of answer.tags"> {{answerTag.name}} </span>
             </nb-card-body>
           </nb-card>
