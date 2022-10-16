@@ -20,11 +20,11 @@
       </nb-card-body>
 
       <nb-card-footer>
-          <div (click)="viewFollowers()">
+          <div class="hoverEffect" (click)="viewFollowers()">
             {{profile.nbFollowers || 0}} Followers
           </div>
         <hr>
-          <div (click)="viewSubscriptions()">
+          <div class="hoverEffect" (click)="viewSubscriptions()">
             {{profile.nbSubscriptions || 0}} Subscriptions
           </div>
       </nb-card-footer>
@@ -54,7 +54,8 @@
             </nb-card-header>
 
             <nb-card-body>
-              <div style="padding: 2%"
+              <div class="hoverEffect"
+                   style="padding: 2%"
                    routerLink="../post/{{post.key.id}}/detail">
               <!--<div (click)="viewPostDetail()">-->
                  <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
@@ -68,7 +69,7 @@
             </nb-card-body>
 
             <nb-card-footer>
-              <span (click)="like_dislike(post.key.id)">
+              <span class="hoverEffect" (click)="like_dislike(post.key.id)">
                 <img *ngIf="!post.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20">
                 <img *ngIf="post.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20">
               </span>
@@ -93,7 +94,7 @@
               </button>
             </nb-card-header>
 
-            <nb-card-body routerLink="../post/{{userAnswer.id}}/detail">
+            <nb-card-body class="hoverEffect" routerLink="../post/{{userAnswer.id}}/detail">
               <div style="padding: 2%">
                 <pre><code>{{formatContentP(userAnswer.content)}}</code></pre>
               </div>

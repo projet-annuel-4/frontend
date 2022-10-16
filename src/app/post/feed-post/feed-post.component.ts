@@ -31,18 +31,6 @@ export class FeedPostComponent implements OnInit {
   }
 
 
-  formatContent(content: string){
-    let newContent = content;
-    let codes = this.codeService.codePreview(content);
-
-    codes.codesFound.forEach((codeStr, i) => {
-        newContent = newContent.replace(codeStr, '\n' + codes.codes[i].content + '\n');
-    });
-
-    return newContent;
-  }
-
-
   like_dislike(post_id: string){
     this.post.value.isLiked = !this.post.value.isLiked;
 
