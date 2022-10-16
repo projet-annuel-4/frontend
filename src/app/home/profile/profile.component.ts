@@ -52,6 +52,7 @@ export class ProfileComponent implements OnInit {
 
 
   //TODO : Supprimer une fois le fix constaté sur la version déployée
+  //        et utilser cette méthode aux autres endroit
   oldInit(){
     this.postService.getUserById(this.profile.id).subscribe(user => {
       this.profile = user;
@@ -94,7 +95,6 @@ export class ProfileComponent implements OnInit {
       posts => {this.tempUserPost = posts},
       error => {},
       () => {
-        //this.posts = this.postTabToPostMap(this.tempUserPost);
         this.posts = this.postService.postTabToPostMap(this.tempUserPost);
         this.posts = this.reverseMap(this.posts);
         this.posts = this.markPostsAlreadyLikeByUser(this.posts);
@@ -107,7 +107,6 @@ export class ProfileComponent implements OnInit {
       },
       error => {},
       () =>{
-        //this.postsLiked = this.postTabToPostMap(this.tempPostLiked);
         this.postsLiked = this.postService.postTabToPostMap(this.tempPostLiked);
         this.postsLiked = this.reverseMap(this.postsLiked)
         this.postsLiked = this.markPostsAlreadyLikeByUser(this.postsLiked);

@@ -71,7 +71,6 @@ export class ChatDetailComponent implements OnInit {
     let formData = new FormData();
 
     if(files.length == 0){
-      console.log("message texte")
       this.chatService.createMessageText(this.friendId, event.message).subscribe()
     } else {
       formData.append('files', files);
@@ -82,7 +81,6 @@ export class ChatDetailComponent implements OnInit {
 
   /** Test Web Socket **/
   connect() {
-    //const socket = new SockJS('http://localhost:8200/websocket');
     const socket = new SockJS(`${chat_service.WEB_SOCKET}`);
     this.stompClient = Stomp.over(socket);
 

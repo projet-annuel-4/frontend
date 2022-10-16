@@ -25,7 +25,6 @@ export class NotificationService {
 
   notification(senderId: number, message: string){
     if(senderId != this.tokenStorageService.getUser().id) {
-      console.log("dans le if");
       this.nbToasterService.show(message, "New Message", {position: this.toastPositions.TOP_RIGHT, status: "basic"});
     }
   }

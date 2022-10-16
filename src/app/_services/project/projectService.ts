@@ -14,9 +14,6 @@ import {Branch} from "../../_dtos/project/Branch";
 })
 
 export class ProjectService{
-  // create project
-  // delete project
-  // update project
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };

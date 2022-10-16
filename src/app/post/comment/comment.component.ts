@@ -38,8 +38,6 @@ export class CommentComponent implements OnInit {
       if(params.postId !== undefined){
         this.postService.getById(params.postId).subscribe(post => {
           this.post = post;
-          console.log("id: " + this.post.id);
-          console.log("content: " + this.post.content);
         });
       }
     });

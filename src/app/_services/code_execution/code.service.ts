@@ -18,12 +18,6 @@ export class CodeService {
   constructor(private http: HttpClient) {}
 
   sendCode(code:CodeExecution): Observable<CodeExecutionResponse>{
-    console.log(code.id);
-    console.log(code.code);
-    console.log(code.language);
-    console.log(code.mode);
-    console.log(code.test);
-    //code.id = "2";
     return this.http.post<CodeExecutionResponse>(`${code_execution_service.SEND}`, code , this.httpOptions);
   }
 
@@ -80,7 +74,6 @@ export class CodeService {
   codePreview(inputContent: string){
     let codes: Code[] = [];
 
-    //const regexp = RegExp('#(.+?)#(.+?)#(.+?)#','g');
     const regexp = RegExp('#(.+?)##','g');
 
     let codesFound = this.findCodeInContent(regexp, inputContent);

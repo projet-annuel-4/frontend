@@ -54,12 +54,6 @@ export class CodeExecutionComponent implements OnInit {
     this.codeToExecute.language = language;
     this.codeToExecute.code = code;
 
-/*
-    console.log("codeId : " + codeId);
-    console.log("language : " + this.codeToExecute.language);
-    console.log("code : " + this.codeToExecute.code);
-
- */
     this.codeService.sendCode(this.codeToExecute).subscribe(
       res => {
         /*
