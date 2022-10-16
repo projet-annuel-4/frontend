@@ -39,7 +39,7 @@
         <nb-accordion-item-body *ngFor="let answer of answers">
           <nb-card>
             <nb-card-body (click)="goToAnswerDetail(answer.id)">
-              <div>Content : {{answer.content}}</div>
+              <div>Content : {{this.codeService.formatContent(answer.content)}}</div>
 
               <span class="tag" *ngFor="let answerTag of answer.tags"> {{answerTag.name}} </span>
             </nb-card-body>
