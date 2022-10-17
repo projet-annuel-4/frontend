@@ -15,7 +15,7 @@ import { RevertCommitComponent } from './revert-commit/revert-commit.component'
 import { FileService } from '../../_services/project/fileService'
 
 import { ProjectTreeComponent } from './project-tree/project-tree.component'
-import { Files } from '../../_dtos/project/Filess'
+import { File } from '../../_dtos/project/File'
 import { DeleteFileDialogComponent } from '../../shared/dialog/delete-file-dialog.component'
 
 declare let monaco: any
@@ -28,7 +28,7 @@ declare let monaco: any
 export class ProjectPageComponent implements OnInit, OnChanges {
   editorOptions = { theme: 'vs-dark', language: 'python', readonly: true }
   code = 'Welcome ! Select or create a file :)'
-  selectedFile: Files = null
+  selectedFile: File = null
   fileModified = false
   branchId: number
   projectId: number
@@ -71,12 +71,12 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   sendCode() {}
 
-  setSelectedFile(file: Files) {
+  setSelectedFile(file: File) {
     this.selectedFile = file
     this.code = ''
     document.getElementById('monaco-editor').style.display = 'none'
     document.getElementById('fileName').innerHTML = file.name
-    this.fileService.getFileData(this.branchId, this.selectedFile.id).subscribe(
+    this.fileService.getFileData(this.projectId, this.selectedFile.name).subscribe(
       data => (this.code = this.convertByteArrayToString(data)),
       () => {},
       () => {
@@ -101,7 +101,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     const file = new File([blob], 'foo.txt', { type: 'text/plain' })
     const data: FormData = new FormData()
     data.append('file', file)
-    this.fileService.saveFile(this.branchId, this.selectedFile.id, data).subscribe(
+    this.fileService.saveFile(this.branchId, this.selectedFile.name, data).subscribe(
       () => {},
       () => {},
       () => {
@@ -117,7 +117,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   deleteFile() {
     this.dialogService.open(DeleteFileDialogComponent).onClose.subscribe(confirmation => {
       if (confirmation) {
-        this.fileService.deleteFile(this.branchId, this.selectedFile.id).subscribe(
+        this.fileService.deleteFile(this.branchId, this.selectedFile.name).subscribe(
           () => {},
           () => {},
           () => {

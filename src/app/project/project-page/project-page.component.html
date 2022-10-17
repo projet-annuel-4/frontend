@@ -20,11 +20,11 @@
       <nb-accordion-item-header>File action</nb-accordion-item-header>
       <nb-accordion-item-body>
         <nb-list>
+          <nb-list-item (click)="createFile()" class="action" >
+            Create file
+          </nb-list-item>
           <nb-list-item (click)="saveFile()" class="action" >
             save
-          </nb-list-item>
-          <nb-list-item (click)="showDiff()" class="action" >
-            show diff
           </nb-list-item>
           <nb-list-item (click)="deleteFile()" class="action" >
             delete
@@ -36,8 +36,8 @@
       <nb-accordion-item-header>Project action</nb-accordion-item-header>
       <nb-accordion-item-body>
         <nb-list>
-          <nb-list-item (click)="createFile()" class="action" >
-            Create file
+          <nb-list-item (click)="showDiff()" class="action" >
+            show diff
           </nb-list-item>
           <nb-list-item (click)="commit()" class="action" >
             Commit
