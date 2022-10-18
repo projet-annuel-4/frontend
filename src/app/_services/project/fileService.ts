@@ -39,7 +39,7 @@ export class FileService {
 
   getFileData(projectId: number, fileNameUrl: string): Observable<ArrayBuffer> {
     return this.http.get<any>(
-      `${project_file_service.BASE_URL}/${projectId}/file/getFileData?fileURL=${fileNameUrl}`,
+      `${project_file_service.BASE_URL}/${projectId}/file/getFileData?fileNameUrl=${fileNameUrl}`,
       { responseType: 'arraybuffer' as 'json'},
     )
   }
@@ -51,9 +51,9 @@ export class FileService {
     )
   }
 
-  saveFile(branchId: number, fileId: number, data: FormData): Observable<File> {
+  saveFile(projectId: number, fileId: number, data: FormData): Observable<File> {
     return this.http.post<File>(
-      `${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/save`,
+      `${project_file_service.BASE_URL}/branch/${projectId}/file/${fileId}/save`,
       data
     )
   }
