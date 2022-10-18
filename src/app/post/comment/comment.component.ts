@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {CommentRequest} from "../../_dtos/post/CommentRequest";
 import {TokenStorageService} from "../../_services/token/token-storage.service";
 import {NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
+import {CodeService} from "../../_services/code_execution/code.service";
 
 @Component({
   selector: 'app-comment',
@@ -23,7 +24,8 @@ export class CommentComponent implements OnInit {
   positions = NbGlobalPhysicalPosition;
 
   constructor(private formBuilder: FormBuilder, private postService: PostService, private route: ActivatedRoute,
-              private tokenStorage: TokenStorageService, private router: Router, private nbToasterService:NbToastrService) {
+              private tokenStorage: TokenStorageService, private router: Router, private nbToasterService:NbToastrService,
+              public codeService: CodeService) {
     this.answerForm = this.formBuilder.group({
       content: [],
       tagName: [],

@@ -49,7 +49,7 @@
               </nb-user>
             </nb-card-header>
             <nb-card-body class="hoverEffect" (click)="goToAnswerDetail(answer.id)">
-              <div>Content : {{this.codeService.formatContent(answer.content)}}</div>
+              <div>{{this.codeService.formatContent(answer.content)}}</div>
               <span class="tag" *ngFor="let answerTag of answer.tags"> {{answerTag.name}} </span>
             </nb-card-body>
           </nb-card>
