@@ -29,7 +29,8 @@ export class ProfileComponent implements OnInit {
   postsLiked: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
   tempPostLiked: Post[];
 
-  userAnswers: Post[];
+  userAnswers: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
+  tempUserAnswers: Post[];
 
   postsAlreadyLiked: Post[];
 
@@ -76,7 +77,7 @@ export class ProfileComponent implements OnInit {
     },error => {});
 
     this.postService.getAllUserAnswers(this.profile.id).subscribe(userAnswers => {
-      this.userAnswers = userAnswers;
+      this.tempUserAnswers = userAnswers;
     }, error => {});
 
 
@@ -113,9 +114,17 @@ export class ProfileComponent implements OnInit {
       }
     );
 
-    this.postService.getAllUserAnswers(this.profile.id).subscribe(userAnswers => {
-      this.userAnswers = userAnswers;
-    }, error => {});
+    this.postService.getAllUserAnswers(this.profile.id).subscribe(
+      userAnswers => {
+        this.tempUserAnswers = userAnswers;
+      },
+        error => {},
+      () => {
+        this.userAnswers = this.postService.postTabToPostMap(this.tempUserAnswers);
+        this.userAnswers = this.reverseMap(this.userAnswers)
+        this.userAnswers = this.markPostsAlreadyLikeByUser(this.userAnswers);
+      }
+    );
 
     this.fileService.downloadImage(this.profile.id).subscribe( res => {
       let objectURL = 'data:image/png;base64,' + res.file;
@@ -180,6 +189,7 @@ export class ProfileComponent implements OnInit {
   like_dislike(post_id: string){
     this.posts.forEach((value, post) =>{
       if(post.id == post_id){
+        console.log("isLiked : " + value.isLiked);
         if(!value.isLiked){
           this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
             value.isLiked = true;
@@ -191,6 +201,47 @@ export class ProfileComponent implements OnInit {
             post.nbLike -= 1;
           });
         }
+        console.log("isLiked : " + value.isLiked);
+      }
+    });
+  }
+
+  answers_like_dislike(post_id: string){
+    this.userAnswers.forEach((value, post) =>{
+      if(post.id == post_id){
+        console.log("isLiked : " + value.isLiked);
+        if(!value.isLiked){
+          this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
+            value.isLiked = true;
+            post.nbLike += 1;
+          });
+        } else {
+          this.postService.dislike(parseInt(post_id), this.profile.id).subscribe(then => {
+            value.isLiked = false;
+            post.nbLike -= 1;
+          });
+        }
+        console.log("isLiked : " + value.isLiked);
+      }
+    });
+  }
+
+  postLiked_like_dislike(post_id: string){
+    this.postsLiked.forEach((value, post) =>{
+      if(post.id == post_id){
+        console.log("isLiked : " + value.isLiked);
+        if(!value.isLiked){
+          this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
+            value.isLiked = true;
+            post.nbLike += 1;
+          });
+        } else {
+          this.postService.dislike(parseInt(post_id), this.profile.id).subscribe(then => {
+            value.isLiked = false;
+            post.nbLike -= 1;
+          });
+        }
+        console.log("isLiked : " + value.isLiked);
       }
     });
   }

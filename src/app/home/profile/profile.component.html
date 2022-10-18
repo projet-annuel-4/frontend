@@ -64,8 +64,6 @@
               <div *ngIf="post.key.tags !== undefined">
                 <span *ngFor="let tag of post.key.tags" class="tag">{{tag.name}}</span>
               </div>
-
-
             </nb-card-body>
 
             <nb-card-footer>
@@ -81,28 +79,35 @@
       </nb-tab>
 
       <nb-tab tabTitle="Answers">
-        <div *ngFor="let userAnswer of userAnswers">
+        <div *ngFor="let userAnswer of userAnswers | keyvalue">
           <nb-card>
             <nb-card-header>
-              Title : {{userAnswer.title}}
+              Title : {{userAnswer.key.title}}
               <button nbButton
                       style="float: right"
                       status="danger"
                       size="tiny"
-                      (click)="deletePost(userAnswer.id)">
+                      (click)="deletePost(userAnswer.key.id)">
                 Delete
               </button>
             </nb-card-header>
 
-            <nb-card-body class="hoverEffect" routerLink="../post/{{userAnswer.id}}/detail">
+            <nb-card-body class="hoverEffect" routerLink="../post/{{userAnswer.key.id}}/detail">
               <div style="padding: 2%">
-                <pre><code>{{formatContentP(userAnswer.content)}}</code></pre>
+                <pre><code>{{formatContentP(userAnswer.key.content)}}</code></pre>
               </div>
-
               <div>
-                <span class="tag" *ngFor="let tag of userAnswer.tags"> {{tag.name}} </span>
+                <span class="tag" *ngFor="let tag of userAnswer.key.tags"> {{tag.name}} </span>
               </div>
             </nb-card-body>
+
+            <nb-card-footer>
+              <span class="hoverEffect" (click)="answers_like_dislike(userAnswer.key.id)">
+                <img *ngIf="!userAnswer.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20">
+                <img *ngIf="userAnswer.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20">
+              </span>
+              {{userAnswer.key.nbLike}}
+            </nb-card-footer>
           </nb-card>
         </div>
       </nb-tab>
@@ -136,7 +141,7 @@
             </nb-card-body>
 
             <nb-card-footer>
-              <span (click)="like_dislike(postLiked.key.id)">
+              <span (click)="postLiked_like_dislike(postLiked.key.id)">
                 <img *ngIf="!postLiked.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20">
                 <img *ngIf="postLiked.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20">
               </span>
