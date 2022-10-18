@@ -1,4 +1,4 @@
-<nb-card status="info">
+<nb-card status="primary">
   <nb-card-header>Title : {{post.title}}</nb-card-header>
   <nb-card-body>
     <div>Content : {{post.content}}</div>
@@ -6,7 +6,6 @@
     <span class="tag" *ngFor="let tag of post.tags"> {{tag.name}} </span>
   </nb-card-body>
 </nb-card>
-
 
 
 <nb-layout>
@@ -23,8 +22,9 @@
                           <label class="label" for="input-content">Content :</label>
                       </span>
           </div>
-          <textarea [(ngModel)]="content" id="input-content" formControlName="content" rows="8" cols="50"> </textarea>
-
+          <textarea [(ngModel)]="content" id="input-content" formControlName="content"
+                    placeholder="#`langage`  some code...##">
+          </textarea>
           <div class="form-control-group mb-3">
                   <span class="label-with-link">
                       <label class="label" for="input-tagName">Tag :</label>
@@ -52,11 +52,7 @@
           </button>
         </form>
       </nb-card-body>
-      <!--
-      <nb-card-footer>
 
-      </nb-card-footer>
-      -->
     </nb-card>
   </nb-layout-column>
 

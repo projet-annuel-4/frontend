@@ -14,10 +14,10 @@
       </nb-card-body>
 
       <nb-card-footer>
-        <div (click)="viewFollowers()">
+        <div class="hoverEffect" (click)="viewFollowers()">
             {{friendProfile.nbFollowers || 0}} Followers
         </div>
-        <div (click)="viewSubscriptions()">
+        <div class="hoverEffect" (click)="viewSubscriptions()">
             {{friendProfile.nbSubscriptions || 0}} Subscriptions
         </div>
         <div style="text-align: right">

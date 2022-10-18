@@ -209,7 +209,6 @@ export class ProfileComponent implements OnInit {
   answers_like_dislike(post_id: string){
     this.userAnswers.forEach((value, post) =>{
       if(post.id == post_id){
-        console.log("isLiked : " + value.isLiked);
         if(!value.isLiked){
           this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
             value.isLiked = true;
@@ -221,7 +220,6 @@ export class ProfileComponent implements OnInit {
             post.nbLike -= 1;
           });
         }
-        console.log("isLiked : " + value.isLiked);
       }
     });
   }
@@ -229,7 +227,6 @@ export class ProfileComponent implements OnInit {
   postLiked_like_dislike(post_id: string){
     this.postsLiked.forEach((value, post) =>{
       if(post.id == post_id){
-        console.log("isLiked : " + value.isLiked);
         if(!value.isLiked){
           this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
             value.isLiked = true;
@@ -241,7 +238,6 @@ export class ProfileComponent implements OnInit {
             post.nbLike -= 1;
           });
         }
-        console.log("isLiked : " + value.isLiked);
       }
     });
   }
