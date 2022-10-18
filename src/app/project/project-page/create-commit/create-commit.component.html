@@ -1,19 +1,19 @@
 <nb-card class="dialog-card">
   <nb-card-header>
-    <div>Commit </div>
+    <div>Commit</div>
   </nb-card-header>
 
   <nb-card-body>
-      <div>
-        <label>Nom du Commit</label>
-      </div>
     <div>
-      <input type="text" id="commitName">
+      <label>Nom du Commit</label>
+    </div>
+    <div>
+      <input type="text" id="commitName" />
     </div>
   </nb-card-body>
 
   <nb-card-footer>
-    <button nbButton (click)="createCommit()"> Create</button>
-    <button nbButton (click)="close()"> Close</button>
+    <button nbButton (click)="createCommit()">Create</button>
+    <button nbButton (click)="close()">Close</button>
   </nb-card-footer>
 </nb-card>

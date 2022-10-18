@@ -1,13 +1,11 @@
 <nb-card status="info">
-  <nb-card-header>Title : {{post.title}}</nb-card-header>
+  <nb-card-header>Title : {{ post.title }}</nb-card-header>
   <nb-card-body>
-    <div>Content : {{post.content}}</div>
+    <div>Content : {{ post.content }}</div>
 
-    <span class="tag" *ngFor="let tag of post.tags"> {{tag.name}} </span>
+    <span class="tag" *ngFor="let tag of post.tags"> {{ tag.name }} </span>
   </nb-card-body>
 </nb-card>
-
-
 
 <nb-layout>
   <nb-layout-column>
@@ -19,19 +17,33 @@
       <nb-card-body>
         <form [formGroup]="answerForm" (ngSubmit)="comment()">
           <div class="form-control-group mb-3">
-                      <span class="label-with-link">
-                          <label class="label" for="input-content">Content :</label>
-                      </span>
+            <span class="label-with-link">
+              <label class="label" for="input-content">Content :</label>
+            </span>
           </div>
-          <textarea [(ngModel)]="content" id="input-content" formControlName="content" rows="8" cols="50"> </textarea>
+          <textarea
+            [(ngModel)]="content"
+            id="input-content"
+            formControlName="content"
+            rows="8"
+            cols="50"
+          >
+          </textarea>
 
           <div class="form-control-group mb-3">
-                  <span class="label-with-link">
-                      <label class="label" for="input-tagName">Tag :</label>
-                  </span>
-            <input nbInput fullWidth id="input-tagName"  placeholder="js, test,..." fieldSize="large" formControlName="tagName">
+            <span class="label-with-link">
+              <label class="label" for="input-tagName">Tag :</label>
+            </span>
+            <input
+              nbInput
+              fullWidth
+              id="input-tagName"
+              placeholder="js, test,..."
+              fieldSize="large"
+              formControlName="tagName"
+            />
           </div>
-<!--
+          <!--
           <div class="form-control-group mb-3">
                   <span class="label-with-link">
                       <label class="label" for="input-attachmentUrl">Attachment Url :</label>
@@ -47,7 +59,14 @@
           </div>
 -->
 
-          <button nbButton fullWidth outline status="primary" size="large" [disabled]="answerForm.invalid">
+          <button
+            nbButton
+            fullWidth
+            outline
+            status="primary"
+            size="large"
+            [disabled]="answerForm.invalid"
+          >
             Post your answer
           </button>
         </form>
@@ -64,6 +83,3 @@
     <app-code-execution [inputContent]="content"></app-code-execution>
   </nb-layout-column>
 </nb-layout>
-
-
-

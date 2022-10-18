@@ -1,9 +1,11 @@
 <nb-card>
   <nb-card-body>
-    <nb-user style="padding-right: 155px"
-             [name]="subscription.firstName"
-             [title]="subscription.lastName"
-             (click)="goToSubscriptionPage()">
+    <nb-user
+      style="padding-right: 155px"
+      [name]="subscription.firstName"
+      [title]="subscription.lastName"
+      (click)="goToSubscriptionPage()"
+    >
     </nb-user>
 
     <!--
@@ -18,5 +20,3 @@
     -->
   </nb-card-body>
 </nb-card>
-
-

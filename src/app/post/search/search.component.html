@@ -8,40 +8,41 @@
 
         <span *ngIf="titleToggle" style="padding-right: 10px">
           <label class="label" for="title">Title : </label>
-          <input nbInput shape="round" id="title" placeholder="Title" [(ngModel)]="filter.title">
+          <input nbInput shape="round" id="title" placeholder="Title" [(ngModel)]="filter.title" />
         </span>
 
         <span *ngIf="contentToggle" style="padding-right: 10px">
-          <label class="label" for="content" >Content : </label>
-          <input nbInput shape="round" id="content" placeholder="Content" [(ngModel)]="filter.content">
+          <label class="label" for="content">Content : </label>
+          <input
+            nbInput
+            shape="round"
+            id="content"
+            placeholder="Content"
+            [(ngModel)]="filter.content"
+          />
         </span>
 
         <span *ngIf="tagToggle" style="padding-right: 10px">
           <label class="label" for="tag">Tag : </label>
-          <input nbInput shape="round" id="tag" placeholder="TS" [(ngModel)]="filter.tagName">
+          <input nbInput shape="round" id="tag" placeholder="TS" [(ngModel)]="filter.tagName" />
         </span>
       </nb-card-header>
 
       <nb-card-body>
         <span class="displayButton">
-          <button nbButton size="small"
-                  (click)="titleToggle = !titleToggle">affiche title</button>
+          <button nbButton size="small" (click)="titleToggle = !titleToggle">affiche title</button>
         </span>
 
         <span class="displayButton">
-          <button
-            nbButton size="small"
-            (click)="contentToggle = !contentToggle">affiche content</button>
+          <button nbButton size="small" (click)="contentToggle = !contentToggle">
+            affiche content
+          </button>
         </span>
 
         <span class="displayButton">
-          <button nbButton size="small"
-                  (click)="tagToggle = !tagToggle">affiche tag</button>
+          <button nbButton size="small" (click)="tagToggle = !tagToggle">affiche tag</button>
         </span>
-
       </nb-card-body>
-
-
     </nb-card>
 
     <nb-card>
@@ -52,14 +53,10 @@
       </nb-card-body>
 
       <ng-template #postElseBlock>
-        <nb-card-body style="text-align: center">
-          No Post Found
-        </nb-card-body>
+        <nb-card-body style="text-align: center"> No Post Found </nb-card-body>
       </ng-template>
     </nb-card>
   </nb-tab>
-
-
 
   <nb-tab tabTitle="User">
     <nb-card>
@@ -70,7 +67,13 @@
 
         <span style="padding-right: 10px">
           <label class="label" for="username">User : </label>
-          <input nbInput shape="round" id="username" placeholder="Username" [(ngModel)]="userFirstName">
+          <input
+            nbInput
+            shape="round"
+            id="username"
+            placeholder="Username"
+            [(ngModel)]="userFirstName"
+          />
         </span>
       </nb-card-body>
     </nb-card>
@@ -78,26 +81,21 @@
     <nb-card>
       <nb-card-body *ngIf="usersFound !== undefined; else userElseBlock">
         <span *ngFor="let user of usersFound">
-          <div style="padding: 10px" routerLink="/friend/{{user.id}}/profile">
-            <nb-user *ngIf="user != null"
-                     name="{{user.firstName}} {{user.lastName}}"
-                     picture=""
-            size="giant">
-          </nb-user>
+          <div style="padding: 10px" routerLink="/friend/{{ user.id }}/profile">
+            <nb-user
+              *ngIf="user != null"
+              name="{{ user.firstName }} {{ user.lastName }}"
+              picture=""
+              size="giant"
+            >
+            </nb-user>
           </div>
-
         </span>
       </nb-card-body>
 
       <ng-template #userElseBlock>
-        <nb-card-body style="text-align: center">
-          No User Found
-        </nb-card-body>
+        <nb-card-body style="text-align: center"> No User Found </nb-card-body>
       </ng-template>
-
     </nb-card>
   </nb-tab>
-
-
 </nb-tabset>
-

@@ -1,37 +1,35 @@
 .profile-image {
-    height: 200px;
-    width: 200px;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  background-size: contain;
+  background-position: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  .top-layer {
+    background-color: #4c4c4c;
     border-radius: 50%;
-    background-size: contain;
-    background-position: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    opacity: 0;
 
-    .top-layer {
-        background-color:#4c4c4c;
-        border-radius: 50%;
-        opacity:0;
-
-        nb-icon{
-            margin-top: 70px;
-            color: #fff;
-            font-size: 3rem;
-            opacity: 0;
-        }
+    nb-icon {
+      margin-top: 70px;
+      color: #fff;
+      font-size: 3rem;
+      opacity: 0;
     }
+  }
 
-    .top-layer:hover{
-        opacity:0.6;
-        cursor: pointer;
+  .top-layer:hover {
+    opacity: 0.6;
+    cursor: pointer;
 
-        nb-icon{
-            opacity: 1;
-        }
+    nb-icon {
+      opacity: 1;
     }
-
+  }
 }
-
 
 #createButton {
   position: fixed;
