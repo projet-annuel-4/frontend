@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
-import { Files } from '../../_dtos/project/Filess'
+import { File } from '../../_dtos/project/File'
 import { project_file_service, project_service } from '../../../environments/environment'
 import { Commit } from '../../_dtos/project/Commit'
 import { HttpClient, HttpHeaders } from '@angular/common/http'

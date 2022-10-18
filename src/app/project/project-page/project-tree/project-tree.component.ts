@@ -1,8 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core'
-import { Files } from '../../../_dtos/project/Filess'
-import { FileService } from '../../../_services/project/fileService'
-import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme'
-import { FileUnsavedChangeComponent } from '../../../shared/dialog/file-unsaved-change.component'
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
+import { File } from '../../../_dtos/project/File';
+import { FileService } from '../../../_services/project/fileService';
+import { FileUnsavedChangeComponent } from '../../../shared/dialog/file-unsaved-change.component';
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
 
 @Component({
   selector: 'app-project-tree',
@@ -10,16 +10,16 @@ import { FileUnsavedChangeComponent } from '../../../shared/dialog/file-unsaved-
   styleUrls: ['./project-tree.component.css'],
 })
 export class ProjectTreeComponent implements OnInit, OnChanges {
-  @Output() fileSelectedEvent = new EventEmitter<Files>()
-  @Input() fileChange
-  @Input() projectId
+  @Output() fileSelectedEvent = new EventEmitter<File>();
+  @Input() fileChange;
+  @Input() projectId;
 
-  files: Files[]
+  files: File[] = [];
 
-  customColumn = 'name'
-  allColumns = [this.customColumn]
+  customColumn = 'name';
+  allColumns = [this.customColumn];
 
-  positions = NbGlobalPhysicalPosition
+  positions = NbGlobalPhysicalPosition;
 
   constructor(
     private fileService: FileService,
@@ -28,55 +28,56 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    this.loadFiles()
+    this.loadFiles();
   }
 
   ngOnChanges(changes) {}
 
   loadFiles() {
-    const promise = this.fileService.getAllFileFromProject(this.projectId).toPromise()
+    const promise = this.fileService.getAllFileFromProject(this.projectId).toPromise();
     promise
       .then(data => {
-        this.files = data
-        console.log(data)
+        data.map(value => {
+          this.files.push(new File(value));
+        });
       })
       .catch(() =>
         this.nbToasterService.show('An error has occurred', `Error`, {
           position: this.positions.TOP_RIGHT,
           status: 'danger',
         })
-      )
+      );
   }
 
   updateFiles() {
     setTimeout(() => {
-      this.loadFiles()
-      const fileObj: Files = JSON.parse(localStorage.getItem('createdFile'))
-      this.files.push(fileObj)
-      localStorage.removeItem('createdFile')
-    }, 600)
+      this.loadFiles();
+      const fileObj: File = JSON.parse(localStorage.getItem('createdFile'));
+      this.files.push(fileObj);
+      localStorage.removeItem('createdFile');
+    }, 600);
   }
 
   uppdateFilesV2() {
-    this.loadFiles()
+    this.loadFiles();
   }
 
-  setSelectedFileEvent(value: number) {
-    let file: Files
+  setSelectedFileEvent(value: string) {
+    let file: File;
     for (let i = 0; i < this.files.length; i++) {
-      if (this.files[i].id === value) {
-        file = this.files[i]
+      if (this.files[i].name === value) {
+        file = this.files[i];
       }
     }
-    console.log('ici : ' + this.fileChange)
+    console.log('ici : ' + this.fileChange);
     if (this.fileChange) {
       this.dialogService.open(FileUnsavedChangeComponent).onClose.subscribe(confirmation => {
         if (confirmation) {
-          return this.fileSelectedEvent.emit(file)
+          return this.fileSelectedEvent.emit(file);
         }
-      })
+      });
     } else {
-      this.fileSelectedEvent.emit(file)
+      this.fileSelectedEvent.emit(file);
     }
   }
 }
