@@ -37,6 +37,7 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
     const promise = this.fileService.getAllFileFromProject(this.projectId).toPromise();
     promise
       .then(data => {
+        this.files = [];
         data.map(value => {
           this.files.push(new Filess(value));
         });

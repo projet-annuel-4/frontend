@@ -53,14 +53,14 @@ export class FileService {
 
   saveFile(projectId: number, fileName: string, data: FormData): Observable<Filess> {
     return this.http.post<Filess>(
-      `${project_file_service.BASE_URL}/branch/${projectId}/file/${fileName}/save`,
-      data
+      `${project_file_service.BASE_URL}/${projectId}/file/saveFile?fileNameUrl=${fileName}`,data
     )
   }
 
-  deleteFile(projectId: number, fileName: string): Observable<Filess> {
-    return this.http.delete<Filess>(
-      `${project_file_service.BASE_URL}/branch/${projectId}/file/${fileName}/get`
+  deleteFile(projectId: number, fileNameUrl: string): Observable<any> {
+    return this.http.delete<any>(
+      `${project_file_service.BASE_URL}/${projectId}/file/deleteFile`,
+      {body: {'fileNameUrl': fileNameUrl}}
     )
   }
 }
