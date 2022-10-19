@@ -36,13 +36,13 @@
           <nb-card *ngFor="let post of posts | keyvalue">
 <!-- Impossible d'appeler le composant 'feed-post' Erreur : Maximum call stack size exceeded Error -->
             <nb-card-header> Title : {{post.key.title}} </nb-card-header>
-            <nb-card-body routerLink="/post/{{post.key.id}}/detail">
+            <nb-card-body class="hoverEffect" routerLink="/post/{{post.key.id}}/detail">
               <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
 
               <span class="tag" *ngFor="let tag of post.key.tags"> {{tag.name}} </span>
             </nb-card-body>
             <nb-card-footer>
-              <span (click)="like_dislike(post.key.id)">
+              <span class="hoverEffect" (click)="like_dislike(post.key.id)">
                 <img *ngIf="!post.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20">
                 <img *ngIf="post.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20">
               </span>

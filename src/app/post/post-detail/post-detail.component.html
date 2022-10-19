@@ -35,10 +35,19 @@
   </nb-layout-column>
 
   <nb-card-footer>
-    <nb-accordion (click)="getAnswers()">
+    <nb-accordion>
       <nb-accordion-item>
 
-        <nb-accordion-item-header>Answers</nb-accordion-item-header>
+        <nb-accordion-item-header *ngIf="answers.size > 0; else noAnswers">
+          {{answers.size}} answers
+        </nb-accordion-item-header>
+        
+        <ng-template #noAnswers>
+          <nb-accordion-item-header>
+            No answers
+          </nb-accordion-item-header>
+        </ng-template>
+
         <nb-accordion-item-body *ngFor="let answer of answers | keyvalue">
           <nb-card>
             <nb-card-header>
@@ -65,9 +74,7 @@
 
       </nb-accordion-item>
     </nb-accordion>
-
   </nb-card-footer>
-
 
 </nb-card>
 

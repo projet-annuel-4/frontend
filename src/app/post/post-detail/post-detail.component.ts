@@ -29,7 +29,10 @@ export class PostDetailComponent implements OnInit {
         this.postService.getById(params.postId).subscribe(
           post => this.post = post,
           () => {},
-          () => this.markPostAlreadyLikeByUser(this.post.id)
+          () => {
+            this.markPostAlreadyLikeByUser(this.post.id);
+            this.getAnswers();
+          }
         );
       }
     });
