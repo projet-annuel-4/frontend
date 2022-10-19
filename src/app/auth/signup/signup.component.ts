@@ -37,26 +37,6 @@ export class SignupComponent implements OnInit {
   register() {
     if (this.signUpFrom.valid) {
       const data = this.signUpFrom.value
-      //this.loading = true;
-
-      this._authService
-        .register(
-          new SignUpRequest(
-            data['firstName'],
-            data['lastName'],
-            data['email'],
-            data['password'],
-            data['password2'],
-            'captchtest'
-          )
-        )
-        .subscribe(() => {
-          this.nbToasterService.show('Connection successful, an email has been sent', ``, {
-            position: this.positions.TOP_RIGHT,
-            status: 'success',
-          })
-          this.router.navigate(['../auth/signing']).then()
-        })
 
       this._authService
         .register(

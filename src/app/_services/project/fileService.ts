@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { TokenStorageService } from '../token/token-storage.service'
 import { Observable } from 'rxjs'
 import { project_file_service } from '../../../environments/environment'
-import { File } from '../../_dtos/project/File'
+import { Filess } from '../../_dtos/project/Filess'
 import { CreateFileRequest } from '../../_dtos/project/CreateFileRequest'
 
 @Injectable({
@@ -23,15 +23,15 @@ export class FileService {
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {}
 
-  create(projectId: number, file: CreateFileRequest): Observable<File> {
-    return this.http.post<File>(
+  create(projectId: number, file: CreateFileRequest): Observable<Filess> {
+    return this.http.post<Filess>(
       `${project_file_service.BASE_URL}/${projectId}/file/createFile`,
       file
     )
   }
 
-  getById(branchId: number, fileId: number): Observable<File> {
-    return this.http.get<File>(
+  getById(branchId: number, fileId: number): Observable<Filess> {
+    return this.http.get<Filess>(
       `${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/get`,
       this.httpOptions
     )
@@ -51,16 +51,16 @@ export class FileService {
     )
   }
 
-  saveFile(projectId: number, fileId: number, data: FormData): Observable<File> {
-    return this.http.post<File>(
-      `${project_file_service.BASE_URL}/branch/${projectId}/file/${fileId}/save`,
+  saveFile(projectId: number, fileName: string, data: FormData): Observable<Filess> {
+    return this.http.post<Filess>(
+      `${project_file_service.BASE_URL}/branch/${projectId}/file/${fileName}/save`,
       data
     )
   }
 
-  deleteFile(branchId: number, fileId: number): Observable<File> {
-    return this.http.delete<File>(
-      `${project_file_service.BASE_URL}/branch/${branchId}/file/${fileId}/get`
+  deleteFile(projectId: number, fileName: string): Observable<Filess> {
+    return this.http.delete<Filess>(
+      `${project_file_service.BASE_URL}/branch/${projectId}/file/${fileName}/get`
     )
   }
 }

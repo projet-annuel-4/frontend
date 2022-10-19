@@ -1,11 +1,11 @@
-import { File } from './File'
+import { Filess } from './Filess'
 import { Commit } from './Commit'
 
 export class Branch {
   id: number
   name: string
   creationDte: Date
-  files: File[]
+  files: Filess[]
   commit: Commit[]
 
   constructor(id: number, name: string, creationDte: Date) {

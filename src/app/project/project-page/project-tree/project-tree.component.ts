@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
-import { File } from '../../../_dtos/project/File';
+import { Filess } from '../../../_dtos/project/Filess';
 import { FileService } from '../../../_services/project/fileService';
 import { FileUnsavedChangeComponent } from '../../../shared/dialog/file-unsaved-change.component';
 import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
@@ -10,11 +10,11 @@ import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebul
   styleUrls: ['./project-tree.component.css'],
 })
 export class ProjectTreeComponent implements OnInit, OnChanges {
-  @Output() fileSelectedEvent = new EventEmitter<File>();
+  @Output() fileSelectedEvent = new EventEmitter<Filess>();
   @Input() fileChange;
   @Input() projectId;
 
-  files: File[] = [];
+  files: Filess[] = [];
 
   customColumn = 'name';
   allColumns = [this.customColumn];
@@ -38,7 +38,7 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
     promise
       .then(data => {
         data.map(value => {
-          this.files.push(new File(value));
+          this.files.push(new Filess(value));
         });
       })
       .catch(() =>
@@ -52,7 +52,7 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
   updateFiles() {
     setTimeout(() => {
       this.loadFiles();
-      const fileObj: File = JSON.parse(localStorage.getItem('createdFile'));
+      const fileObj: Filess = JSON.parse(localStorage.getItem('createdFile'));
       this.files.push(fileObj);
       localStorage.removeItem('createdFile');
     }, 600);
@@ -63,7 +63,7 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
   }
 
   setSelectedFileEvent(value: string) {
-    let file: File;
+    let file: Filess;
     for (let i = 0; i < this.files.length; i++) {
       if (this.files[i].name === value) {
         file = this.files[i];

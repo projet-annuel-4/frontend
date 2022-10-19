@@ -1,4 +1,4 @@
-export class File {
+export class Filess {
   name: string;
 
   constructor(name: string) {
