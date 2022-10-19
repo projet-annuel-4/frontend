@@ -1,15 +1,15 @@
 export class SignUpRequest {
-    firstname: string
-    lastname: string
+    firstName: string
+    lastName: string
     email: string
     password: string
     password2: string
     captcha: string
 
-    constructor(firstname: string, lastname: string, email: string,
+    constructor(firstName: string, lastName: string, email: string,
                 password: string, password2: string, captcha: string){
-      this.firstname = firstname;
-      this.lastname = lastname;
+      this.firstName = firstName;
+      this.lastName = lastName;
       this.email = email;
       this.password = password;
       this.password2 = password2;

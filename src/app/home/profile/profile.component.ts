@@ -186,61 +186,23 @@ export class ProfileComponent implements OnInit {
     return posts;
   }
 
+
+
   like_dislike(post_id: string){
-    this.posts.forEach((value, post) =>{
-      if(post.id == post_id){
-        console.log("isLiked : " + value.isLiked);
-        if(!value.isLiked){
-          this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
-            value.isLiked = true;
-            post.nbLike += 1;
-          });
-        } else {
-          this.postService.dislike(parseInt(post_id), this.profile.id).subscribe(then => {
-            value.isLiked = false;
-            post.nbLike -= 1;
-          });
-        }
-        console.log("isLiked : " + value.isLiked);
-      }
-    });
+    this.postService.like_dislike(post_id, this.posts);
   }
+
 
   answers_like_dislike(post_id: string){
-    this.userAnswers.forEach((value, post) =>{
-      if(post.id == post_id){
-        if(!value.isLiked){
-          this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
-            value.isLiked = true;
-            post.nbLike += 1;
-          });
-        } else {
-          this.postService.dislike(parseInt(post_id), this.profile.id).subscribe(then => {
-            value.isLiked = false;
-            post.nbLike -= 1;
-          });
-        }
-      }
-    });
+    this.postService.like_dislike(post_id, this.userAnswers);
   }
 
+
   postLiked_like_dislike(post_id: string){
-    this.postsLiked.forEach((value, post) =>{
-      if(post.id == post_id){
-        if(!value.isLiked){
-          this.postService.like(parseInt(post_id), this.profile.id).subscribe(then => {
-            value.isLiked = true;
-            post.nbLike += 1;
-          });
-        } else {
-          this.postService.dislike(parseInt(post_id), this.profile.id).subscribe(then => {
-            value.isLiked = false;
-            post.nbLike -= 1;
-          });
-        }
-      }
-    });
+    this.postService.like_dislike(post_id, this.postsLiked);
   }
+
+
 
   reverseMap(mapToReverse: Map<Post, {isLiked: boolean}>): Map<Post, {isLiked: boolean}>{
     return new Map(Array.from(mapToReverse).reverse());

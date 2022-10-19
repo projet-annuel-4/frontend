@@ -66,7 +66,7 @@ export class FriendProfileComponent implements OnInit {
       error => {},
       () => {
         this.posts = this.postService.postTabToPostMap(this.tempUserPost);
-        this.posts = this.reverseMap(this.posts);
+        this.posts = this.postService.reverseMap(this.posts);
         this.markPostAlreadyLikeByUser();
       }
     );
@@ -121,16 +121,7 @@ export class FriendProfileComponent implements OnInit {
     this.dialogService.open(SubscriptionListComponent);
   }
 
-  formatContentP(content: string){
-    let newContent = content;
-    let codes = this.codeService.codePreview(content);
 
-    codes.codesFound.forEach((codeStr, i) => {
-      newContent = newContent.replace(codeStr, '\n' + codes.codes[i].content + '\n');
-    });
-
-    return newContent;
-  }
 
   follow_unfollow(){
     if(!this.followedByTheUser){
@@ -176,8 +167,5 @@ export class FriendProfileComponent implements OnInit {
     }
   }
 
-  reverseMap(mapToReverse: Map<Post, {isLiked: boolean}>): Map<Post, {isLiked: boolean}>{
-    return new Map(Array.from(mapToReverse).reverse());
-  }
 
 }

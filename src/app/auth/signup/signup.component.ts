@@ -40,10 +40,12 @@ export class SignupComponent implements OnInit {
 
       this._authService.register(new SignUpRequest(data['firstname'], data['lastname'], data['email'],
                                                    data['password'], data['password2'], "captchtest")).subscribe(
+        () => {},
+        error => {console.log(error['error'])},
         () => {
-          this.nbToasterService.show('Connection successful, an email has been sent', ``, { position:this.positions.TOP_RIGHT, status:"success" });
+          this.nbToasterService.show('Registration successful, an email has been sent', ``, { position:this.positions.TOP_RIGHT, status:"success" });
           this.router.navigate(['../auth/signing']).then();
-        },
+        }
       );
 
     } else {

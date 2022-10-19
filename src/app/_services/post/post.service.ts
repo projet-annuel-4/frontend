@@ -131,4 +131,28 @@ export class PostService {
     return tempMap;
   }
 
+  like_dislike(post_id: string, posts: Map<Post, {isLiked: boolean}>){
+    posts.forEach((value, post) =>{
+      if(post.id == post_id){
+        if(!value.isLiked){
+          this.like(parseInt(post_id), this.tokenStorage.getUser().id).subscribe(then => {
+            value.isLiked = true;
+            post.nbLike += 1;
+          });
+        } else {
+          this.dislike(parseInt(post_id), this.tokenStorage.getUser().id).subscribe(then => {
+            value.isLiked = false;
+            post.nbLike -= 1;
+          });
+        }
+      }
+    });
+    return posts;
+  }
+
+
+  reverseMap(mapToReverse: Map<Post, {isLiked: boolean}>): Map<Post, {isLiked: boolean}>{
+    return new Map(Array.from(mapToReverse).reverse());
+  }
+
 }
