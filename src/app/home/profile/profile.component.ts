@@ -97,7 +97,7 @@ export class ProfileComponent implements OnInit {
       error => {},
       () => {
         this.posts = this.postService.postTabToPostMap(this.tempUserPost);
-        this.posts = this.reverseMap(this.posts);
+        this.posts = this.postService.reverseMap(this.posts);
         this.posts = this.markPostsAlreadyLikeByUser(this.posts);
       }
     );
@@ -191,7 +191,6 @@ export class ProfileComponent implements OnInit {
   like_dislike(post_id: string){
     this.postService.like_dislike(post_id, this.posts);
   }
-
 
   answers_like_dislike(post_id: string){
     this.postService.like_dislike(post_id, this.userAnswers);

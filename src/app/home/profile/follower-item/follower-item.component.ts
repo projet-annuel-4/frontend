@@ -22,7 +22,6 @@ export class FollowerItemComponent implements OnInit {
   }
 
   goToFriendPage() {
-    // tslint:disable-next-line:triple-equals
     if (this.follower.id == this.tokenStorage.getUser().id) {
       this.router.navigate(['/profile']).then();
     } else {

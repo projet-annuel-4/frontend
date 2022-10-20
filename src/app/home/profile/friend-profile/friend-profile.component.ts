@@ -23,11 +23,15 @@ export class FriendProfileComponent implements OnInit {
   friendProfile: User;
   image;
 
-  friendPostsLiked: Post[];
-  friendAnswers: Post[];
-
   posts: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
   tempUserPost: Post[];
+
+  friendPostsLiked: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
+  tempFriendPostsLiked: Post[];
+
+  friendAnswers: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
+  tempFriendAnswers: Post[];
+
   postsAlreadyLiked: Post[];
 
   followedByTheUser: boolean = false;
@@ -65,19 +69,41 @@ export class FriendProfileComponent implements OnInit {
       posts => {this.tempUserPost = posts;},
       error => {},
       () => {
-        this.posts = this.postService.postTabToPostMap(this.tempUserPost);
-        this.posts = this.postService.reverseMap(this.posts);
-        this.markPostAlreadyLikeByUser();
+        if(this.tempUserPost != null){
+          this.posts = this.postService.postTabToPostMap(this.tempUserPost);
+          this.posts = this.postService.reverseMap(this.posts);
+          this.posts = this.markPostAlreadyLikeByUser(this.posts);
+        }
       }
     );
 
-    this.postService.getPostLikedByUser(this.friendProfile.id).subscribe(postsLiked => {
-      this.friendPostsLiked = postsLiked;
-    }, error => {});
+    this.postService.getPostLikedByUser(this.friendProfile.id).subscribe(
+      postsLiked => {
+        this.tempFriendPostsLiked = postsLiked;
+      },
+        error => {},
+      () => {
+        if(this.tempFriendPostsLiked != null){
+          this.friendPostsLiked = this.postService.postTabToPostMap(this.tempFriendPostsLiked);
+          this.friendPostsLiked = this.postService.reverseMap(this.friendPostsLiked)
+          this.friendPostsLiked = this.markPostAlreadyLikeByUser(this.friendPostsLiked);
+        }
+      }
+    );
 
-    this.postService.getAllUserAnswers(this.friendProfile.id).subscribe(userAnswers => {
-      this.friendAnswers = userAnswers;
-    }, error => {});
+    this.postService.getAllUserAnswers(this.friendProfile.id).subscribe(
+      userAnswers => {
+          this.tempFriendAnswers = userAnswers;
+        },
+        error => {},
+      () => {
+        if(this.tempFriendAnswers !== null){
+          this.friendAnswers = this.postService.postTabToPostMap(this.tempFriendAnswers);
+          this.friendAnswers = this.postService.reverseMap(this.friendAnswers)
+          this.friendAnswers = this.markPostAlreadyLikeByUser(this.friendAnswers);
+        }
+      }
+    );
   }
 
   loadProfilePicture(friendId: string){
@@ -97,15 +123,16 @@ export class FriendProfileComponent implements OnInit {
   }
 
 
-  markPostAlreadyLikeByUser(){
+  markPostAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>){
     this.postService.getPostLikedByUser(this.tokenStorage.getUser().id).subscribe(postsLiked => {
       this.postsAlreadyLiked = postsLiked
-      this.posts.forEach((value, post) => {
+      posts.forEach((value, post) => {
         this.postsAlreadyLiked.forEach(postLiked => {
           if(post.id == postLiked.id) value.isLiked = true;
         });
       });
     });
+    return posts;
   }
 
 
@@ -125,13 +152,11 @@ export class FriendProfileComponent implements OnInit {
 
   follow_unfollow(){
     if(!this.followedByTheUser){
-
       this.followService.follow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
         this.followedByTheUser = true;
         this.friendProfile.nbFollowers += 1;
         this.updateSubscribeButton();
       });
-
     } else {
       this.followService.unfollow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
         this.followedByTheUser = false;
@@ -143,6 +168,15 @@ export class FriendProfileComponent implements OnInit {
 
   like_dislike(post_id: string){
     this.postService.like_dislike(post_id, this.posts);
+  }
+
+  answers_like_dislike(post_id: string){
+    this.postService.like_dislike(post_id, this.friendAnswers);
+  }
+
+
+  postLiked_like_dislike(post_id: string){
+    this.postService.like_dislike(post_id, this.friendPostsLiked);
   }
 
   updateSubscribeButton(){
