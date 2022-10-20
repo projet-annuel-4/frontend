@@ -11,8 +11,6 @@ import {NewGroupComponent} from '../../shared/dialog/new-group.component';
 })
 export class GroupHomeComponent implements OnInit {
 
-  // groups: Group[] = [ new Group(1, "coucou", []) , new Group(2, "coucou2", []), new Group(3, "couco3", [])];
-
   groups: Group[];
 
   constructor(private groupService: GroupService, private dialogService: NbDialogService) { }
@@ -24,14 +22,14 @@ export class GroupHomeComponent implements OnInit {
   initUserGroups() {
     this.groupService.getGroupsByMembersEmail().subscribe(groups => {
       this.groups = groups;
-
     });
   }
 
 
   createGroup() {
-    this.dialogService.open(NewGroupComponent);
-    this.initUserGroups();
+    this.dialogService.open(NewGroupComponent).onClose.subscribe(
+      () => this.initUserGroups()
+    );
   }
 
 
