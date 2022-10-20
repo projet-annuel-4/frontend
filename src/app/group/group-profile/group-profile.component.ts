@@ -26,11 +26,6 @@ export class GroupProfileComponent implements OnInit {
               private route: ActivatedRoute,
               private dialogService: NbDialogService,
               private nbToasterService:NbToastrService) {
-
-    /*this.group.members = [
-      new User(1 , 'mon test', 'mon tast', 'montext@gmail.com', 0, 0, null)
-    ];*/
-
   }
 
   ngOnInit(): void {

@@ -41,7 +41,20 @@ export class SignupComponent implements OnInit {
       this._authService.register(new SignUpRequest(data['firstname'], data['lastname'], data['email'],
                                                    data['password'], data['password2'], "captchtest")).subscribe(
         () => {},
-        error => {console.log(error['error'])},
+        error => {
+            if(error['error']['firstNameError'] !== undefined ){
+              this.nbToasterService.show(error['error']['firstNameError'], ``, { position:this.positions.TOP_RIGHT, status:"danger" });
+            }
+            if(error['error']['lastNameError'] !== undefined ){
+              this.nbToasterService.show(error['error']['lastNameError'], ``, { position:this.positions.TOP_RIGHT, status:"danger" });
+            }
+            if(error['error']['emailError'] !== undefined ){
+              this.nbToasterService.show(error['error']['emailError'], ``, { position:this.positions.TOP_RIGHT, status:"danger" });
+            }
+            if(error['error']['passwordError'] !== undefined ){
+              this.nbToasterService.show(error['error']['passwordError'], ``, { position:this.positions.TOP_RIGHT, status:"danger" });
+            }
+          },
         () => {
           this.nbToasterService.show('Registration successful, an email has been sent', ``, { position:this.positions.TOP_RIGHT, status:"success" });
           this.router.navigate(['../auth/signing']).then();
