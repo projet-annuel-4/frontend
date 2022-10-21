@@ -94,7 +94,7 @@
 
             <nb-card-body class="hoverEffect" routerLink="../post/{{userAnswer.key.id}}/detail">
               <div style="padding: 2%">
-                <pre><code>{{formatContentP(userAnswer.key.content)}}</code></pre>
+                <pre><code>{{this.codeService.formatContent(userAnswer.key.content)}}</code></pre>
               </div>
               <div>
                 <span class="tag" *ngFor="let tag of userAnswer.key.tags"> {{tag.name}} </span>

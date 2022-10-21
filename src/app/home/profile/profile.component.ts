@@ -10,7 +10,6 @@ import {SubscriptionListComponent} from "./subscription-list/subscription-list.c
 import {CodeService} from "../../_services/code_execution/code.service";
 import {FileManagementService} from "../../_services/file-management/file-management.service";
 import {DomSanitizer} from "@angular/platform-browser";
-import {PostDetailComponent} from "../../post/post-detail/post-detail.component";
 import {DeletePostDialogComponent} from "../../shared/dialog/delete-post-dialog.component";
 
 
@@ -92,7 +91,7 @@ export class ProfileComponent implements OnInit {
       this.profile = user;
     });
 
-    this.postService.getAllByUser(this.profile.id).subscribe(
+    this.postService.getAllByUserWithoutAnswers(this.profile.id).subscribe(
       posts => {this.tempUserPost = posts},
       error => {},
       () => {
@@ -139,25 +138,6 @@ export class ProfileComponent implements OnInit {
     this.dialogService.open(SubscriptionListComponent);
   }
 
-  viewPostDetail(){
-    this.dialogService.open(PostDetailComponent);
-  }
-
-  formatContentP(content: string){
-    let newContent = content;
-    let codes = this.codeService.codePreview(content);
-
-    codes.codesFound.forEach((codeStr, i) => {
-      newContent = newContent.replace(codeStr, '\n' + codes.codes[i].content + '\n');
-    });
-
-    return newContent;
-  }
-
-  containCode(str: string) : boolean{
-    return this.codeService.findCodeInContent(RegExp('#(.+?)##', 'g'), str).length > 0;
-  }
-
 
   deletePost(post_id: string) {
     this.dialogService.open(DeletePostDialogComponent).onClose.subscribe(deletionConfirmed => {
@@ -187,7 +167,6 @@ export class ProfileComponent implements OnInit {
   }
 
 
-
   like_dislike(post_id: string){
     this.postService.like_dislike(post_id, this.posts);
   }
@@ -196,11 +175,9 @@ export class ProfileComponent implements OnInit {
     this.postService.like_dislike(post_id, this.userAnswers);
   }
 
-
   postLiked_like_dislike(post_id: string){
     this.postService.like_dislike(post_id, this.postsLiked);
   }
-
 
 
   reverseMap(mapToReverse: Map<Post, {isLiked: boolean}>): Map<Post, {isLiked: boolean}>{

@@ -54,6 +54,9 @@ export class SignupComponent implements OnInit {
             if(error['error']['passwordError'] !== undefined ){
               this.nbToasterService.show(error['error']['passwordError'], ``, { position:this.positions.TOP_RIGHT, status:"danger" });
             }
+            if(error['error']['error'] !== undefined ){
+              this.nbToasterService.show(error['error']['error'], ``, { position:this.positions.TOP_RIGHT, status:"danger" });
+            }
           },
         () => {
           this.nbToasterService.show('Registration successful, an email has been sent', ``, { position:this.positions.TOP_RIGHT, status:"success" });

@@ -8,7 +8,6 @@ import {User} from "../../_dtos/user/User";
 import {CommentRequest} from "../../_dtos/post/CommentRequest";
 import {PostFilterRequest} from "../../_dtos/post/PostFilterRequest";
 import {PostRequest} from "../../_dtos/post/PostRequest";
-import {SearchFilter} from "../../_dtos/post/Search/SearchFilter";
 import {Filters} from "../../_dtos/post/Search/Filters";
 
 
@@ -38,6 +37,10 @@ export class PostService {
 
   getAllByUser(user_id: number): Observable<Post[]> {
     return this.http.get<Post[]>(`${post_service.BASE_URL}/userId/${user_id}`, this.httpOptions);
+  }
+
+  getAllByUserWithoutAnswers(user_id: number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${post_service.BASE_URL}/userId/${user_id}/withoutAnswers`, this.httpOptions);
   }
 
   getAll(): Observable<Post[]> {
@@ -73,7 +76,6 @@ export class PostService {
   dislike(post_id: number, user_id: number): Observable<any>{
     return this.http.post(`${post_service.BASE_URL}/${post_id}/dislike/userId/${user_id}`, this.httpOptions);
   }
-
 
   getUsersLiked(post_id: number): Observable<User[]> {
     return this.http.get<User[]>(`${post_service.BASE_URL}/${post_id}/userLiked`, this.httpOptions);
@@ -118,6 +120,35 @@ export class PostService {
   getUserByFirstname(firstname: string): Observable<User[]>{
     return this.http.get<User[]>(`${post_service.BASE_URL}/user/firstname/${firstname}`, this.httpOptions);
   }
+
+  /*
+  getAllPostWithoutAnswers(user_id: number): Post[]{
+    let allUserPost: Post[];
+    let allUserAnswers: Post[];
+    let postsWithoutAnswers: Post[];
+    let tmp: Post[];
+
+    this.getAllByUser(user_id).subscribe(
+      posts => {allUserPost = posts},
+      () => {},
+      () => {
+        this.getAllUserAnswers(user_id).subscribe(
+          answers => {allUserAnswers = answers},
+          () => {},
+          () => {
+            allUserPost.forEach(userPost => {
+              if(!allUserAnswers.includes(userPost)) {
+                tmp.push(userPost);
+              }
+            });
+            postsWithoutAnswers = tmp
+          },
+        );
+      }
+    );
+    return postsWithoutAnswers;
+  }
+   */
 
 
   /**
