@@ -1,15 +1,15 @@
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {TokenStorageService} from "../token/token-storage.service";
-import {Injectable} from "@angular/core";
-import {Post} from "../../_dtos/post/Post";
-import {Observable} from "rxjs";
-import {post_service} from "../../../environments/environment";
-import {User} from "../../_dtos/user/User";
-import {CommentRequest} from "../../_dtos/post/CommentRequest";
-import {PostFilterRequest} from "../../_dtos/post/PostFilterRequest";
-import {PostRequest} from "../../_dtos/post/PostRequest";
-import {SearchFilter} from "../../_dtos/post/Search/SearchFilter";
-import {Filters} from "../../_dtos/post/Search/Filters";
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {TokenStorageService} from '../token/token-storage.service';
+import {Injectable} from '@angular/core';
+import {Post} from '../../_dtos/post/Post';
+import {Observable} from 'rxjs';
+import {post_service} from '../../../environments/environment';
+import {User} from '../../_dtos/user/User';
+import {CommentRequest} from '../../_dtos/post/CommentRequest';
+import {PostFilterRequest} from '../../_dtos/post/PostFilterRequest';
+import {PostRequest} from '../../_dtos/post/PostRequest';
+import {SearchFilter} from '../../_dtos/post/Search/SearchFilter';
+import {Filters} from '../../_dtos/post/Search/Filters';
 
 
 @Injectable({
@@ -18,7 +18,7 @@ import {Filters} from "../../_dtos/post/Search/Filters";
 export class PostService {
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {}
@@ -54,11 +54,11 @@ export class PostService {
 
   getAllByTagNameList(tagNameList: string[]): Observable<Post[]> {
 
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
     const requestParams = new HttpParams();
     tagNameList.forEach(tagName => {
-      requestParams.set("", tagName);
+      requestParams.set('', tagName);
     });
 
     const requestOptions = {
@@ -70,11 +70,11 @@ export class PostService {
   }
 
 
-  like(post_id: number, user_id: number): Observable<any>{
+  like(post_id: number, user_id: number): Observable<any> {
     return this.http.post(`${post_service.BASE_URL}/${post_id}/like/userId/${user_id}`, this.httpOptions);
   }
 
-  dislike(post_id: number, user_id: number): Observable<any>{
+  dislike(post_id: number, user_id: number): Observable<any> {
     return this.http.post(`${post_service.BASE_URL}/${post_id}/dislike/userId/${user_id}`, this.httpOptions);
   }
 
@@ -86,11 +86,11 @@ export class PostService {
     return this.http.get<Post[]>(`${post_service.BASE_URL}/userId/${user_id}/postLiked`, this.httpOptions);
   }
 
-  delete(post_id: number){
+  delete(post_id: number) {
     return this.http.delete(`${post_service.BASE_URL}/${post_id}`, this.httpOptions);
   }
 
-  comment(comment: CommentRequest): Observable<any>{
+  comment(comment: CommentRequest): Observable<any> {
     return this.http.post(`${post_service.BASE_URL}/answer`, comment, this.httpOptions);
   }
 
@@ -106,19 +106,19 @@ export class PostService {
     return this.http.post<Post[]>(`${post_service.BASE_URL}/filters`, filters, this.httpOptions);
   }
 
-  getAllByFilters(filters: Filters): Observable<Post[]>{
+  getAllByFilters(filters: Filters): Observable<Post[]> {
     return this.http.post<Post[]>(`${post_service.BASE_URL}/getAllByFilters`, filters, this.httpOptions);
   }
 
-  getAllUserAnswers(user_id: number): Observable<Post[]>{
+  getAllUserAnswers(user_id: number): Observable<Post[]> {
     return this.http.get<Post[]>(`${post_service.BASE_URL}/user/${user_id}/answers`, this.httpOptions);
   }
 
-  getUserById(user_id: number): Observable<User>{
+  getUserById(user_id: number): Observable<User> {
     return this.http.get<User>(`${post_service.BASE_URL}/user/${user_id}`, this.httpOptions);
   }
 
-  getUserByFirstname(firstname: string): Observable<User[]>{
+  getUserByFirstName(firstname: string): Observable<User[]> {
     return this.http.get<User[]>(`${post_service.BASE_URL}/user/firstname/${firstname}`, this.httpOptions);
   }
 
@@ -156,17 +156,17 @@ export class PostService {
    * convert a tab post to a Map with default value
    */
   postTabToPostMap(postTab: Post[]): Map<Post, {isLiked: boolean}> {
-    let tempMap = new Map<Post, {isLiked: boolean}>();
+    const tempMap = new Map<Post, {isLiked: boolean}>();
     postTab.forEach(post => {
       tempMap.set(post, {isLiked: false});
     });
     return tempMap;
   }
 
-  like_dislike(post_id: string, posts: Map<Post, {isLiked: boolean}>){
-    posts.forEach((value, post) =>{
-      if(post.id == post_id){
-        if(!value.isLiked){
+  like_dislike(post_id: string, posts: Map<Post, {isLiked: boolean}>) {
+    posts.forEach((value, post) => {
+      if (post.id == post_id) {
+        if (!value.isLiked) {
           this.like(parseInt(post_id), this.tokenStorage.getUser().id).subscribe(then => {
             value.isLiked = true;
             post.nbLike += 1;
@@ -183,7 +183,7 @@ export class PostService {
   }
 
 
-  reverseMap(mapToReverse: Map<Post, {isLiked: boolean}>): Map<Post, {isLiked: boolean}>{
+  reverseMap(mapToReverse: Map<Post, {isLiked: boolean}>): Map<Post, {isLiked: boolean}> {
     return new Map(Array.from(mapToReverse).reverse());
   }
 
