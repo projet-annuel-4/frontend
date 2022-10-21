@@ -1,35 +1,45 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core';
 //import {NgxEditorModel} from "../lib/types";
-import { CodeService } from '../../_services/code_execution/code.service'
-import { CodeExecution } from '../../_dtos/code_execution/CodeExecution'
+import {CodeService} from "../../_services/code_execution/code.service";
+import {CodeExecution} from "../../_dtos/code_execution/CodeExecution";
 
-declare var monaco: any
+
+declare var monaco: any;
+
 
 @Component({
   selector: 'app-project-execution',
   templateUrl: './project-execution.component.html',
-  styleUrls: ['./project-execution.component.scss'],
+  styleUrls: ['./project-execution.component.scss']
 })
 export class ProjectExecutionComponent implements OnInit {
-  codeExecutionModel = new CodeExecution()
-  editorOptions = { theme: 'vs-dark', language: 'python' }
-  code: string = 'function x() {\nconsole.log("Hello world!");\n}'
 
-  constructor(private codeExecution: CodeService) {}
+  codeExecutionModel = new CodeExecution();
+  editorOptions = {theme: 'vs-dark', language: 'python'};
+  code: string= 'function x() {\nconsole.log("Hello world!");\n}';
 
-  editor: any
-  toggleLanguage = true
+  constructor(private codeExecution: CodeService) { }
+
+  editor:any;
+  toggleLanguage = true;
+
 
   options = {
     theme: 'vs-dark',
     lineNumbers: 'on',
     minimap: {
-      enabled: true,
+      enabled: true
     },
-    toolbar: 'BarProp',
-  }
+    toolbar: 'BarProp'
+  };
 
-  jsonCode = ['{', '    "p1": "v3",', '    "p2": false', '}'].join('\n')
+  jsonCode = [
+    '{',
+    '    "p1": "v3",',
+    '    "p2": false',
+    '}'
+  ].join('\n');
+
 
   // model: NgxEditorModel = {
   //   value: this.jsonCode,
@@ -37,12 +47,12 @@ export class ProjectExecutionComponent implements OnInit {
   // };
 
   ngOnInit(): void {
-    this.updateOptions()
+    this.updateOptions();
   }
 
-  onInit(editor) {
-    this.editor = editor
-    console.log(editor)
+  onInit(editor){
+    this.editor = editor;
+    console.log(editor);
     // this.model = {
     //   value: "coucou c'est moi",
     //   language: 'json',
@@ -50,19 +60,16 @@ export class ProjectExecutionComponent implements OnInit {
     // };
   }
 
-  updateOptions() {
-    this.toggleLanguage = !this.toggleLanguage
+  updateOptions(){
+    this.toggleLanguage = !this.toggleLanguage;
     if (this.toggleLanguage) {
-      this.options = Object.assign({}, this.options, { language: this.codeExecutionModel.language })
+      this.options = Object.assign({}, this.options, { language: this.codeExecutionModel.language });
     } else {
-      this.options = Object.assign({}, this.options, { language: this.codeExecutionModel.language })
+      this.options = Object.assign({}, this.options, { language: this.codeExecutionModel.language });
     }
   }
 
-  sendCode() {
-    console.log('language : ' + this.codeExecutionModel.language)
-    console.log('code : ' + this.codeExecutionModel.code)
-
-    this.codeExecution.sendCode(this.codeExecutionModel)
+  sendCode(){
+    this.codeExecution.sendCode(this.codeExecutionModel);
   }
 }

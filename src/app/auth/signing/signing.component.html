@@ -1,53 +1,31 @@
-<nb-card [nbSpinner]="loading" nbSpinnerStatus="primary">
-  <nb-card-header>
-    <h3 id="title" class="text-center">Sign In</h3>
-  </nb-card-header>
+<span class="hideScrollbar">
+  <nb-card [nbSpinner]="loading" nbSpinnerStatus="primary">
+    <nb-card-header>
+        <h3 id="title" class="text-center">Sign In</h3>
+    </nb-card-header>
 
-  <nb-card-body>
-    <form [formGroup]="signInFrom" (ngSubmit)="login()">
-      <div class="form-control-group mb-3">
-        <label class="label" for="input-email">Email address:</label>
-        <input
-          nbInput
-          fullWidth
-          id="input-email"
-          type="email"
-          placeholder="Email address"
-          fieldSize="large"
-          formControlName="email"
-        />
-      </div>
+    <nb-card-body>
+        <form [formGroup]="signInFrom" (ngSubmit)="login()">
+            <div class="form-control-group mb-3">
+                <label class="label" for="input-email">Email address:</label>
+                <input nbInput fullWidth id="input-email" type="email" placeholder="Email address" fieldSize="large" formControlName="email">
+            </div>
 
-      <div class="form-control-group mb-3">
-        <span class="label-with-link">
-          <label class="label" for="input-password">Password:</label>
-        </span>
-        <input
-          nbInput
-          fullWidth
-          id="input-password"
-          type="password"
-          placeholder="Password"
-          fieldSize="large"
-          formControlName="password"
-        />
-        <p class="text-right">
-          <a class="caption-2 text-primary" routerLink="../forgot">Forgot Password?</a>
-        </p>
-      </div>
+            <div class="form-control-group mb-3">
+                <span class="label-with-link">
+                    <label class="label" for="input-password">Password:</label>
+                </span>
+                <input nbInput fullWidth id="input-password" type="password" placeholder="Password" fieldSize="large" formControlName="password">
+                <p class="text-right">
+                    <a class="caption-2 text-primary" routerLink="../forgot">Forgot Password?</a>
+                </p>
+            </div>
 
-      <button
-        nbButton
-        fullWidth
-        outline
-        status="primary"
-        size="large"
-        [disabled]="signInFrom.invalid"
-      >
-        Sign In
-      </button>
-    </form>
-    <!--
+            <button nbButton fullWidth outline status="primary" size="large" [disabled]="signInFrom.invalid">
+                Sign In
+            </button>
+        </form>
+      <!--
         <p class="text-center mt-3">or Continue with </p>
         <section class="text-center">
             <button nbButton outline class="text-control" (click)="google()" status="primary">
@@ -58,11 +36,12 @@
             </button>
         </section>
         -->
-  </nb-card-body>
+    </nb-card-body>
 
-  <nb-card-footer>
-    <p class="another-action text-center" aria-label="Register">
-      Don't have an account? <a class="text-link" routerLink="../signup">Register</a>
-    </p>
-  </nb-card-footer>
+    <nb-card-footer>
+        <p class="another-action text-center" aria-label="Register">
+            Don't have an account? <a class="text-link" routerLink="../signup">Register</a>
+        </p>
+    </nb-card-footer>
 </nb-card>
+</span>

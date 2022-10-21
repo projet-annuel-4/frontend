@@ -1,39 +1,34 @@
-import { Injectable } from '@angular/core'
-import { DataService } from '../data/data.service'
-import * as SockJS from 'sockjs-client'
-import { Stomp } from '@stomp/stompjs'
-import { environment } from 'src/environments/environment'
-import { UserService } from '../user/user.service'
-import { UserMessage } from '../../_dtos/chat/UserMessage'
-import { FriendProfile } from '../../_dtos/chat/FriendProfile'
-import { TokenStorageService } from '../token/token-storage.service'
-import { NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme'
+import { Injectable } from '@angular/core';
+import { DataService } from '../data/data.service';
+import * as SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
+import { environment } from 'src/environments/environment';
+import { UserService } from '../user/user.service';
+import { UserMessage } from '../../_dtos/chat/UserMessage';
+import { FriendProfile } from '../../_dtos/chat/FriendProfile';
+import { TokenStorageService } from '../token/token-storage.service';
+import {NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 
 @Injectable()
 export class NotificationService {
-  stompClient: any
+
+  stompClient: any;
   topic: string
 
-  toastPositions = NbGlobalPhysicalPosition
+  toastPositions = NbGlobalPhysicalPosition;
 
-  constructor(
-    private dataService: DataService,
-    private userService: UserService,
-    private tokenStorageService: TokenStorageService,
-    private nbToasterService: NbToastrService
-  ) {}
+  constructor(private dataService: DataService, private userService: UserService, private tokenStorageService: TokenStorageService,
+              private nbToasterService:NbToastrService) {
+  }
 
-  notification(senderId: number, message: string) {
-    if (senderId != this.tokenStorageService.getUser().id) {
-      console.log('dans le if')
-      this.nbToasterService.show(message, 'New Message', {
-        position: this.toastPositions.TOP_RIGHT,
-        status: 'basic',
-      })
+
+  notification(senderId: number, message: string){
+    if(senderId != this.tokenStorageService.getUser().id) {
+      this.nbToasterService.show(message, "New Message", {position: this.toastPositions.TOP_RIGHT, status: "basic"});
     }
   }
 
-  /*
+/*
   subscribe() {
     const ws = new SockJS(`http://localhost:8200/websocket`);
     this.stompClient = Stomp.over(ws);

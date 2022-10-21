@@ -1,24 +1,28 @@
 <nb-card>
   <nb-card-header>
     <nb-user
-      name="{{ post.key.user.firstName }} {{ post.key.user.lastName }}"
-      routerLink="/friend/{{ post.key.user.id }}/profile"
-    >
+      class="hoverEffect"
+      name="{{post.key.user.firstname}} {{post.key.user.lastname}}"
+      routerLink="/friend/{{post.key.user.id}}/profile">
     </nb-user>
-    <br />
-    Title : {{ post.key.title }}
+    <br>
+    Title : {{post.key.title}}
   </nb-card-header>
-  <nb-card-body class="</nb-layout-column>" routerLink="../{{ post.key.id }}/detail">
-    <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
+  <nb-card-body class="</nb-layout-column>" routerLink="../{{post.key.id}}/detail">
 
-    <span class="tag" *ngFor="let tag of post.key.tags">{{ tag.name }}</span>
+    <span class="hoverEffect">
+      <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
+    </span>
+
+    <span class="tag" *ngFor="let tag of post.key.tags">{{tag.name}}</span>
+
   </nb-card-body>
 
   <nb-card-footer>
-    <span (click)="like_dislike(post.key.id)">
-      <img *ngIf="!post.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20" />
-      <img *ngIf="post.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20" />
+    <span class="hoverEffect" (click)="like_dislike(post.key.id)">
+      <img *ngIf="!post.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20">
+      <img *ngIf="post.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20">
     </span>
-    {{ post.key.nbLike }}
+    {{post.key.nbLike}}
   </nb-card-footer>
 </nb-card>

@@ -1,121 +1,126 @@
 <nb-layout>
   <nb-layout-column>
     <nb-card>
-      <nb-card-body style="text-align: center">
-        <img
-          *ngIf="image !== undefined; else noProfileImage"
-          class="profile-image"
-          [src]="image"
-          width="150"
-          height="150"
-          alt=""
-        />
+      <nb-card-body style="text-align:center">
+
+        <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150" height="150" alt="">
         <ng-template #noProfileImage>
-          <img
-            class="profile-image"
-            src="../../../../assets/profile.png"
-            width="150"
-            height="150"
-            alt=""
-          />
+          <img class="profile-image" src="../../../../assets/profile.png" width="150" height="150" alt="">
         </ng-template>
 
-        <br />
-        <div>{{ friendProfile.firstName }} {{ friendProfile.lastName.toUpperCase() }}</div>
-        <div>{{ friendProfile.email }}</div>
+        <br>
+        <div>{{friendProfile.firstname}} {{friendProfile.lastname.toUpperCase()}}</div>
+        <div>{{friendProfile.email}}</div>
       </nb-card-body>
 
       <nb-card-footer>
-        <div (click)="viewFollowers()">{{ friendProfile.nbFollowers || 0 }} Followers</div>
-        <div (click)="viewSubscriptions()">
-          {{ friendProfile.nbSubscriptions || 0 }} Subscriptions
+        <div class="hoverEffect" (click)="viewFollowers()">
+            {{friendProfile.nbFollowers || 0}} Followers
+        </div>
+        <div class="hoverEffect" (click)="viewSubscriptions()">
+            {{friendProfile.nbSubscriptions || 0}} Subscriptions
         </div>
         <div style="text-align: right">
           <button nbButton (click)="follow_unfollow()">
-            {{ buttonText }}
+            {{buttonText}}
           </button>
         </div>
       </nb-card-footer>
     </nb-card>
 
+
     <nb-tabset>
+
       <nb-tab tabTitle="Posts">
-        <span *ngIf="posts !== undefined; else postElseBlock">
+        <span *ngIf="posts !== null; else postElseBlock">
           <nb-card *ngFor="let post of posts | keyvalue">
-            <!-- Impossible d'appeler le composant 'feed-post' Erreur : Maximum call stack size exceeded Error -->
-            <nb-card-header> Title : {{ post.key.title }} </nb-card-header>
-            <nb-card-body routerLink="/post/{{ post.key.id }}/detail">
+<!-- Impossible d'appeler le composant 'feed-post' Erreur : Maximum call stack size exceeded Error -->
+            <nb-card-header> Title : {{post.key.title}} </nb-card-header>
+            <nb-card-body class="hoverEffect" routerLink="/post/{{post.key.id}}/detail">
               <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
 
-              <span class="tag" *ngFor="let tag of post.key.tags"> {{ tag.name }} </span>
+              <span class="tag" *ngFor="let tag of post.key.tags"> {{tag.name}} </span>
             </nb-card-body>
             <nb-card-footer>
-              <span (click)="like_dislike(post.key.id)">
-                <img
-                  *ngIf="!post.value.isLiked"
-                  src="assets/black_heart.png"
-                  alt=""
-                  height="20"
-                  width="20"
-                />
-                <img
-                  *ngIf="post.value.isLiked"
-                  src="assets/red_heart.png"
-                  alt=""
-                  height="20"
-                  width="20"
-                />
+              <span class="hoverEffect" (click)="like_dislike(post.key.id)">
+                <img *ngIf="!post.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20">
+                <img *ngIf="post.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20">
               </span>
-              {{ post.key.nbLike }}
+              {{post.key.nbLike}}
             </nb-card-footer>
-            <!---->
+<!---->
           </nb-card>
         </span>
 
         <ng-template #postElseBlock>
-          <nb-card-body style="text-align: center"> No Post Found </nb-card-body>
+          <nb-card-body style="text-align: center">
+            No Post Found
+          </nb-card-body>
         </ng-template>
       </nb-tab>
 
       <nb-tab tabTitle="Answers">
-        <nb-card *ngIf="friendAnswers !== undefined; else answersElseBlock">
-          <span *ngFor="let friendAnswer of friendAnswers">
-            <nb-card-body routerLink="../post/{{ friendAnswer.id }}/detail">
-              <nb-card-header> Title : {{ friendAnswer.title }} </nb-card-header>
-
-              <div style="padding: 2%">
-                <pre><code>{{formatContentP(friendAnswer.content)}}</code></pre>
-              </div>
+        <span *ngIf="friendAnswers !== null; else answersElseBlock">
+          <nb-card *ngFor="let friendAnswer of friendAnswers | keyvalue">
+            <nb-card-header>
+              Title : {{friendAnswer.key.title}}
+            </nb-card-header>
+            <nb-card-body routerLink="../post/{{friendAnswer.key.id}}/detail">
+              <pre><code>{{this.codeService.formatContent(friendAnswer.key.content)}}</code></pre>
 
               <div>
-                <span class="tag" *ngFor="let tag of friendAnswer.tags"> {{ tag.name }} </span>
+                <span class="tag" *ngFor="let tag of friendAnswer.key.tags"> {{tag.name}} </span>
               </div>
             </nb-card-body>
-          </span>
+            <nb-card-footer>
+              <span class="hoverEffect" (click)="answers_like_dislike(friendAnswer.key.id)">
+                <img *ngIf="!friendAnswer.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20">
+                <img *ngIf="friendAnswer.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20">
+              </span>
+              {{friendAnswer.key.nbLike}}
+            </nb-card-footer>
         </nb-card>
+        </span>
 
         <ng-template #answersElseBlock>
-          <nb-card-body style="text-align: center"> No Post Found </nb-card-body>
+          <nb-card-body style="text-align: center">
+            No Post Found
+          </nb-card-body>
         </ng-template>
+
       </nb-tab>
 
       <nb-tab tabTitle="Like">
-        <div *ngFor="let postLiked of friendPostsLiked">
-          <nb-card>
-            <nb-card-body routerLink="../post/{{ postLiked.id }}/detail">
-              <nb-card-header> Title : {{ postLiked.title }} </nb-card-header>
+        <span *ngIf="friendPostsLiked !== null; else likedElseBlock">
+          <nb-card *ngFor="let postLiked of friendPostsLiked | keyvalue">
+            <nb-card-header>
+              Title : {{postLiked.key.title}}
+            </nb-card-header>
+            <nb-card-body routerLink="../post/{{postLiked.key.id}}/detail">
 
-              <div style="padding: 2%">
-                <pre><code>{{postLiked.content}}</code></pre>
-              </div>
+              <pre><code>{{this.codeService.formatContent(postLiked.key.content)}}</code></pre>
 
               <div>
-                <span class="tag" *ngFor="let tag of postLiked.tags"> {{ tag.name }} </span>
+                <span class="tag" *ngFor="let tag of postLiked.key.tags"> {{tag.name}} </span>
               </div>
             </nb-card-body>
+            <nb-card-footer>
+              <span class="hoverEffect" (click)="postLiked_like_dislike(postLiked.key.id)">
+                <img *ngIf="!postLiked.value.isLiked" src="assets/black_heart.png" alt="" height="20" width="20">
+                <img *ngIf="postLiked.value.isLiked" src="assets/red_heart.png" alt="" height="20" width="20">
+              </span>
+              {{postLiked.key.nbLike}}
+            </nb-card-footer>
           </nb-card>
-        </div>
+        </span>
+
+        <ng-template #likedElseBlock>
+          <nb-card-body style="text-align: center">
+            No Post Liked
+          </nb-card-body>
+        </ng-template>
       </nb-tab>
+
     </nb-tabset>
   </nb-layout-column>
 </nb-layout>

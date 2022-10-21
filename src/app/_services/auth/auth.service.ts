@@ -43,60 +43,59 @@ export class AuthService {
         this.tokenStorage.saveToken(response.accessToken)
         console.log('Login token  : ' + this.tokenStorage.getToken())
 
-        this.tokenStorage.saveUser(
-          new User(
-            response.id,
-            response.firstName,
-            response.lastName,
-            response.email,
-            0,
-            0,
-            response.imgUrl
-          )
-        )
+        this.tokenStorage.saveToken(response.accessToken);
+        console.log("Login token  : " + this.tokenStorage.getToken());
 
-        this.followService.getAllFollowers(response.id).subscribe(followers => {
-          const user = this.tokenStorage.getUser()
-          user.nbFollowers = followers.length
-          this.tokenStorage.saveUser(user)
-        })
+        console.log(response.firstName, response.lastName)
+        this.tokenStorage.saveUser(new User(response.id, response.firstName, response.lastName, response.email,
+          0, 0, response.imgUrl));
 
-        this.followService.getAllSubscriptions(response.id).subscribe(subscriptions => {
-          const user = this.tokenStorage.getUser()
-          user.nbSubscriptions = subscriptions.length
-          this.tokenStorage.saveUser(user)
-        })
+        this.followService.getAllFollowers(response.id).subscribe( followers => {
+          let user = this.tokenStorage.getUser();
+          user.nbFollowers = followers.length;
+          this.tokenStorage.saveUser(user);
+        });
 
-        console.log('Login User id : ' + this.tokenStorage.getUser().id)
-        console.log('Login User firstName : ' + this.tokenStorage.getUser().firstName)
-        console.log('Login User lastName : ' + this.tokenStorage.getUser().lastName)
-        console.log('Login User email : ' + this.tokenStorage.getUser().email)
-        console.log('Login User nbFollowers : ' + this.tokenStorage.getUser().nbFollowers)
-        console.log('Login User nbSubscriptions : ' + this.tokenStorage.getUser().nbSubscriptions)
-        return response
-      })
-    )
+        this.followService.getAllSubscriptions(response.id).subscribe( subscriptions => {
+          let user = this.tokenStorage.getUser();
+          user.nbSubscriptions = subscriptions.length;
+          this.tokenStorage.saveUser(user);
+        });
+
+
+        console.log("Login User id : " + this.tokenStorage.getUser().id);
+        console.log("Login User firstname : " + this.tokenStorage.getUser().firstname);
+        console.log("Login User lastname : " + this.tokenStorage.getUser().lastname);
+        console.log("Login User email : " + this.tokenStorage.getUser().email);
+        console.log("Login User nbFollowers : " + this.tokenStorage.getUser().nbFollowers);
+        console.log("Login User nbSubscriptions : " + this.tokenStorage.getUser().nbSubscriptions);
+        return response;
+      }));
+
   }
 
   register(signUpRequest: SignUpRequest) {
-    return this.http.post(`${auth_service.REGISTRATION}`, signUpRequest, this.httpOptions)
+    return this.http.post(`${auth_service.REGISTRATION}`, signUpRequest, this.httpOptions);
   }
 
-  registerWithFacebook() {
-    window.location.href = `${environment.DOMAIN}/oauth2/authorization/facebook?redirect_url=http://localhost:4200/auth/token`
+  registerWithFacebook(){
+    window.location.href=`${environment.DOMAIN}/oauth2/authorization/facebook?redirect_url=http://localhost:4200/auth/token`;
   }
 
-  registerWithGoogle() {
-    window.location.href = `${environment.DOMAIN}/oauth2/authorization/google?redirect_url=http://localhost:4200/auth/token`
+  registerWithGoogle(){
+    window.location.href=`${environment.DOMAIN}/oauth2/authorization/google?redirect_url=http://localhost:4200/auth/token`;
   }
 
-  registerWithGithub() {}
+  registerWithGithub(){
 
-  forgotPassword(email: string) {
-    return this.http.post(`${auth_service.FORGOT_PASSWORD}/${email}`, this.httpOptions)
   }
 
-  updatePassword(forgotPasswordRequest: ForgotPasswordRequest) {
-    return this.http.put(`${auth_service.EDIT_PASSWORD}`, forgotPasswordRequest, this.httpOptions)
+  forgotPassword(email: string){
+    return this.http.post(`${auth_service.FORGOT_PASSWORD}/${email}`, this.httpOptions);
   }
+
+  updatePassword(forgotPasswordRequest: ForgotPasswordRequest){
+    return this.http.put(`${auth_service.EDIT_PASSWORD}`, forgotPasswordRequest, this.httpOptions);
+  }
+
 }

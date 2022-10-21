@@ -1,11 +1,10 @@
 <nb-card>
   <nb-card-body>
-    <nb-user
-      style="padding-right: 155px"
-      [name]="subscription.firstName"
-      [title]="subscription.lastName"
-      (click)="goToSubscriptionPage()"
-    >
+    <nb-user class="hoverEffect"
+             style="padding-right: 155px"
+             [name]="subscription.firstname"
+             [title]="subscription.lastname"
+             (click)="goToSubscriptionPage()">
     </nb-user>
 
     <!--

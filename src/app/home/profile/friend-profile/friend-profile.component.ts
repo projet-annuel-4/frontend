@@ -1,193 +1,188 @@
-import { Component, Input, OnInit } from '@angular/core'
-import { User } from '../../../_dtos/user/User'
-import { Post } from '../../../_dtos/post/Post'
-import { UserService } from '../../../_services/user/user.service'
-import { ActivatedRoute, Params } from '@angular/router'
-import { PostService } from '../../../_services/post/post.service'
-import { FollowerListComponent } from '../follower-list/follower-list.component'
-import { SubscriptionListComponent } from '../subscription-list/subscription-list.component'
-import { NbDialogService } from '@nebular/theme'
-import { CodeService } from '../../../_services/code_execution/code.service'
-import { FollowService } from '../../../_services/follow/follow.service'
-import { TokenStorageService } from '../../../_services/token/token-storage.service'
-import { FileManagementService } from '../../../_services/file-management/file-management.service'
-import { DomSanitizer } from '@angular/platform-browser'
+import {Component, Input, OnInit} from '@angular/core';
+import {User} from "../../../_dtos/user/User";
+import {Post} from "../../../_dtos/post/Post";
+import {UserService} from "../../../_services/user/user.service";
+import {ActivatedRoute, Params} from "@angular/router";
+import {PostService} from "../../../_services/post/post.service";
+import {FollowerListComponent} from "../follower-list/follower-list.component";
+import {SubscriptionListComponent} from "../subscription-list/subscription-list.component";
+import {NbDialogService} from "@nebular/theme";
+import {CodeService} from "../../../_services/code_execution/code.service";
+import {FollowService} from "../../../_services/follow/follow.service";
+import {TokenStorageService} from "../../../_services/token/token-storage.service";
+import {FileManagementService} from "../../../_services/file-management/file-management.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-friend-profile',
   templateUrl: './friend-profile.component.html',
-  styleUrls: ['./friend-profile.component.scss'],
+  styleUrls: ['./friend-profile.component.scss']
 })
 export class FriendProfileComponent implements OnInit {
-  friendProfile: User
-  image
 
-  friendPostsLiked: Post[]
-  friendAnswers: Post[]
+  friendProfile: User;
+  image;
 
-  posts: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>()
-  postsAlreadyLiked: Post[]
+  posts: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
+  tempUserPost: Post[];
 
-  followedByTheUser: boolean = false
+  friendPostsLiked: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
+  tempFriendPostsLiked: Post[];
 
-  buttonText: string
+  friendAnswers: Map<Post, {isLiked: boolean}> = new Map<Post, {isLiked: boolean}>();
+  tempFriendAnswers: Post[];
 
-  constructor(
-    private userService: UserService,
-    private route: ActivatedRoute,
-    private postService: PostService,
-    private dialogService: NbDialogService,
-    public codeService: CodeService,
-    private followService: FollowService,
-    private tokenStorage: TokenStorageService,
-    private fileService: FileManagementService,
-    private sanitizer: DomSanitizer
-  ) {}
+  postsAlreadyLiked: Post[];
+
+  followedByTheUser: boolean = false;
+
+  buttonText: string;
+
+  constructor(private userService: UserService, private route: ActivatedRoute, private postService: PostService,
+              private dialogService: NbDialogService, public codeService:CodeService,
+              private followService: FollowService, private tokenStorage: TokenStorageService,
+              private fileService: FileManagementService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params): void => {
-      if (params.friendId !== undefined) {
-        this.initFriend(params.friendId)
-
-        this.fileService.downloadImage(params.friendId).subscribe(res => {
-          let objectURL = 'data:image/png;base64,' + res.file
-          this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-        })
+      if(params.friendId !== undefined){
+        this.initFriend(params.friendId);
+        this.loadProfilePicture(params.friendId);
       }
-    })
+    });
+
   }
 
-  initFriend(friendId: string) {
-    this.postService.getUserById(parseInt(friendId)).subscribe(friend => {
-      this.friendProfile = friend
-      this.initFriendPost()
-      this.isFollowed(parseInt(friendId))
-    })
+  initFriend(friendId: string){
+    this.postService.getUserById(parseInt(friendId)).subscribe(
+      friend => {this.friendProfile = friend},
+      () => {},
+      () => {
+        this.initFriendPost();
+        this.isFollowed(parseInt(friendId));
+      });
   }
 
-  initFriendPost() {
+
+  initFriendPost(){
     this.postService.getAllByUser(this.friendProfile.id).subscribe(
-      posts => {
-        posts.forEach(post => {
-          this.posts.set(post, { isLiked: false })
-        })
-        this.posts = new Map(Array.from(this.posts).reverse()) //reverse
-        this.markPostAlreadyLikeByUser()
-      },
-      error => {}
-    )
+      posts => {this.tempUserPost = posts;},
+      error => {},
+      () => {
+        if(this.tempUserPost != null){
+          this.posts = this.postService.postTabToPostMap(this.tempUserPost);
+          this.posts = this.postService.reverseMap(this.posts);
+          this.posts = this.markPostAlreadyLikeByUser(this.posts);
+        }
+      }
+    );
 
     this.postService.getPostLikedByUser(this.friendProfile.id).subscribe(
       postsLiked => {
-        this.friendPostsLiked = postsLiked
+        this.tempFriendPostsLiked = postsLiked;
       },
-      error => {}
-    )
+        error => {},
+      () => {
+        if(this.tempFriendPostsLiked != null){
+          this.friendPostsLiked = this.postService.postTabToPostMap(this.tempFriendPostsLiked);
+          this.friendPostsLiked = this.postService.reverseMap(this.friendPostsLiked)
+          this.friendPostsLiked = this.markPostAlreadyLikeByUser(this.friendPostsLiked);
+        }
+      }
+    );
 
     this.postService.getAllUserAnswers(this.friendProfile.id).subscribe(
       userAnswers => {
-        this.friendAnswers = userAnswers
-      },
-      error => {}
-    )
+          this.tempFriendAnswers = userAnswers;
+        },
+        error => {},
+      () => {
+        if(this.tempFriendAnswers !== null){
+          this.friendAnswers = this.postService.postTabToPostMap(this.tempFriendAnswers);
+          this.friendAnswers = this.postService.reverseMap(this.friendAnswers)
+          this.friendAnswers = this.markPostAlreadyLikeByUser(this.friendAnswers);
+        }
+      }
+    );
   }
 
-  isFollowed(friendId: number) {
-    this.followService
-      .getAllSubscriptions(this.tokenStorage.getUser().id)
-      .subscribe(subscriptions => {
-        subscriptions.forEach(sub => {
-          if (sub.id == friendId) this.followedByTheUser = true
-        })
-        this.updateButton()
-      })
+  loadProfilePicture(friendId: string){
+    this.fileService.downloadImage(parseInt(friendId)).subscribe( res => {
+      let objectURL = 'data:image/png;base64,' + res.file;
+      this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    })
   }
 
-  markPostAlreadyLikeByUser() {
+  isFollowed(friendId: number){
+    this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(subscriptions => {
+      subscriptions.forEach(sub => {
+        if(sub.id == friendId) this.followedByTheUser = true;
+      });
+      this.updateSubscribeButton();
+    });
+  }
+
+
+  markPostAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>){
     this.postService.getPostLikedByUser(this.tokenStorage.getUser().id).subscribe(postsLiked => {
       this.postsAlreadyLiked = postsLiked
-      this.posts.forEach((value, post) => {
+      posts.forEach((value, post) => {
         this.postsAlreadyLiked.forEach(postLiked => {
-          if (post.id == postLiked.id) value.isLiked = true
-        })
-      })
-    })
+          if(post.id == postLiked.id) value.isLiked = true;
+        });
+      });
+    });
+    return posts;
   }
 
-  viewFollowers() {
-    localStorage.setItem('fromFriendPage', 'true')
-    localStorage.setItem('friendId', this.friendProfile.id.toString())
-    this.dialogService.open(FollowerListComponent)
+  viewFollowers(){
+    localStorage.setItem('fromFriendPage', 'true');
+    localStorage.setItem('friendId', this.friendProfile.id.toString());
+    this.dialogService.open(FollowerListComponent);
   }
 
-  viewSubscriptions() {
-    localStorage.setItem('fromFriendPage', 'true')
-    localStorage.setItem('friendId', this.friendProfile.id.toString())
-    this.dialogService.open(SubscriptionListComponent)
+  viewSubscriptions(){
+    localStorage.setItem('fromFriendPage', 'true');
+    localStorage.setItem('friendId', this.friendProfile.id.toString());
+    this.dialogService.open(SubscriptionListComponent);
   }
 
-  formatContentP(content: string) {
-    let newContent = content
-    let codes = this.codeService.codePreview(content)
 
-    codes.codesFound.forEach((codeStr, i) => {
-      newContent = newContent.replace(codeStr, '\n' + codes.codes[i].content + '\n')
-    })
 
-    return newContent
-  }
-
-  follow_unfollow() {
-    if (!this.followedByTheUser) {
-      this.followService
-        .follow(this.tokenStorage.getUser().id, this.friendProfile.id)
-        .subscribe(then => {
-          this.followedByTheUser = true
-          this.friendProfile.nbFollowers += 1
-          this.updateButton()
-        })
+  follow_unfollow(){
+    if(!this.followedByTheUser){
+      this.followService.follow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
+        this.followedByTheUser = true;
+        this.friendProfile.nbFollowers += 1;
+        this.updateSubscribeButton();
+      });
     } else {
-      this.followService
-        .unfollow(this.tokenStorage.getUser().id, this.friendProfile.id)
-        .subscribe(then => {
-          this.followedByTheUser = false
-          this.friendProfile.nbFollowers -= 1
-          this.updateButton()
-        })
+      this.followService.unfollow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
+        this.followedByTheUser = false;
+        this.friendProfile.nbFollowers -= 1;
+        this.updateSubscribeButton();
+      });
     }
   }
 
-  like_dislike(post_id: string) {
-    this.posts.forEach((value, post) => {
-      if (post.id == post_id) {
-        value.isLiked = !value.isLiked
-
-        if (value.isLiked) {
-          this.postService
-            .like(parseInt(post_id), this.tokenStorage.getUser().id)
-            .subscribe(then => {
-              //this.status = this.ENABLE;
-              post.nbLike += 1
-              //window.location.reload();
-            })
-        } else {
-          this.postService
-            .dislike(parseInt(post_id), this.tokenStorage.getUser().id)
-            .subscribe(then => {
-              //this.status = this.DISABLE;
-              //window.location.reload();
-              post.nbLike -= 1
-            })
-        }
-      }
-    })
+  like_dislike(post_id: string){
+    this.postService.like_dislike(post_id, this.posts);
   }
 
-  updateButton() {
-    if (this.followedByTheUser == true) {
-      this.buttonText = 'unfollow'
+  answers_like_dislike(post_id: string){
+    this.postService.like_dislike(post_id, this.friendAnswers);
+  }
+
+
+  postLiked_like_dislike(post_id: string){
+    this.postService.like_dislike(post_id, this.friendPostsLiked);
+  }
+
+  updateSubscribeButton(){
+    if(this.followedByTheUser == true){
+      this.buttonText = "unfollow";
     } else {
-      this.buttonText = 'follow'
+      this.buttonText = "follow";
     }
   }
 }

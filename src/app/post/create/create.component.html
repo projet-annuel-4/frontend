@@ -9,39 +9,28 @@
       <nb-card-body>
         <form [formGroup]="postForm" (ngSubmit)="create()">
           <div class="form-control-group mb-3">
-            <span class="label-with-link">
-              <label class="label" for="input-title">Title :</label>
-            </span>
-            <input nbInput fullWidth id="input-title" fieldSize="large" formControlName="title" />
+                <span class="label-with-link">
+                    <label class="label" for="input-title">Title :</label>
+                </span>
+            <input nbInput fullWidth id="input-title" fieldSize="large" formControlName="title">
           </div>
           <div class="form-control-group mb-3">
-            <span class="label-with-link">
-              <label class="label" for="input-content">Content :</label>
-            </span>
+                    <span class="label-with-link">
+                        <label class="label" for="input-content">Content :</label>
+                    </span>
           </div>
-          <textarea
-            [(ngModel)]="content"
-            id="input-content"
-            formControlName="content"
-            rows="8"
-            cols="50"
-          >
+          <textarea [(ngModel)]="content" id="input-content" formControlName="content"
+                     placeholder="#`langage`  some code...##">
           </textarea>
 
+
           <div class="form-control-group mb-3">
-            <span class="label-with-link">
-              <label class="label" for="input-tagName">Tag :</label>
-            </span>
-            <input
-              nbInput
-              fullWidth
-              id="input-tagName"
-              placeholder="js, test,..."
-              fieldSize="large"
-              formControlName="tagName"
-            />
+                <span class="label-with-link">
+                    <label class="label" for="input-tagName">Tag :</label>
+                </span>
+            <input nbInput fullWidth id="input-tagName"  placeholder="js, test,..." fieldSize="large" formControlName="tagName">
           </div>
-          <!--
+<!--
           <div class="form-control-group mb-3">
                 <span class="label-with-link">
                     <label class="label" for="input-attachmentUrl">Attachment Url :</label>
@@ -56,20 +45,11 @@
             <input nbInput fullWidth id="input-attachmentDescription"  placeholder="" fieldSize="large" formControlName="attachmentDescription">
           </div>
 -->
-          <button
-            nbButton
-            fullWidth
-            outline
-            status="primary"
-            size="large"
-            [disabled]="postForm.invalid"
-          >
+          <button nbButton fullWidth outline status="primary" size="large" [disabled]="postForm.invalid">
             Post
           </button>
         </form>
       </nb-card-body>
-
-      <nb-card-footer> Footer </nb-card-footer>
     </nb-card>
   </nb-layout-column>
 
@@ -77,56 +57,3 @@
     <app-code-execution [inputContent]="content"></app-code-execution>
   </nb-layout-column>
 </nb-layout>
-
-<!--
-
-<nb-card nbSpinnerStatus="primary">
-  <nb-card-header>
-    <h3 id="title" class="text-center">Create Post</h3>
-  </nb-card-header>
-
-  <nb-card-body>
-    <form [formGroup]="postForm" (ngSubmit)="create()">
-        <div class="form-control-group mb-3">
-                    <span class="label-with-link">
-                        <label class="label" for="input-content">Content :</label>
-                    </span>
-        </div>
-        <textarea id="input-content" formControlName="content" rows="8" cols="50"> </textarea>
-
-      <div class="form-control-group mb-3">
-                <span class="label-with-link">
-                    <label class="label" for="input-tagName">Tag :</label>
-                </span>
-        <input nbInput fullWidth id="input-tagName"  placeholder="js, test,..." fieldSize="large" formControlName="tagName">
-      </div>
-
-      <div class="form-control-group mb-3">
-                <span class="label-with-link">
-                    <label class="label" for="input-attachmentUrl">Attachment Url :</label>
-                </span>
-        <input nbInput fullWidth id="input-attachmentUrl"  placeholder="" fieldSize="large" formControlName="attachmentUrl">
-      </div>
-
-      <div class="form-control-group mb-3">
-                <span class="label-with-link">
-                    <label class="label" for="input-attachmentDescription">Attachment Description :</label>
-                </span>
-        <input nbInput fullWidth id="input-attachmentDescription"  placeholder="" fieldSize="large" formControlName="attachmentDescription">
-      </div>
-
-      <button nbButton fullWidth outline status="primary" size="large" [disabled]="postForm.invalid">
-        Post
-      </button>
-
-    </form>
-  </nb-card-body>
-
-  <nb-card-footer>
-    Footer
-  </nb-card-footer>
-
-</nb-card>
-
-
--->
