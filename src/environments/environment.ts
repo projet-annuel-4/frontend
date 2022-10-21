@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-  DOMAIN: 'http://localhost:8072',
-  //DOMAIN: 'http://social-code.fr/backend',
+  // DOMAIN: 'http://localhost:8072',
+  DOMAIN: 'http://social-code.fr/backend',
 
   API_VERSION: 'api/v1',
 
@@ -18,7 +18,7 @@ export const environment = {
   FOLLOW: `followLink`,
   USERS_GROUPS: `users-group`,
   FILE: `files`,
-}
+};
 
 export const auth_service = {
   LOGIN: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/login`,
@@ -26,46 +26,46 @@ export const auth_service = {
 
   FORGOT_PASSWORD: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/forgot`,
   EDIT_PASSWORD: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/edit/password`,
-}
+};
 
 export const chat_service = {
   CHAT: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.CHAT}`,
   WEB_SOCKET: `http://social-code.fr/socket/websocket`,
-}
+};
 
 export const user_service = {
   INFO: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/info`,
   UPDATE: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.AUTH}/${environment.USERS}/edit`,
-}
+};
 
 export const code_execution_service = {
   SEND: `${environment.DOMAIN}/${environment.API_VERSION}/executor/submit`,
-  //SEND: `http://localhost:3001/${environment.API_VERSION}/codeExecutor/submit`
-}
+  // SEND: `http://localhost:3001/${environment.API_VERSION}/codeExecutor/submit`
+};
 
 export const post_service = {
   BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.POST}`,
-}
+};
 
 export const follower_service = {
   BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/post/${environment.FOLLOW}`,
-}
+};
 
 export const group_service = {
   BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/groups`,
-}
+};
 
 export const file_service = {
   BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/${environment.FILE}`,
-}
+};
 
 export const project_service = {
   BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}`,
-}
+};
 
 export const project_file_service = {
   BASE_URL: `${environment.DOMAIN}/${environment.API_VERSION}/project`,
-}
+};
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
