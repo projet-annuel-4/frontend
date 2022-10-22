@@ -22,30 +22,30 @@ import {
   NbTabsetModule,
   NbTreeGridModule,
   NbToastrModule,
-} from '@nebular/theme'
+} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from "./auth/auth.module";
+import { AuthModule } from './auth/auth.module';
 
 import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
-import {CodeExecutionComponent} from "./code/code-execution/code-execution.component";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CodeExecutionComponent} from './code/code-execution/code-execution.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ProjectExecutionComponent } from './code/project-execution/project-execution.component';
-import {MonacoEditorModule} from "./code/lib/editor.module";
-import {NgxMonacoEditorConfig} from "./code/lib/config";
+import {MonacoEditorModule} from './code/lib/editor.module';
+import {NgxMonacoEditorConfig} from './code/lib/config';
 import { FeedComponent } from './post/feed/feed.component';
 import { CreateComponent } from './post/create/create.component';
 import { PostDetailComponent } from './post/post-detail/post-detail.component';
 import { CommentComponent } from './post/comment/comment.component';
-import {CodeNotRunnableComponent} from "./code/code-not-runnable.component";
+import {CodeNotRunnableComponent} from './code/code-not-runnable.component';
 import { FeedPostComponent } from './post/feed-post/feed-post.component';
 import { SearchComponent } from './post/search/search.component';
 import { PostCardComponent } from './post/post-card/post-card.component';
-import {DatePipe} from "@angular/common";
+import {DatePipe} from '@angular/common';
 import { GroupHomeComponent } from './group/group-home/group-home.component';
 import { GroupCardComponent } from './group/group-card/group-card.component';
 import { GroupProfileComponent } from './group/group-profile/group-profile.component';
@@ -58,10 +58,14 @@ import { CreateCommitComponent } from './project/project-page/create-commit/crea
 import { CreateFileComponent } from './project/project-page/create-file/create-file.component';
 import { RevertCommitComponent } from './project/project-page/revert-commit/revert-commit.component';
 import { CreateProjectComponent } from './group/group-profile/create-project/create-project.component';
-import {LogoutDialogComponent} from "./shared/dialog/logout-dialog.component";
-import {DeletePostDialogComponent} from "./shared/dialog/delete-post-dialog.component";
-import {DeleteFileDialogComponent} from "./shared/dialog/delete-file-dialog.component";
-import {FileUnsavedChangeComponent} from "./shared/dialog/file-unsaved-change.component";
+import {LogoutDialogComponent} from './shared/dialog/logout-dialog.component';
+import {DeletePostDialogComponent} from './shared/dialog/delete-post-dialog.component';
+import {DeleteFileDialogComponent} from './shared/dialog/delete-file-dialog.component';
+import {FileUnsavedChangeComponent} from './shared/dialog/file-unsaved-change.component';
+import {TreeviewModule} from 'ngx-treeview';
+import {
+  DropdownTreeviewSelectComponent
+} from './project/project-page/project-tree/dropdown-treeview-select/dropdown-treeview-select.component';
 
 
 /************** Config Monaco *************/
@@ -103,14 +107,14 @@ export function onMonacoLoad() {
         },
       },
     ],
-  })
+  });
 }
 
 const monacoConfig: NgxMonacoEditorConfig = {
   baseUrl: 'assets',
   defaultOptions: { scrollBeyondLastLine: false },
   onMonacoLoad,
-}
+};
 /**************** End monaco Config ***********/
 
 @NgModule({
@@ -141,7 +145,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
     LogoutDialogComponent,
     DeletePostDialogComponent,
     DeleteFileDialogComponent,
-    FileUnsavedChangeComponent
+    FileUnsavedChangeComponent,
+    DropdownTreeviewSelectComponent
   ],
 
   imports: [
@@ -171,7 +176,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
     NbSearchModule,
     NbTabsetModule,
     NbToastrModule.forRoot(),
-    NbListModule
+    NbListModule,
+    TreeviewModule.forRoot()
   ],
   providers: [
     NbSearchModule,

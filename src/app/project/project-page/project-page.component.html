@@ -3,6 +3,9 @@
 
   <div class="col-md-8" style="height: 650px">
     <div id="fileName">Bienvenue</div>
+    <select formControlName="branchId">
+      <option *ngFor="let branch of branchList" [ngValue]="branch" [selected]="branch === 'master'">{{branch}}</option>
+    </select>
     <ngx-monaco-editor id="monaco-editor"
                        style=" height: 100%;
                        z-index: 1"

@@ -1,10 +1,6 @@
-<nb-card>
-  <nb-card-header>Files</nb-card-header>
-  <nb-card-body style="max-height: 250px">
-    <nb-list>
-      <nb-list-item *ngFor="let file of files" class="file">
-        <button nbButton (click)="setSelectedFileEvent(file.name)"> {{file.name}} </button>
-      </nb-list-item>
-    </nb-list>
-  </nb-card-body>
-</nb-card>
+<div class="row">
+  <div class="col-12">
+    <ngx-dropdown-treeview-select [items]="items" [(value)]="value" (valueChange)="onValueChange($event)">
+    </ngx-dropdown-treeview-select>
+  </div>
+</div>

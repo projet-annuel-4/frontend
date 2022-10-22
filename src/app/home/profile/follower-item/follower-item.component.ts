@@ -18,10 +18,11 @@ export class FollowerItemComponent implements OnInit {
   constructor(private router: Router, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.name = this.follower.firstname + ' ' + this.follower.lastname;
+    this.name = this.follower.firstName + ' ' + this.follower.lastName;
   }
 
   goToFriendPage() {
+    // tslint:disable-next-line:triple-equals
     if (this.follower.id == this.tokenStorage.getUser().id) {
       this.router.navigate(['/profile']).then();
     } else {
