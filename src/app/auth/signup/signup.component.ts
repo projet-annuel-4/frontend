@@ -21,7 +21,7 @@ export class SignupComponent implements OnInit {
               private dialogService: NbDialogService, private nbToasterService:NbToastrService) {
     this.signUpFrom = this.formBuilder.group({
       firstname: [],
-      lastname: [],
+      lastName: [],
       email: [],
       password: [],
       password2: [],
@@ -38,7 +38,7 @@ export class SignupComponent implements OnInit {
       const data = this.signUpFrom.value;
       //this.loading = true;
 
-      this._authService.register(new SignUpRequest(data['firstname'], data['lastname'], data['email'],
+      this._authService.register(new SignUpRequest(data['firstName'], data['lastName'], data['email'],
                                                    data['password'], data['password2'], "captchtest")).subscribe(
         () => {},
         error => {
