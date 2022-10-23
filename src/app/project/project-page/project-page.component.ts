@@ -17,8 +17,9 @@ import { FileService } from '../../_services/project/fileService';
 import { ProjectTreeComponent } from './project-tree/project-tree.component';
 import { Filess} from '../../_dtos/project/Filess';
 import { DeleteFileDialogComponent } from '../../shared/dialog/delete-file-dialog.component';
-import {Branch} from "../../_dtos/project/Branch";
-import {BranchService} from "../../_services/project/branchService";
+import {Branch} from '../../_dtos/project/Branch';
+import {BranchService} from '../../_services/project/branchService';
+import {CreateBranchComponent} from "./create-branch/create-brach.component";
 
 declare let monaco: any;
 
@@ -32,7 +33,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   code = 'Welcome ! Select or create a file :)';
   selectedFile: Filess = null;
   fileModified = false;
-  branchId: 'master';
+  branchName: 'master';
   projectId: number;
   atLeastOneFileModified = false;
   positions = NbGlobalPhysicalPosition;
@@ -62,7 +63,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     console.log(this.code);
 
     this.route.params.subscribe((params: Params): void => {
-      this.branchId = params.branchId;
+      this.branchName = params.branchName;
     });
   }
  loadBrachList() {
@@ -156,11 +157,11 @@ export class ProjectPageComponent implements OnInit, OnChanges {
       });
       return;
     }
-    let branchId;
+    let branchName;
     this.route.params.subscribe((params: Params): void => {
-      branchId = params.branchId;
+      branchName = params.branchName;
     });
-    localStorage.setItem('branchId', branchId);
+    localStorage.setItem('branchName', branchName);
     console.log('commit');
     this.dialogService.open(CreateCommitComponent).onClose.subscribe(
       () => {},
@@ -175,20 +176,42 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   revert() {
-    let branchId;
+    let branchName;
     this.route.params.subscribe((params: Params): void => {
-      branchId = params.branchId;
+      branchName = params.branchName;
     });
-    localStorage.setItem('branchId', branchId);
+    localStorage.setItem('branchName', branchName);
     this.dialogService.open(RevertCommitComponent);
   }
 
-  createFile() {
-    let branchId;
-    this.route.params.subscribe((params: Params): void => {
-      branchId = params.branchId;
+  createBranch() {
+    const createBranchComponent = this.dialogService.open(CreateBranchComponent, {
+      context: { projectId: this.projectId },
     });
-    localStorage.setItem('branchId', branchId);
+
+    createBranchComponent.onClose.subscribe(
+      () => {},
+      () => {
+        this.nbToasterService.show('', `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+        });
+      },
+      () => {
+        this.child.updateFiles();
+      }
+    );
+  }
+
+  merge() {
+  }
+
+  createFile() {
+    let branchName;
+    this.route.params.subscribe((params: Params): void => {
+      branchName = params.branchName;
+    });
+    localStorage.setItem('branchName', branchName);
     const createFileComponent = this.dialogService.open(CreateFileComponent, {
       context: { projectId: this.projectId },
     });

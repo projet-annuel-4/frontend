@@ -56,6 +56,7 @@ import { ProjectTreeComponent } from './project/project-page/project-tree/projec
 import { ActionPanelComponent } from './project/project-page/action-panel/action-panel.component';
 import { CreateCommitComponent } from './project/project-page/create-commit/create-commit.component';
 import { CreateFileComponent } from './project/project-page/create-file/create-file.component';
+import { CreateBranchComponent } from './project/project-page/create-branch/create-brach.component';
 import { RevertCommitComponent } from './project/project-page/revert-commit/revert-commit.component';
 import { CreateProjectComponent } from './group/group-profile/create-project/create-project.component';
 import {LogoutDialogComponent} from './shared/dialog/logout-dialog.component';
@@ -66,6 +67,7 @@ import {TreeviewModule} from 'ngx-treeview';
 import {
   DropdownTreeviewSelectComponent
 } from './project/project-page/project-tree/dropdown-treeview-select/dropdown-treeview-select.component';
+
 
 
 /************** Config Monaco *************/
@@ -140,6 +142,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
     ActionPanelComponent,
     CreateCommitComponent,
     CreateFileComponent,
+    CreateBranchComponent,
     RevertCommitComponent,
     CreateProjectComponent,
     LogoutDialogComponent,
