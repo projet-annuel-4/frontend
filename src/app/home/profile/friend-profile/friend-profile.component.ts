@@ -1,17 +1,17 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../../../_dtos/user/User";
-import {Post} from "../../../_dtos/post/Post";
-import {UserService} from "../../../_services/user/user.service";
-import {ActivatedRoute, Params} from "@angular/router";
-import {PostService} from "../../../_services/post/post.service";
-import {FollowerListComponent} from "../follower-list/follower-list.component";
-import {SubscriptionListComponent} from "../subscription-list/subscription-list.component";
-import {NbDialogService} from "@nebular/theme";
-import {CodeService} from "../../../_services/code_execution/code.service";
-import {FollowService} from "../../../_services/follow/follow.service";
-import {TokenStorageService} from "../../../_services/token/token-storage.service";
-import {FileManagementService} from "../../../_services/file-management/file-management.service";
-import {DomSanitizer} from "@angular/platform-browser";
+import {User} from '../../../_dtos/user/User';
+import {Post} from '../../../_dtos/post/Post';
+import {UserService} from '../../../_services/user/user.service';
+import {ActivatedRoute, Params} from '@angular/router';
+import {PostService} from '../../../_services/post/post.service';
+import {FollowerListComponent} from '../follower-list/follower-list.component';
+import {SubscriptionListComponent} from '../subscription-list/subscription-list.component';
+import {NbDialogService} from '@nebular/theme';
+import {CodeService} from '../../../_services/code_execution/code.service';
+import {FollowService} from '../../../_services/follow/follow.service';
+import {TokenStorageService} from '../../../_services/token/token-storage.service';
+import {FileManagementService} from '../../../_services/file-management/file-management.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-friend-profile',
@@ -34,18 +34,18 @@ export class FriendProfileComponent implements OnInit {
 
   postsAlreadyLiked: Post[];
 
-  followedByTheUser: boolean = false;
+  followedByTheUser = false;
 
   buttonText: string;
 
   constructor(private userService: UserService, private route: ActivatedRoute, private postService: PostService,
-              private dialogService: NbDialogService, public codeService:CodeService,
+              private dialogService: NbDialogService, public codeService: CodeService,
               private followService: FollowService, private tokenStorage: TokenStorageService,
               private fileService: FileManagementService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params): void => {
-      if(params.friendId !== undefined){
+      if (params.friendId !== undefined) {
         this.initFriend(params.friendId);
         this.loadProfilePicture(params.friendId);
       }
@@ -53,9 +53,9 @@ export class FriendProfileComponent implements OnInit {
 
   }
 
-  initFriend(friendId: string){
+  initFriend(friendId: string) {
     this.postService.getUserById(parseInt(friendId)).subscribe(
-      friend => {this.friendProfile = friend},
+      friend => {this.friendProfile = friend; },
       () => {},
       () => {
         this.initFriendPost();
@@ -64,12 +64,12 @@ export class FriendProfileComponent implements OnInit {
   }
 
 
-  initFriendPost(){
+  initFriendPost() {
     this.postService.getAllByUser(this.friendProfile.id).subscribe(
-      posts => {this.tempUserPost = posts;},
+      posts => {this.tempUserPost = posts; },
       error => {},
       () => {
-        if(this.tempUserPost != null){
+        if (this.tempUserPost != null) {
           this.posts = this.postService.postTabToPostMap(this.tempUserPost);
           this.posts = this.postService.reverseMap(this.posts);
           this.posts = this.markPostAlreadyLikeByUser(this.posts);
@@ -83,9 +83,9 @@ export class FriendProfileComponent implements OnInit {
       },
         error => {},
       () => {
-        if(this.tempFriendPostsLiked != null){
+        if (this.tempFriendPostsLiked != null) {
           this.friendPostsLiked = this.postService.postTabToPostMap(this.tempFriendPostsLiked);
-          this.friendPostsLiked = this.postService.reverseMap(this.friendPostsLiked)
+          this.friendPostsLiked = this.postService.reverseMap(this.friendPostsLiked);
           this.friendPostsLiked = this.markPostAlreadyLikeByUser(this.friendPostsLiked);
         }
       }
@@ -97,51 +97,51 @@ export class FriendProfileComponent implements OnInit {
         },
         error => {},
       () => {
-        if(this.tempFriendAnswers !== null){
+        if (this.tempFriendAnswers !== null) {
           this.friendAnswers = this.postService.postTabToPostMap(this.tempFriendAnswers);
-          this.friendAnswers = this.postService.reverseMap(this.friendAnswers)
+          this.friendAnswers = this.postService.reverseMap(this.friendAnswers);
           this.friendAnswers = this.markPostAlreadyLikeByUser(this.friendAnswers);
         }
       }
     );
   }
 
-  loadProfilePicture(friendId: string){
+  loadProfilePicture(friendId: string) {
     this.fileService.downloadImage(parseInt(friendId)).subscribe( res => {
-      let objectURL = 'data:image/png;base64,' + res.file;
+      const objectURL = 'data:image/png;base64,' + res.file;
       this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    })
+    });
   }
 
-  isFollowed(friendId: number){
+  isFollowed(friendId: number) {
     this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(subscriptions => {
       subscriptions.forEach(sub => {
-        if(sub.id == friendId) this.followedByTheUser = true;
+        if (sub.id === friendId) { this.followedByTheUser = true; }
       });
       this.updateSubscribeButton();
     });
   }
 
 
-  markPostAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>){
+  markPostAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>) {
     this.postService.getPostLikedByUser(this.tokenStorage.getUser().id).subscribe(postsLiked => {
-      this.postsAlreadyLiked = postsLiked
+      this.postsAlreadyLiked = postsLiked;
       posts.forEach((value, post) => {
         this.postsAlreadyLiked.forEach(postLiked => {
-          if(post.id == postLiked.id) value.isLiked = true;
+          if (post.id === postLiked.id) { value.isLiked = true; }
         });
       });
     });
     return posts;
   }
 
-  viewFollowers(){
+  viewFollowers() {
     localStorage.setItem('fromFriendPage', 'true');
     localStorage.setItem('friendId', this.friendProfile.id.toString());
     this.dialogService.open(FollowerListComponent);
   }
 
-  viewSubscriptions(){
+  viewSubscriptions() {
     localStorage.setItem('fromFriendPage', 'true');
     localStorage.setItem('friendId', this.friendProfile.id.toString());
     this.dialogService.open(SubscriptionListComponent);
@@ -149,8 +149,8 @@ export class FriendProfileComponent implements OnInit {
 
 
 
-  follow_unfollow(){
-    if(!this.followedByTheUser){
+  follow_unfollow() {
+    if (!this.followedByTheUser) {
       this.followService.follow(this.tokenStorage.getUser().id, this.friendProfile.id).subscribe(then => {
         this.followedByTheUser = true;
         this.friendProfile.nbFollowers += 1;
@@ -165,24 +165,24 @@ export class FriendProfileComponent implements OnInit {
     }
   }
 
-  like_dislike(post_id: string){
-    this.postService.like_dislike(post_id, this.posts);
+  like_dislike(postId: string) {
+    this.postService.like_dislike(postId, this.posts);
   }
 
-  answers_like_dislike(post_id: string){
-    this.postService.like_dislike(post_id, this.friendAnswers);
+  answers_like_dislike(postId: string) {
+    this.postService.like_dislike(postId, this.friendAnswers);
   }
 
 
-  postLiked_like_dislike(post_id: string){
-    this.postService.like_dislike(post_id, this.friendPostsLiked);
+  postLiked_like_dislike(postId: string) {
+    this.postService.like_dislike(postId, this.friendPostsLiked);
   }
 
-  updateSubscribeButton(){
-    if(this.followedByTheUser == true){
-      this.buttonText = "unfollow";
+  updateSubscribeButton() {
+    if (this.followedByTheUser === true) {
+      this.buttonText = 'unfollow';
     } else {
-      this.buttonText = "follow";
+      this.buttonText = 'follow';
     }
   }
 }

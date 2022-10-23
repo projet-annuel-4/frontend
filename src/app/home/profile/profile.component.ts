@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from 'src/app/_services/user/user.service';
-import {Post} from "../../_dtos/post/Post";
-import {PostService} from "../../_services/post/post.service";
-import {User} from "../../_dtos/user/User";
-import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
-import {FollowerListComponent} from "./follower-list/follower-list.component";
-import {SubscriptionListComponent} from "./subscription-list/subscription-list.component";
-import {CodeService} from "../../_services/code_execution/code.service";
-import {FileManagementService} from "../../_services/file-management/file-management.service";
-import {DomSanitizer} from "@angular/platform-browser";
-import {DeletePostDialogComponent} from "../../shared/dialog/delete-post-dialog.component";
+import {Post} from '../../_dtos/post/Post';
+import {PostService} from '../../_services/post/post.service';
+import {User} from '../../_dtos/user/User';
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
+import {FollowerListComponent} from './follower-list/follower-list.component';
+import {SubscriptionListComponent} from './subscription-list/subscription-list.component';
+import {CodeService} from '../../_services/code_execution/code.service';
+import {FileManagementService} from '../../_services/file-management/file-management.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {DeletePostDialogComponent} from '../../shared/dialog/delete-post-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -37,22 +37,22 @@ export class ProfileComponent implements OnInit {
   positions = NbGlobalPhysicalPosition;
 
   constructor(private userService: UserService, private postService: PostService, private router: Router,
-              private dialogService: NbDialogService,public codeService:CodeService, private fileService: FileManagementService,
-              private sanitizer: DomSanitizer, private nbToasterService:NbToastrService) {
+              private dialogService: NbDialogService, public codeService: CodeService, private fileService: FileManagementService,
+              private sanitizer: DomSanitizer, private nbToasterService: NbToastrService) {
   }
 
 
   ngOnInit(): void {
     this.profile = this.userService.getProfile();
 
-    //this.oldInit();
+    // this.oldInit();
     this.init();
   }
 
 
-  //TODO : Supprimer une fois le fix constaté sur la version déployée
+  // TODO : Supprimer une fois le fix constaté sur la version déployée
   //        et utilser cette méthode aux autres endroit
-  oldInit(){
+  oldInit() {
     this.postService.getUserById(this.profile.id).subscribe(user => {
       this.profile = user;
     });
@@ -61,18 +61,18 @@ export class ProfileComponent implements OnInit {
       posts.forEach(post => {
         this.posts.set(post, {isLiked: false});
 
-        this.posts = new Map(Array.from(this.posts).reverse()); //reverse
+        this.posts = new Map(Array.from(this.posts).reverse()); // reverse
         this.posts = this.markPostsAlreadyLikeByUser(this.posts);
       });
-    },error => {});
+    }, error => {});
 
     this.postService.getPostLikedByUser(this.profile.id).subscribe(posts => {
       posts.forEach(post => {
         this.postsLiked.set(post, {isLiked: false});
       });
-      this.postsLiked = new Map(Array.from(this.postsLiked).reverse()); //reverse
+      this.postsLiked = new Map(Array.from(this.postsLiked).reverse()); // reverse
       this.postsLiked = this.markPostsAlreadyLikeByUser(this.postsLiked);
-    },error => {});
+    }, error => {});
 
     this.postService.getAllUserAnswers(this.profile.id).subscribe(userAnswers => {
       this.tempUserAnswers = userAnswers;
@@ -80,18 +80,18 @@ export class ProfileComponent implements OnInit {
 
 
     this.fileService.downloadImage(this.profile.id).subscribe( res => {
-      let objectURL = 'data:image/png;base64,' + res.file;
+      const objectURL = 'data:image/png;base64,' + res.file;
       this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    })
+    });
   }
 
-  init(){
+  init() {
     this.postService.getUserById(this.profile.id).subscribe(user => {
       this.profile = user;
     });
 
     this.postService.getAllByUserWithoutAnswers(this.profile.id).subscribe(
-      posts => {this.tempUserPost = posts},
+      posts => {this.tempUserPost = posts; },
       error => {},
       () => {
         this.posts = this.postService.postTabToPostMap(this.tempUserPost);
@@ -102,12 +102,12 @@ export class ProfileComponent implements OnInit {
 
     this.postService.getPostLikedByUser(this.profile.id).subscribe(
       posts => {
-        this.tempPostLiked = posts
+        this.tempPostLiked = posts;
       },
       error => {},
-      () =>{
+      () => {
         this.postsLiked = this.postService.postTabToPostMap(this.tempPostLiked);
-        this.postsLiked = this.reverseMap(this.postsLiked)
+        this.postsLiked = this.reverseMap(this.postsLiked);
         this.postsLiked = this.markPostsAlreadyLikeByUser(this.postsLiked);
       }
     );
@@ -119,45 +119,45 @@ export class ProfileComponent implements OnInit {
         error => {},
       () => {
         this.userAnswers = this.postService.postTabToPostMap(this.tempUserAnswers);
-        this.userAnswers = this.reverseMap(this.userAnswers)
+        this.userAnswers = this.reverseMap(this.userAnswers);
         this.userAnswers = this.markPostsAlreadyLikeByUser(this.userAnswers);
       }
     );
 
     this.fileService.downloadImage(this.profile.id).subscribe( res => {
-      let objectURL = 'data:image/png;base64,' + res.file;
+      const objectURL = 'data:image/png;base64,' + res.file;
       this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     });
   }
 
-  viewFollowers(){
+  viewFollowers() {
     this.dialogService.open(FollowerListComponent);
   }
-  viewSubscriptions(){
+  viewSubscriptions() {
     this.dialogService.open(SubscriptionListComponent);
   }
 
 
-  deletePost(post_id: string) {
+  deletePost(postId: string) {
     this.dialogService.open(DeletePostDialogComponent).onClose.subscribe(deletionConfirmed => {
       if (deletionConfirmed) {
-        this.postService.delete(parseInt(post_id)).subscribe(
-          () =>{},
+        this.postService.delete(parseInt(postId)).subscribe(
+          () => {},
           () => {},
           () => {
             window.location.reload();
           });
-        this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position:this.positions.TOP_RIGHT, status:"success" });
+        this.nbToasterService.show('Post deleted successfully', `Confirmation`, { position: this.positions.TOP_RIGHT, status: 'success' });
       }
     });
   }
 
-  markPostsAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>){
+  markPostsAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>) {
     this.postService.getPostLikedByUser(this.profile.id).subscribe(postsLiked => {
-      this.postsAlreadyLiked = postsLiked
+      this.postsAlreadyLiked = postsLiked;
       posts.forEach((value, post) => {
         this.postsAlreadyLiked.forEach(postLiked => {
-          if(post.id == postLiked.id) value.isLiked = true;
+          if (post.id === postLiked.id) { value.isLiked = true; }
         });
       });
     });
@@ -166,19 +166,19 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  like_dislike(post_id: string){
-    this.postService.like_dislike(post_id, this.posts);
+  like_dislike(postId: string) {
+    this.postService.like_dislike(postId, this.posts);
   }
 
-  answers_like_dislike(post_id: string){
-    this.postService.like_dislike(post_id, this.userAnswers);
+  answers_like_dislike(postId: string) {
+    this.postService.like_dislike(postId, this.userAnswers);
   }
 
-  postLiked_like_dislike(post_id: string){
-    this.postService.like_dislike(post_id, this.postsLiked);
+  postLiked_like_dislike(postId: string) {
+    this.postService.like_dislike(postId, this.postsLiked);
   }
 
-  reverseMap(mapToReverse: Map<Post, {isLiked: boolean}>): Map<Post, {isLiked: boolean}>{
+  reverseMap(mapToReverse: Map<Post, {isLiked: boolean}>): Map<Post, {isLiked: boolean}> {
     return new Map(Array.from(mapToReverse).reverse());
   }
 

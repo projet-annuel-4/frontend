@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core'
-import { User } from '../../../_dtos/user/User'
-import { FollowService } from '../../../_services/follow/follow.service'
-import { TokenStorageService } from '../../../_services/token/token-storage.service'
-import { NbDialogRef } from '@nebular/theme'
-import { Router } from '@angular/router'
+import { Component, Input, OnInit } from '@angular/core';
+import { User } from '../../../_dtos/user/User';
+import { FollowService } from '../../../_services/follow/follow.service';
+import { TokenStorageService } from '../../../_services/token/token-storage.service';
+import { NbDialogRef } from '@nebular/theme';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-subscription-item',
@@ -12,9 +12,9 @@ import { Router } from '@angular/router'
 })
 export class SubscriptionItemComponent implements OnInit {
   @Input()
-  subscription: User
+  subscription: User;
 
-  friendId: number
+  friendId: number;
 
   constructor(
     private followService: FollowService,
@@ -26,10 +26,10 @@ export class SubscriptionItemComponent implements OnInit {
   ngOnInit(): void {}
 
   goToSubscriptionPage() {
-    if (this.subscription.id == this.tokenStorage.getUser().id) {
-      this.router.navigate(['/profile']).then()
+    if (this.subscription.id === this.tokenStorage.getUser().id) {
+      this.router.navigate(['/profile']).then();
     } else {
-      this.router.navigate(['friend/' + this.subscription.id + '/' + 'profile']).then()
+      this.router.navigate(['friend/' + this.subscription.id + '/' + 'profile']).then();
     }
   }
 
@@ -37,7 +37,7 @@ export class SubscriptionItemComponent implements OnInit {
     this.followService
       .unfollow(this.tokenStorage.getUser().id, this.subscription.id)
       .subscribe(then => {
-        this.ref.close()
-      })
+        this.ref.close();
+      });
   }
 }

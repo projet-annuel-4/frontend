@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, ViewChild, OnChanges, OnInit} from '@angular/core';
-import { TreeviewItem, TreeviewConfig} from 'ngx-treeview';
+import {TreeviewItem, TreeviewConfig, TreeItem} from 'ngx-treeview';
 import {FileUnsavedChangeComponent} from '../../../shared/dialog/file-unsaved-change.component';
 import {Filess} from '../../../_dtos/project/Filess';
 import {FileService} from '../../../_services/project/fileService';
@@ -87,7 +87,7 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
       this.fileSelectedEvent.emit(file);
     }
   }
-  onValueChange(value: number): void {
+  onValueChange(value: string): void {
     console.log('valueChange raised with value: ' + value);
     let file: Filess;
     for (let i = 0; i < this.files.length; i++) {
@@ -101,20 +101,21 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
   getRepository(data: string[]): TreeviewItem[] {
     console.log(data);
 // make tree
-    const treeObj = data.reduce((obj, path) => this.addPath(path.split('/'), obj, path), {});
+    const treeObj = data.reduce((obj: any, path) => this.addPath(path.split('/'), obj, path), {});
 
 // convert to array
     const arr = this.makeArray(treeObj);
 
 
     const treeItem = new TreeviewItem({
+      value: this.projectId,
       text: 'Project', collapsed: true, children: arr
     });
 
     return [treeItem];
   }
 
-  addPath(arr, obj = {}, path) {
+  addPath(arr: string[], obj: TreeItem, path: string): TreeItem {
     const component = arr.shift();
     const current = obj[component] || (obj[component] = {text: component, value: path});
     if (arr.length) {
@@ -123,7 +124,7 @@ export class ProjectTreeComponent implements OnInit, OnChanges {
     return obj;
   }
 
-  makeArray(obj) {
+  makeArray(obj: TreeItem): TreeItem[] {
     const arr = Object.values(obj);
     arr.filter(item => item.children).forEach(item => {
       item.children = this.makeArray(item.children);

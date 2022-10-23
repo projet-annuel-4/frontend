@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Post} from "../../_dtos/post/Post";
-import {PostService} from "../../_services/post/post.service";
-import {TokenStorageService} from "../../_services/token/token-storage.service";
-import {User} from "../../_dtos/user/User";
-import {KeyValue} from "@angular/common";
-import {CodeService} from "../../_services/code_execution/code.service";
+import {Post} from '../../_dtos/post/Post';
+import {PostService} from '../../_services/post/post.service';
+import {TokenStorageService} from '../../_services/token/token-storage.service';
+import {User} from '../../_dtos/user/User';
+import {KeyValue} from '@angular/common';
+import {CodeService} from '../../_services/code_execution/code.service';
 
 @Component({
   selector: 'app-feed-post',
@@ -18,8 +18,8 @@ export class FeedPostComponent implements OnInit {
 
   user: User;
 
-  ENABLE = "Enable";
-  DISABLE = "Disable"
+  ENABLE = 'Enable';
+  DISABLE = 'Disable';
   status: string;
 
 
@@ -30,16 +30,16 @@ export class FeedPostComponent implements OnInit {
     this.user = this.tokenStorage.getUser();
   }
 
-  like_dislike(post_id: string){
+  like_dislike(postId: string) {
     this.post.value.isLiked = !this.post.value.isLiked;
 
-    if(this.post.value.isLiked){
-      this.postService.like(parseInt(post_id), this.user.id).subscribe(then => {
+    if (this.post.value.isLiked) {
+      this.postService.like(parseInt(postId), this.user.id).subscribe(then => {
         this.status = this.ENABLE;
         this.post.key.nbLike += 1;
       });
     } else {
-      this.postService.dislike(parseInt(post_id), this.user.id).subscribe(then => {
+      this.postService.dislike(parseInt(postId), this.user.id).subscribe(then => {
         this.status = this.DISABLE;
         this.post.key.nbLike -= 1;
       });
