@@ -47,7 +47,6 @@ export class FriendProfileComponent implements OnInit {
     this.route.params.subscribe((params: Params): void => {
       if (params.friendId !== undefined) {
         this.initFriend(params.friendId);
-        this.loadProfilePicture(params.friendId);
       }
     });
 
@@ -60,6 +59,9 @@ export class FriendProfileComponent implements OnInit {
       () => {
         this.initFriendPost();
         this.isFollowed(parseInt(friendId));
+        if(this.friendProfile.imgUrl != null){
+          this.loadProfilePicture(this.friendProfile.id.toString());
+        }
       });
   }
 
