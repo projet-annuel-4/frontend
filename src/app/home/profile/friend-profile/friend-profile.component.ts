@@ -124,14 +124,19 @@ export class FriendProfileComponent implements OnInit {
 
 
   markPostAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>) {
-    this.postService.getPostLikedByUser(this.tokenStorage.getUser().id).subscribe(postsLiked => {
-      this.postsAlreadyLiked = postsLiked;
-      posts.forEach((value, post) => {
-        this.postsAlreadyLiked.forEach(postLiked => {
-          if (post.id === postLiked.id) { value.isLiked = true; }
-        });
-      });
-    });
+    this.postService.getPostLikedByUser(this.tokenStorage.getUser().id).subscribe(
+      postsLiked => {this.postsAlreadyLiked = postsLiked;},
+      () => {},
+      () => {
+        if(this.postsAlreadyLiked != null){
+          posts.forEach((value, post) => {
+            this.postsAlreadyLiked.forEach(postLiked => {
+              if (post.id === postLiked.id) { value.isLiked = true; }
+            });
+          });
+        }
+      }
+    );
     return posts;
   }
 
