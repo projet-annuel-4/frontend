@@ -45,50 +45,22 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.profile = this.userService.getProfile();
 
-    // this.oldInit();
     this.init();
   }
 
 
-  // TODO : Supprimer une fois le fix constaté sur la version déployée
-  //        et utilser cette méthode aux autres endroit
-  oldInit() {
-    this.postService.getUserById(this.profile.id).subscribe(user => {
-      this.profile = user;
-    });
-
-    this.postService.getAllByUser(this.profile.id).subscribe(posts => {
-      posts.forEach(post => {
-        this.posts.set(post, {isLiked: false});
-
-        this.posts = new Map(Array.from(this.posts).reverse()); // reverse
-        this.posts = this.markPostsAlreadyLikeByUser(this.posts);
-      });
-    }, error => {});
-
-    this.postService.getPostLikedByUser(this.profile.id).subscribe(posts => {
-      posts.forEach(post => {
-        this.postsLiked.set(post, {isLiked: false});
-      });
-      this.postsLiked = new Map(Array.from(this.postsLiked).reverse()); // reverse
-      this.postsLiked = this.markPostsAlreadyLikeByUser(this.postsLiked);
-    }, error => {});
-
-    this.postService.getAllUserAnswers(this.profile.id).subscribe(userAnswers => {
-      this.tempUserAnswers = userAnswers;
-    }, error => {});
-
-
-    this.fileService.downloadImage(this.profile.id).subscribe( res => {
-      const objectURL = 'data:image/png;base64,' + res.file;
-      this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    });
-  }
-
   init() {
-    this.postService.getUserById(this.profile.id).subscribe(user => {
-      this.profile = user;
-    });
+    this.postService.getUserById(this.profile.id).subscribe(
+      user => {
+        this.profile = user;
+      },
+      ()=> {},
+      () => {
+        if(this.profile.imgUrl != null){
+          this.loadImage();
+        }
+      }
+    );
 
     this.postService.getAllByUserWithoutAnswers(this.profile.id).subscribe(
       posts => {this.tempUserPost = posts; },
@@ -130,6 +102,10 @@ export class ProfileComponent implements OnInit {
       }
     );
 
+  }
+
+
+  loadImage(){
     this.fileService.downloadImage(this.profile.id).subscribe( res => {
       const objectURL = 'data:image/png;base64,' + res.file;
       this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
@@ -159,15 +135,21 @@ export class ProfileComponent implements OnInit {
   }
 
   markPostsAlreadyLikeByUser(posts: Map<Post, {isLiked: boolean}>) {
-    this.postService.getPostLikedByUser(this.profile.id).subscribe(postsLiked => {
-      this.postsAlreadyLiked = postsLiked;
-      posts.forEach((value, post) => {
-        this.postsAlreadyLiked.forEach(postLiked => {
-          if (post.id === postLiked.id) { value.isLiked = true; }
-        });
-      });
-    });
-
+    this.postService.getPostLikedByUser(this.profile.id).subscribe(
+      postsLiked => {
+        this.postsAlreadyLiked = postsLiked;
+      },
+      ()=> {},
+      () => {
+        if (this.postsAlreadyLiked != null){
+          posts.forEach((value, post) => {
+            this.postsAlreadyLiked.forEach(postLiked => {
+              if (post.id === postLiked.id) { value.isLiked = true; }
+            });
+          });
+        }
+      }
+    );
     return posts;
   }
 

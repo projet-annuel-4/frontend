@@ -75,14 +75,12 @@ export class DataService {
       )
       .pipe(
         map((userMessages: UserMessage[]) => {
-          console.log('userMessages.length : ' + userMessages.length)
           const messages: UserMessage[] = []
           userMessages.forEach((v, k) => {
             messages.push(v)
             messagesList.set(v.id, v)
           })
           this._userMessages.next(messagesList)
-          console.log('messages.length : ' + messages.length)
           return messages
         })
       )
@@ -104,7 +102,6 @@ export class DataService {
             friendsList.set(v.id, v)
           })
           this._friends.next(friendsList)
-          console.log(friends)
           return friends
         })
       )

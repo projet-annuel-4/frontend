@@ -41,12 +41,7 @@ export class AuthService {
     return this.http.post(`${auth_service.LOGIN}`, signInRequest, this.httpOptions).pipe(
       map((response: SignInResponse) => {
         this.tokenStorage.saveToken(response.accessToken)
-        console.log('Login token  : ' + this.tokenStorage.getToken())
 
-        this.tokenStorage.saveToken(response.accessToken);
-        console.log("Login token  : " + this.tokenStorage.getToken());
-
-        console.log(response.firstName, response.lastName)
         this.tokenStorage.saveUser(new User(response.id, response.firstName, response.lastName, response.email,
           0, 0, response.imgUrl));
 
@@ -62,13 +57,6 @@ export class AuthService {
           this.tokenStorage.saveUser(user);
         });
 
-
-        console.log("Login User id : " + this.tokenStorage.getUser().id);
-        console.log("Login User firstname : " + this.tokenStorage.getUser().firstName);
-        console.log("Login User lastname : " + this.tokenStorage.getUser().lastName);
-        console.log("Login User email : " + this.tokenStorage.getUser().email);
-        console.log("Login User nbFollowers : " + this.tokenStorage.getUser().nbFollowers);
-        console.log("Login User nbSubscriptions : " + this.tokenStorage.getUser().nbSubscriptions);
         return response;
       }));
 
