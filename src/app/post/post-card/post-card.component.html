@@ -2,9 +2,12 @@
   <nb-card-body routerLink="../{{ post.id }}/detail">
     <nb-card-header> Title : {{ post.title }} </nb-card-header>
 
-    <div style="padding: 2%">
-      Content : <code>{{ post.content }}</code>
-      <!-- Content : <code>{{formatContentP(post.content)}}</code> -->
+    <div>
+      <pre>
+        <code class="hoverEffect">
+          {{post.content}}
+        </code>
+      </pre>
     </div>
 
     <div>
