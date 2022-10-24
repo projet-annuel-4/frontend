@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit {
   constructor(private _authService: AuthService, private formBuilder: FormBuilder, private router: Router,
               private dialogService: NbDialogService, private nbToasterService:NbToastrService) {
     this.signUpFrom = this.formBuilder.group({
-      firstname: [],
+      firstName: [],
       lastName: [],
       email: [],
       password: [],
