@@ -94,9 +94,11 @@ export class ProfileComponent implements OnInit {
       posts => {this.tempUserPost = posts; },
       error => {},
       () => {
-        this.posts = this.postService.postTabToPostMap(this.tempUserPost);
-        this.posts = this.postService.reverseMap(this.posts);
-        this.posts = this.markPostsAlreadyLikeByUser(this.posts);
+        if(this.tempUserPost != null){
+          this.posts = this.postService.postTabToPostMap(this.tempUserPost);
+          this.posts = this.postService.reverseMap(this.posts);
+          this.posts = this.markPostsAlreadyLikeByUser(this.posts);
+        }
       }
     );
 
@@ -106,9 +108,11 @@ export class ProfileComponent implements OnInit {
       },
       error => {},
       () => {
-        this.postsLiked = this.postService.postTabToPostMap(this.tempPostLiked);
-        this.postsLiked = this.reverseMap(this.postsLiked);
-        this.postsLiked = this.markPostsAlreadyLikeByUser(this.postsLiked);
+        if(this.tempPostLiked != null){
+          this.postsLiked = this.postService.postTabToPostMap(this.tempPostLiked);
+          this.postsLiked = this.reverseMap(this.postsLiked);
+          this.postsLiked = this.markPostsAlreadyLikeByUser(this.postsLiked);
+        }
       }
     );
 
@@ -118,9 +122,11 @@ export class ProfileComponent implements OnInit {
       },
         error => {},
       () => {
-        this.userAnswers = this.postService.postTabToPostMap(this.tempUserAnswers);
-        this.userAnswers = this.reverseMap(this.userAnswers);
-        this.userAnswers = this.markPostsAlreadyLikeByUser(this.userAnswers);
+        if(this.tempUserAnswers != null){
+          this.userAnswers = this.postService.postTabToPostMap(this.tempUserAnswers);
+          this.userAnswers = this.reverseMap(this.userAnswers);
+          this.userAnswers = this.markPostsAlreadyLikeByUser(this.userAnswers);
+        }
       }
     );
 
