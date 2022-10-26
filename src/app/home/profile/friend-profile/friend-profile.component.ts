@@ -116,12 +116,20 @@ export class FriendProfileComponent implements OnInit {
   }
 
   isFollowed(friendId: number) {
-    this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(subscriptions => {
-      subscriptions.forEach(sub => {
-        if (sub.id === friendId) { this.followedByTheUser = true; }
-      });
-      this.updateSubscribeButton();
-    });
+    let tempSubscriptions : User[];
+
+    this.followService.getAllSubscriptions(this.tokenStorage.getUser().id).subscribe(
+      subscriptions => {tempSubscriptions = subscriptions},
+      () => {},
+      () => {
+        if(tempSubscriptions != null){
+          tempSubscriptions.forEach(sub => {
+            if (sub.id === friendId) this.followedByTheUser = true;
+          });
+          this.updateSubscribeButton();
+        }
+      }
+    );
   }
 
 
