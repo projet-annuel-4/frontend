@@ -10,7 +10,7 @@ import {
 import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import { CreateCommitComponent } from './create-commit/create-commit.component';
 import { CreateFileComponent } from './create-file/create-file.component';
-import { ActivatedRoute, Params } from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import { RevertCommitComponent } from './revert-commit/revert-commit.component';
 import { FileService } from '../../_services/project/fileService';
 
@@ -19,7 +19,7 @@ import { Filess} from '../../_dtos/project/Filess';
 import { DeleteFileDialogComponent } from '../../shared/dialog/delete-file-dialog.component';
 import {Branch} from '../../_dtos/project/Branch';
 import {BranchService} from '../../_services/project/branchService';
-import {CreateBranchComponent} from "./create-branch/create-brach.component";
+import {CreateBranchComponent} from './create-branch/create-brach.component';
 
 declare let monaco: any;
 
@@ -33,8 +33,9 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   code = 'Welcome ! Select or create a file :)';
   selectedFile: Filess = null;
   fileModified = false;
-  branchName: 'master';
+  branchName = 'master';
   projectId: number;
+  groupId: number;
   atLeastOneFileModified = false;
   positions = NbGlobalPhysicalPosition;
   branchList = ['master'];
@@ -45,29 +46,28 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   constructor(
     private cf: ChangeDetectorRef,
     private dialogService: NbDialogService,
+    private router: Router,
     private route: ActivatedRoute,
     private fileService: FileService,
-    private brachService: BranchService,
+    private branchService: BranchService,
     private nbToasterService: NbToastrService
   ) {
     this.route.params.subscribe(params => {
       this.projectId = params.projectId;
+      this.groupId = params.groupId;
     });
   }
 
   ngOnInit(): void {
     this.updateOptions();
+    this.loadBranchList();
+    this.loadCurrentBranch();
+    console.log(this.branchName);
 
-    this.loadBrachList();
-
-    console.log(this.code);
-
-    this.route.params.subscribe((params: Params): void => {
-      this.branchName = params.branchName;
-    });
   }
- loadBrachList() {
-  this.brachService.getAllBranch(this.projectId).subscribe(
+
+ loadBranchList() {
+  this.branchService.getAllBranch(this.projectId).subscribe(
     data => (this.branchList = data),
     () => {},
     () => {
@@ -75,6 +75,12 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     }
   );
  }
+ async loadCurrentBranch() {
+     await this.branchService.getActualBranch(this.projectId).toPromise().then(data => (this.branchName = data.name));
+  }
+  async checkout(branch: string) {
+     await this.branchService.checkout(this.projectId, branch).toPromise().then(() => (this.loadCurrentBranch()));
+  }
   ngOnChanges(simpleChanges: SimpleChanges) {}
 
   onInit() {}
@@ -101,6 +107,14 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   convertByteArrayToString(data: ArrayBuffer): string {
     const jsonBytesToString = String.fromCharCode(...new Uint8Array(data));
     return jsonBytesToString;
+  }
+
+  async onChangeBranch($event: Event, element) {
+    console.log(element);
+    await this.checkout(element);
+    this.child.updateFiles();
+    await this.router.navigateByUrl('/group/' + this.groupId + '/project/' + this.projectId + '/branch/' + this.branchName);
+
   }
 
   setFileChanged($event: Event) {
@@ -150,22 +164,17 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   commit() {
-    if (this.atLeastOneFileModified === false) {
-      this.nbToasterService.show('No files change since the last commit', ``, {
-        position: this.positions.TOP_RIGHT,
-        status: 'info',
-      });
-      return;
-    }
-    let branchName;
-    this.route.params.subscribe((params: Params): void => {
-      branchName = params.branchName;
+    const createCommitComponent = this.dialogService.open(CreateCommitComponent, {
+      context: { projectId: this.projectId },
     });
-    localStorage.setItem('branchName', branchName);
-    console.log('commit');
-    this.dialogService.open(CreateCommitComponent).onClose.subscribe(
+    createCommitComponent.onClose.subscribe(
       () => {},
-      () => {},
+      () => {
+        this.nbToasterService.show('', `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+        });
+      },
       () => {
         if (localStorage.getItem('commit') === 'true') {
           this.atLeastOneFileModified = false;
@@ -176,11 +185,12 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   revert() {
-    let branchName;
+    /*let branchName;
     this.route.params.subscribe((params: Params): void => {
       branchName = params.branchName;
     });
     localStorage.setItem('branchName', branchName);
+     */
     this.dialogService.open(RevertCommitComponent);
   }
 
@@ -213,7 +223,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     });
     localStorage.setItem('branchName', branchName);
     const createFileComponent = this.dialogService.open(CreateFileComponent, {
-      context: { projectId: this.projectId },
+      context: { projectId: this.projectId},
     });
     createFileComponent.onClose.subscribe(
       () => {},

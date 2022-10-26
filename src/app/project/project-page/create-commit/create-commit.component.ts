@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core'
-import { NbDialogRef } from '@nebular/theme'
-import { CommitService } from '../../../_services/project/commitService'
-import { CreateCommitRequest } from '../../../_dtos/project/CreateCommitRequest'
+import {Component, Input, OnInit} from '@angular/core';
+import { NbDialogRef } from '@nebular/theme';
+import { CommitService } from '../../../_services/project/commitService';
+import { CreateCommitRequest } from '../../../_dtos/project/CreateCommitRequest';
 
 @Component({
   selector: 'app-create-commit',
@@ -9,8 +9,8 @@ import { CreateCommitRequest } from '../../../_dtos/project/CreateCommitRequest'
   styleUrls: ['./create-commit.component.scss'],
 })
 export class CreateCommitComponent implements OnInit {
-  commitExec: boolean = false
-
+  commitExec = false;
+  @Input() projectId;
   constructor(
     protected ref: NbDialogRef<CreateCommitComponent>,
     private commitService: CommitService
@@ -21,21 +21,21 @@ export class CreateCommitComponent implements OnInit {
   createCommit() {
     const commitRequest = new CreateCommitRequest(
       (document.getElementById('commitName') as HTMLInputElement).value
-    )
-    this.commitExec = true
-    const branchId: string = localStorage.getItem('branchId')
-    this.commitService.create(+branchId, commitRequest).subscribe(
+    );
+    this.commitExec = true;
+    const branchId: string = localStorage.getItem('branchId');
+    this.commitService.create(this.projectId, commitRequest).subscribe(
       () => {},
       () => {},
       () => {
-        localStorage.setItem('commit', 'true')
-        this.ref.close()
+        localStorage.setItem('commit', 'true');
+        this.ref.close();
       }
-    )
+    );
   }
 
   getCommitExec(): boolean {
-    return this.commitExec
+    return this.commitExec;
   }
 
   close() {
@@ -43,6 +43,6 @@ export class CreateCommitComponent implements OnInit {
       () => this.getCommitExec(),
       () => {},
       () => localStorage.setItem('commit', 'false')
-    )
+    );
   }
 }

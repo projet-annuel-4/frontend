@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core'
-import { NbDialogRef, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme'
-import { FileService } from '../../../_services/project/fileService'
-import { CommitService } from '../../../_services/project/commitService'
-import { CreateFileRequest } from '../../../_dtos/project/CreateFileRequest'
-import { Commit } from '../../../_dtos/project/Commit'
-import { ActivatedRoute, Params } from '@angular/router'
+import { Component, OnInit } from '@angular/core';
+import { NbDialogRef, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+import { FileService } from '../../../_services/project/fileService';
+import { CommitService } from '../../../_services/project/commitService';
+import { CreateFileRequest } from '../../../_dtos/project/CreateFileRequest';
+import { Commit } from '../../../_dtos/project/Commit';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-revert-commit',
@@ -12,9 +12,9 @@ import { ActivatedRoute, Params } from '@angular/router'
   styleUrls: ['./revert-commit.component.css'],
 })
 export class RevertCommitComponent implements OnInit {
-  commits: Commit[]
+  commits: Commit[];
 
-  positions = NbGlobalPhysicalPosition
+  positions = NbGlobalPhysicalPosition;
 
   constructor(
     protected ref: NbDialogRef<RevertCommitComponent>,
@@ -24,7 +24,7 @@ export class RevertCommitComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadCommit()
+    //this.loadCommit();
   }
 
   loadCommit(): void {
@@ -32,55 +32,55 @@ export class RevertCommitComponent implements OnInit {
       commit => (this.commits = commit),
       () => {},
       () => {
-        this.sortCommits()
+        this.sortCommits();
       }
-    )
+    );
   }
 
   sortCommits(): void {
     this.commits.sort(
       (commitA, commitB) =>
         new Date(commitA.creationDate).getTime() - new Date(commitB.creationDate).getTime()
-    )
+    );
   }
 
   revertCommit() {
     const fileRequest = new CreateFileRequest(
       (document.getElementById('fileName') as HTMLInputElement).value
-    )
+    );
 
-    const commitId = localStorage.getItem('commitId')
-    console.log('commit : ' + commitId)
-    const branchId = localStorage.getItem('branchId')
+    const commitId = localStorage.getItem('commitId');
+    console.log('commit : ' + commitId);
+    const branchId = localStorage.getItem('branchId');
     this.commitService.revert(+branchId, parseInt(commitId)).subscribe(
       () => {},
       () => {},
       () => {
-        localStorage.removeItem('branchId')
-        localStorage.removeItem('commitId')
+        localStorage.removeItem('branchId');
+        localStorage.removeItem('commitId');
         this.nbToasterService.show('Project has been revert', `Done`, {
           position: this.positions.TOP_RIGHT,
           status: 'success',
-        })
-        window.location.reload()
+        });
+        window.location.reload();
       }
-    )
+    );
 
-    this.ref.close()
+    this.ref.close();
   }
 
   checkInput(id: number) {
-    localStorage.setItem('commitId', id.toString())
-    let checkbox = document.getElementsByClassName(
+    localStorage.setItem('commitId', id.toString());
+    const checkbox = document.getElementsByClassName(
       'commitCheckBox'
-    ) as HTMLCollectionOf<HTMLInputElement>
+    ) as HTMLCollectionOf<HTMLInputElement>;
     for (let i = 0; i < checkbox.length; i++) {
-      checkbox[i].checked = false
+      checkbox[i].checked = false;
     }
-    ;(document.getElementById('commit_' + id) as HTMLInputElement).checked = true
+    (document.getElementById('commit_' + id) as HTMLInputElement).checked = true;
   }
 
   close() {
-    this.ref.close()
+    this.ref.close();
   }
 }

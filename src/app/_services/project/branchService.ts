@@ -31,4 +31,20 @@ export class BranchService {
       this.httpOptions
     );
   }
+
+  getActualBranch(projectId: number): Observable<Branch> {
+    return this.http.get<Branch>(
+      `${project_service.BASE_URL}/project/${projectId}/branch/getActualBranch`,
+      this.httpOptions
+    );
+  }
+
+  checkout(projectId: number, branch: string): Observable<any> {
+    const target = {targetBranch: branch};
+    console.log(target)
+    return this.http.post<any>(
+      `${project_file_service.BASE_URL}/${projectId}/branch/checkout`,
+      target
+    );
+  }
 }
