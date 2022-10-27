@@ -18,9 +18,14 @@
       <nb-card-body>
         <form [formGroup]="answerForm" (ngSubmit)="comment()">
           <div class="form-control-group mb-3">
-                      <span class="label-with-link">
-                          <label class="label" for="input-content">Content :</label>
-                      </span>
+            <span class="label-with-link">
+                <label class="label" for="input-content">
+                  Content :
+                  <div>
+                    #`language` some code....##
+                  </div>
+                </label>
+            </span>
           </div>
           <textarea [(ngModel)]="content" id="input-content" formControlName="content"
                     placeholder="#`langage`  some code...##">

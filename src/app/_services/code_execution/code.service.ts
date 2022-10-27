@@ -38,6 +38,7 @@ export class CodeService {
    * @param language
    */
   cleanCode(code: string, language: string): string{
+    if(code == null || language == null) return
     return code
       .replace(language, '')
       .replace(/#/, '')
@@ -60,6 +61,17 @@ export class CodeService {
   createCodeFromString(codeString: string): Code{
     const codeRegex = RegExp('`(.+?)`','g');
     let languageMatch = codeRegex.exec(codeString);
+
+    if(languageMatch == null){
+      return new Code(
+        Math.floor(Math.random() * 1_000_000),
+        "",
+        this.cleanCode(codeString, ""),
+        "",
+        false
+      );
+    }
+
 
     return new Code(
       Math.floor(Math.random() * 1_000_000),
@@ -96,4 +108,15 @@ export class CodeService {
 
     return newContent;
   }
+
+
+
+
+  codeValidation(content: string): boolean{
+    const regexp = RegExp('#`(.+?)`(.+?)##','g');
+    let languageMatch = regexp.exec(content);
+
+    return languageMatch != null;
+  }
+
 }

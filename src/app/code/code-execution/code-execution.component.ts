@@ -3,6 +3,7 @@ import {CodeService} from "../../_services/code_execution/code.service";
 import {CodeExecution} from "../../_dtos/code_execution/CodeExecution";
 import {Code} from "../../_dtos/code_execution/Code";
 import {v4 as uuidv4} from 'uuid';
+import {NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 
 @Component({
   selector: 'app-code-execution',
@@ -20,8 +21,10 @@ export class CodeExecutionComponent implements OnInit {
 
   CODE_RUNNABLE_KEY = 'code-runnable';
 
+  positions = NbGlobalPhysicalPosition;
 
-  constructor(private codeService: CodeService) { }
+
+  constructor(private codeService: CodeService, private nbToasterService: NbToastrService) { }
 
   ngOnInit(): void {
 
@@ -38,10 +41,21 @@ export class CodeExecutionComponent implements OnInit {
    */
 
 
-  previewCode(inoutContent: string){
+  previewCode(inputContent: string){
+    if(!this.codeService.codeValidation(inputContent)){
+      this.nbToasterService.show(
+        'The code is not formatted correctly for the preview !',
+        `Warning`,
+        {
+          position: this.positions.TOP_RIGHT,
+          status: 'warning'
+        }
+      );
+      return;
+    }
     this.codes = [];
 
-    const preview = this.codeService.codePreview(inoutContent);
+    const preview = this.codeService.codePreview(inputContent);
 
     this.codes = preview.codes;
     this.codesString = preview.codesFound;
