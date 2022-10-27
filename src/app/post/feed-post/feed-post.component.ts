@@ -16,6 +16,8 @@ export class FeedPostComponent implements OnInit {
   @Input()
   post: KeyValue<Post, {isLiked: boolean}>;
 
+  postsAlreadyLiked: Post[];
+
   user: User;
 
   ENABLE = 'Enable';
@@ -28,6 +30,7 @@ export class FeedPostComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.tokenStorage.getUser();
+    this.markPostAlreadyLikeByUser();
   }
 
   like_dislike(postId: string) {
@@ -44,5 +47,21 @@ export class FeedPostComponent implements OnInit {
         this.post.key.nbLike -= 1;
       });
     }
+  }
+
+  markPostAlreadyLikeByUser() {
+    this.postService.getPostLikedByUser(this.user.id).subscribe(
+      postsLiked => { this.postsAlreadyLiked = postsLiked },
+      ()=> {},
+      () => {
+        if (this.postsAlreadyLiked == null) return;
+
+        this.postsAlreadyLiked.forEach(postAlreadyLiked => {
+          if (this.post.key.id === postAlreadyLiked.id) {
+            this.post.value.isLiked = true;
+          }
+        });
+      }
+    );
   }
 }

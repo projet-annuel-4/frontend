@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
 
     this.nbMenuService.onItemClick().subscribe(title => {
       switch (title.item.title) {
+        /*
         case 'Profile':
           this.router.navigate(['../profile']).then();
           break;
@@ -58,6 +59,8 @@ export class AppComponent implements OnInit {
         case 'Feed':
           this.router.navigate(['../post/feed']).then();
           break;
+
+         */
 
         case 'Logout':
           this.dialogService.open(LogoutDialogComponent);

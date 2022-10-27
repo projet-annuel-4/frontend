@@ -2,7 +2,7 @@
   <nb-card-header>
     <nb-user
       class="hoverEffect"
-      name="{{post.key.user.firstName}} {{post.key.user.lastName}}"
+      name="{{post.key.user.firstName}}"
       routerLink="/friend/{{post.key.user.id}}/profile">
     </nb-user>
     <br>
@@ -11,7 +11,7 @@
   <nb-card-body class="</nb-layout-column>" routerLink="../{{post.key.id}}/detail">
 
     <span class="hoverEffect">
-      <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
+      <pre><code>{{post.key.content}}</code></pre>
     </span>
 
     <span class="tag" *ngFor="let tag of post.key.tags">{{tag.name}}</span>

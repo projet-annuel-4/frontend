@@ -13,6 +13,8 @@ export class FeedComponent implements OnInit {
   user: User
 
   posts: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>()
+  tempPosts: Post[];
+
   postsAlreadyLiked: Post[]
 
   constructor(private postService: PostService, private tokenStorage: TokenStorageService) {}
@@ -22,55 +24,16 @@ export class FeedComponent implements OnInit {
 
     this.postService.getAllSubscriptionPost(this.user.id).subscribe(
       posts => {
-        posts.forEach(post => {
-          this.posts.set(post, { isLiked: false })
-        })
-
-        this.posts = new Map(Array.from(this.posts).reverse()) //reverse
-
-        //this.getPostAlreadyLiked();
-        this.postService.getPostLikedByUser(this.user.id).subscribe(
-          postsLiked => {
-            this.postsAlreadyLiked = postsLiked
-
-            this.posts.forEach((value, post) => {
-              this.postsAlreadyLiked.forEach(postLiked => {
-                if (post.id == postLiked.id) value.isLiked = true
-              })
-            })
-          },
-          error => {}
-        )
-
-        //this.markPostAlreadyLiked()
+        this.tempPosts = posts;
       },
-      error => {}
-    )
-  }
-
-  getPostAlreadyLiked() {
-    return this.postService.getPostLikedByUser(this.user.id).subscribe(
-      postsLiked => {
-        this.postsAlreadyLiked = postsLiked
-      },
-      error => {}
-    )
-  }
-
-  markPostAlreadyLiked() {
-    this.posts.forEach((value, post) => {
-      this.postsAlreadyLiked.forEach(postLiked => {
-        if (post.id == postLiked.id) value.isLiked = true
-      })
-    })
-  }
-
-  isAlreadyLiked(post_id: string): boolean {
-    let isLiked: boolean
-    this.postsAlreadyLiked.forEach(post => {
-      isLiked = post.id == post_id
-    })
-    return isLiked
+      error => {},
+      () => {
+        if(this.tempPosts != null){
+          this.posts = this.postService.postTabToPostMap(this.tempPosts);
+          this.posts = this.postService.reverseMap(this.posts);
+        }
+      }
+    );
   }
 
   /**

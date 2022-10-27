@@ -3,7 +3,7 @@
     <div>
       <nb-user
         class="hoverEffect"
-        name="{{post.user.firstName}} {{post.user.lastName}}"
+        name="{{post.user.firstName}}"
         (click)="goToProfile()">
       </nb-user>
       <br>
@@ -51,7 +51,7 @@
             <nb-card-header>
               <nb-user
                 class="hoverEffect"
-                name="{{answer.key.user.firstname}} {{answer.key.user.lastname}}"
+                name="{{answer.key.user.firstName}}"
                 routerLink="/friend/{{answer.key.user.id}}/profile">
               </nb-user>
             </nb-card-header>

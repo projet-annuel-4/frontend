@@ -122,35 +122,6 @@ export class PostService {
     return this.http.get<User[]>(`${post_service.BASE_URL}/user/firstname/${firstname}`, this.httpOptions);
   }
 
-  /*
-  getAllPostWithoutAnswers(user_id: number): Post[]{
-    let allUserPost: Post[];
-    let allUserAnswers: Post[];
-    let postsWithoutAnswers: Post[];
-    let tmp: Post[];
-
-    this.getAllByUser(user_id).subscribe(
-      posts => {allUserPost = posts},
-      () => {},
-      () => {
-        this.getAllUserAnswers(user_id).subscribe(
-          answers => {allUserAnswers = answers},
-          () => {},
-          () => {
-            allUserPost.forEach(userPost => {
-              if(!allUserAnswers.includes(userPost)) {
-                tmp.push(userPost);
-              }
-            });
-            postsWithoutAnswers = tmp
-          },
-        );
-      }
-    );
-    return postsWithoutAnswers;
-  }
-   */
-
 
   /**
    * convert a tab post to a Map with default value
