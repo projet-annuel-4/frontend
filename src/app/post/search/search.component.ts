@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common'
 import { User } from '../../_dtos/user/User'
 import { SearchFilter } from '../../_dtos/post/Search/SearchFilter'
 import { Filters } from '../../_dtos/post/Search/Filters'
+import {NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
 
 @Component({
   selector: 'app-search',
@@ -24,14 +25,36 @@ export class SearchComponent implements OnInit {
   userFirstName: string
   usersFound: User[]
 
-  constructor(private postService: PostService, private datePipe: DatePipe) {}
+  positions = NbGlobalPhysicalPosition;
+
+
+  constructor(private postService: PostService, private datePipe: DatePipe,
+              private nbToasterService: NbToastrService) {}
 
   ngOnInit(): void {}
 
   searchPost() {
-    this.postService.getAllByFilters(this.checkFilterValue()).subscribe(posts => {
-      this.postsFound = posts
-    })
+    this.postService.getAllByFilters(this.checkFilterValue()).subscribe(
+      posts => {
+        this.postsFound = posts;
+      },
+      () => {
+        this.nbToasterService.show('We have a problem retry later', `Oopss`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+          icon: 'alert-triangle-outline'
+        });
+      },
+      () => {
+        if(this.postsFound.length <= 0){
+          this.nbToasterService.show('No post Found', `Search`, {
+            position: this.positions.TOP_RIGHT,
+            status: 'info',
+            icon: 'info-outline'
+          });
+        }
+      }
+    );
   }
 
   checkFilterValue() {
@@ -51,9 +74,27 @@ export class SearchComponent implements OnInit {
   }
 
   searchUser() {
-    this.postService.getUserByFirstName(this.userFirstName).subscribe(user => {
-      this.usersFound = user
-    })
+    this.postService.getUserByFirstName(this.userFirstName).subscribe(
+      users => {
+        this.usersFound = users;
+      },
+      () => {
+        this.nbToasterService.show('We have a problem retry later', `Oopss`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+          icon: 'alert-triangle-outline'
+        });
+      },
+      () => {
+        if(this.usersFound.length <= 0){
+          this.nbToasterService.show('No user Found', ``, {
+            position: this.positions.TOP_RIGHT,
+            status: 'info',
+            icon: 'info-outline'
+          });
+        }
+      }
+    );
   }
 
   OLDcheckFilterValue() {
