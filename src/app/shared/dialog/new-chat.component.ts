@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core'
-import { NbDialogRef } from '@nebular/theme'
+import {NbDialogRef, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme'
+import {UserService} from "../../_services/user/user.service";
+import {ChatService} from "../../_services/chat/chat.service";
 
 @Component({
   template: `
@@ -16,13 +18,39 @@ import { NbDialogRef } from '@nebular/theme'
   `,
 })
 export class NewChatComponent {
-  constructor(protected ref: NbDialogRef<NewChatComponent>) {}
+
+  positions = NbGlobalPhysicalPosition;
+
+  constructor(protected ref: NbDialogRef<NewChatComponent>, private userService: UserService,
+              private chatService: ChatService, private nbToasterService: NbToastrService,) {}
+
 
   dismiss() {
     this.ref.close()
   }
 
-  submit(email: string) {
+  OLDsubmit(email: string) {
     this.ref.close(email)
+  }
+
+  submit(email: string){
+    this.userService.getByEmail(email).subscribe(
+      user => {
+        this.chatService.startConversation(user.email).subscribe(
+          r => {},
+          err => {},
+          () => {}
+        );
+      },
+      error => {
+        this.nbToasterService.show('User not found', `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'warning',
+        })
+      },
+      () => {
+        this.ref.close();
+      }
+    );
   }
 }

@@ -46,12 +46,21 @@ export class ChatListComponent implements OnInit {
       this.loadImage();
     }
 
-    this.chatService.getFriends().subscribe(friends => {
-      this.friends = friends;
-    });
+    this.initChatList();
   }
 
-  newChatClicked() {
+
+  initChatList(){
+    this.chatService.getFriends().subscribe(
+      friends => {
+        this.friends = friends;
+      },
+      err => {},
+      () => {}
+    );
+  }
+
+  OLDnewChatClicked() {
     this.dialogService.open(NewChatComponent).onClose.subscribe(email => {
       this.userService.getByEmail(email).subscribe(
         user => {
@@ -71,6 +80,14 @@ export class ChatListComponent implements OnInit {
           })
       );
     });
+  }
+
+  newChatClicked() {
+    this.dialogService.open(NewChatComponent).onClose.subscribe(
+      () => {},
+      () =>{},
+      () => this.initChatList()
+    );
   }
 
   newGroupClicked() {
