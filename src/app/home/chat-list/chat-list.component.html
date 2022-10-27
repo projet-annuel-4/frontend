@@ -2,7 +2,14 @@
   <nb-card-header>
     <div class="row no-gutters align-items-center" *ngIf="profile">
       <div class="col-auto">
-        <img src="{{profile.imgUrl}}" class="img-fluid rounded-circle" width="50px" appImgFallback/>
+        <img *ngIf="userImage !== undefined; else noProfileImage"
+             class="img-fluid rounded-circle"
+             [src]="userImage"
+             width="50"
+             appImgFallback>
+        <ng-template #noProfileImage>
+          <img src="assets/profile.png" class="img-fluid rounded-circle" width="50px" appImgFallback>
+        </ng-template>
       </div>
       <div class="col">
         <h6 class="pl-3 pr-3">{{profile.firstName}}</h6>

@@ -13,6 +13,8 @@ import { FriendProfile } from 'src/app/_dtos/chat/FriendProfile';
 import { NewChatComponent } from '../../shared/dialog/new-chat.component';
 import { User } from '../../_dtos/user/User';
 import { NewGroupComponent } from '../../shared/dialog/new-group.component';
+import {FileManagementService} from "../../_services/file-management/file-management.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-home-chat-list',
@@ -23,6 +25,7 @@ export class ChatListComponent implements OnInit {
   friends: FriendProfile[];
   profile: User;
   positions = NbGlobalPhysicalPosition;
+  userImage;
 
   constructor(
     private menuService: NbMenuService,
@@ -31,11 +34,17 @@ export class ChatListComponent implements OnInit {
     private userService: UserService,
     private chatService: ChatService,
     private route: ActivatedRoute,
-    private nbToasterService: NbToastrService
+    private nbToasterService: NbToastrService,
+    private fileService: FileManagementService,
+    private sanitizer: DomSanitizer,
   ) {}
 
   ngOnInit(): void {
     this.profile = this.userService.getProfile();
+
+    if(this.profile.imgUrl != null) {
+      this.loadImage();
+    }
 
     this.chatService.getFriends().subscribe(friends => {
       this.friends = friends;
@@ -70,5 +79,12 @@ export class ChatListComponent implements OnInit {
 
   chatClicked(id: string) {
     this.router.navigate([id], { relativeTo: this.route, skipLocationChange: true }).then();
+  }
+
+  loadImage(){
+    this.fileService.downloadImage(this.profile.id).subscribe( res => {
+      const objectURL = 'data:image/png;base64,' + res.file;
+      this.userImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    });
   }
 }
