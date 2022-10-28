@@ -47,7 +47,7 @@ export class GroupHomeComponent implements OnInit {
 
    */
 
-  showModal(){
+  showPopup(){
     if(this.togglePopup == "pop-up-block"){
       this.togglePopup = 'pop-up-none'
     } else if(this.togglePopup == "pop-up-none"){

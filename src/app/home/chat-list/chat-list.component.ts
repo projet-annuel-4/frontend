@@ -5,7 +5,6 @@ import {
   NbGlobalPhysicalPosition,
   NbToastrService,
 } from '@nebular/theme';
-import { filter, map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/_services/user/user.service';
 import { ChatService } from 'src/app/_services/chat/chat.service';
@@ -26,6 +25,8 @@ export class ChatListComponent implements OnInit {
   profile: User;
   positions = NbGlobalPhysicalPosition;
   userImage;
+
+  togglePopup: string = 'pop-up-none';
 
   constructor(
     private menuService: NbMenuService,
@@ -104,4 +105,38 @@ export class ChatListComponent implements OnInit {
       this.userImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     });
   }
+
+
+
+  /**** New Chat Pop Up ****/
+
+  openNewChatForm(){
+    this.togglePopup = 'pop-up-block';
+  }
+
+  closeNewChatForm(){
+    this.togglePopup = 'pop-up-none';
+  }
+
+  submit(email: string){
+    this.userService.getByEmail(email).subscribe(
+      user => {
+        this.chatService.startConversation(user.email).subscribe(
+          r => {},
+          err => {},
+          () => {}
+        );
+      },
+      error => {
+        this.nbToasterService.show('User not found', `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'warning',
+        })
+      },
+      () => {}
+    );
+  }
+
+
+
 }

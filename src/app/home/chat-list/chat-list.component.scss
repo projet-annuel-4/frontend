@@ -66,3 +66,19 @@ nb-card {
 .three-point {
   cursor: pointer;
 }
+
+//New Chat Pop up
+.pop-up {
+  margin: auto;
+  position: absolute;
+  top: 15%;
+  left: 10%;
+}
+
+.pop-up-block {
+  display: block;
+}
+
+.pop-up-none {
+  display: none;
+}
