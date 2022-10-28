@@ -6,26 +6,25 @@
 
     <nb-card>
       <nb-card-body style="text-align:center">
-
         <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150" height="150" alt="">
         <ng-template #noProfileImage>
-          <img class="profile-image" src="assets/profile.png" width="150" height="150" alt="">
+          <img class="profile-image" src="assets/profile.png" alt="">
         </ng-template>
 
-        <br>
-        <div>{{profile.firstName}} {{profile.lastName?.toUpperCase()}}</div>
-        <div>{{profile.email}}</div>
-      </nb-card-body>
+        <div style="padding-top: 5%; padding-bottom: 5%">
+          <div>{{profile.firstName}} {{profile.lastName?.toUpperCase()}}</div>
+          <div>{{profile.email}}</div>
+        </div>
 
-      <nb-card-footer>
-          <div class="hoverEffect" (click)="viewFollowers()">
+        <div style="border-top: 1px solid #f4f4f4;">
+          <div class="hoverEffect subscriptionsCounter" (click)="viewFollowers()">
             {{profile.nbFollowers || 0}} Followers
           </div>
-        <hr>
-          <div class="hoverEffect" (click)="viewSubscriptions()">
+          <div class="hoverEffect subscriptionsCounter" (click)="viewSubscriptions()">
             {{profile.nbSubscriptions || 0}} Subscriptions
           </div>
-      </nb-card-footer>
+        </div>
+      </nb-card-body>
     </nb-card>
 
     <nb-card>

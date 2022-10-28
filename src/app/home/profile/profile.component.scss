@@ -1,6 +1,6 @@
 .profile-image {
-  height: 200px;
-  width: 200px;
+  height: 70%;
+  width: 70%;
   border-radius: 50%;
   background-size: contain;
   background-position: center;
@@ -38,13 +38,10 @@
   z-index: 1;
 }
 
-.green {
-  -o-background-image: url("src/assets/red_heart.png");
+
+.subscriptionsCounter {
+  text-align: left;
+  border-top: 1px solid #f4f4f4;
+  padding-top: 5%;
+  padding-bottom: 5%;
 }
-
-.white {
-  -o-background-image: url("src/assets/black_heart.png");
-  background-color: white;
-}
-
-
