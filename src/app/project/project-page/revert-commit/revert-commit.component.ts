@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { NbDialogRef, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import { FileService } from '../../../_services/project/fileService';
 import { CommitService } from '../../../_services/project/commitService';
@@ -12,6 +12,7 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./revert-commit.component.css'],
 })
 export class RevertCommitComponent implements OnInit {
+  @Input() projectId;
   commits: Commit[];
 
   positions = NbGlobalPhysicalPosition;
@@ -24,12 +25,12 @@ export class RevertCommitComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //this.loadCommit();
+    this.loadCommit();
   }
 
   loadCommit(): void {
-    this.commitService.getAllCommit(+localStorage.getItem('branchId')).subscribe(
-      commit => (this.commits = commit),
+    this.commitService.getAllCommit(this.projectId).subscribe(
+      data => (this.commits = data),
       () => {},
       () => {
         this.sortCommits();
@@ -40,7 +41,7 @@ export class RevertCommitComponent implements OnInit {
   sortCommits(): void {
     this.commits.sort(
       (commitA, commitB) =>
-        new Date(commitA.creationDate).getTime() - new Date(commitB.creationDate).getTime()
+        new Date(commitA.date).getTime() - new Date(commitB.date).getTime()
     );
   }
 
@@ -69,7 +70,7 @@ export class RevertCommitComponent implements OnInit {
     this.ref.close();
   }
 
-  checkInput(id: number) {
+  checkInput(id: string) {
     localStorage.setItem('commitId', id.toString());
     const checkbox = document.getElementsByClassName(
       'commitCheckBox'

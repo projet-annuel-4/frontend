@@ -191,7 +191,9 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     });
     localStorage.setItem('branchName', branchName);
      */
-    this.dialogService.open(RevertCommitComponent);
+    this.dialogService.open(RevertCommitComponent, {
+      context: { projectId: this.projectId },
+    });
   }
 
   createBranch() {

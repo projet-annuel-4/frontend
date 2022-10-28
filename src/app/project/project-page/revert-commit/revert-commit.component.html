@@ -9,12 +9,12 @@
         <div>
           <input
             class="commitCheckBox"
-            id="commit_{{ commit.id }}"
-            (click)="checkInput(commit.id)"
+            id="commit_{{ commit.code }}"
+            (click)="checkInput(commit.name)"
             type="checkbox"
-            value="{{ commit.id }}"
+            value="{{ commit.name }}"
           />
-          <label for="commit_{{ commit.id }}">{{ commit.name }}</label>
+          <label for="commit_{{ commit.code }}">{{ commit.name }}</label>
         </div>
       </nb-list-item>
     </nb-list>

@@ -35,14 +35,14 @@ export class CommitService {
 
   getAllCommit(projectId: number): Observable<Commit[]> {
     return this.http.get<Commit[]>(
-      `${project_file_service.BASE_URL}/${projectId}/commit/getAllCommit`,
+      `${project_file_service.BASE_URL}/${projectId}/commit/getAllCommits`,
       this.httpOptions
     );
   }
 
   revert(projectId: number, commitId: number): Observable<any> {
     return this.http.post<any>(
-      `${project_file_service.BASE_URL}/${projectId}/commit/getAllCommit/revert`,
+      `${project_file_service.BASE_URL}/${projectId}/commit/revert`,
       this.httpOptions
     );
   }

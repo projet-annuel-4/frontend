@@ -1,7 +1,7 @@
 export class CreateCommitRequest {
-  name: string
+  commitName: string;
 
-  constructor(name: string) {
-    this.name = name
+  constructor(commitName: string) {
+    this.commitName = commitName;
   }
 }
