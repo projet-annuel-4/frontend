@@ -3,6 +3,25 @@
     <input class="menu-btn" type="checkbox" id="menu-btn" />
     <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
     <ul class="menu">
+      <li>
+        <a (click)="logOut()">
+          <img src="assets/log-out-outline.svg" alt="Log Out" height="16" width="16">
+        </a>
+      </li>
+<!--
+      <li>
+        <nb-user name="{{user.firstName}} {{user.lastName}}"
+                 picture=""
+                 [nbContextMenu]="items"
+                 nbContextMenuTag="my-context-menu"
+                 style="display: block;
+                        padding: 12px 12px;
+                        border-right: 1px solid #f4f4f4;
+                        text-decoration: none;"
+        >
+        </nb-user>
+      </li>
+-->
       <li><a routerLink="../group">Group</a></li>
       <li><a routerLink="../post/feed">Feed</a></li>
       <li><a routerLink="../post/search">Search</a></li>
@@ -10,18 +29,20 @@
       <li><a routerLink="../profile">Profile</a></li>
     </ul>
 
+<!--
     <nb-user name="{{user.firstName}} {{user.lastName}}"
              picture=""
              [nbContextMenu]="items"
              nbContextMenuTag="my-context-menu"
-             style="padding-left: 1%">
+             style="padding-left: 1%;">
     </nb-user>
-    <!--
-    <nb-toggle class="themeToggle"
-               [(ngModel)]="toggleTheme"
-               (click)="changeTheme()">
-    </nb-toggle>
-    -->
+-->
+        <!--
+        <nb-toggle class="themeToggle"
+                   [(ngModel)]="toggleTheme"
+                   (click)="changeTheme()">
+        </nb-toggle>
+        -->
   </nb-layout-header>
   <nb-layout-column>
 

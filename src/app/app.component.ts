@@ -83,4 +83,8 @@ export class AppComponent implements OnInit {
       this.themeService.changeTheme('default');
     }
   }
+
+  logOut(){
+    this.dialogService.open(LogoutDialogComponent);
+  }
 }
