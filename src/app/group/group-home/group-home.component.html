@@ -8,6 +8,41 @@
         </nb-list-item>
       </nb-list>
     </nb-card-body>
-    <nb-card-footer><button class="customButton" (click)="createGroup()">Create group</button></nb-card-footer>
+    <nb-card-footer><button class="customButton" (click)="showModal()">Create group</button></nb-card-footer>
   </nb-card>
 </div>
+
+
+<div [ngClass]="['pop-up',togglePopup]">
+  <nb-card class="dialog-card">
+    <nb-card-header>
+      <label class="label">Group Name:</label>
+      <input nbInput [(ngModel)]="createGroupRequest.name" />
+    </nb-card-header>
+
+    <nb-card-body>
+      <ul>
+        <li *ngFor="let member of members">
+          {{ member.email }}
+          <button nbButton size="tiny" status="danger" (click)="removeMember(member)">
+            remove
+          </button>
+        </li>
+      </ul>
+      <div>
+        <label class="label">Members :</label>
+        <input nbInput placeholder="mymail@mail.fr" [(ngModel)]="mail" />
+      </div>
+    </nb-card-body>
+
+    <button nbButton status="primary" (click)="addMembers()">Add Members</button>
+
+    <nb-card-footer>
+      <button nbButton (click)="createGroup()">Create</button>
+    </nb-card-footer>
+  </nb-card>
+</div>
+
+
+
+
