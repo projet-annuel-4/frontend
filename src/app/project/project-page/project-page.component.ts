@@ -20,6 +20,10 @@ import { DeleteFileDialogComponent } from '../../shared/dialog/delete-file-dialo
 import {Branch} from '../../_dtos/project/Branch';
 import {BranchService} from '../../_services/project/branchService';
 import {CreateBranchComponent} from './create-branch/create-brach.component';
+import {CreateCommitRequest} from "../../_dtos/project/CreateCommitRequest";
+import {CommitService} from "../../_services/project/commitService";
+import {Commit} from "../../_dtos/project/Commit";
+import {CreateFileRequest} from "../../_dtos/project/CreateFileRequest";
 
 declare let monaco: any;
 
@@ -43,9 +47,14 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   @ViewChild(ProjectTreeComponent) child: ProjectTreeComponent;
   @ViewChild(CreateCommitComponent) createCommitChild: CreateCommitComponent;
 
+  commitExec = false;
+
+  commits: Commit[];
 
   //Popup
   deleteFilePopup: string = 'pop-up-none';
+  createCommitPopup: string = 'pop-up-none';
+  revertCommitPopup: string = 'pop-up-none';
 
   constructor(
     private cf: ChangeDetectorRef,
@@ -54,7 +63,8 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     private route: ActivatedRoute,
     private fileService: FileService,
     private branchService: BranchService,
-    private nbToasterService: NbToastrService
+    private nbToasterService: NbToastrService,
+    private commitService: CommitService
   ) {
     this.route.params.subscribe(params => {
       this.projectId = params.projectId;
@@ -67,6 +77,8 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     this.loadBranchList();
     this.loadCurrentBranch();
     console.log(this.branchName);
+
+    this.loadCommit();
 
   }
 
@@ -145,26 +157,68 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   }
 
-  deleteFile(confirmation: boolean) {
-    if (confirmation) {
-      this.fileService.deleteFile(this.projectId, this.selectedFile.name).subscribe(
-        () => {},
-        () => {},
-        () => {
-          this.nbToasterService.show('File deleted successfully', `Done`, {
-            position: this.positions.TOP_RIGHT,
-            status: 'success',
-          });
-          this.child.uppdateFilesV2();
-        }
-      );
-    }
+  showDeleteFile(){
+    this.deleteFilePopup = 'pop-up-block';
+  }
+  hideDeleteFile(){
+    this.deleteFilePopup = 'pop-up-none';
+  }
+
+  deleteFile() {
+    this.fileService.deleteFile(this.projectId, this.selectedFile.name).subscribe(
+      () => {},
+      () => {},
+      () => {
+        this.nbToasterService.show('File deleted successfully', `Done`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'success',
+        });
+        this.child.uppdateFilesV2();
+      }
+    );
   }
 
   showDiff() {
     console.log('diff');
   }
 
+/*** Commit ***/
+  showCommitPopup(){
+    this.createCommitPopup = 'pop-up-block';
+  }
+  hideCommitPopup(){
+    this.createCommitPopup = 'pop-up-none';
+    this.getCommitExec();
+    localStorage.setItem('commit', 'false')
+  }
+
+  createCommit() {
+    const commitRequest = new CreateCommitRequest(
+      (document.getElementById('commitName') as HTMLInputElement).value
+    );
+    this.commitExec = true;
+    const branchId: string = localStorage.getItem('branchId');
+    this.commitService.create(this.projectId, commitRequest).subscribe(
+      () => {},
+      () => {},
+      () => {
+        localStorage.setItem('commit', 'true');
+        this.hideCommitPopup();
+
+        if (localStorage.getItem('commit') === 'true') {
+          this.atLeastOneFileModified = false;
+        }
+        localStorage.removeItem('commit');
+      }
+    );
+  }
+
+  getCommitExec(): boolean {
+    return this.commitExec;
+  }
+
+
+/*  OLD Commit
   commit() {
     const createCommitComponent = this.dialogService.open(CreateCommitComponent, {
       context: { projectId: this.projectId },
@@ -186,7 +240,73 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     );
   }
 
-  revert() {
+ */
+/*******/
+
+
+/****** Revert ******/
+  showRevertCommitPopup(){
+    this.revertCommitPopup = 'pop-up-block';
+  }
+  hideRevertCommitPopup(){
+    this.revertCommitPopup = 'pop-up-none';
+  }
+
+  loadCommit(): void {
+    this.commitService.getAllCommit(this.projectId).subscribe(
+      data => (this.commits = data),
+      () => {},
+      () => {
+        this.sortCommits();
+      }
+    );
+  }
+
+  sortCommits(): void {
+    this.commits.sort(
+      (commitA, commitB) =>
+        new Date(commitA.date).getTime() - new Date(commitB.date).getTime()
+    );
+  }
+
+  revertCommit() {
+    const fileRequest = new CreateFileRequest(
+      (document.getElementById('fileName') as HTMLInputElement).value
+    );
+
+    const commitId = localStorage.getItem('commitId');
+    console.log('commit : ' + commitId);
+    const branchId = localStorage.getItem('branchId');
+    this.commitService.revert(+branchId, parseInt(commitId)).subscribe(
+      () => {},
+      () => {},
+      () => {
+        localStorage.removeItem('branchId');
+        localStorage.removeItem('commitId');
+        this.nbToasterService.show('Project has been revert', `Done`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'success',
+        });
+        window.location.reload();
+      }
+    );
+
+    this.hideRevertCommitPopup();
+  }
+
+  checkInput(id: string) {
+    localStorage.setItem('commitId', id.toString());
+    const checkbox = document.getElementsByClassName(
+      'commitCheckBox'
+    ) as HTMLCollectionOf<HTMLInputElement>;
+    for (let i = 0; i < checkbox.length; i++) {
+      checkbox[i].checked = false;
+    }
+    (document.getElementById('commit_' + id) as HTMLInputElement).checked = true;
+  }
+
+
+  Oldrevert() {
     /*let branchName;
     this.route.params.subscribe((params: Params): void => {
       branchName = params.branchName;
@@ -197,6 +317,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
       context: { projectId: this.projectId },
     });
   }
+/*************/
 
   createBranch() {
     const createBranchComponent = this.dialogService.open(CreateBranchComponent, {

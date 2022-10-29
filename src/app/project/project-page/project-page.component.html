@@ -29,7 +29,7 @@
           <nb-list-item (click)="saveFile()" class="action" >
             save
           </nb-list-item>
-          <nb-list-item (click)="deleteFile()" class="action" >
+          <nb-list-item (click)="showDeleteFile()" class="action" >
             delete
           </nb-list-item>
         </nb-list>
@@ -45,10 +45,10 @@
           <nb-list-item (click)="showDiff()" class="action" >
             show diff
           </nb-list-item>
-          <nb-list-item (click)="commit()" class="action" >
+          <nb-list-item (click)="showCommitPopup()" class="action" >
             Commit
           </nb-list-item>
-          <nb-list-item (click)="revert()" class="action" >
+          <nb-list-item (click)="showRevertCommitPopup()" class="action" >
             Revert
           </nb-list-item>
           <nb-list-item (click)="merge()" class="action" >
@@ -82,7 +82,7 @@
           <button
             nbButton
             size="tiny"
-            (click)="deleteFile(true)">
+            (click)="deleteFile()">
             delete
           </button>
         </span>
@@ -90,7 +90,7 @@
           <button nbButton
                   size="tiny"
                   status="danger"
-                  (click)="deleteFile(false)">
+                  (click)="hideDeleteFile()">
             Cancel
           </button>
         </span>
@@ -100,10 +100,60 @@
 
 
 <!-- Create Commit -->
+<div [ngClass]="['pop-up', createCommitPopup]">
+  <nb-card class="dialog-card">
+    <nb-card-header>
+      <div>Commit</div>
+    </nb-card-header>
+
+    <nb-card-body>
+      <div>
+        <label>Nom du Commit</label>
+      </div>
+      <div>
+        <input type="text" id="commitName" />
+      </div>
+    </nb-card-body>
+
+    <nb-card-footer>
+      <button nbButton (click)="createCommit()">Create</button>
+      <button nbButton (click)="hideCommitPopup()">Close</button>
+    </nb-card-footer>
+  </nb-card>
+</div>
 
 
+<!-- Revert Commit -->
+<div [ngClass]="['pop-up', revertCommitPopup]">
+  <nb-card class="dialog-card">
+    <nb-card-header>
+      <div>File</div>
+    </nb-card-header>
 
+    <nb-card-body>
+      <nb-list>
+        <nb-list-item *ngFor="let commit of commits">
+          <div>
+            <input
+              class="commitCheckBox"
+              id="commit_{{ commit.code }}"
+              (click)="checkInput(commit.name)"
+              type="checkbox"
+              value="{{ commit.name }}"
+            />
+            <label for="commit_{{ commit.code }}">{{ commit.name }}</label>
+          </div>
+        </nb-list-item>
+      </nb-list>
+    </nb-card-body>
 
+    <nb-card-footer>
+      <button nbButton (click)="revertCommit()">Revert</button>
+      <button nbButton (click)="hideRevertCommitPopup()">Close</button>
+    </nb-card-footer>
+  </nb-card>
+
+</div>
 
 
 
