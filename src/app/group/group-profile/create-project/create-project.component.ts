@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import {Component, OnInit, Optional} from '@angular/core'
 import { NbDialogRef, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme'
 import { FileService } from '../../../_services/project/fileService'
 import { ActivatedRoute } from '@angular/router'
@@ -15,14 +15,19 @@ import { CreateProjectRequest } from '../../../_dtos/project/CreateProjectReques
 export class CreateProjectComponent implements OnInit {
   positions = NbGlobalPhysicalPosition
 
+
+  togglePopup: string;
+
   constructor(
-    protected ref: NbDialogRef<CreateProjectComponent>,
+    @Optional() private ref: NbDialogRef<CreateProjectComponent>,
     private projectService: ProjectService,
     private route: ActivatedRoute,
     private nbToasterService: NbToastrService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log("togglePopup : " + this.togglePopup)
+  }
 
   createProject() {
     const projectRequest = new CreateProjectRequest(
@@ -49,12 +54,24 @@ export class CreateProjectComponent implements OnInit {
 
         localStorage.removeItem('groupId')
         delay(2000)
-        this.ref.close()
+        //this.ref.close()
       }
     )
   }
 
   close() {
-    this.ref.close()
+    this.togglePopup = 'pop-up-none';
   }
+
+
+
+  showPopup(){
+    if(this.togglePopup == "pop-up-block"){
+      this.togglePopup = 'pop-up-none'
+    } else if(this.togglePopup == "pop-up-none"){
+      this.togglePopup = 'pop-up-block'
+    }
+  }
+
+
 }

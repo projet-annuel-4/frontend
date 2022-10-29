@@ -21,7 +21,7 @@
         </div>
         <hr>
         <div>
-          <button class="customButton" (click)="createProject()">
+          <button class="customButton" (click)="showPopup()">
             Create project
           </button>
         </div>
@@ -50,3 +50,27 @@
     </nb-tabset>
   </nb-layout-column>
 </nb-layout>
+
+
+
+<div [ngClass]="['pop-up',togglePopup]">
+  <nb-card class="dialog-card">
+    <nb-card-header>
+      <div>New Project</div>
+    </nb-card-header>
+
+    <nb-card-body>
+      <div>
+        <label>Project Name</label>
+      </div>
+      <div>
+        <input type="text" id="createProjectName" />
+      </div>
+    </nb-card-body>
+
+    <nb-card-footer>
+      <button nbButton (click)="createProject()">Create</button>
+      <button style="margin-left: 5%" nbButton (click)="showPopup()">Close</button>
+    </nb-card-footer>
+  </nb-card>
+</div>
