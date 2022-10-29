@@ -2,8 +2,10 @@
   <nb-card-body>
     <div class="row">
       <div class="col-md-6">
-        <nb-user name="{{this.member.firstName}} {{this.member.lastName}}"
-                 picture="{{image != null ? image : ''}}">
+        <nb-user class="hoverEffect"
+                 name="{{this.member.firstName}} {{this.member.lastName}}"
+                 picture="{{image != null ? image : ''}}"
+                 (click)="goToFriendPage()">
         </nb-user>
       </div>
 

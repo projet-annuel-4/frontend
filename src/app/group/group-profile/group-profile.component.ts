@@ -108,6 +108,7 @@ export class GroupProfileComponent implements OnInit {
         })
 
         localStorage.removeItem('groupId')
+        this.loadProjects();
         this.showPopup();
       }
     )

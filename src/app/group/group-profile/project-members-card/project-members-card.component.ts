@@ -4,6 +4,8 @@ import {GroupService} from '../../../_services/group/group.service';
 import {FileService} from "../../../_services/project/fileService";
 import {FileManagementService} from "../../../_services/file-management/file-management.service";
 import {DomSanitizer} from "@angular/platform-browser";
+import {Router} from "@angular/router";
+import {TokenStorageService} from "../../../_services/token/token-storage.service";
 
 @Component({
   selector: 'app-project-members-card',
@@ -19,7 +21,9 @@ export class ProjectMembersCardComponent implements OnInit {
 
   constructor(private groupService: GroupService,
               private fileService : FileManagementService,
-              private sanitizer: DomSanitizer) { }
+              private sanitizer: DomSanitizer,
+              private router: Router,
+              private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
     console.log( this.member);
@@ -41,5 +45,14 @@ export class ProjectMembersCardComponent implements OnInit {
       const objectURL = 'data:image/png;base64,' + res.file;
       this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     });
+  }
+
+
+  goToFriendPage() {
+    if (this.member.id == this.tokenStorage.getUser().id) {
+      this.router.navigate(['/profile']).then();
+    } else {
+      this.router.navigate(['friend/' + this.member.id + '/' + 'profile']).then();
+    }
   }
 }
