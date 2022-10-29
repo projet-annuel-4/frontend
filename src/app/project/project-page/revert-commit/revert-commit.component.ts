@@ -31,7 +31,6 @@ export class RevertCommitComponent implements OnInit {
       data => (this.commits = data),
       () => {},
       () => {
-        //this.sortCommits();
       }
     );
   }

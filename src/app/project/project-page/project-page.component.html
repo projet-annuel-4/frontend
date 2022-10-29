@@ -51,7 +51,7 @@
           <nb-list-item (click)="showRevertCommitPopup()" class="action" >
             Revert
           </nb-list-item>
-          <nb-list-item (click)="merge()" class="action" >
+          <nb-list-item (click)="showMergeBranchPopup()" class="action">
             Merge
           </nb-list-item>
         </nb-list>
@@ -61,20 +61,15 @@
 
 </div>
 
-
-
-
-
-
 <!-- Delete File Popup -->
 <div [ngClass]="['pop-up', deleteFilePopup]">
   <nb-card class="dialog-card">
     <nb-card-header>
-      <h6>File deletion</h6>
+      <h6>Delete File</h6>
     </nb-card-header>
 
     <nb-card-body style="text-align: center; padding-bottom: 0;">
-      <p>You are going to delete a post</p>
+      <p>You are going to delete a file</p>
     </nb-card-body>
 
     <nb-card-footer>
@@ -103,7 +98,7 @@
 <div [ngClass]="['pop-up', createCommitPopup]">
   <nb-card class="dialog-card">
     <nb-card-header>
-      <div>Commit</div>
+      <div>Create Commit</div>
     </nb-card-header>
 
     <nb-card-body>
@@ -127,7 +122,7 @@
 <div [ngClass]="['pop-up', revertCommitPopup]">
   <nb-card class="dialog-card">
     <nb-card-header>
-      <div>File</div>
+      <div>Revert Commit</div>
     </nb-card-header>
 
     <nb-card-body>
@@ -159,7 +154,7 @@
 <div [ngClass]="['pop-up', createBranchPopup]">
   <nb-card class="dialog-card">
     <nb-card-header>
-      <div>File</div>
+      <div>Create Branch</div>
     </nb-card-header>
 
     <nb-card-body>
@@ -178,12 +173,34 @@
   </nb-card>
 </div>
 
+<!-- Merge Branch -->
+<div [ngClass]="['pop-up', mergeBranchPopup]">
+  <nb-card class="dialog-card">
+    <nb-card-header>
+      <div>Merge Branch</div>
+    </nb-card-header>
+
+    <nb-card-body>
+      <div>
+        <label>Nom de la branch</label>
+      </div>
+      <div>
+        <input type="text" id="mergeBranchName"/>
+      </div>
+    </nb-card-body>
+
+    <nb-card-footer>
+      <button nbButton (click)="createBranch()">Create</button>
+      <button nbButton (click)="hideCreateBranchPopup()">Close</button>
+    </nb-card-footer>
+  </nb-card>
+</div>
 
 <!-- Create File -->
 <div [ngClass]="['pop-up', createFilePopup]">
   <nb-card class="dialog-card">
     <nb-card-header>
-      <div>File</div>
+      <div>Create File</div>
     </nb-card-header>
 
     <nb-card-body>
