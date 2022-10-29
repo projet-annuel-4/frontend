@@ -43,6 +43,10 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   @ViewChild(ProjectTreeComponent) child: ProjectTreeComponent;
   @ViewChild(CreateCommitComponent) createCommitChild: CreateCommitComponent;
 
+
+  //Popup
+  deleteFilePopup: string = 'pop-up-none';
+
   constructor(
     private cf: ChangeDetectorRef,
     private dialogService: NbDialogService,
@@ -141,22 +145,20 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   }
 
-  deleteFile() {
-    this.dialogService.open(DeleteFileDialogComponent).onClose.subscribe(confirmation => {
-      if (confirmation) {
-        this.fileService.deleteFile(this.projectId, this.selectedFile.name).subscribe(
-          () => {},
-          () => {},
-          () => {
-            this.nbToasterService.show('File deleted successfully', `Done`, {
-              position: this.positions.TOP_RIGHT,
-              status: 'success',
-            });
-            this.child.uppdateFilesV2();
-          }
-        );
-      }
-    });
+  deleteFile(confirmation: boolean) {
+    if (confirmation) {
+      this.fileService.deleteFile(this.projectId, this.selectedFile.name).subscribe(
+        () => {},
+        () => {},
+        () => {
+          this.nbToasterService.show('File deleted successfully', `Done`, {
+            position: this.positions.TOP_RIGHT,
+            status: 'success',
+          });
+          this.child.uppdateFilesV2();
+        }
+      );
+    }
   }
 
   showDiff() {

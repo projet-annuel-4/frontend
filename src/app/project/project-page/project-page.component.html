@@ -61,3 +61,55 @@
 
 </div>
 
+
+
+
+
+
+<!-- Delete File Popup -->
+<div [ngClass]="['pop-up', deleteFilePopup]">
+  <nb-card class="dialog-card">
+    <nb-card-header>
+      <h6>File deletion</h6>
+    </nb-card-header>
+
+    <nb-card-body style="text-align: center; padding-bottom: 0;">
+      <p>You are going to delete a post</p>
+    </nb-card-body>
+
+    <nb-card-footer>
+        <span style="padding-right: 50px">
+          <button
+            nbButton
+            size="tiny"
+            (click)="deleteFile(true)">
+            delete
+          </button>
+        </span>
+      <span>
+          <button nbButton
+                  size="tiny"
+                  status="danger"
+                  (click)="deleteFile(false)">
+            Cancel
+          </button>
+        </span>
+    </nb-card-footer>
+  </nb-card>
+</div>
+
+
+<!-- Create Commit -->
+
+
+
+
+
+
+
+
+
+
+
+
+
