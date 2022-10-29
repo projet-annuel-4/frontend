@@ -133,7 +133,10 @@ export class ChatListComponent implements OnInit {
           status: 'warning',
         })
       },
-      () => {}
+      () => {
+        this.initChatList();
+        this.closeNewChatForm();
+      }
     );
   }
 

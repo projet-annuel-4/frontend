@@ -55,7 +55,7 @@ export class FeedComponent implements OnInit {
 
           tempPostMap = this.postService.postTabToPostMap(tempPost);
           tempPostMap.forEach((value, key) => {
-            this.posts.set(key, value);
+            if(!this.posts.has(key)) this.posts.set(key, value);
           });
 
           this.posts = this.postService.reverseMap(this.posts);

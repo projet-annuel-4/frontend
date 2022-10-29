@@ -88,7 +88,7 @@ export class GroupProfileComponent implements OnInit {
     const projectRequest = new CreateProjectRequest(
       (document.getElementById('createProjectName') as HTMLInputElement).value,
       false,
-      +localStorage.getItem('groupId')
+      +this.groupId
     )
     this.projectService.createProject(projectRequest).subscribe(
       data => {
