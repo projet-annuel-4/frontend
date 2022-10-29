@@ -34,14 +34,15 @@ export class FeedComponent implements OnInit {
           this.posts = this.postService.postTabToPostMap(this.tempPosts);
           this.posts = this.postService.reverseMap(this.posts);
         }
-
-        this.addRandomPost();
+        this.generateRandomPost();
       }
     );
   }
 
 
-  addRandomPost(){
+  generateRandomPost(nb?: number){
+    if(nb === undefined) nb = 10;
+
     let tempPost: Post[];
     let tempPostMap: Map<Post, { isLiked: boolean }>;
 
@@ -50,7 +51,7 @@ export class FeedComponent implements OnInit {
       () => {},
       () => {
         if(tempPost != null){
-          tempPost = tempPost.slice(0,10);
+          tempPost = tempPost.slice(0, nb);
 
           tempPostMap = this.postService.postTabToPostMap(tempPost);
           tempPostMap.forEach((value, key) => {
