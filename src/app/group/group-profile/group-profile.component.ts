@@ -108,7 +108,7 @@ export class GroupProfileComponent implements OnInit {
         })
 
         localStorage.removeItem('groupId')
-        delay(2000)
+        this.showPopup();
       }
     )
   }
