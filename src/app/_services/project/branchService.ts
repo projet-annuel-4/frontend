@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 import {project_file_service, project_service} from '../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { TokenStorageService } from '../token/token-storage.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {TokenStorageService} from '../token/token-storage.service';
 import {Branch} from '../../_dtos/project/Branch';
 import {CreateBranchRequest} from '../../_dtos/project/CreateBranchRequest';
 
@@ -44,6 +44,15 @@ export class BranchService {
     console.log(target)
     return this.http.post<any>(
       `${project_file_service.BASE_URL}/${projectId}/branch/checkout`,
+      target
+    );
+  }
+
+  merge(projectId: number, branch: string): Observable<any> {
+    const target = {branchToMerge: branch};
+    console.log(target)
+    return this.http.post<any>(
+      `${project_file_service.BASE_URL}/${projectId}/branch/merge`,
       target
     );
   }

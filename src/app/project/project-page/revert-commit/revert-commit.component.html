@@ -1,6 +1,6 @@
 <nb-card class="dialog-card">
   <nb-card-header>
-    <div>File</div>
+    <div>Revert</div>
   </nb-card-header>
 
   <nb-card-body>
@@ -10,7 +10,7 @@
           <input
             class="commitCheckBox"
             id="commit_{{ commit.code }}"
-            (click)="checkInput(commit.name)"
+            (click)="checkInput(commit.code)"
             type="checkbox"
             value="{{ commit.name }}"
           />

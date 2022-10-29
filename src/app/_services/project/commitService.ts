@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Filess } from '../../_dtos/project/Filess';
-import { project_file_service, project_service } from '../../../environments/environment';
-import { Commit } from '../../_dtos/project/Commit';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { TokenStorageService } from '../token/token-storage.service';
-import { CreateCommitRequest } from '../../_dtos/project/CreateCommitRequest';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {project_file_service} from '../../../environments/environment';
+import {Commit} from '../../_dtos/project/Commit';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {TokenStorageService} from '../token/token-storage.service';
+import {CreateCommitRequest} from '../../_dtos/project/CreateCommitRequest';
 
 @Injectable({
   providedIn: 'root',
@@ -40,9 +39,11 @@ export class CommitService {
     );
   }
 
-  revert(projectId: number, commitId: number): Observable<any> {
+  revert(projectId: number, commitId: string): Observable<any> {
+    const request = {commitToRevert: commitId};
     return this.http.post<any>(
       `${project_file_service.BASE_URL}/${projectId}/commit/revert`,
+      request,
       this.httpOptions
     );
   }

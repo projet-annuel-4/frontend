@@ -1,25 +1,18 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild,} from '@angular/core';
 
-import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
-import { CreateCommitComponent } from './create-commit/create-commit.component';
-import { CreateFileComponent } from './create-file/create-file.component';
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
+import {CreateCommitComponent} from './create-commit/create-commit.component';
+import {CreateFileComponent} from './create-file/create-file.component';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import { RevertCommitComponent } from './revert-commit/revert-commit.component';
-import { FileService } from '../../_services/project/fileService';
+import {RevertCommitComponent} from './revert-commit/revert-commit.component';
+import {FileService} from '../../_services/project/fileService';
 
-import { ProjectTreeComponent } from './project-tree/project-tree.component';
-import { Filess} from '../../_dtos/project/Filess';
-import { DeleteFileDialogComponent } from '../../shared/dialog/delete-file-dialog.component';
-import {Branch} from '../../_dtos/project/Branch';
+import {ProjectTreeComponent} from './project-tree/project-tree.component';
+import {Filess} from '../../_dtos/project/Filess';
+import {DeleteFileDialogComponent} from '../../shared/dialog/delete-file-dialog.component';
 import {BranchService} from '../../_services/project/branchService';
 import {CreateBranchComponent} from './create-branch/create-brach.component';
+import {MergeBranchComponent} from "./merge-branch/merge-branch.component";
 
 declare let monaco: any;
 
@@ -185,15 +178,22 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   revert() {
-    /*let branchName;
-    this.route.params.subscribe((params: Params): void => {
-      branchName = params.branchName;
+    const revertCommitComponent = this.dialogService.open(RevertCommitComponent, {
+      context: {projectId: this.projectId},
     });
-    localStorage.setItem('branchName', branchName);
-     */
-    this.dialogService.open(RevertCommitComponent, {
-      context: { projectId: this.projectId },
-    });
+    revertCommitComponent.onClose.subscribe(
+      () => {
+      },
+      () => {
+        this.nbToasterService.show('', `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+        });
+      },
+      () => {
+        this.child.updateFiles();
+      }
+    );
   }
 
   createBranch() {
@@ -216,6 +216,22 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   merge() {
+    const mergeBranchComponent = this.dialogService.open(MergeBranchComponent, {
+      context: {projectId: this.projectId, branchList: this.branchList, actualBranch: this.branchName},
+    });
+    mergeBranchComponent.onClose.subscribe(
+      () => {
+      },
+      () => {
+        this.nbToasterService.show('', `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+        });
+      },
+      () => {
+        this.child.updateFiles();
+      }
+    );
   }
 
   createFile() {

@@ -1,64 +1,63 @@
-import { BrowserModule } from '@angular/platform-browser';
-import {InjectionToken, NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  NbThemeModule,
-  NbLayoutModule,
-  NbMenuModule,
-  NbDialogModule,
-  NbSelectModule,
+  NbAccordionModule,
+  NbButtonModule,
   NbCardModule,
   NbContextMenuModule,
+  NbDialogModule,
   NbIconModule,
-  NbButtonModule,
-  NbAccordionModule,
   NbInputModule,
-  NbUserModule,
-  NbTableModule,
-  NbToggleModule,
-  NbSearchModule,
+  NbLayoutModule,
   NbListModule,
+  NbMenuModule,
+  NbSearchModule,
+  NbSelectModule,
+  NbTableModule,
   NbTabsetModule,
-  NbTreeGridModule,
+  NbThemeModule,
   NbToastrModule,
+  NbToggleModule,
+  NbUserModule,
 } from '@nebular/theme';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
+import {NbEvaIconsModule} from '@nebular/eva-icons';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './auth/auth.module';
+import {AppRoutingModule} from './app-routing.module';
+import {AuthModule} from './auth/auth.module';
 
-import { AppComponent } from './app.component';
-import { HomeModule } from './home/home.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import {AppComponent} from './app.component';
+import {HomeModule} from './home/home.module';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {JwtInterceptor} from './_helpers/jwt.interceptor';
 import {CodeExecutionComponent} from './code/code-execution/code-execution.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { ProjectExecutionComponent } from './code/project-execution/project-execution.component';
+import {ProjectExecutionComponent} from './code/project-execution/project-execution.component';
 import {MonacoEditorModule} from './code/lib/editor.module';
 import {NgxMonacoEditorConfig} from './code/lib/config';
-import { FeedComponent } from './post/feed/feed.component';
-import { CreateComponent } from './post/create/create.component';
-import { PostDetailComponent } from './post/post-detail/post-detail.component';
-import { CommentComponent } from './post/comment/comment.component';
+import {FeedComponent} from './post/feed/feed.component';
+import {CreateComponent} from './post/create/create.component';
+import {PostDetailComponent} from './post/post-detail/post-detail.component';
+import {CommentComponent} from './post/comment/comment.component';
 import {CodeNotRunnableComponent} from './code/code-not-runnable.component';
-import { FeedPostComponent } from './post/feed-post/feed-post.component';
-import { SearchComponent } from './post/search/search.component';
-import { PostCardComponent } from './post/post-card/post-card.component';
+import {FeedPostComponent} from './post/feed-post/feed-post.component';
+import {SearchComponent} from './post/search/search.component';
+import {PostCardComponent} from './post/post-card/post-card.component';
 import {DatePipe} from '@angular/common';
-import { GroupHomeComponent } from './group/group-home/group-home.component';
-import { GroupCardComponent } from './group/group-card/group-card.component';
-import { GroupProfileComponent } from './group/group-profile/group-profile.component';
-import { ProjectMembersCardComponent } from './group/group-profile/project-members-card/project-members-card.component';
-import { GroupProjectsCardComponent } from './group/group-profile/group-projects-card/group-projects-card.component';
-import { ProjectPageComponent } from './project/project-page/project-page.component';
-import { ProjectTreeComponent } from './project/project-page/project-tree/project-tree.component';
-import { ActionPanelComponent } from './project/project-page/action-panel/action-panel.component';
-import { CreateCommitComponent } from './project/project-page/create-commit/create-commit.component';
-import { CreateFileComponent } from './project/project-page/create-file/create-file.component';
-import { CreateBranchComponent } from './project/project-page/create-branch/create-brach.component';
-import { RevertCommitComponent } from './project/project-page/revert-commit/revert-commit.component';
-import { CreateProjectComponent } from './group/group-profile/create-project/create-project.component';
+import {GroupHomeComponent} from './group/group-home/group-home.component';
+import {GroupCardComponent} from './group/group-card/group-card.component';
+import {GroupProfileComponent} from './group/group-profile/group-profile.component';
+import {ProjectMembersCardComponent} from './group/group-profile/project-members-card/project-members-card.component';
+import {GroupProjectsCardComponent} from './group/group-profile/group-projects-card/group-projects-card.component';
+import {ProjectPageComponent} from './project/project-page/project-page.component';
+import {ProjectTreeComponent} from './project/project-page/project-tree/project-tree.component';
+import {ActionPanelComponent} from './project/project-page/action-panel/action-panel.component';
+import {CreateCommitComponent} from './project/project-page/create-commit/create-commit.component';
+import {CreateFileComponent} from './project/project-page/create-file/create-file.component';
+import {CreateBranchComponent} from './project/project-page/create-branch/create-brach.component';
+import {RevertCommitComponent} from './project/project-page/revert-commit/revert-commit.component';
+import {CreateProjectComponent} from './group/group-profile/create-project/create-project.component';
 import {LogoutDialogComponent} from './shared/dialog/logout-dialog.component';
 import {DeletePostDialogComponent} from './shared/dialog/delete-post-dialog.component';
 import {DeleteFileDialogComponent} from './shared/dialog/delete-file-dialog.component';
@@ -67,7 +66,7 @@ import {TreeviewModule} from 'ngx-treeview';
 import {
   DropdownTreeviewSelectComponent
 } from './project/project-page/project-tree/dropdown-treeview-select/dropdown-treeview-select.component';
-
+import {MergeBranchComponent} from './project/project-page/merge-branch/merge-branch.component';
 
 
 /************** Config Monaco *************/
@@ -149,7 +148,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
     DeletePostDialogComponent,
     DeleteFileDialogComponent,
     FileUnsavedChangeComponent,
-    DropdownTreeviewSelectComponent
+    DropdownTreeviewSelectComponent,
+    MergeBranchComponent
   ],
 
   imports: [
