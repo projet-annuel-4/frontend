@@ -38,7 +38,12 @@
     <button nbButton status="primary" (click)="addMembers()">Add Members</button>
 
     <nb-card-footer>
-      <button nbButton (click)="createGroup()">Create</button>
+      <button nbButton
+              style="margin-right: 35%"
+              (click)="createGroup()">
+        Create
+      </button>
+      <button nbButton (click)="showPopup()">Cancel</button>
     </nb-card-footer>
   </nb-card>
 </div>
