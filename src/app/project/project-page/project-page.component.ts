@@ -1,18 +1,25 @@
-import {ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 
-import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
-import {CreateCommitComponent} from './create-commit/create-commit.component';
-import {CreateFileComponent} from './create-file/create-file.component';
+import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+import { CreateCommitComponent } from './create-commit/create-commit.component';
+import { CreateFileComponent } from './create-file/create-file.component';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {RevertCommitComponent} from './revert-commit/revert-commit.component';
-import {FileService} from '../../_services/project/fileService';
+import { RevertCommitComponent } from './revert-commit/revert-commit.component';
+import { FileService } from '../../_services/project/fileService';
 
-import {ProjectTreeComponent} from './project-tree/project-tree.component';
-import {Filess} from '../../_dtos/project/Filess';
-import {DeleteFileDialogComponent} from '../../shared/dialog/delete-file-dialog.component';
+import { ProjectTreeComponent } from './project-tree/project-tree.component';
+import { Filess} from '../../_dtos/project/Filess';
+import { DeleteFileDialogComponent } from '../../shared/dialog/delete-file-dialog.component';
+import {Branch} from '../../_dtos/project/Branch';
 import {BranchService} from '../../_services/project/branchService';
 import {CreateBranchComponent} from './create-branch/create-brach.component';
-import {MergeBranchComponent} from './merge-branch/merge-branch.component';
 
 declare let monaco: any;
 
@@ -35,6 +42,17 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   @ViewChild(ProjectTreeComponent) child: ProjectTreeComponent;
   @ViewChild(CreateCommitComponent) createCommitChild: CreateCommitComponent;
+
+  commitExec = false;
+
+  commits: Commit[];
+
+  //Popup
+  deleteFilePopup: string = 'pop-up-none';
+  createCommitPopup: string = 'pop-up-none';
+  revertCommitPopup: string = 'pop-up-none';
+  createBranchPopup: string = 'pop-up-none';
+  createFilePopup: string = 'pop-up-none';
 
   constructor(
     private cf: ChangeDetectorRef,
@@ -133,6 +151,13 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   }
 
+  showDeleteFile(){
+    this.deleteFilePopup = 'pop-up-block';
+  }
+  hideDeleteFile(){
+    this.deleteFilePopup = 'pop-up-none';
+  }
+
   deleteFile() {
     this.dialogService.open(DeleteFileDialogComponent).onClose.subscribe(confirmation => {
       if (confirmation) {
@@ -154,8 +179,14 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   showDiff() {
     console.log('diff');
   }
-
-  commit() {
+  /*** Commit ***/
+  showCommitPopup(){
+    this.createCommitPopup = 'pop-up-block';
+  }
+  hideCommitPopup(){
+    this.createCommitPopup = 'pop-up-none';
+  }
+  createCommit() {
     const createCommitComponent = this.dialogService.open(CreateCommitComponent, {
       context: { projectId: this.projectId },
     });
@@ -175,7 +206,13 @@ export class ProjectPageComponent implements OnInit, OnChanges {
       }
     );
   }
-
+  /****** Revert ******/
+  showRevertCommitPopup(){
+    this.revertCommitPopup = 'pop-up-block';
+  }
+  hideRevertCommitPopup(){
+    this.revertCommitPopup = 'pop-up-none';
+  }
   revert() {
     const revertCommitComponent = this.dialogService.open(RevertCommitComponent, {
       context: {projectId: this.projectId},
@@ -190,10 +227,23 @@ export class ProjectPageComponent implements OnInit, OnChanges {
         });
       },
       () => {
+        this.nbToasterService.show('Project has been revert', `Done`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'success',
+        });
         this.child.updateFiles();
         window.location.reload();
       }
     );
+    this.hideRevertCommitPopup();
+  }
+
+/***** Create Branch *****/
+  showCreateBranchPopup(){
+    this.createBranchPopup = 'pop-up-block';
+  }
+  hideCreateBranchPopup(){
+    this.createBranchPopup = 'pop-up-none';
   }
 
   createBranch() {
@@ -210,6 +260,12 @@ export class ProjectPageComponent implements OnInit, OnChanges {
         });
       },
       () => {
+        this.nbToasterService.show('Branch has been saved successfully', `Done`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'success',
+        });
+        delay(2000);
+        this.hideCreateBranchPopup();
         this.child.updateFiles();
         window.location.reload();
       }
@@ -236,6 +292,15 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     );
   }
 
+
+/***** Create File *****/
+  showCreateFilePopup(){
+    this.createFilePopup = 'pop-up-block';
+  }
+  hideCreateFilePopup(){
+    this.createFilePopup = 'pop-up-none';
+  }
+
   createFile() {
     let branchName;
     this.route.params.subscribe((params: Params): void => {
@@ -254,6 +319,12 @@ export class ProjectPageComponent implements OnInit, OnChanges {
         });
       },
       () => {
+        this.nbToasterService.show('File has been saved successfully', `Done`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'success',
+        });
+        delay(2000);
+        this.hideCreateFilePopup();
         this.child.updateFiles();
       }
     );

@@ -6,6 +6,8 @@ import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebul
 import {CreateProjectComponent} from "./create-project/create-project.component";
 import {GroupService} from "../../_services/group/group.service";
 import {group} from "@angular/animations";
+import {CreateProjectRequest} from "../../_dtos/project/CreateProjectRequest";
+import {delay} from "rxjs/operators";
 
 @Component({
   selector: 'app-group-profile',
@@ -13,12 +15,15 @@ import {group} from "@angular/animations";
   styleUrls: ['./group-profile.component.scss']
 })
 export class GroupProfileComponent implements OnInit {
-
   group: Group;
   groupId: number;
 
   image;
   positions = NbGlobalPhysicalPosition;
+
+
+
+  togglePopup: string = 'pop-up-none';
 
 
   constructor(private groupService: GroupService,
@@ -51,6 +56,7 @@ export class GroupProfileComponent implements OnInit {
     );
   }
 
+  /*
   createProject() {
 
     localStorage.setItem('groupId', String(this.groupId));
@@ -64,4 +70,49 @@ export class GroupProfileComponent implements OnInit {
     );
 
   }
+
+   */
+
+
+
+  showPopup(){
+    if(this.togglePopup == "pop-up-block"){
+      this.togglePopup = 'pop-up-none'
+    } else if(this.togglePopup == "pop-up-none"){
+      this.togglePopup = 'pop-up-block'
+    }
+  }
+
+
+  createProject() {
+    const projectRequest = new CreateProjectRequest(
+      (document.getElementById('createProjectName') as HTMLInputElement).value,
+      false,
+      +localStorage.getItem('groupId')
+    )
+    this.projectService.createProject(projectRequest).subscribe(
+      data => {
+        localStorage.setItem('createdProject', JSON.stringify(data))
+      },
+      error => {
+        this.nbToasterService.show(error.error.message, `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+        })
+        return
+      },
+      () => {
+        this.nbToasterService.show('Project has been saved successfully', `Done`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'success',
+        })
+
+        localStorage.removeItem('groupId')
+        delay(2000)
+      }
+    )
+  }
+
+
+
 }
