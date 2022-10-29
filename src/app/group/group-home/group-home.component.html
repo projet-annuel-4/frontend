@@ -1,5 +1,5 @@
-<div style="text-align: center">
-  <nb-card class="col-md-6 center">
+<div style="text-align: center;">
+  <nb-card class="col-md-6 center" style="margin: auto">
     <nb-card-header>Groups</nb-card-header>
     <nb-card-body>
       <nb-list>
@@ -32,14 +32,26 @@
       <div>
         <label class="label">Members :</label>
         <input nbInput placeholder="mymail@mail.fr" [(ngModel)]="mail" />
+          <img
+            class="hoverEffect"
+            src="assets/plus-square-outline.svg"
+            height="32"
+            width="32"
+            (click)="addMembers()"
+          >
       </div>
     </nb-card-body>
 
-    <button nbButton status="primary" (click)="addMembers()">Add Members</button>
 
     <nb-card-footer>
       <button nbButton (click)="createGroup()">Create</button>
-      <button style="margin-left: 40%" nbButton (click)="showPopup()">Close</button>
+      <button
+        nbButton
+        status="danger"
+        style="margin-left: 40%"
+        (click)="showPopup()">
+        Close
+      </button>
     </nb-card-footer>
   </nb-card>
 </div>

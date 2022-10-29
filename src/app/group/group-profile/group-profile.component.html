@@ -69,8 +69,15 @@
     </nb-card-body>
 
     <nb-card-footer>
-      <button nbButton (click)="createProject()">Create</button>
-      <button style="margin-left: 5%" nbButton (click)="showPopup()">Close</button>
+      <button nbButton
+              status="primary"
+              (click)="createProject()">
+        Create
+      </button>
+      <button style="margin-left: 5%"
+              nbButton
+              status="danger"
+              (click)="showPopup()">Close</button>
     </nb-card-footer>
   </nb-card>
 </div>

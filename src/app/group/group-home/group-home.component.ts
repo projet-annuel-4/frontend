@@ -38,14 +38,6 @@ export class GroupHomeComponent implements OnInit {
     });
   }
 
-  /*
-  createGroup() {
-    this.dialogService.open(NewGroupComponent).onClose.subscribe(
-      () => this.initUserGroups()
-    );
-  }
-
-   */
 
   showPopup(){
     if(this.togglePopup == "pop-up-block"){
