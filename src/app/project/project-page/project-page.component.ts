@@ -58,6 +58,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   createCommitPopup: string = 'pop-up-none';
   revertCommitPopup: string = 'pop-up-none';
   createBranchPopup: string = 'pop-up-none';
+  createFilePopup: string = 'pop-up-none';
 
   constructor(
     private cf: ChangeDetectorRef,
@@ -383,8 +384,41 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
 
-  
+/***** Create File *****/
+  showCreateFilePopup(){
+    this.createFilePopup = 'pop-up-block';
+  }
+  hideCreateFilePopup(){
+    this.createFilePopup = 'pop-up-none';
+  }
+
   createFile() {
+    const fileRequest = new CreateFileRequest(
+      (document.getElementById('createFileName') as HTMLInputElement).value
+    );
+    this.fileService.create(this.projectId, fileRequest).subscribe(
+      data => {
+        localStorage.setItem('createdFile', JSON.stringify(data));
+      },
+      error => {
+        this.nbToasterService.show(error.error.message, `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+        });
+        return;
+      },
+      () => {
+        this.nbToasterService.show('File has been saved successfully', `Done`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'success',
+        });
+        delay(2000);
+        this.hideCreateFilePopup();
+      }
+    );
+  }
+
+  OLDcreateFile() {
     let branchName;
     this.route.params.subscribe((params: Params): void => {
       branchName = params.branchName;
@@ -407,3 +441,4 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     );
   }
 }
+/********************/

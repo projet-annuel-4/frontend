@@ -23,7 +23,7 @@
       <nb-accordion-item-header>File action</nb-accordion-item-header>
       <nb-accordion-item-body>
         <nb-list>
-          <nb-list-item (click)="createFile()" class="action" >
+          <nb-list-item (click)="showCreateFilePopup()" class="action" >
             Create file
           </nb-list-item>
           <nb-list-item (click)="saveFile()" class="action" >
@@ -176,9 +176,32 @@
       <button nbButton (click)="hideCreateBranchPopup()">Close</button>
     </nb-card-footer>
   </nb-card>
-
 </div>
 
+
+<!-- Create File -->
+<div [ngClass]="['pop-up', createFilePopup]">
+  <nb-card class="dialog-card">
+    <nb-card-header>
+      <div>File</div>
+    </nb-card-header>
+
+    <nb-card-body>
+      <div>
+        <label>Nom du fichier</label>
+      </div>
+      <div>
+        <input type="text" id="createFileName" />
+      </div>
+    </nb-card-body>
+
+    <nb-card-footer>
+      <button nbButton (click)="createFile()">Create</button>
+      <button nbButton (click)="hideCreateFilePopup()">Close</button>
+    </nb-card-footer>
+  </nb-card>
+
+</div>
 
 
 
