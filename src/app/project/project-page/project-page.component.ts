@@ -24,6 +24,8 @@ import {CreateCommitRequest} from "../../_dtos/project/CreateCommitRequest";
 import {CommitService} from "../../_services/project/commitService";
 import {Commit} from "../../_dtos/project/Commit";
 import {CreateFileRequest} from "../../_dtos/project/CreateFileRequest";
+import {CreateBranchRequest} from "../../_dtos/project/CreateBranchRequest";
+import {delay} from "rxjs/operators";
 
 declare let monaco: any;
 
@@ -55,6 +57,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   deleteFilePopup: string = 'pop-up-none';
   createCommitPopup: string = 'pop-up-none';
   revertCommitPopup: string = 'pop-up-none';
+  createBranchPopup: string = 'pop-up-none';
 
   constructor(
     private cf: ChangeDetectorRef,
@@ -319,7 +322,42 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 /*************/
 
+/***** Create Branch *****/
+  showCreateBranchPopup(){
+    this.createBranchPopup = 'pop-up-block';
+  }
+  hideCreateBranchPopup(){
+    this.createBranchPopup = 'pop-up-none';
+  }
+
   createBranch() {
+    const branchRequest = new CreateBranchRequest(
+      (document.getElementById('createBranchName') as HTMLInputElement).value
+    );
+    this.branchService.create(this.projectId, branchRequest).subscribe(
+      data => {
+        localStorage.setItem('createBranch', JSON.stringify(data));
+      },
+      error => {
+        this.nbToasterService.show(error.error.message, `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+        });
+        return;
+      },
+      () => {
+        this.nbToasterService.show('Branch has been saved successfully', `Done`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'success',
+        });
+        delay(2000);
+        this.hideCreateBranchPopup();
+        this.child.updateFiles();
+      }
+    );
+  }
+
+  OLDcreateBranch() {
     const createBranchComponent = this.dialogService.open(CreateBranchComponent, {
       context: { projectId: this.projectId },
     });
@@ -338,9 +376,14 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     );
   }
 
+/***********************/
+
+
   merge() {
   }
 
+
+  
   createFile() {
     let branchName;
     this.route.params.subscribe((params: Params): void => {

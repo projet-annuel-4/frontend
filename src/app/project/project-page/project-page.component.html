@@ -39,7 +39,7 @@
       <nb-accordion-item-header>Project action</nb-accordion-item-header>
       <nb-accordion-item-body>
         <nb-list>
-          <nb-list-item (click)="createBranch()" class="action" >
+          <nb-list-item (click)="showCreateBranchPopup()" class="action" >
             create branch
           </nb-list-item>
           <nb-list-item (click)="showDiff()" class="action" >
@@ -150,6 +150,30 @@
     <nb-card-footer>
       <button nbButton (click)="revertCommit()">Revert</button>
       <button nbButton (click)="hideRevertCommitPopup()">Close</button>
+    </nb-card-footer>
+  </nb-card>
+</div>
+
+
+<!-- Create Branch -->
+<div [ngClass]="['pop-up', createBranchPopup]">
+  <nb-card class="dialog-card">
+    <nb-card-header>
+      <div>File</div>
+    </nb-card-header>
+
+    <nb-card-body>
+      <div>
+        <label>Nom de la branch</label>
+      </div>
+      <div>
+        <input type="text" id="createBranchName" />
+      </div>
+    </nb-card-body>
+
+    <nb-card-footer>
+      <button nbButton (click)="createBranch()">Create</button>
+      <button nbButton (click)="hideCreateBranchPopup()">Close</button>
     </nb-card-footer>
   </nb-card>
 
