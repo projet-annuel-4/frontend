@@ -53,12 +53,15 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   commits: Commit[];
 
+  selectedBranch: string;
+
   //Popup
   deleteFilePopup: string = 'pop-up-none';
   createCommitPopup: string = 'pop-up-none';
   revertCommitPopup: string = 'pop-up-none';
   createBranchPopup: string = 'pop-up-none';
   createFilePopup: string = 'pop-up-none';
+  mergePopup: string = 'pop-up-none';
 
   constructor(
     private cf: ChangeDetectorRef,
@@ -68,7 +71,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     private fileService: FileService,
     private branchService: BranchService,
     private nbToasterService: NbToastrService,
-    private commitService: CommitService
+    private commitService: CommitService,
   ) {
     this.route.params.subscribe(params => {
       this.projectId = params.projectId;
@@ -379,8 +382,50 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
 /***********************/
 
+/*** Merge ***/
 
-  merge() {
+  showMergeBranchPopup(){
+    this.mergePopup = 'pop-up-block';
+  }
+  hideMergeBranchPopup(){
+    this.mergePopup = 'pop-up-none';
+  }
+
+
+  mergeBranch() {
+    if (this.selectedBranch && this.selectedBranch !== '') {
+      this.branchService.merge(this.projectId, this.selectedBranch).subscribe(
+        () => {
+        },
+        () => {
+        },
+        () => {
+          this.nbToasterService.show('You need to check a commit', `Revert warning`, {
+            position: this.positions.TOP_RIGHT,
+            status: 'warning',
+          });
+          //window.location.reload();
+        }
+      );
+
+      this.hideMergeBranchPopup()
+    } else {
+      this.nbToasterService.show('Project has been revert', `Done`, {
+        position: this.positions.TOP_RIGHT,
+        status: 'success',
+      });
+    }
+  }
+
+  checkInputMerge(selected: string) {
+    this.selectedBranch = selected;
+    const checkbox = document.getElementsByClassName(
+      'branchCheckBox'
+    ) as HTMLCollectionOf<HTMLInputElement>;
+    for (let i = 0; i < checkbox.length; i++) {
+      checkbox[i].checked = false;
+    }
+    (document.getElementById(selected) as HTMLInputElement).checked = true;
   }
 
 

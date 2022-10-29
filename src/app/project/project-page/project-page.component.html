@@ -51,7 +51,7 @@
           <nb-list-item (click)="showRevertCommitPopup()" class="action" >
             Revert
           </nb-list-item>
-          <nb-list-item (click)="merge()" class="action" >
+          <nb-list-item (click)="showMergeBranchPopup()" class="action" >
             Merge
           </nb-list-item>
         </nb-list>
@@ -207,6 +207,33 @@
 
 
 
+<!-- Merge Popup -->
+<div [ngClass]="['pop-up', mergePopup]">
+  <nb-card class="dialog-card">
+    <nb-card-header>
+      <div>Merge</div>
+    </nb-card-header>
 
+    <nb-card-body>
+      <nb-list>
+        <nb-list-item *ngFor="let branch of branchList">
+          <div>
+            <input
+              class="branchCheckBox"
+              id="{{ branch }}"
+              (click)="checkInputMerge(branch)"
+              type="checkbox"
+              value="{{ branch }}"
+            />
+            <label for="{{ branch }}">{{ branch }}</label>
+          </div>
+        </nb-list-item>
+      </nb-list>
+    </nb-card-body>
 
-
+    <nb-card-footer>
+      <button nbButton (click)="mergeBranch()">merge</button>
+      <button nbButton (click)="hideMergeBranchPopup()">Close</button>
+    </nb-card-footer>
+  </nb-card>
+</div>
