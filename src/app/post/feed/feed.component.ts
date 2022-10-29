@@ -15,6 +15,8 @@ export class FeedComponent implements OnInit {
   posts: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>()
   tempPosts: Post[];
 
+  randomPost: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>();
+
   postsAlreadyLiked: Post[]
 
   constructor(private postService: PostService, private tokenStorage: TokenStorageService) {}
@@ -32,9 +34,35 @@ export class FeedComponent implements OnInit {
           this.posts = this.postService.postTabToPostMap(this.tempPosts);
           this.posts = this.postService.reverseMap(this.posts);
         }
+
+        this.addRandomPost();
       }
     );
   }
+
+
+  addRandomPost(){
+    let tempPost: Post[];
+    let tempPostMap: Map<Post, { isLiked: boolean }>;
+
+    this.postService.getAll().subscribe(
+      post => {tempPost = post},
+      () => {},
+      () => {
+        if(tempPost != null){
+          tempPost = tempPost.slice(0,10);
+
+          tempPostMap = this.postService.postTabToPostMap(tempPost);
+          tempPostMap.forEach((value, key) => {
+            this.posts.set(key, value);
+          });
+
+          this.posts = this.postService.reverseMap(this.posts);
+        }
+      }
+    );
+  }
+
 
   /**
    *
