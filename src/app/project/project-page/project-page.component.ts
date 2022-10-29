@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild,} from '@angular/core';
+import {ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 
 import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
 import {CreateCommitComponent} from './create-commit/create-commit.component';
@@ -12,7 +12,7 @@ import {Filess} from '../../_dtos/project/Filess';
 import {DeleteFileDialogComponent} from '../../shared/dialog/delete-file-dialog.component';
 import {BranchService} from '../../_services/project/branchService';
 import {CreateBranchComponent} from './create-branch/create-brach.component';
-import {MergeBranchComponent} from "./merge-branch/merge-branch.component";
+import {MergeBranchComponent} from './merge-branch/merge-branch.component';
 
 declare let monaco: any;
 
