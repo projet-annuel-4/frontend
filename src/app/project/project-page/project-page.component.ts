@@ -54,9 +54,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.updateOptions();
     this.loadBranchList();
-    this.loadCurrentBranch();
     console.log(this.branchName);
-
   }
 
  loadBranchList() {
@@ -65,6 +63,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     () => {},
     () => {
       document.getElementById('monaco-editor').style.display = 'block';
+      this.loadCurrentBranch();
     }
   );
  }
@@ -107,7 +106,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     await this.checkout(element);
     this.child.updateFiles();
     await this.router.navigateByUrl('/group/' + this.groupId + '/project/' + this.projectId + '/branch/' + this.branchName);
-
+    window.location.reload();
   }
 
   setFileChanged($event: Event) {
@@ -192,6 +191,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
       },
       () => {
         this.child.updateFiles();
+        window.location.reload();
       }
     );
   }
@@ -211,13 +211,15 @@ export class ProjectPageComponent implements OnInit, OnChanges {
       },
       () => {
         this.child.updateFiles();
+        window.location.reload();
       }
     );
   }
 
   merge() {
+    const result = this.branchList.filter(value => value !== this.branchName);
     const mergeBranchComponent = this.dialogService.open(MergeBranchComponent, {
-      context: {projectId: this.projectId, branchList: this.branchList, actualBranch: this.branchName},
+      context: {projectId: this.projectId, branchList: result, actualBranch: this.branchName},
     });
     mergeBranchComponent.onClose.subscribe(
       () => {
