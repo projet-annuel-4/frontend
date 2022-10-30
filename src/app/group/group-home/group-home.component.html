@@ -48,14 +48,18 @@
 
 
     <nb-card-footer>
-      <button nbButton (click)="createGroup()">Create</button>
-      <button
-        nbButton
-        status="danger"
-        style="margin-left: 40%"
-        (click)="showPopup()">
-        Close
-      </button>
+      <div class="box">
+
+        <button nbButton status="primary" (click)="createGroup()">Create</button>
+        <button
+          nbButton
+          status="danger"
+          (click)="showPopup()">
+          Close
+        </button>
+      </div>
+
+
     </nb-card-footer>
   </nb-card>
 </div>

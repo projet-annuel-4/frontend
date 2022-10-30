@@ -98,23 +98,21 @@
     </nb-card-body>
 
     <nb-card-footer>
-        <span style="padding-right: 50px">
-          <button
-            nbButton
-            size="tiny"
-            status="primary"
-            (click)="deleteFile()">
-            delete
-          </button>
-        </span>
-      <span>
-          <button nbButton
-                  size="tiny"
-                  status="danger"
-                  (click)="hideDeleteFile()">
-            Cancel
-          </button>
-        </span>
+      <div class="box">
+        <button
+          nbButton
+          size="tiny"
+          status="primary"
+          (click)="deleteFile()">
+          delete
+        </button>
+        <button nbButton
+                size="tiny"
+                status="danger"
+                (click)="hideDeleteFile()">
+          Cancel
+        </button>
+      </div>
     </nb-card-footer>
   </nb-card>
 </div>
@@ -137,16 +135,18 @@
     </nb-card-body>
 
     <nb-card-footer>
-      <button nbButton
-              status="primary"
-              (click)="createCommit()">
-        Create
-      </button>
-      <button nbButton
-              status="danger"
-              (click)="hideCommitPopup()">
-        Close
-      </button>
+      <div class="box">
+        <button nbButton
+                status="primary"
+                (click)="createCommit()">
+          Create
+        </button>
+        <button nbButton
+                status="danger"
+                (click)="hideCommitPopup()">
+          Close
+        </button>
+      </div>
     </nb-card-footer>
   </nb-card>
 </div>
@@ -177,8 +177,10 @@
     </nb-card-body>
 
     <nb-card-footer>
-      <button nbButton (click)="revertCommit()">Revert</button>
-      <button nbButton (click)="hideRevertCommitPopup()">Close</button>
+      <div class="box">
+        <button nbButton (click)="revertCommit()" status="primary">Revert</button>
+        <button nbButton (click)="hideRevertCommitPopup()" status="danger">Close</button>
+      </div>
     </nb-card-footer>
   </nb-card>
 </div>
@@ -201,12 +203,16 @@
     </nb-card-body>
 
     <nb-card-footer>
-      <button nbButton
-              status="primary"
-              (click)="createBranch()">Create</button>
-      <button nbButton
-              status="danger"
-              (click)="hideCreateBranchPopup()">Close</button>
+      <div class="box">
+        <button nbButton
+                status="primary"
+                (click)="createBranch()">Create
+        </button>
+        <button nbButton
+                status="danger"
+                (click)="hideCreateBranchPopup()">Close
+        </button>
+      </div>
     </nb-card-footer>
   </nb-card>
 </div>
@@ -236,12 +242,16 @@
     </nb-card-body>
 
     <nb-card-footer>
-      <button nbButton
-              status="primary"
-              (click)="mergeBranch()">Merge</button>
-      <button nbButton
-              status="danger"
-              (click)="hideMergeBranchPopup()">Close</button>
+      <div class="box">
+        <button nbButton
+                status="primary"
+                (click)="mergeBranch()">Merge
+        </button>
+        <button nbButton
+                status="danger"
+                (click)="hideMergeBranchPopup()">Close
+        </button>
+      </div>
     </nb-card-footer>
   </nb-card>
 </div>
@@ -263,12 +273,16 @@
     </nb-card-body>
 
     <nb-card-footer>
-      <button nbButton
-              status="primary"
-              (click)="createFile()">Create</button>
-      <button nbButton
-              status="danger"
-              (click)="hideCreateFilePopup()">Close</button>
+      <div class="box">
+        <button nbButton
+                status="primary"
+                (click)="createFile()">Create
+        </button>
+        <button nbButton
+                status="danger"
+                (click)="hideCreateFilePopup()">Close
+        </button>
+      </div>
     </nb-card-footer>
   </nb-card>
 

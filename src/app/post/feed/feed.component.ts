@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core'
-import { PostService } from '../../_services/post/post.service'
-import { Post } from '../../_dtos/post/Post'
-import { TokenStorageService } from '../../_services/token/token-storage.service'
-import { User } from '../../_dtos/user/User'
+import {Component, OnInit} from '@angular/core';
+import {PostService} from '../../_services/post/post.service';
+import {Post} from '../../_dtos/post/Post';
+import {TokenStorageService} from '../../_services/token/token-storage.service';
+import {User} from '../../_dtos/user/User';
 
 @Component({
   selector: 'app-feed',
@@ -10,19 +10,19 @@ import { User } from '../../_dtos/user/User'
   styleUrls: ['./feed.component.scss'],
 })
 export class FeedComponent implements OnInit {
-  user: User
+  user: User;
 
-  posts: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>()
+  posts: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>();
   tempPosts: Post[];
 
   randomPost: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>();
 
-  postsAlreadyLiked: Post[]
+  postsAlreadyLiked: Post[];
 
   constructor(private postService: PostService, private tokenStorage: TokenStorageService) {}
 
   ngOnInit(): void {
-    this.user = this.tokenStorage.getUser()
+    this.user = this.tokenStorage.getUser();
 
     this.postService.getAllSubscriptionPost(this.user.id).subscribe(
       posts => {
@@ -30,7 +30,7 @@ export class FeedComponent implements OnInit {
       },
       error => {},
       () => {
-        if(this.tempPosts != null){
+        if (this.tempPosts != null) {
           this.posts = this.postService.postTabToPostMap(this.tempPosts);
           this.posts = this.postService.reverseMap(this.posts);
         }
@@ -40,22 +40,29 @@ export class FeedComponent implements OnInit {
   }
 
 
-  generateRandomPost(nb?: number){
-    if(nb === undefined) nb = 10;
+  generateRandomPost(nb?: number) {
+    if (nb === undefined) {
+      nb = 10;
+    }
 
     let tempPost: Post[];
     let tempPostMap: Map<Post, { isLiked: boolean }>;
 
     this.postService.getAll().subscribe(
-      post => {tempPost = post},
-      () => {},
+      post => {
+        tempPost = post;
+      },
       () => {
-        if(tempPost != null){
+      },
+      () => {
+        if (tempPost != null) {
           tempPost = tempPost.slice(0, nb);
 
           tempPostMap = this.postService.postTabToPostMap(tempPost);
           tempPostMap.forEach((value, key) => {
-            if(!this.posts.has(key)) this.posts.set(key, value);
+            if (!this.posts.has(key)) {
+              this.posts.set(key, value);
+            }
           });
 
           this.posts = this.postService.reverseMap(this.posts);
@@ -72,20 +79,20 @@ export class FeedComponent implements OnInit {
    * @return returns common posts to arrays (inner join)
    */
   getIntersection(source: Post[], target: Post[]) {
-    let res: Post[] = []
+    const res: Post[] = [];
 
     source.forEach(post => {
       target.forEach(postLiked => {
         if (post.id == postLiked.id) {
-          res.push(postLiked)
+          res.push(postLiked);
         }
-      })
-    })
+      });
+    });
 
-    return res
+    return res;
   }
 
   refresh() {
-    window.location.reload()
+    window.location.reload();
   }
 }
