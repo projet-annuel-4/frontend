@@ -39,7 +39,7 @@
             <nb-card-body class="hoverEffect" routerLink="/post/{{post.key.id}}/detail">
               <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
 
-              <span class="tag" *ngFor="let tag of post.key.tags"> {{tag.name}} </span>
+              <span class="badge badge-pill badge-info tag-post" *ngFor="let tag of post.key.tags"> {{tag.name}} </span>
             </nb-card-body>
             <nb-card-footer>
               <span class="hoverEffect" (click)="like_dislike(post.key.id)">
@@ -69,7 +69,8 @@
               <pre><code>{{this.codeService.formatContent(friendAnswer.key.content)}}</code></pre>
 
               <div>
-                <span class="tag" *ngFor="let tag of friendAnswer.key.tags"> {{tag.name}} </span>
+                <span class="badge badge-pill badge-info tag-post"
+                      *ngFor="let tag of friendAnswer.key.tags"> {{tag.name}} </span>
               </div>
             </nb-card-body>
             <nb-card-footer>
@@ -101,7 +102,8 @@
               <pre><code>{{this.codeService.formatContent(postLiked.key.content)}}</code></pre>
 
               <div>
-                <span class="tag" *ngFor="let tag of postLiked.key.tags"> {{tag.name}} </span>
+                <span class="badge badge-pill badge-info tag-post"
+                      *ngFor="let tag of postLiked.key.tags"> {{tag.name}} </span>
               </div>
             </nb-card-body>
             <nb-card-footer>

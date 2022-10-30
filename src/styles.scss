@@ -22,6 +22,10 @@ body {
   margin-right: 10px;
 }
 
+.tag-post {
+  margin-right: 5px;
+}
+
 .hoverEffect:hover {
   cursor: pointer;
 }
@@ -84,4 +88,8 @@ textarea {
 div.dropdown-menu.show {
   display: block;
   width: 100%;
+}
+
+button {
+  margin: 5px;
 }

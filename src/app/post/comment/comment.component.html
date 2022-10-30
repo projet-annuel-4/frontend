@@ -3,7 +3,7 @@
   <nb-card-body>
     <div>{{this.codeService.formatContent(post.content)}}</div>
 
-    <span class="tag" *ngFor="let tag of post.tags"> {{tag.name}} </span>
+    <span class="badge badge-pill badge-info tag-post" *ngFor="let tag of post.tags"> {{tag.name}} </span>
   </nb-card-body>
 </nb-card>
 
