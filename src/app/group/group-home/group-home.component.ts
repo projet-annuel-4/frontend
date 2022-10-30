@@ -93,7 +93,7 @@ export class GroupHomeComponent implements OnInit {
 
     this.memberToCreateGroupRequest();
     let user: User;
-    user = JSON.parse(localStorage.getItem('auth-user') as unknown as User);
+    user = JSON.parse(localStorage.getItem('auth-user'));
     this.createGroupRequest.creatorId = parseInt(user.id);
     this.groupService.create(this.createGroupRequest).subscribe(
       then => {
