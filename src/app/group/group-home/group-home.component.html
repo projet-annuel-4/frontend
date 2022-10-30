@@ -8,18 +8,20 @@
         </nb-list-item>
       </nb-list>
     </nb-card-body>
-    <nb-card-footer><button class="customButton" (click)="showPopup()">Create group</button></nb-card-footer>
+    <nb-card-footer>
+      <button nbButton shape="rectangle" status="primary" (click)="showPopup()">Create group</button>
+    </nb-card-footer>
   </nb-card>
 </div>
 
 
 <div id="overlay" (click)="showPopup()"></div>
 
-<div [ngClass]="['pop-up', togglePopup]" >
+<div [ngClass]="['pop-up', togglePopup]">
   <nb-card class="dialog-card">
     <nb-card-header>
       <label class="label">Group Name:</label>
-      <input nbInput [(ngModel)]="createGroupRequest.name" />
+      <input nbInput [(ngModel)]="createGroupRequest.name"/>
     </nb-card-header>
 
     <nb-card-body>
@@ -33,14 +35,14 @@
       </ul>
       <div>
         <label class="label">Members :</label>
-        <input nbInput placeholder="mymail@mail.fr" [(ngModel)]="mail" />
-          <img
-            class="hoverEffect"
-            src="assets/plus-square-outline.svg"
-            height="32"
-            width="32"
-            (click)="addMembers()"
-          >
+        <input nbInput placeholder="mymail@mail.fr" [(ngModel)]="mail"/>
+        <img
+          class="hoverEffect"
+          src="assets/plus-square-outline.svg"
+          height="32"
+          width="32"
+          (click)="addMembers()"
+        >
       </div>
     </nb-card-body>
 

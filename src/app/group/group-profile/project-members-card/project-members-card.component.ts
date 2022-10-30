@@ -1,11 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../../_dtos/user/User';
 import {GroupService} from '../../../_services/group/group.service';
-import {FileService} from "../../../_services/project/fileService";
-import {FileManagementService} from "../../../_services/file-management/file-management.service";
-import {DomSanitizer} from "@angular/platform-browser";
-import {Router} from "@angular/router";
-import {TokenStorageService} from "../../../_services/token/token-storage.service";
+import {FileManagementService} from '../../../_services/file-management/file-management.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Router} from '@angular/router';
+import {TokenStorageService} from '../../../_services/token/token-storage.service';
 
 @Component({
   selector: 'app-project-members-card',
@@ -20,7 +19,7 @@ export class ProjectMembersCardComponent implements OnInit {
   image;
 
   constructor(private groupService: GroupService,
-              private fileService : FileManagementService,
+              private fileService: FileManagementService,
               private sanitizer: DomSanitizer,
               private router: Router,
               private tokenStorage: TokenStorageService) { }
@@ -30,7 +29,7 @@ export class ProjectMembersCardComponent implements OnInit {
     console.log( this.member?.firstName);
 
 
-    if(this.member.imgUrl != null){
+    if (this.member.imgUrl != null) {
       this.loadImage();
     }
 
@@ -40,8 +39,8 @@ export class ProjectMembersCardComponent implements OnInit {
     this.groupService.deleteMembers(this.member.id).subscribe();
   }
 
-  loadImage(){
-    this.fileService.downloadImage(this.member.id).subscribe( res => {
+  loadImage() {
+    this.fileService.downloadImage(this.member.id).subscribe(res => {
       const objectURL = 'data:image/png;base64,' + res.file;
       this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     });
@@ -49,7 +48,7 @@ export class ProjectMembersCardComponent implements OnInit {
 
 
   goToFriendPage() {
-    if (this.member.id == this.tokenStorage.getUser().id) {
+    if (this.member.id === this.tokenStorage.getUser().id) {
       this.router.navigate(['/profile']).then();
     } else {
       this.router.navigate(['friend/' + this.member.id + '/' + 'profile']).then();

@@ -2,16 +2,17 @@
 
   <nb-layout-column class="col-3">
     <nb-card>
-      <nb-card-body style="text-align:center">
-        <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150" height="150" alt="">
+      <nb-card-header style="text-align:center">
+        <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150"
+             height="150" alt="">
         <ng-template #noProfileImage>
           <img class="profile-image" src="assets/profile.png" width="150" height="150" alt="">
         </ng-template>
         <br>
         <div>{{group?.name}}</div>
-      </nb-card-body>
+      </nb-card-header>
 
-      <nb-card-footer>
+      <nb-card-body>
         <div>
           Members: {{group?.members?.length}}
         </div>
@@ -20,11 +21,9 @@
           Project : {{group?.project?.length}}
         </div>
         <hr>
-        <div>
-          <button class="customButton" (click)="showPopup()">
-            Create project
-          </button>
-        </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton fullWidth status="primary" (click)="showPopup()">Create project</button>
       </nb-card-footer>
     </nb-card>
   </nb-layout-column>
