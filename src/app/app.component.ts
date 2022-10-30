@@ -1,9 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { NB_WINDOW, NbDialogService, NbMenuService, NbThemeService } from '@nebular/theme';
-import { TokenStorageService } from './_services/token/token-storage.service';
-import { Router } from '@angular/router';
-import { User } from './_dtos/user/User';
-import { LogoutDialogComponent } from './shared/dialog/logout-dialog.component';
+import {Component, Inject, OnInit} from '@angular/core';
+import {NB_WINDOW, NbDialogService, NbMenuService, NbThemeService} from '@nebular/theme';
+import {TokenStorageService} from './_services/token/token-storage.service';
+import {Router} from '@angular/router';
+import {User} from './_dtos/user/User';
+import {LogoutDialogComponent} from './shared/dialog/logout-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -84,7 +84,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  logOut(){
+  logOut() {
     this.dialogService.open(LogoutDialogComponent);
   }
 }
