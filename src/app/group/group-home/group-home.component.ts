@@ -97,7 +97,7 @@ export class GroupHomeComponent implements OnInit {
     this.createGroupRequest.creatorId = user.id;
     this.groupService.create(this.createGroupRequest).subscribe(
       then => {
-        this.togglePopup = 'pop-up-none';
+        this.showPopup();
         this.initUserGroups();
       },
       () => {
