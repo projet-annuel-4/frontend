@@ -42,7 +42,7 @@ export class ProjectMembersCardComponent implements OnInit {
       [this.member.id]
     );
 
-    this.groupService.deleteMembers(this.member.id, groupRequest).subscribe(
+    this.groupService.deleteMembers(this.group.id, groupRequest).subscribe(
       then => {},
       error => {},
       () => {

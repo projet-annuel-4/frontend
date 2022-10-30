@@ -148,7 +148,7 @@ export class GroupProfileComponent implements OnInit {
           [userToAdd.id]
         );
 
-        this.groupService.addMembers(userToAdd.id, groupRequest).subscribe(
+        this.groupService.addMembers(this.group.id, groupRequest).subscribe(
           then => {},
           error => {
             this.nbToasterService.show('We have a problem retry later', `Oopss`, {
