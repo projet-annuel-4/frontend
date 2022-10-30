@@ -49,8 +49,10 @@
       <input #email nbInput placeholder="Email" type="email" />
     </nb-card-body>
     <nb-card-footer class="text-center">
-      <button nbButton (click)="submit(email.value)" status="primary" class="m-2">Submit</button>
-      <button nbButton (click)="closeNewChatForm()" status="danger" class="m-2">Close</button>
+      <div class="box">
+        <button nbButton (click)="submit(email.value)" status="primary">Submit</button>
+        <button nbButton (click)="closeNewChatForm()" status="danger">Close</button>
+      </div>
     </nb-card-footer>
   </nb-card>
 </div>
