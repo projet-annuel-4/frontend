@@ -33,7 +33,7 @@
       <nb-tab tabTitle="Members">
         <nb-list>
           <nb-list-item *ngFor="let member of group?.members">
-            <app-project-members-card class="col-md-12" [member]="member"></app-project-members-card>
+            <app-project-members-card class="col-md-12" [member]="member" [groupCreatorId]="group.creatorId"></app-project-members-card>
           </nb-list-item>
         </nb-list>
       </nb-tab>

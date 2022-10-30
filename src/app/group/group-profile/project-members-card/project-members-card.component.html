@@ -9,7 +9,7 @@
         </nb-user>
       </div>
 
-      <div class="col-md-1">
+      <div *ngIf="member.id !== groupCreatorId" class="col-md-1">
         <img
           class="hoverEffect"
           src="assets/trash-2-outline.svg"

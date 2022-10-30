@@ -15,6 +15,8 @@ export class ProjectMembersCardComponent implements OnInit {
 
   @Input()
   member: User;
+  @Input()
+  groupCreatorId: number;
 
   image;
 
