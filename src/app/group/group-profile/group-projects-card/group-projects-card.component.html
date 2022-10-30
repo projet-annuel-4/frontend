@@ -12,7 +12,13 @@
         <p>Date de création {{ project.creationDate | date }}</p>
       </div>
       <div class="col-md-4">
-        <button nbButton (click)="goTo(project.id)">go to</button>
+        <img
+          class="hoverEffect"
+          src="assets/search-outline.svg"
+          height="30"
+          width="30"
+          (click)="goTo(project.id)"
+        >
       </div>
     </div>
   </nb-card-body>

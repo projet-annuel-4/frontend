@@ -49,18 +49,23 @@ export class ProfileUpdateComponent implements OnInit {
 
       const data = this.signUpFrom.value
       //this.loading = true;
+      console.log("-- Data --");
+      console.log(data['firstName'], data['lastName'], data['imgUrl'])
+
       this.userService
         .update(new UserUpdateRequest(data['firstName'], data['lastName'], data['imgUrl']))
         .subscribe(
           response => {
             //this.loading = true;
-            this.router.navigate(['../profile']).then()
-          },
+            },
           error => {
             this.nbToasterService.show(error['firstNameError'], `Error`, {
               position: this.positions.TOP_RIGHT,
               status: 'danger',
             })
+          },
+          () => {
+            this.router.navigate(['../profile']).then()
           }
         )
     } else {

@@ -1,7 +1,7 @@
 <nb-card>
   <nb-card-body>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-8">
         <nb-user class="hoverEffect"
                  name="{{this.member.firstName}} {{this.member.lastName}}"
                  picture="{{image != null ? image : ''}}"
@@ -9,8 +9,14 @@
         </nb-user>
       </div>
 
-      <div class="col-md-4">
-        <button nbButton (click)="removeMember()">remove</button>
+      <div class="col-md-2">
+        <img
+          class="hoverEffect"
+          src="assets/trash-2-outline.svg"
+          height="30"
+          width="30"
+          (click)="removeMember()"
+        >
       </div>
     </div>
   </nb-card-body>

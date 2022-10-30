@@ -136,6 +136,7 @@ export class ChatListComponent implements OnInit {
       () => {
         this.initChatList();
         this.closeNewChatForm();
+        window.location.reload();
       }
     );
   }

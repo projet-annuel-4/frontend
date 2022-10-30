@@ -3,11 +3,8 @@ import {Group} from "../../_dtos/group/Group";
 import {ProjectService} from "../../_services/project/projectService";
 import {ActivatedRoute, Params} from "@angular/router";
 import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
-import {CreateProjectComponent} from "./create-project/create-project.component";
 import {GroupService} from "../../_services/group/group.service";
-import {group} from "@angular/animations";
 import {CreateProjectRequest} from "../../_dtos/project/CreateProjectRequest";
-import {delay} from "rxjs/operators";
 
 @Component({
   selector: 'app-group-profile',
