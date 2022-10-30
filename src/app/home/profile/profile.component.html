@@ -1,48 +1,51 @@
-<nb-layout>
-  <nb-layout-column class="col-3">
-    <button id="createButton" nbButton shape="round" size="small" routerLink="/post/create">
-      <img width="30" height="30" src="/assets/add.png">
-    </button>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <button id="createButton" nbButton shape="round" size="small" routerLink="/post/create">
+        <img width="30" height="30" src="/assets/add.png">
+      </button>
 
-    <nb-card>
-      <nb-card-body style="text-align:center">
-        <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150" height="150" alt="">
-        <ng-template #noProfileImage>
-          <img class="profile-image" src="assets/profile.png" alt="">
-        </ng-template>
-
-        <div style="padding-top: 5%; padding-bottom: 5%">
-          <div>{{profile.firstName}} {{profile.lastName?.toUpperCase()}}</div>
-          <div>{{profile.email}}</div>
-        </div>
-
-        <div style="border-top: 1px solid #f4f4f4;">
-          <div class="hoverEffect subscriptionsCounter" (click)="viewFollowers()">
-            {{profile.nbFollowers || 0}} Followers
+      <nb-card>
+        <nb-card-header style="text-align:center">
+          <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150"
+               height="150" alt="">
+          <ng-template #noProfileImage>
+            <img class="profile-image" src="assets/profile.png" alt="">
+          </ng-template>
+        </nb-card-header>
+        <nb-card-body>
+          <div style="padding-top: 5%; padding-bottom: 5%">
+            <div class="truncateLongTexts">{{profile.firstName}} {{profile.lastName?.toUpperCase()}}</div>
+            <div class="truncateLongTexts">{{profile.email}}</div>
           </div>
-          <div class="hoverEffect subscriptionsCounter" (click)="viewSubscriptions()">
-            {{profile.nbSubscriptions || 0}} Subscriptions
+
+          <div style="border-top: 1px solid #f4f4f4;">
+            <div class="hoverEffect subscriptionsCounter truncateLongTexts" (click)="viewFollowers()">
+              {{profile.nbFollowers || 0}} Followers
+            </div>
+            <div class="hoverEffect subscriptionsCounter truncateLongTexts" (click)="viewSubscriptions()">
+              {{profile.nbSubscriptions || 0}} Subscriptions
+            </div>
           </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
+        </nb-card-body>
+        <nb-card-footer>
+          <button nbButton fullWidth status="primary" routerLink="../profile/update">Edit</button>
+        </nb-card-footer>
+      </nb-card>
 
-    <nb-card>
-      <button nbButton routerLink="../profile/update">Edit</button>
-    </nb-card>
-  </nb-layout-column>
+    </div>
 
-  <nb-layout-column>
-    <nb-tabset>
-      <nb-tab tabTitle="My Posts">
-        <div *ngFor="let post of posts | keyvalue">
-          <nb-card>
-            <nb-card-header>
-              Title : {{post.key.title}}
-              <button nbButton
-                      style="float: right"
-                      status="danger"
-                      size="tiny"
+    <div class="col-sm-9">
+      <nb-tabset>
+        <nb-tab tabTitle="My Posts">
+          <div *ngFor="let post of posts | keyvalue">
+            <nb-card>
+              <nb-card-header>
+                Title : {{post.key.title}}
+                <button nbButton
+                        style="float: right"
+                        status="danger"
+                        size="tiny"
                       (click)="deletePost(post.key.id)">
                 Delete
               </button>
@@ -144,6 +147,7 @@
           </nb-card>
         </div>
       </nb-tab>
-    </nb-tabset>
-  </nb-layout-column>
-</nb-layout>
+      </nb-tabset>
+    </div>
+  </div>
+</div>

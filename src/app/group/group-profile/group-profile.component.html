@@ -1,60 +1,56 @@
-<nb-layout>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <nb-card>
+        <nb-card-header style="text-align:center">
+          <h5 class="card-title truncateLongTexts">{{group?.name?.toUpperCase()}}</h5>
+        </nb-card-header>
 
-  <nb-layout-column class="col-3">
-    <nb-card>
-      <nb-card-header style="text-align:center">
-        <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150"
-             height="150" alt="">
-        <ng-template #noProfileImage>
-          <img class="profile-image" src="assets/profile.png" width="150" height="150" alt="">
-        </ng-template>
-        <br>
-        <div>{{group?.name}}</div>
-      </nb-card-header>
-
-      <nb-card-body>
-        <div>
-          Members: {{group?.members?.length}}
-        </div>
-        <hr>
-        <div>
-          Project : {{group?.project?.length}}
-        </div>
-        <hr>
+        <nb-card-body>
+          <div style="padding-top: 5%; padding-bottom: 5%">
+            Members: {{group?.members?.length}}
+          </div>
+          <hr>
+          <div style="padding-top: 5%; padding-bottom: 5%">
+            Project : {{group?.project?.length}}
+          </div>
       </nb-card-body>
-      <nb-card-footer>
-        <button nbButton
-                fullWidth
-                (click)="showAddMembersPopup()">Add Members</button>
-        <button nbButton
-                fullWidth
-                status="primary"
-                (click)="showPopup()">Create project</button>
-      </nb-card-footer>
-    </nb-card>
-  </nb-layout-column>
+        <nb-card-footer>
+          <button nbButton
+                  fullWidth
+                  (click)="showAddMembersPopup()">Add Members
+          </button>
+          <button nbButton
+                  fullWidth
+                  status="primary"
+                  (click)="showPopup()">Create project
+          </button>
+        </nb-card-footer>
+      </nb-card>
+    </div>
 
-  <nb-layout-column>
-    <nb-tabset>
-      <nb-tab tabTitle="Members">
-        <nb-list>
-          <nb-list-item *ngFor="let member of group?.members">
-            <app-project-members-card class="col-md-12" [member]="member" [group]="group"></app-project-members-card>
-          </nb-list-item>
-        </nb-list>
-      </nb-tab>
+    <div class="col-sm-9">
+      <nb-tabset>
+        <nb-tab tabTitle="Members">
+          <nb-list>
+            <nb-list-item *ngFor="let member of group?.members">
+              <app-project-members-card class="col-md-12" [member]="member" [group]="group"></app-project-members-card>
+            </nb-list-item>
+          </nb-list>
+        </nb-tab>
 
-      <nb-tab tabTitle="Project">
-        <nb-list>
-          <button (click)="createProject()"> Create Project</button>
-          <nb-list-item *ngFor="let project of group?.project">
-            <app-group-projects-card class="col-md-12" [project]="project"></app-group-projects-card>
-          </nb-list-item>
-        </nb-list>
-      </nb-tab>
-    </nb-tabset>
-  </nb-layout-column>
-</nb-layout>
+        <nb-tab tabTitle="Project">
+          <nb-list>
+            <button (click)="createProject()"> Create Project</button>
+            <nb-list-item *ngFor="let project of group?.project">
+              <app-group-projects-card class="col-md-12" [project]="project"></app-group-projects-card>
+            </nb-list-item>
+          </nb-list>
+        </nb-tab>
+      </nb-tabset>
+    </div>
+  </div>
+</div>
 
 <div id="overlay" (click)="showPopup()"></div>
 
@@ -74,15 +70,18 @@
     </nb-card-body>
 
     <nb-card-footer>
-      <button nbButton
-              status="primary"
-              (click)="createProject()">
-        Create
-      </button>
-      <button style="margin-left: 5%"
-              nbButton
-              status="danger"
-              (click)="showPopup()">Close</button>
+      <div class="box">
+        <button nbButton
+                status="primary"
+                (click)="createProject()">
+          Create
+        </button>
+        <button style="margin-left: 5%"
+                nbButton
+                status="danger"
+                (click)="showPopup()">Close
+        </button>
+      </div>
     </nb-card-footer>
   </nb-card>
 </div>

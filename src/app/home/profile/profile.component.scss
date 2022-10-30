@@ -45,3 +45,10 @@
   padding-top: 5%;
   padding-bottom: 5%;
 }
+
+.truncateLongTexts {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis // This is where the magic happens
+}
