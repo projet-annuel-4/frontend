@@ -93,10 +93,10 @@
   <nb-card class="dialog-card">
     <nb-card-header>Enter Your Friend Email</nb-card-header>
     <nb-card-body>
-      <input #email nbInput placeholder="Email" type="email" />
+      <input [(ngModel)]="email" nbInput placeholder="Email" type="email" />
     </nb-card-body>
     <nb-card-footer class="text-center">
-      <button nbButton (click)="addMembers(email.value)" status="primary" class="m-2">Submit</button>
+      <button nbButton (click)="addMembers(email)" status="primary" class="m-2">Submit</button>
       <button nbButton (click)="showAddMembersPopup()" status="danger" class="m-2">Close</button>
     </nb-card-footer>
   </nb-card>

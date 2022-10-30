@@ -25,6 +25,8 @@ export class GroupProfileComponent implements OnInit {
   togglePopup = 'pop-up-none';
   addMemberPopup = 'pop-up-none';
 
+  email: string;
+
 
   constructor(private groupService: GroupService,
               private projectService: ProjectService,
@@ -61,10 +63,10 @@ export class GroupProfileComponent implements OnInit {
   }
 
   showPopup(){
-    if(this.togglePopup === "pop-up-block"){
+    if(this.togglePopup == "pop-up-block"){
       this.togglePopup = 'pop-up-none';
       this.offOverlay();
-    } else if(this.togglePopup === "pop-up-none"){
+    } else if(this.togglePopup == "pop-up-none"){
       this.togglePopup = 'pop-up-block';
       this.onOverlay();
     }
@@ -158,7 +160,9 @@ export class GroupProfileComponent implements OnInit {
             });
           },
           () => {
-            this.showPopup();
+            this.addMemberPopup = 'pop-up-none';
+            this.email = "";
+            this.offOverlay();
             this.initGroup();
             this.nbToasterService.show('User add successfully', `Confirm`, {
               position: this.positions.TOP_RIGHT,
