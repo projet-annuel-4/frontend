@@ -7,6 +7,8 @@ import { User } from '../../_dtos/user/User'
 import { SearchFilter } from '../../_dtos/post/Search/SearchFilter'
 import { Filters } from '../../_dtos/post/Search/Filters'
 import {NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
+import {TokenStorageService} from "../../_services/token/token-storage.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-search',
@@ -28,8 +30,11 @@ export class SearchComponent implements OnInit {
   positions = NbGlobalPhysicalPosition;
 
 
-  constructor(private postService: PostService, private datePipe: DatePipe,
-              private nbToasterService: NbToastrService) {}
+  constructor(private postService: PostService,
+              private datePipe: DatePipe,
+              private nbToasterService: NbToastrService,
+              private tokenStorage: TokenStorageService,
+              private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -115,4 +120,14 @@ export class SearchComponent implements OnInit {
   dateToString(date: Date) {
     return this.datePipe.transform(date, 'yyyy-MM-dd 00:00:00')
   }
+
+  goToFriendPage(friendId: number) {
+    if (friendId == this.tokenStorage.getUser().id) {
+      this.router.navigate(['/profile']).then();
+    } else {
+      this.router.navigate(['friend/' + friendId + '/' + 'profile']).then();
+    }
+  }
+
+
 }

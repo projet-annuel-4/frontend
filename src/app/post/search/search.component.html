@@ -83,7 +83,7 @@
         <span *ngFor="let user of usersFound">
           <div class="hoverEffect"
                style="padding: 10px"
-               routerLink="/friend/{{ user.id }}/profile">
+               (click)="goToFriendPage(user.id)">
             <nb-user
               *ngIf="user != null"
               name="{{ user.firstName }} {{ user.lastName }}"
