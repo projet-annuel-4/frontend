@@ -158,7 +158,12 @@ export class GroupProfileComponent implements OnInit {
             });
           },
           () => {
+            this.showPopup();
             this.initGroup();
+            this.nbToasterService.show('User add successfully', `Confirm`, {
+              position: this.positions.TOP_RIGHT,
+              status: 'success',
+            });
           },
         );
 
