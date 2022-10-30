@@ -94,7 +94,7 @@ export class GroupHomeComponent implements OnInit {
     this.memberToCreateGroupRequest();
     let user: User;
     user = JSON.parse(localStorage.getItem('auth-user'));
-    this.createGroupRequest.creatorId = parseInt(user.id);
+    this.createGroupRequest.creatorId = user.id;
     this.groupService.create(this.createGroupRequest).subscribe(
       then => {
         this.togglePopup = 'pop-up-none';
