@@ -46,7 +46,7 @@ export class ProjectMembersCardComponent implements OnInit {
       then => {},
       error => {},
       () => {
-        //window.location.reload();
+        window.location.reload();
       },
     );
   }
