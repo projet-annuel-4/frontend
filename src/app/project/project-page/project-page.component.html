@@ -1,30 +1,41 @@
 <div class="row">
-  <app-project-tree [projectId]="projectId" [fileChange]=fileModified (fileSelectedEvent)="setSelectedFile($event)"
-                    class="col-md-2"></app-project-tree>
+  <app-project-tree
+    [projectId]="projectId"
+    [fileChange]="fileModified"
+    (fileSelectedEvent)="setSelectedFile($event)"
+    class="col-md-2"
+  ></app-project-tree>
 
   <div class="col-md-8" style="height: 650px">
     <div id="fileName"><strong>Bienvenue</strong></div>
 
-    <ngx-monaco-editor id="monaco-editor"
-                       style=" height: 100%;
-                       z-index: 1"
-                       [disabled]
-                       [options]="editorOptions"
-                       [(ngModel)]="code" (ngModelChange)="setFileChanged($event)">
-
+    <ngx-monaco-editor
+      class="my-code-editor"
+      id="monaco-editor"
+      [disabled]
+      [options]="editorOptions"
+      [(ngModel)]="code"
+      (ngModelChange)="setFileChanged($event)"
+    >
     </ngx-monaco-editor>
-
-
   </div>
   <div class="col-md-2">
     <nb-card>
       <nb-card-header>
         <div [formGroup]="branchGroup">
           <nb-select-label>Branch:</nb-select-label>
-          <nb-select formControlName="branchId" [ngModel]="branchName" #element
-                     (selectedChange)="onChangeBranch($event)">
-            <nb-option *ngFor="let branch of branchList" [value]="branch" (selected)="branchName"
-            >{{branch}}</nb-option>
+          <nb-select
+            formControlName="branchId"
+            [ngModel]="branchName"
+            #element
+            (selectedChange)="onChangeBranch($event)"
+          >
+            <nb-option
+              *ngFor="let branch of branchList"
+              [value]="branch"
+              (selected)="(branchName)"
+              >{{ branch }}</nb-option
+            >
           </nb-select>
         </div>
       </nb-card-header>
@@ -37,12 +48,8 @@
                 <nb-list-item (click)="showCreateFilePopup()" class="action">
                   Create file
                 </nb-list-item>
-                <nb-list-item (click)="saveFile()" class="action">
-                  Save changes
-                </nb-list-item>
-                <nb-list-item (click)="showDeleteFile()" class="action">
-                  Delete file
-                </nb-list-item>
+                <nb-list-item (click)="saveFile()" class="action"> Save changes </nb-list-item>
+                <nb-list-item (click)="showDeleteFile()" class="action"> Delete file </nb-list-item>
               </nb-list>
             </nb-accordion-item-body>
           </nb-accordion-item>
@@ -50,9 +57,7 @@
             <nb-accordion-item-header>Commit actions</nb-accordion-item-header>
             <nb-accordion-item-body>
               <nb-list>
-                <nb-list-item (click)="showCommitPopup()" class="action">
-                  Commit
-                </nb-list-item>
+                <nb-list-item (click)="showCommitPopup()" class="action"> Commit </nb-list-item>
                 <nb-list-item (click)="showRevertCommitPopup()" class="action">
                   Revert
                 </nb-list-item>
@@ -78,16 +83,10 @@
         </nb-accordion>
       </nb-card-body>
     </nb-card>
-
-
   </div>
-
-
 </div>
 
-
 <div id="overlay"></div>
-
 
 <!-- Delete File Popup -->
 <div [ngClass]="['pop-up', deleteFilePopup]">
@@ -96,30 +95,18 @@
       <h6>Delete File</h6>
     </nb-card-header>
 
-    <nb-card-body style="text-align: center; padding-bottom: 0;">
+    <nb-card-body style="text-align: center; padding-bottom: 0">
       <p>You are going to delete a file</p>
     </nb-card-body>
 
     <nb-card-footer>
       <div class="box">
-        <button
-          nbButton
-          size="tiny"
-          status="primary"
-          (click)="deleteFile()">
-          delete
-        </button>
-        <button nbButton
-                size="tiny"
-                status="danger"
-                (click)="hideDeleteFile()">
-          Cancel
-        </button>
+        <button nbButton size="tiny" status="primary" (click)="deleteFile()">delete</button>
+        <button nbButton size="tiny" status="danger" (click)="hideDeleteFile()">Cancel</button>
       </div>
     </nb-card-footer>
   </nb-card>
 </div>
-
 
 <!-- Create Commit -->
 <div [ngClass]="['pop-up', createCommitPopup]">
@@ -133,30 +120,21 @@
         <label>Nom du Commit</label>
       </div>
       <div>
-        <input type="text" id="commitName"/>
+        <input type="text" id="commitName" />
       </div>
     </nb-card-body>
 
     <nb-card-footer>
       <div class="box">
-        <button nbButton
-                status="primary"
-                (click)="createCommit()">
-          Create
-        </button>
-        <button nbButton
-                status="danger"
-                (click)="hideCommitPopup()">
-          Close
-        </button>
+        <button nbButton status="primary" (click)="createCommit()">Create</button>
+        <button nbButton status="danger" (click)="hideCommitPopup()">Close</button>
       </div>
     </nb-card-footer>
   </nb-card>
 </div>
 
-
 <!-- Revert Commit -->
-<div [ngClass]="['pop-up', revertCommitPopup]" class='example-height-60 example-horizontal-spread'>
+<div [ngClass]="['pop-up', revertCommitPopup]" class="example-height-60 example-horizontal-spread">
   <nb-card [size]="'medium'">
     <nb-card-header>
       <div>Revert Commit</div>
@@ -188,7 +166,6 @@
   </nb-card>
 </div>
 
-
 <!-- Create Branch -->
 <div [ngClass]="['pop-up', createBranchPopup]">
   <nb-card class="dialog-card">
@@ -201,20 +178,14 @@
         <label>Nom de la branch</label>
       </div>
       <div>
-        <input type="text" id="createBranchName"/>
+        <input type="text" id="createBranchName" />
       </div>
     </nb-card-body>
 
     <nb-card-footer>
       <div class="box">
-        <button nbButton
-                status="primary"
-                (click)="createBranch()">Create
-        </button>
-        <button nbButton
-                status="danger"
-                (click)="hideCreateBranchPopup()">Close
-        </button>
+        <button nbButton status="primary" (click)="createBranch()">Create</button>
+        <button nbButton status="danger" (click)="hideCreateBranchPopup()">Close</button>
       </div>
     </nb-card-footer>
   </nb-card>
@@ -237,7 +208,7 @@
               type="checkbox"
               value="{{ branch }}"
             />
-            <label for="branch_{{ branch }}">  {{ branch }}</label>
+            <label for="branch_{{ branch }}"> {{ branch }}</label>
           </div>
         </nb-list-item>
       </nb-list>
@@ -245,19 +216,8 @@
 
     <nb-card-footer>
       <div class="box">
-        <button
-          nbButton
-          size="tiny"
-          status="primary"
-          (click)="deleteBranch()">
-          delete
-        </button>
-        <button nbButton
-                size="tiny"
-                status="danger"
-                (click)="hideDeleteBranch()">
-          Cancel
-        </button>
+        <button nbButton size="tiny" status="primary" (click)="deleteBranch()">delete</button>
+        <button nbButton size="tiny" status="danger" (click)="hideDeleteBranch()">Cancel</button>
       </div>
     </nb-card-footer>
   </nb-card>
@@ -281,7 +241,7 @@
               type="checkbox"
               value="{{ branch }}"
             />
-            <label for="branch_{{ branch }}">  {{ branch }}</label>
+            <label for="branch_{{ branch }}"> {{ branch }}</label>
           </div>
         </nb-list-item>
       </nb-list>
@@ -289,14 +249,8 @@
 
     <nb-card-footer>
       <div class="box">
-        <button nbButton
-                status="primary"
-                (click)="mergeBranch()">Merge
-        </button>
-        <button nbButton
-                status="danger"
-                (click)="hideMergeBranchPopup()">Close
-        </button>
+        <button nbButton status="primary" (click)="mergeBranch()">Merge</button>
+        <button nbButton status="danger" (click)="hideMergeBranchPopup()">Close</button>
       </div>
     </nb-card-footer>
   </nb-card>
@@ -314,30 +268,15 @@
         <label>Nom du fichier</label>
       </div>
       <div>
-        <input type="text" id="createFileName"/>
+        <input type="text" id="createFileName" />
       </div>
     </nb-card-body>
 
     <nb-card-footer>
       <div class="box">
-        <button nbButton
-                status="primary"
-                (click)="createFile()">Create
-        </button>
-        <button nbButton
-                status="danger"
-                (click)="hideCreateFilePopup()">Close
-        </button>
+        <button nbButton status="primary" (click)="createFile()">Create</button>
+        <button nbButton status="danger" (click)="hideCreateFilePopup()">Close</button>
       </div>
     </nb-card-footer>
   </nb-card>
-
 </div>
-
-
-
-
-
-
-
-

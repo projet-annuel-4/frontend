@@ -21,6 +21,7 @@ import { CreateBranchRequest } from '../../_dtos/project/CreateBranchRequest'
 import { CreateCommitRequest } from '../../_dtos/project/CreateCommitRequest'
 import { CommitService } from '../../_services/project/commitService'
 import { FormControl, FormGroup } from '@angular/forms'
+import { getFileType } from 'src/app/_helpers/fileLanguage'
 
 declare let monaco: any
 
@@ -137,6 +138,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   setSelectedFile(file: Filess) {
     this.selectedFile = file
+    this.editorOptions = { ...this.editorOptions, language: getFileType(this.selectedFile.name) }
     this.code = ''
     document.getElementById('fileName').innerHTML = file.name
     this.fileService.getFileData(this.projectId, this.selectedFile.name).subscribe(
