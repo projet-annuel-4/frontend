@@ -25,6 +25,7 @@
         <div [formGroup]="branchGroup">
           <nb-select-label>Branch:</nb-select-label>
           <nb-select
+            style="width: 100%"
             formControlName="branchId"
             [ngModel]="branchName"
             #element
@@ -39,50 +40,44 @@
           </nb-select>
         </div>
       </nb-card-header>
-      <nb-card-body>
-        <nb-accordion multi>
-          <nb-accordion-item>
-            <nb-accordion-item-header>File actions</nb-accordion-item-header>
-            <nb-accordion-item-body>
-              <nb-list>
-                <nb-list-item (click)="showCreateFilePopup()" class="action">
-                  Create file
-                </nb-list-item>
-                <nb-list-item (click)="saveFile()" class="action"> Save changes </nb-list-item>
-                <nb-list-item (click)="showDeleteFile()" class="action"> Delete file </nb-list-item>
-              </nb-list>
-            </nb-accordion-item-body>
-          </nb-accordion-item>
-          <nb-accordion-item>
-            <nb-accordion-item-header>Commit actions</nb-accordion-item-header>
-            <nb-accordion-item-body>
-              <nb-list>
-                <nb-list-item (click)="showCommitPopup()" class="action"> Commit </nb-list-item>
-                <nb-list-item (click)="showRevertCommitPopup()" class="action">
-                  Revert
-                </nb-list-item>
-              </nb-list>
-            </nb-accordion-item-body>
-          </nb-accordion-item>
-          <nb-accordion-item>
-            <nb-accordion-item-header>Branch actions</nb-accordion-item-header>
-            <nb-accordion-item-body>
-              <nb-list>
-                <nb-list-item (click)="showCreateBranchPopup()" class="action">
-                  Create branch
-                </nb-list-item>
-                <nb-list-item (click)="showMergeBranchPopup()" class="action">
-                  Merge branch
-                </nb-list-item>
-                <nb-list-item (click)="showDeleteBranch()" class="action">
-                  Delete branch
-                </nb-list-item>
-              </nb-list>
-            </nb-accordion-item-body>
-          </nb-accordion-item>
-        </nb-accordion>
-      </nb-card-body>
     </nb-card>
+    <nb-accordion multi>
+      <nb-accordion-item>
+        <nb-accordion-item-header>File actions</nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <nb-list>
+            <nb-list-item (click)="showCreateFilePopup()" class="action">
+              Create file
+            </nb-list-item>
+            <nb-list-item (click)="saveFile()" class="action"> Save changes </nb-list-item>
+            <nb-list-item (click)="showDeleteFile()" class="action"> Delete file </nb-list-item>
+          </nb-list>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      <nb-accordion-item>
+        <nb-accordion-item-header>Commit actions</nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <nb-list>
+            <nb-list-item (click)="showCommitPopup()" class="action"> Commit </nb-list-item>
+            <nb-list-item (click)="showRevertCommitPopup()" class="action"> Revert </nb-list-item>
+          </nb-list>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      <nb-accordion-item>
+        <nb-accordion-item-header>Branch actions</nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <nb-list>
+            <nb-list-item (click)="showCreateBranchPopup()" class="action">
+              Create branch
+            </nb-list-item>
+            <nb-list-item (click)="showMergeBranchPopup()" class="action">
+              Merge branch
+            </nb-list-item>
+            <nb-list-item (click)="showDeleteBranch()" class="action"> Delete branch </nb-list-item>
+          </nb-list>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
   </div>
 </div>
 
