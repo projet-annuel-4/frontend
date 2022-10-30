@@ -41,7 +41,6 @@ export class BranchService {
 
   checkout(projectId: number, branch: string): Observable<any> {
     const target = {targetBranch: branch};
-    console.log(target)
     return this.http.post<any>(
       `${project_file_service.BASE_URL}/${projectId}/branch/checkout`,
       target
@@ -50,10 +49,15 @@ export class BranchService {
 
   merge(projectId: number, branch: string): Observable<any> {
     const target = {branchToMerge: branch};
-    console.log(target)
     return this.http.post<any>(
       `${project_file_service.BASE_URL}/${projectId}/branch/merge`,
       target
+    );
+  }
+
+  deleteBranch(projectId: number, branchName: string): Observable<any> {
+    return this.http.delete<any>(
+      `${project_file_service.BASE_URL}/${projectId}/branch/branch?branchName=${branchName}`
     );
   }
 }

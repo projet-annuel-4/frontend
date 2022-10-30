@@ -216,6 +216,36 @@
     </nb-card-footer>
   </nb-card>
 </div>
+<!-- Delete Branch -->
+<div [ngClass]="['pop-up', deleteBranchPopup]">
+  <nb-card class="dialog-card">
+    <nb-card-header>
+      <h6>Delete current Branch</h6>
+    </nb-card-header>
+
+    <nb-card-body style="text-align: center; padding-bottom: 0;">
+      <p>You are going to delete {{branchName}} Branch</p>
+    </nb-card-body>
+
+    <nb-card-footer>
+      <div class="box">
+        <button
+          nbButton
+          size="tiny"
+          status="primary"
+          (click)="deleteBranch()">
+          delete
+        </button>
+        <button nbButton
+                size="tiny"
+                status="danger"
+                (click)="hideDeleteBranch()">
+          Cancel
+        </button>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</div>
 
 <!-- Merge Branch -->
 <div [ngClass]="['pop-up', mergeBranchPopup]">

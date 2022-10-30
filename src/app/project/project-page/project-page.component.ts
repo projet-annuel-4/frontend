@@ -50,6 +50,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   revertCommitPopup = 'pop-up-none';
   createBranchPopup = 'pop-up-none';
   mergeBranchPopup = 'pop-up-none';
+  deleteBranchPopup = 'pop-up-none';
   createFilePopup = 'pop-up-none';
 
   constructor(
@@ -69,12 +70,11 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     this.branchGroup = new FormGroup({
       branchId: new FormControl()
     });
-  }
 
+  }
   ngOnInit(): void {
     this.updateOptions();
     this.loadBranchList();
-    console.log(this.branchName);
   }
 
   loadBranchList() {
@@ -99,8 +99,8 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   async checkout(branch: string) {
     await this.branchService.checkout(this.projectId, branch).toPromise()
       .then(async (data) => {
-        if (data) {
-          this.nbToasterService.show(data, `Warning`, {
+        if (data.length > 0 && data[0].includes('error')) {
+          this.nbToasterService.show(data[0], `Warning`, {
             position: this.positions.TOP_RIGHT,
             status: 'danger',
           });
@@ -147,7 +147,6 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   async onChangeBranch(element: string) {
-    console.log(element);
     await this.checkout(element);
   }
 
@@ -378,6 +377,35 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     );
   }
 
+  /***** Delete File *****/
+
+  hideDeleteBranch() {
+    this.deleteFilePopup = 'pop-up-none';
+    this.offOverlay();
+  }
+
+  deleteBranch() {
+    this.branchService.deleteBranch(this.projectId, this.branchName).subscribe(
+      () => {
+        this.nbToasterService.show('Branch deleted successfully', `Done`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'success',
+        });
+        this.child.uppdateFilesV2();
+        window.location.reload();
+      },
+      () => {
+        this.nbToasterService.show('', `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+        });
+      },
+      () => {
+        this.hideDeleteBranch();
+      }
+    );
+  }
+
   /***** Merge Branch *****/
 
 
@@ -392,7 +420,6 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     this.mergeBranchList = this.branchList.filter(value => value !== this.branchName);
     this.offOverlay();
   }
-
 
   mergeBranch() {
     if (this.mergeCommitId && this.mergeCommitId !== '') {
@@ -442,7 +469,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   async loadCommit() {
-    await this.commitService.getAllCommit(this.projectId).toPromise().then(data => (this.commits = data));
+    await this.commitService.getAllCommit(this.projectId).toPromise().then(data => (this.commits = data.sort()));
   }
 
   sortCommits(): void {
