@@ -18,3 +18,13 @@ input {
   z-index: 1;
   height: 100%;
 }
+.branch-select {
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  color: rgb(0, 108, 190);
+  background: rgb(226, 242, 255);
+  border: 3px solid rgba(0, 26, 46, 0.549);
+
+  font-weight: 700;
+}

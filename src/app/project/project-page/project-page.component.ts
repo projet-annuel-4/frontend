@@ -156,7 +156,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     return jsonBytesToString
   }
 
-  async onChangeBranch(element: string) {
+  async onChangeBranch($event, element: string) {
     await this.checkout(element)
   }
 

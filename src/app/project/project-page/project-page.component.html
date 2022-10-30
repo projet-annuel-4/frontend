@@ -24,20 +24,17 @@
       <nb-card-header>
         <div [formGroup]="branchGroup">
           <nb-select-label>Branch:</nb-select-label>
-          <nb-select
-            style="width: 100%"
+          <select
+            class="branch-select"
             formControlName="branchId"
             [ngModel]="branchName"
             #element
-            (selectedChange)="onChangeBranch($event)"
+            (change)="onChangeBranch($event, $event.target.value)"
           >
-            <nb-option
-              *ngFor="let branch of branchList"
-              [value]="branch"
-              (selected)="(branchName)"
-              >{{ branch }}</nb-option
-            >
-          </nb-select>
+            <option *ngFor="let branch of branchList" [value]="branch" (selected)="(branchName)">
+              {{ branch }}
+            </option>
+          </select>
         </div>
       </nb-card-header>
     </nb-card>
