@@ -90,11 +90,27 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   async loadCurrentBranch() {
-    await this.branchService.getActualBranch(this.projectId).toPromise().then(data => (this.branchName = data.name));
+    await this.branchService.getActualBranch(this.projectId).toPromise().then(data => {
+      this.branchName = data.name;
+      this.mergeBranchList = this.branchList.filter(value => value !== data.name);
+    });
   }
 
   async checkout(branch: string) {
-    await this.branchService.checkout(this.projectId, branch).toPromise().then(() => (this.loadCurrentBranch()));
+    await this.branchService.checkout(this.projectId, branch).toPromise()
+      .then(async (data) => {
+        if (data) {
+          this.nbToasterService.show(data, `Warning`, {
+            position: this.positions.TOP_RIGHT,
+            status: 'danger',
+          });
+        } else {
+          await this.loadCurrentBranch();
+          this.child.updateFiles();
+          await this.router.navigateByUrl('/group/' + this.groupId + '/project/' + this.projectId + '/branch/' + this.branchName);
+          window.location.reload();
+        }
+      });
   }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
@@ -130,12 +146,9 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     return jsonBytesToString;
   }
 
-  async onChangeBranch($event: Event, element) {
+  async onChangeBranch(element: string) {
     console.log(element);
     await this.checkout(element);
-    this.child.updateFiles();
-    await this.router.navigateByUrl('/group/' + this.groupId + '/project/' + this.projectId + '/branch/' + this.branchName);
-    window.location.reload();
   }
 
   setFileChanged($event: Event) {
@@ -202,6 +215,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     );
     this.fileService.create(this.projectId, fileRequest).subscribe(
       data => {
+        console.log(this.nbToasterService);
         this.nbToasterService.show('File has been saved successfully', `Done`, {
           position: this.positions.TOP_RIGHT,
           status: 'success',
@@ -293,7 +307,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   /****** Revert ******/
   showRevertCommitPopup() {
-    this.revertCommitPopup = 'pop-up-block'
+    this.revertCommitPopup = 'pop-up-block';
     this.onOverlay();
     this.loadCommit();
   }
@@ -350,7 +364,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
           status: 'success',
         });
         delay(2000);
-        // window.location.reload();
+        window.location.reload();
       },
       error => {
         this.nbToasterService.show(error.error.message, `Error`, {
@@ -369,14 +383,14 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
 
   showMergeBranchPopup() {
-    this.createBranchPopup = 'pop-up-block';
+    this.mergeBranchPopup = 'pop-up-block';
     this.onOverlay();
   }
 
   hideMergeBranchPopup() {
-    this.createBranchPopup = 'pop-up-none';
-    this.offOverlay();
+    this.mergeBranchPopup = 'pop-up-none';
     this.mergeBranchList = this.branchList.filter(value => value !== this.branchName);
+    this.offOverlay();
   }
 
 
@@ -440,11 +454,11 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
 
   onOverlay() {
-    document.getElementById("overlay").style.display = "block";
+    document.getElementById('overlay').style.display = 'block';
   }
 
   offOverlay() {
-    document.getElementById("overlay").style.display = "none";
+    document.getElementById('overlay').style.display = 'none';
   }
 
 
