@@ -12,17 +12,17 @@ import { User } from '../../_dtos/user/User'
 export class FeedComponent implements OnInit {
   user: User
 
-  posts: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>()
+  posts: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>();
   tempPosts: Post[];
 
   randomPost: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>();
 
-  postsAlreadyLiked: Post[]
+  postsAlreadyLiked: Post[];
 
   constructor(private postService: PostService, private tokenStorage: TokenStorageService) {}
 
   ngOnInit(): void {
-    this.user = this.tokenStorage.getUser()
+    this.user = this.tokenStorage.getUser();
 
     this.postService.getAllSubscriptionPost(this.user.id).subscribe(
       posts => {
@@ -52,16 +52,38 @@ export class FeedComponent implements OnInit {
       () => {
         if(tempPost != null){
           tempPost = tempPost.slice(0, nb);
-
           tempPostMap = this.postService.postTabToPostMap(tempPost);
-          tempPostMap.forEach((value, key) => {
-            if(!this.posts.has(key)) this.posts.set(key, value);
-          });
 
+          let distinctMap = this.distinct(this.posts, tempPostMap);
+          this.addAll(distinctMap, this.posts);
           this.posts = this.postService.reverseMap(this.posts);
         }
       }
     );
+  }
+
+
+  distinct(map1: Map<Post, { isLiked: boolean }>, map2: Map<Post, { isLiked: boolean }>){
+    let res: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>();
+    map1.forEach((value1, key1) => {
+      map2.forEach((value2, key2) => {
+        if (key2.id != key1.id) res.set(key2, value2);
+      });
+    });
+    return res;
+  }
+
+  /**
+   * map1 into map2
+   * @param map1
+   * @param map2
+   */
+  addAll(map1: Map<Post, { isLiked: boolean }>, map2: Map<Post, { isLiked: boolean }>){
+    map2.forEach((value, key) => {
+      map1.forEach((value1, key1) => {
+        map2.set(key1, value1);
+      });
+    });
   }
 
 
@@ -82,10 +104,10 @@ export class FeedComponent implements OnInit {
       })
     })
 
-    return res
+    return res;
   }
 
   refresh() {
-    window.location.reload()
+    window.location.reload();
   }
 }
