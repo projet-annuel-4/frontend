@@ -1,11 +1,11 @@
 <div class="row">
   <div
-    style="display: flex; justify-content: center; align-content: center; flex-direction: column"
-    class="col-md-6"
+    style="display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column"
+    class="col-md-4"
   >
-    <p>{{ group.name }}</p>
-  </div>
-  <div class="col-md-4">
     <img
       class="hoverEffect"
       src="assets/search-outline.svg"
@@ -13,5 +13,18 @@
       width="30"
       (click)="goTo(group.id)"
     >
+  </div>
+  <div class="col-md-4" >
+    <p>{{ group.name }}</p>
+  </div>
+
+  <div *ngIf="group.creatorId === tokenStorage.getUser().id"
+            class="col-md-4">
+    <button nbButton
+            status="danger"
+            size="small"
+            (click)="deleteGroup(group.id)">
+      Delete
+    </button>
   </div>
 </div>
