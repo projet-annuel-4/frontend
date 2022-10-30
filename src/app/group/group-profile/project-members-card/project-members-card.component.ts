@@ -5,6 +5,8 @@ import {FileManagementService} from '../../../_services/file-management/file-man
 import {DomSanitizer} from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {TokenStorageService} from '../../../_services/token/token-storage.service';
+import {GroupRequest} from "../../../_dtos/group/GroupRequest";
+import {Group} from "../../../_dtos/group/Group";
 
 @Component({
   selector: 'app-project-members-card',
@@ -16,7 +18,7 @@ export class ProjectMembersCardComponent implements OnInit {
   @Input()
   member: User;
   @Input()
-  groupCreatorId: number;
+  group: Group;
 
   image;
 
@@ -27,18 +29,26 @@ export class ProjectMembersCardComponent implements OnInit {
               private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
-    console.log( this.member);
-    console.log( this.member?.firstName);
-
-
     if (this.member.imgUrl != null) {
       this.loadImage();
     }
-
   }
 
   removeMember() {
-    this.groupService.deleteMembers(this.member.id).subscribe();
+    let groupRequest = new GroupRequest(
+      this.group.id,
+      this.group.name,
+      this.group.creatorId,
+      [this.member.id]
+    );
+
+    this.groupService.deleteMembers(this.member.id, groupRequest).subscribe(
+      then => {},
+      error => {},
+      () => {
+        //window.location.reload();
+      },
+    );
   }
 
   loadImage() {

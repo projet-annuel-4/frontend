@@ -23,7 +23,13 @@
         <hr>
       </nb-card-body>
       <nb-card-footer>
-        <button nbButton fullWidth status="primary" (click)="showPopup()">Create project</button>
+        <button nbButton
+                fullWidth
+                (click)="showAddMembersPopup()">Add Members</button>
+        <button nbButton
+                fullWidth
+                status="primary"
+                (click)="showPopup()">Create project</button>
       </nb-card-footer>
     </nb-card>
   </nb-layout-column>
@@ -33,7 +39,7 @@
       <nb-tab tabTitle="Members">
         <nb-list>
           <nb-list-item *ngFor="let member of group?.members">
-            <app-project-members-card class="col-md-12" [member]="member" [groupCreatorId]="group.creatorId"></app-project-members-card>
+            <app-project-members-card class="col-md-12" [member]="member" [group]="group"></app-project-members-card>
           </nb-list-item>
         </nb-list>
       </nb-tab>
@@ -77,6 +83,22 @@
               nbButton
               status="danger"
               (click)="showPopup()">Close</button>
+    </nb-card-footer>
+  </nb-card>
+</div>
+
+
+
+<!-- Add Members -->
+<div [ngClass]="['pop-up', addMemberPopup]">
+  <nb-card class="dialog-card">
+    <nb-card-header>Enter Your Friend Email</nb-card-header>
+    <nb-card-body>
+      <input #email nbInput placeholder="Email" type="email" />
+    </nb-card-body>
+    <nb-card-footer class="text-center">
+      <button nbButton (click)="addMembers(email.value)" status="primary" class="m-2">Submit</button>
+      <button nbButton (click)="showAddMembersPopup()" status="danger" class="m-2">Close</button>
     </nb-card-footer>
   </nb-card>
 </div>

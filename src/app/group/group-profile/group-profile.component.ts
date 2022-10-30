@@ -5,6 +5,9 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
 import {GroupService} from '../../_services/group/group.service';
 import {CreateProjectRequest} from '../../_dtos/project/CreateProjectRequest';
+import {GroupRequest} from "../../_dtos/group/GroupRequest";
+import {UserService} from "../../_services/user/user.service";
+import {User} from "../../_dtos/user/User";
 
 @Component({
   selector: 'app-group-profile',
@@ -20,13 +23,15 @@ export class GroupProfileComponent implements OnInit {
 
 
   togglePopup = 'pop-up-none';
+  addMemberPopup = 'pop-up-none';
 
 
   constructor(private groupService: GroupService,
               private projectService: ProjectService,
               private route: ActivatedRoute,
               private dialogService: NbDialogService,
-              private nbToasterService: NbToastrService) {
+              private nbToasterService: NbToastrService,
+              private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -34,12 +39,15 @@ export class GroupProfileComponent implements OnInit {
       this.groupId = params.groupId;
     });
 
+    this.initGroup();
+  }
+
+  initGroup(){
     this.groupService.getInfoGroup(this.groupId).subscribe(
       data => this.group = data,
       () => {},
       () => { this.loadProjects(); console.log(this.group); }
     );
-
   }
 
   loadProjects() {
@@ -99,6 +107,65 @@ export class GroupProfileComponent implements OnInit {
         this.showPopup();
       }
     );
+  }
+
+
+  showAddMembersPopup(){
+    if(this.addMemberPopup === "pop-up-block"){
+      this.addMemberPopup = 'pop-up-none';
+      this.offOverlay();
+    } else if(this.addMemberPopup === "pop-up-none"){
+      this.addMemberPopup = 'pop-up-block';
+      this.onOverlay();
+    }
+  }
+
+
+
+  addMembers(email: string){
+    if(email === undefined){
+      this.nbToasterService.show('Please give an email', `No entry`, {
+        position: this.positions.TOP_RIGHT,
+        status: 'warning',
+      });
+    }
+
+    let userToAdd: User;
+
+    this.userService.getByEmail(email).subscribe(
+      user => { userToAdd = user },
+      err => {
+        this.nbToasterService.show('User not found', `Error`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'warning',
+        });
+      },
+      () => {
+        let groupRequest = new GroupRequest(
+          this.group.id,
+          this.group.name,
+          this.group.creatorId,
+          [userToAdd.id]
+        );
+
+        this.groupService.addMembers(userToAdd.id, groupRequest).subscribe(
+          then => {},
+          error => {
+            this.nbToasterService.show('We have a problem retry later', `Oopss`, {
+              position: this.positions.TOP_RIGHT,
+              status: 'danger',
+              icon: 'alert-triangle-outline'
+            });
+          },
+          () => {
+            this.initGroup();
+          },
+        );
+
+      },
+    );
+
+
   }
 
 

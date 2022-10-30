@@ -133,7 +133,7 @@ export class ChatListComponent implements OnInit {
         this.nbToasterService.show('User not found', `Error`, {
           position: this.positions.TOP_RIGHT,
           status: 'warning',
-        })
+        });
       },
       () => {
         this.initChatList();

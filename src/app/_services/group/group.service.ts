@@ -6,6 +6,7 @@ import {CreateGroupRequest} from '../../_dtos/group/CreateGroupRequest';
 import {Observable} from 'rxjs';
 import {Group} from '../../_dtos/group/Group';
 import {User} from '../../_dtos/user/User';
+import {GroupRequest} from "../../_dtos/group/GroupRequest";
 
 @Injectable({
   providedIn: 'root',
@@ -28,16 +29,16 @@ export class GroupService {
     return this.http.delete(`${group_service.BASE_URL}/${group_id}`, this.httpOptions);
   }
 
-  addMembers(user_id: number) {
-    return this.http.patch(`${group_service.BASE_URL}/${user_id}/add-members`, this.httpOptions);
+  addMembers(user_id: number, groupRequest: GroupRequest) {
+    return this.http.patch(`${group_service.BASE_URL}/${user_id}/add-members`, groupRequest, this.httpOptions);
   }
 
   getInfoGroup(groupId: number): Observable<Group> {
     return this.http.get<Group>(`${group_service.BASE_URL}/${groupId}`, this.httpOptions);
   }
 
-  deleteMembers(user_id: number) {
-    return this.http.patch(`${group_service.BASE_URL}/${user_id}/delete-members`, this.httpOptions);
+  deleteMembers(user_id: number, groupRequest: GroupRequest) {
+    return this.http.patch(`${group_service.BASE_URL}/${user_id}/delete-members`, groupRequest, this.httpOptions);
   }
 
   updateGroupName(group_id: number, name: string) {
