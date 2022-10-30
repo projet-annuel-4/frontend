@@ -116,6 +116,7 @@ export class GroupProfileComponent implements OnInit {
     if(this.addMemberPopup === "pop-up-block"){
       this.addMemberPopup = 'pop-up-none';
       this.offOverlay();
+      this.email = "";
     } else if(this.addMemberPopup === "pop-up-none"){
       this.addMemberPopup = 'pop-up-block';
       this.onOverlay();
