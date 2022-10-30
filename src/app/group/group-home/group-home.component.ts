@@ -33,9 +33,19 @@ export class GroupHomeComponent implements OnInit {
   }
 
   initUserGroups() {
-    this.groupService.getGroupsByMembersEmail().subscribe(groups => {
-      this.groups = groups;
-    });
+    this.groupService.getGroupsByMembersEmail().subscribe(
+      groups => {
+        this.groups = groups;
+      },
+      error => {
+        this.nbToasterService.show('We have a problem retry later', `Oopss`, {
+          position: this.positions.TOP_RIGHT,
+          status: 'danger',
+          icon: 'alert-triangle-outline'
+        });
+      },
+      () => {},
+    );
   }
 
 

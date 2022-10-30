@@ -18,8 +18,8 @@
     <p>{{ group.name }}</p>
   </div>
 
-  <div *ngIf="group.creatorId === tokenStorage.getUser().id"
-            class="col-md-4">
+  <div *ngIf="group.creatorId == tokenStorage.getUser().id"
+            class="col-md-2">
     <button nbButton
             status="danger"
             size="small"
