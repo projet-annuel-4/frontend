@@ -1,9 +1,7 @@
 import {ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild,} from '@angular/core';
 
 import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
-import {CreateCommitComponent} from './create-commit/create-commit.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {RevertCommitComponent} from './revert-commit/revert-commit.component';
 import {FileService} from '../../_services/project/fileService';
 
 import {ProjectTreeComponent} from './project-tree/project-tree.component';
@@ -11,11 +9,11 @@ import {Filess} from '../../_dtos/project/Filess';
 import {BranchService} from '../../_services/project/branchService';
 import {Commit} from '../../_dtos/project/Commit';
 import {delay} from 'rxjs/operators';
-import {MergeBranchComponent} from './merge-branch/merge-branch.component';
 import {CreateFileRequest} from '../../_dtos/project/CreateFileRequest';
 import {CreateBranchRequest} from '../../_dtos/project/CreateBranchRequest';
 import {CreateCommitRequest} from '../../_dtos/project/CreateCommitRequest';
 import {CommitService} from '../../_services/project/commitService';
+import {FormControl, FormGroup} from '@angular/forms';
 
 declare let monaco: any;
 
@@ -35,10 +33,12 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   atLeastOneFileModified = false;
   positions = NbGlobalPhysicalPosition;
   branchList = ['master'];
+  mergeBranchList = [];
   selectedBranch: string;
-
+  revertCommitId: string;
+  mergeCommitId: string;
+  branchGroup: FormGroup;
   @ViewChild(ProjectTreeComponent) child: ProjectTreeComponent;
-  @ViewChild(CreateCommitComponent) createCommitChild: CreateCommitComponent;
 
   commitExec = false;
 
@@ -65,6 +65,9 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     this.route.params.subscribe(params => {
       this.projectId = params.projectId;
       this.groupId = params.groupId;
+    });
+    this.branchGroup = new FormGroup({
+      branchId: new FormControl()
     });
   }
 
@@ -140,28 +143,35 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   saveFile() {
-    const fileContent = this.code;
-    const blob = new Blob([fileContent], {type: 'text/plain'});
-    const file = new File([blob], 'foo.txt', {type: 'text/plain'});
-    const data: FormData = new FormData();
-    data.append('file', file);
-    this.fileService.saveFile(this.projectId, this.selectedFile.name, data).subscribe(
-      () => {
-        this.nbToasterService.show('The file has been saved', `Done`, {
-          position: this.positions.TOP_RIGHT,
-          status: 'success',
-        });
-        this.atLeastOneFileModified = true;
-      },
-      () => {
-        this.nbToasterService.show('', `Error`, {
-          position: this.positions.TOP_RIGHT,
-          status: 'danger',
-        });
-      },
-      () => {
-      }
-    );
+    if (this.selectedFile && this.selectedFile.name && this.selectedFile.name !== '') {
+      const fileContent = this.code;
+      const blob = new Blob([fileContent], {type: 'text/plain'});
+      const file = new File([blob], 'foo.txt', {type: 'text/plain'});
+      const data: FormData = new FormData();
+      data.append('file', file);
+      this.fileService.saveFile(this.projectId, this.selectedFile.name, data).subscribe(
+        () => {
+          this.nbToasterService.show('The file has been saved', `Done`, {
+            position: this.positions.TOP_RIGHT,
+            status: 'success',
+          });
+          this.atLeastOneFileModified = true;
+        },
+        () => {
+          this.nbToasterService.show('', `Error`, {
+            position: this.positions.TOP_RIGHT,
+            status: 'danger',
+          });
+        },
+        () => {
+        }
+      );
+    } else {
+      this.nbToasterService.show('You need to select file to save', `Warning`, {
+        position: this.positions.TOP_RIGHT,
+        status: 'warning',
+      });
+    }
   }
 
   showDeleteFile() {
@@ -279,6 +289,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   /****** Revert ******/
   showRevertCommitPopup() {
     this.revertCommitPopup = 'pop-up-block';
+    this.loadCommit();
   }
 
   hideRevertCommitPopup() {
@@ -286,28 +297,28 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   revertCommit() {
-    const revertCommitComponent = this.dialogService.open(RevertCommitComponent, {
-      context: {projectId: this.projectId},
-    });
-    revertCommitComponent.onClose.subscribe(
-      () => {
-      },
-      () => {
-        this.nbToasterService.show('', `Error`, {
-          position: this.positions.TOP_RIGHT,
-          status: 'danger',
-        });
-      },
-      () => {
-        this.nbToasterService.show('Project has been revert', `Done`, {
-          position: this.positions.TOP_RIGHT,
-          status: 'success',
-        });
-        this.child.updateFiles();
-        window.location.reload();
-      }
-    );
-    this.hideRevertCommitPopup();
+    if (this.revertCommitId && this.revertCommitId !== '') {
+      this.commitService.revert(this.projectId, this.revertCommitId).subscribe(
+        () => {
+          this.nbToasterService.show('Commit has been revert successfully', `Done`, {
+            position: this.positions.TOP_RIGHT,
+            status: 'success',
+          });
+          delay(2000);
+          window.location.reload();
+        },
+        () => {
+        },
+        () => {
+          this.hideRevertCommitPopup();
+        }
+      );
+    } else {
+      this.nbToasterService.show('You need to check a commit', `Revert warning`, {
+        position: this.positions.TOP_RIGHT,
+        status: 'warning',
+      });
+    }
   }
 
   /***** Create Branch *****/
@@ -330,7 +341,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
           status: 'success',
         });
         delay(2000);
-        window.location.reload();
+        // window.location.reload();
       },
       error => {
         this.nbToasterService.show(error.error.message, `Error`, {
@@ -346,49 +357,69 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   /***** Merge Branch *****/
   showMergeBranchPopup() {
-    this.createBranchPopup = 'pop-up-block';
+    this.mergeBranchPopup = 'pop-up-block';
+    this.mergeBranchList = this.branchList.filter(value => value !== this.branchName);
   }
 
   hideMergeBranchPopup() {
-    this.createBranchPopup = 'pop-up-none';
+    this.mergeBranchPopup = 'pop-up-none';
   }
 
-  merge() {
-    const result = this.branchList.filter(value => value !== this.branchName);
-    const mergeBranchComponent = this.dialogService.open(MergeBranchComponent, {
-      context: {projectId: this.projectId, branchList: result, actualBranch: this.branchName},
-    });
-    mergeBranchComponent.onClose.subscribe(
-      () => {
-      },
-      () => {
-        this.nbToasterService.show('', `Error`, {
-          position: this.positions.TOP_RIGHT,
-          status: 'danger',
-        });
-        delay(2000);
-      },
-      () => {
-        this.nbToasterService.show('Branch has been merged successfully', `Done`, {
-          position: this.positions.TOP_RIGHT,
-          status: 'success',
-        });
-        delay(2000);
-        this.child.updateFiles();
-        this.hideMergeBranchPopup();
-        window.location.reload();
-      }
-    );
+  mergeBranch() {
+    if (this.mergeCommitId && this.mergeCommitId !== '') {
+      this.branchService.merge(this.projectId, this.mergeCommitId).subscribe(
+        () => {
+          this.nbToasterService.show('Branch has been merged successfully', `Done`, {
+            position: this.positions.TOP_RIGHT,
+            status: 'success',
+          });
+          delay(2000);
+          // window.location.reload();
+        },
+        () => {
+        },
+        () => {
+          this.hideMergeBranchPopup();
+        }
+      );
+    } else {
+      this.nbToasterService.show('You need to check a branch', `Revert warning`, {
+        position: this.positions.TOP_RIGHT,
+        status: 'warning',
+      });
+    }
   }
 
-  checkInput(selected: string) {
-    this.selectedBranch = selected;
+  checkRevertInput(selected: string) {
+    this.revertCommitId = selected;
     const checkbox = document.getElementsByClassName(
-      'branchCheckBox'
+      'commitRevertCheckBox'
     ) as HTMLCollectionOf<HTMLInputElement>;
     for (let i = 0; i < checkbox.length; i++) {
       checkbox[i].checked = false;
     }
-    (document.getElementById(selected) as HTMLInputElement).checked = true;
+    (document.getElementById('commit_' + selected) as HTMLInputElement).checked = true;
+  }
+
+  branchMergeInput(selected: string) {
+    this.mergeCommitId = selected;
+    const checkbox = document.getElementsByClassName(
+      'mergerBranchCheckBox'
+    ) as HTMLCollectionOf<HTMLInputElement>;
+    for (let i = 0; i < checkbox.length; i++) {
+      checkbox[i].checked = false;
+    }
+    (document.getElementById('branch_' + selected) as HTMLInputElement).checked = true;
+  }
+
+  async loadCommit() {
+    await this.commitService.getAllCommit(this.projectId).toPromise().then(data => (this.commits = data));
+  }
+
+  sortCommits(): void {
+    this.commits.sort(
+      (commitA, commitB) =>
+        new Date(commitA.date).getTime() - new Date(commitB.date).getTime()
+    );
   }
 }

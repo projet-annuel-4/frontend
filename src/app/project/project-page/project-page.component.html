@@ -3,9 +3,14 @@
 
   <div class="col-md-8" style="height: 650px">
     <div id="fileName">Bienvenue</div>
-    <select formControlName="branchId" [ngModel]="branchName" #element (change)="onChangeBranch($event,element.value)">
-      <option *ngFor="let branch of branchList" [value]="branch" [selected]="branch === branchName">{{branch}}</option>
-    </select>
+    <div [formGroup]="branchGroup">
+      <select formControlName="branchId" [ngModel]="branchName" #element
+              (change)="onChangeBranch($event,element.value)">
+        <option *ngFor="let branch of branchList" [value]="branch"
+                [selected]="branch === branchName">{{branch}}</option>
+      </select>
+    </div>
+
     <ngx-monaco-editor id="monaco-editor"
                        style=" height: 100%;
                        z-index: 1"
@@ -20,39 +25,43 @@
 
   <nb-accordion multi>
     <nb-accordion-item>
-      <nb-accordion-item-header>File action</nb-accordion-item-header>
+      <nb-accordion-item-header>File actions</nb-accordion-item-header>
       <nb-accordion-item-body>
         <nb-list>
           <nb-list-item (click)="showCreateFilePopup()" class="action" >
             Create file
           </nb-list-item>
           <nb-list-item (click)="saveFile()" class="action" >
-            save
+            Save changes
           </nb-list-item>
           <nb-list-item (click)="showDeleteFile()" class="action" >
-            delete
+            Delete file
           </nb-list-item>
         </nb-list>
       </nb-accordion-item-body>
     </nb-accordion-item>
     <nb-accordion-item>
-      <nb-accordion-item-header>Project action</nb-accordion-item-header>
+      <nb-accordion-item-header>Commit actions</nb-accordion-item-header>
       <nb-accordion-item-body>
         <nb-list>
-          <nb-list-item (click)="showCreateBranchPopup()" class="action" >
-            create branch
-          </nb-list-item>
-          <nb-list-item (click)="showDiff()" class="action" >
-            show diff
-          </nb-list-item>
-          <nb-list-item (click)="showCommitPopup()" class="action" >
+          <nb-list-item (click)="showCommitPopup()" class="action">
             Commit
           </nb-list-item>
-          <nb-list-item (click)="showRevertCommitPopup()" class="action" >
+          <nb-list-item (click)="showRevertCommitPopup()" class="action">
             Revert
           </nb-list-item>
+        </nb-list>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+    <nb-accordion-item>
+      <nb-accordion-item-header>Branch actions</nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <nb-list>
+          <nb-list-item (click)="showCreateBranchPopup()" class="action">
+            Create branch
+          </nb-list-item>
           <nb-list-item (click)="showMergeBranchPopup()" class="action">
-            Merge
+            Merge branch
           </nb-list-item>
         </nb-list>
       </nb-accordion-item-body>
@@ -130,9 +139,9 @@
         <nb-list-item *ngFor="let commit of commits">
           <div>
             <input
-              class="commitCheckBox"
+              class="commitRevertCheckBox"
               id="commit_{{ commit.code }}"
-              (click)="checkInput(commit.name)"
+              (click)="checkRevertInput(commit.code)"
               type="checkbox"
               value="{{ commit.name }}"
             />
@@ -181,17 +190,25 @@
     </nb-card-header>
 
     <nb-card-body>
-      <div>
-        <label>Nom de la branch</label>
-      </div>
-      <div>
-        <input type="text" id="mergeBranchName"/>
-      </div>
+      <nb-list>
+        <nb-list-item *ngFor="let branch of mergeBranchList">
+          <div>
+            <input
+              class="mergerBranchCheckBox"
+              id="branch_{{ branch }}"
+              (click)="branchMergeInput(branch)"
+              type="checkbox"
+              value="{{ branch }}"
+            />
+            <label for="branch_{{ branch }}">{{ branch }}</label>
+          </div>
+        </nb-list-item>
+      </nb-list>
     </nb-card-body>
 
     <nb-card-footer>
-      <button nbButton (click)="createBranch()">Create</button>
-      <button nbButton (click)="hideCreateBranchPopup()">Close</button>
+      <button nbButton (click)="mergeBranch()">Merge</button>
+      <button nbButton (click)="hideMergeBranchPopup()">Close</button>
     </nb-card-footer>
   </nb-card>
 </div>

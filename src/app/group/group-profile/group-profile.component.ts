@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {Group} from "../../_dtos/group/Group";
-import {ProjectService} from "../../_services/project/projectService";
-import {ActivatedRoute, Params} from "@angular/router";
-import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from "@nebular/theme";
-import {CreateProjectComponent} from "./create-project/create-project.component";
-import {GroupService} from "../../_services/group/group.service";
-import {group} from "@angular/animations";
-import {CreateProjectRequest} from "../../_dtos/project/CreateProjectRequest";
-import {delay} from "rxjs/operators";
+import {Component, OnInit} from '@angular/core';
+import {Group} from '../../_dtos/group/Group';
+import {ProjectService} from '../../_services/project/projectService';
+import {ActivatedRoute, Params} from '@angular/router';
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
+import {GroupService} from '../../_services/group/group.service';
+import {CreateProjectRequest} from '../../_dtos/project/CreateProjectRequest';
 
 @Component({
   selector: 'app-group-profile',
@@ -22,15 +19,14 @@ export class GroupProfileComponent implements OnInit {
   positions = NbGlobalPhysicalPosition;
 
 
-
-  togglePopup: string = 'pop-up-none';
+  togglePopup = 'pop-up-none';
 
 
   constructor(private groupService: GroupService,
               private projectService: ProjectService,
               private route: ActivatedRoute,
               private dialogService: NbDialogService,
-              private nbToasterService:NbToastrService) {
+              private nbToasterService: NbToastrService) {
   }
 
   ngOnInit(): void {
@@ -74,12 +70,11 @@ export class GroupProfileComponent implements OnInit {
    */
 
 
-
-  showPopup(){
-    if(this.togglePopup == "pop-up-block"){
-      this.togglePopup = 'pop-up-none'
-    } else if(this.togglePopup == "pop-up-none"){
-      this.togglePopup = 'pop-up-block'
+  showPopup() {
+    if (this.togglePopup === 'pop-up-block') {
+      this.togglePopup = 'pop-up-none';
+    } else if (this.togglePopup === 'pop-up-none') {
+      this.togglePopup = 'pop-up-block';
     }
   }
 
@@ -89,28 +84,28 @@ export class GroupProfileComponent implements OnInit {
       (document.getElementById('createProjectName') as HTMLInputElement).value,
       false,
       +this.groupId
-    )
+    );
     this.projectService.createProject(projectRequest).subscribe(
       data => {
-        localStorage.setItem('createdProject', JSON.stringify(data))
+        localStorage.setItem('createdProject', JSON.stringify(data));
       },
       error => {
         this.nbToasterService.show(error.error.message, `Error`, {
           position: this.positions.TOP_RIGHT,
           status: 'danger',
-        })
-        return
+        });
+        return;
       },
       () => {
         this.nbToasterService.show('Project has been saved successfully', `Done`, {
           position: this.positions.TOP_RIGHT,
           status: 'success',
-        })
+        });
 
-        localStorage.removeItem('groupId')
+        localStorage.removeItem('groupId');
         this.showPopup();
       }
-    )
+    );
   }
 
 

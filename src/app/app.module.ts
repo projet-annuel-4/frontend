@@ -53,10 +53,6 @@ import {GroupProjectsCardComponent} from './group/group-profile/group-projects-c
 import {ProjectPageComponent} from './project/project-page/project-page.component';
 import {ProjectTreeComponent} from './project/project-page/project-tree/project-tree.component';
 import {ActionPanelComponent} from './project/project-page/action-panel/action-panel.component';
-import {CreateCommitComponent} from './project/project-page/create-commit/create-commit.component';
-import {CreateFileComponent} from './project/project-page/create-file/create-file.component';
-import {CreateBranchComponent} from './project/project-page/create-branch/create-brach.component';
-import {RevertCommitComponent} from './project/project-page/revert-commit/revert-commit.component';
 import {CreateProjectComponent} from './group/group-profile/create-project/create-project.component';
 import {LogoutDialogComponent} from './shared/dialog/logout-dialog.component';
 import {DeletePostDialogComponent} from './shared/dialog/delete-post-dialog.component';
@@ -66,7 +62,6 @@ import {TreeviewModule} from 'ngx-treeview';
 import {
   DropdownTreeviewSelectComponent
 } from './project/project-page/project-tree/dropdown-treeview-select/dropdown-treeview-select.component';
-import {MergeBranchComponent} from './project/project-page/merge-branch/merge-branch.component';
 
 
 /************** Config Monaco *************/
@@ -139,17 +134,12 @@ const monacoConfig: NgxMonacoEditorConfig = {
     ProjectPageComponent,
     ProjectTreeComponent,
     ActionPanelComponent,
-    CreateCommitComponent,
-    CreateFileComponent,
-    CreateBranchComponent,
-    RevertCommitComponent,
     CreateProjectComponent,
     LogoutDialogComponent,
     DeletePostDialogComponent,
     DeleteFileDialogComponent,
     FileUnsavedChangeComponent,
     DropdownTreeviewSelectComponent,
-    MergeBranchComponent
   ],
 
   imports: [
