@@ -69,6 +69,9 @@
                 <nb-list-item (click)="showMergeBranchPopup()" class="action">
                   Merge branch
                 </nb-list-item>
+                <nb-list-item (click)="showDeleteBranch()" class="action">
+                  Delete branch
+                </nb-list-item>
               </nb-list>
             </nb-accordion-item-body>
           </nb-accordion-item>
@@ -223,8 +226,21 @@
       <h6>Delete current Branch</h6>
     </nb-card-header>
 
-    <nb-card-body style="text-align: center; padding-bottom: 0;">
-      <p>You are going to delete {{branchName}} Branch</p>
+    <nb-card-body>
+      <nb-list>
+        <nb-list-item *ngFor="let branch of mergeBranchList">
+          <div>
+            <input
+              class="deleteBranchCheckBox"
+              id="branch_{{ branch }}"
+              (click)="branchDeleteInput(branch)"
+              type="checkbox"
+              value="{{ branch }}"
+            />
+            <label for="branch_{{ branch }}">  {{ branch }}</label>
+          </div>
+        </nb-list-item>
+      </nb-list>
     </nb-card-body>
 
     <nb-card-footer>

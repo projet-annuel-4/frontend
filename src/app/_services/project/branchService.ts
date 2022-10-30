@@ -57,7 +57,7 @@ export class BranchService {
 
   deleteBranch(projectId: number, branchName: string): Observable<any> {
     return this.http.delete<any>(
-      `${project_file_service.BASE_URL}/${projectId}/branch/branch?branchName=${branchName}`
+      `${project_file_service.BASE_URL}/${projectId}/branch/delete?branchName=${branchName}`
     );
   }
 }

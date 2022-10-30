@@ -34,9 +34,11 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   positions = NbGlobalPhysicalPosition;
   branchList = ['master'];
   mergeBranchList = [];
+  deleteBranchList = [];
   selectedBranch: string;
   revertCommitId: string;
   mergeCommitId: string;
+  branchToDelete: string;
   branchGroup: FormGroup;
   @ViewChild(ProjectTreeComponent) child: ProjectTreeComponent;
 
@@ -378,14 +380,25 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   /***** Delete File *****/
+  showDeleteBranch() {
+    if (this.branchList.length > 1) {
+      this.deleteBranchPopup = 'pop-up-block';
+      this.deleteBranchList = this.branchList.filter(value => value !== this.branchName);
+    } else {
+      this.nbToasterService.show('You have only one branch', `Warning`, {
+        position: this.positions.TOP_RIGHT,
+        status: 'warning',
+      });
+    }
+  }
 
   hideDeleteBranch() {
-    this.deleteFilePopup = 'pop-up-none';
+    this.deleteBranchPopup = 'pop-up-none';
     this.offOverlay();
   }
 
   deleteBranch() {
-    this.branchService.deleteBranch(this.projectId, this.branchName).subscribe(
+    this.branchService.deleteBranch(this.projectId, this.branchToDelete).subscribe(
       () => {
         this.nbToasterService.show('Branch deleted successfully', `Done`, {
           position: this.positions.TOP_RIGHT,
@@ -412,12 +425,12 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   showMergeBranchPopup() {
     this.mergeBranchPopup = 'pop-up-block';
+    this.mergeBranchList = this.branchList.filter(value => value !== this.branchName);
     this.onOverlay();
   }
 
   hideMergeBranchPopup() {
     this.mergeBranchPopup = 'pop-up-none';
-    this.mergeBranchList = this.branchList.filter(value => value !== this.branchName);
     this.offOverlay();
   }
 
@@ -461,6 +474,17 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     this.mergeCommitId = selected;
     const checkbox = document.getElementsByClassName(
       'mergerBranchCheckBox'
+    ) as HTMLCollectionOf<HTMLInputElement>;
+    for (let i = 0; i < checkbox.length; i++) {
+      checkbox[i].checked = false;
+    }
+    (document.getElementById('branch_' + selected) as HTMLInputElement).checked = true;
+  }
+
+  branchDeleteInput(selected: string) {
+    this.branchToDelete = selected;
+    const checkbox = document.getElementsByClassName(
+      'deleteBranchCheckBox'
     ) as HTMLCollectionOf<HTMLInputElement>;
     for (let i = 0; i < checkbox.length; i++) {
       checkbox[i].checked = false;
