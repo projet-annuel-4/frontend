@@ -1,16 +1,16 @@
-import { Component } from '@angular/core'
-import { NbDialogRef, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme'
-import { CreateGroupRequest } from '../../_dtos/group/CreateGroupRequest'
-import { UserService } from '../../_services/user/user.service'
-import { GroupService } from '../../_services/group/group.service'
-import { User } from '../../_dtos/user/User'
+import {Component} from '@angular/core';
+import {NbDialogRef, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
+import {CreateGroupRequest} from '../../_dtos/group/CreateGroupRequest';
+import {UserService} from '../../_services/user/user.service';
+import {GroupService} from '../../_services/group/group.service';
+import {User} from '../../_dtos/user/User';
 
 @Component({
   template: `
     <nb-card class="dialog-card">
       <nb-card-header>
         <label class="label">Group Name:</label>
-        <input nbInput [(ngModel)]="createGroupRequest.name" />
+        <input nbInput [(ngModel)]="createGroupRequest.name"/>
       </nb-card-header>
 
       <nb-card-body>
@@ -37,18 +37,19 @@ import { User } from '../../_dtos/user/User'
   `,
 })
 export class NewGroupComponent {
-  createGroupRequest = new CreateGroupRequest()
-  mail: string
-  members: Set<User> = new Set<User>()
+  createGroupRequest = new CreateGroupRequest();
+  mail: string;
+  members: Set<User> = new Set<User>();
 
-  positions = NbGlobalPhysicalPosition
+  positions = NbGlobalPhysicalPosition;
 
   constructor(
     protected ref: NbDialogRef<NewGroupComponent>,
     private userService: UserService,
     private groupService: GroupService,
     private nbToasterService: NbToastrService
-  ) {}
+  ) {
+  }
 
   addMembers() {
     this.userService.getByEmail(this.mail).subscribe(
@@ -57,45 +58,47 @@ export class NewGroupComponent {
           this.nbToasterService.show(user.email + ' is already add', `Warning`, {
             position: this.positions.TOP_RIGHT,
             status: 'warning',
-          })
-          return
+          });
+          return;
         }
-        this.members.add(user)
-        this.mail = ''
+        this.members.add(user);
+        this.mail = '';
       },
       error => {
         this.nbToasterService.show('User ' + this.mail + ' not found', `Warning`, {
           position: this.positions.TOP_RIGHT,
           status: 'warning',
-        })
+        });
       }
-    )
+    );
   }
 
   createGroup() {
-    if (this.members.size == 0) {
+    if (this.members.size === 0) {
       this.nbToasterService.show('A group with only you is not very funny', `Warning`, {
         position: this.positions.TOP_RIGHT,
         status: 'warning',
-      })
-      return
+      });
+      return;
     }
 
-    this.memberToCreateGroupRequest()
-
+    this.memberToCreateGroupRequest();
+    let user: User;
+    user = JSON.parse(localStorage.getItem('auth-user') as unknown as User);
+    this.createGroupRequest.creatorId = parseInt(user.id);
     this.groupService.create(this.createGroupRequest).subscribe(then => {
-      this.ref.close()
-    })
+      this.ref.close();
+    });
   }
 
   removeMember(memberToDelete: User) {
-    this.members.delete(memberToDelete)
+    this.members.delete(memberToDelete);
   }
 
   memberToCreateGroupRequest() {
-    let ids: Set<number> = new Set<number>()
-    ids.add(this.userService.getProfile().id)
-    this.members.forEach(member => ids.add(member.id))
-    this.createGroupRequest.members = Array.from(ids)
+    const ids: Set<number> = new Set<number>();
+    ids.add(this.userService.getProfile().id);
+    this.members.forEach(member => ids.add(member.id));
+    this.createGroupRequest.members = Array.from(ids);
   }
 }

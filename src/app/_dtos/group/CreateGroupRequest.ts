@@ -1,4 +1,5 @@
 export class CreateGroupRequest {
-  name: string
-  members: number[]
+  name: string;
+  creatorId: number;
+  members: number[];
 }
