@@ -54,11 +54,12 @@ export class ProfileComponent implements OnInit {
       user => {
         this.profile = user;
       },
-      ()=> {},
       () => {
-        if(this.profile.imgUrl != null){
-          this.loadImage();
-        }
+      },
+      () => {
+        // if (this.profile.imgUrl != null) {
+        this.loadImage();
+        // }
       }
     );
 
@@ -66,7 +67,7 @@ export class ProfileComponent implements OnInit {
       posts => {this.tempUserPost = posts; },
       error => {},
       () => {
-        if(this.tempUserPost != null){
+        if (this.tempUserPost != null) {
           this.posts = this.postService.postTabToPostMap(this.tempUserPost);
           this.posts = this.postService.reverseMap(this.posts);
           this.posts = this.markPostsAlreadyLikeByUser(this.posts);
@@ -80,7 +81,7 @@ export class ProfileComponent implements OnInit {
       },
       error => {},
       () => {
-        if(this.tempPostLiked != null){
+        if (this.tempPostLiked != null) {
           this.postsLiked = this.postService.postTabToPostMap(this.tempPostLiked);
           this.postsLiked = this.reverseMap(this.postsLiked);
           this.postsLiked = this.markPostsAlreadyLikeByUser(this.postsLiked);
@@ -94,7 +95,7 @@ export class ProfileComponent implements OnInit {
       },
         error => {},
       () => {
-        if(this.tempUserAnswers != null){
+        if (this.tempUserAnswers != null) {
           this.userAnswers = this.postService.postTabToPostMap(this.tempUserAnswers);
           this.userAnswers = this.reverseMap(this.userAnswers);
           this.userAnswers = this.markPostsAlreadyLikeByUser(this.userAnswers);
@@ -105,11 +106,14 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  loadImage(){
-    this.fileService.downloadImage(this.profile.id).subscribe( res => {
-      const objectURL = 'data:image/png;base64,' + res.file;
-      this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    });
+  loadImage() {
+    this.fileService.downloadImage(this.profile.id).subscribe(res => {
+        if (res !== null) {
+          const objectURL = 'data:image/png;base64,' + res.file;
+          this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        }
+      }
+    );
   }
 
   viewFollowers() {
@@ -139,12 +143,15 @@ export class ProfileComponent implements OnInit {
       postsLiked => {
         this.postsAlreadyLiked = postsLiked;
       },
-      ()=> {},
       () => {
-        if (this.postsAlreadyLiked != null){
+      },
+      () => {
+        if (this.postsAlreadyLiked != null) {
           posts.forEach((value, post) => {
             this.postsAlreadyLiked.forEach(postLiked => {
-              if (post.id === postLiked.id) { value.isLiked = true; }
+              if (post.id === postLiked.id) {
+                value.isLiked = true;
+              }
             });
           });
         }
