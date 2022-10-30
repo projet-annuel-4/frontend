@@ -53,31 +53,23 @@ export class GroupProfileComponent implements OnInit {
     );
   }
 
-  /*
-  createProject() {
-
-    localStorage.setItem('groupId', String(this.groupId));
-    const createProjectComponent = this.dialogService.open(CreateProjectComponent);
-    createProjectComponent.onClose.subscribe(
-      () => {},
-      () => {
-        this.nbToasterService.show('', `Error`, { position: this.positions.TOP_RIGHT, status: 'danger' });
-      },
-      () => {this.loadProjects(); }
-    );
-
-  }
-
-   */
-
-
 
   showPopup(){
-    if(this.togglePopup == "pop-up-block"){
-      this.togglePopup = 'pop-up-none'
-    } else if(this.togglePopup == "pop-up-none"){
-      this.togglePopup = 'pop-up-block'
+    if(this.togglePopup === "pop-up-block"){
+      this.togglePopup = 'pop-up-none';
+      this.offOverlay();
+    } else if(this.togglePopup === "pop-up-none"){
+      this.togglePopup = 'pop-up-block';
+      this.onOverlay();
     }
+  }
+
+  onOverlay() {
+    document.getElementById("overlay").style.display = "block";
+  }
+
+  offOverlay() {
+    document.getElementById("overlay").style.display = "none";
   }
 
 

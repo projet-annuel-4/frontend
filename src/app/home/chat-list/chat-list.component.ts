@@ -112,10 +112,12 @@ export class ChatListComponent implements OnInit {
 
   openNewChatForm(){
     this.togglePopup = 'pop-up-block';
+    this.onOverlay();
   }
 
   closeNewChatForm(){
     this.togglePopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   submit(email: string){
@@ -139,6 +141,14 @@ export class ChatListComponent implements OnInit {
         window.location.reload();
       }
     );
+  }
+
+  onOverlay() {
+    document.getElementById("overlay").style.display = "block";
+  }
+
+  offOverlay() {
+    document.getElementById("overlay").style.display = "none";
   }
 
 

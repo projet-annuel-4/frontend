@@ -178,10 +178,12 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   /***** Create File *****/
   showCreateFilePopup() {
     this.createFilePopup = 'pop-up-block';
+    this.onOverlay();
   }
 
   hideCreateFilePopup() {
     this.createFilePopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   createFile() {
@@ -214,6 +216,7 @@ export class ProjectPageComponent implements OnInit, OnChanges {
 
   hideDeleteFile() {
     this.deleteFilePopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   deleteFile() {
@@ -246,10 +249,12 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   /*** Commit ***/
   showCommitPopup() {
     this.createCommitPopup = 'pop-up-block';
+    this.onOverlay();
   }
 
   hideCommitPopup() {
     this.createCommitPopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   createCommit() {
@@ -279,10 +284,12 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   /****** Revert ******/
   showRevertCommitPopup() {
     this.revertCommitPopup = 'pop-up-block';
+    this.onOverlay();
   }
 
   hideRevertCommitPopup() {
     this.revertCommitPopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   revertCommit() {
@@ -313,10 +320,12 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   /***** Create Branch *****/
   showCreateBranchPopup() {
     this.createBranchPopup = 'pop-up-block';
+    this.onOverlay();
   }
 
   hideCreateBranchPopup() {
     this.createBranchPopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   createBranch() {
@@ -345,12 +354,17 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   }
 
   /***** Merge Branch *****/
+
+
+
   showMergeBranchPopup() {
     this.createBranchPopup = 'pop-up-block';
+    this.onOverlay();
   }
 
   hideMergeBranchPopup() {
     this.createBranchPopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   merge() {
@@ -391,4 +405,15 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     }
     (document.getElementById(selected) as HTMLInputElement).checked = true;
   }
+
+
+  onOverlay() {
+    document.getElementById("overlay").style.display = "block";
+  }
+
+  offOverlay() {
+    document.getElementById("overlay").style.display = "none";
+  }
+
+
 }
