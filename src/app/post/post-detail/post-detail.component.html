@@ -3,33 +3,36 @@
     <div>
       <nb-user
         class="hoverEffect"
-        name="{{post.user.firstName}}"
+        name="{{post?.user?.firstName}}"
         (click)="goToProfile()">
       </nb-user>
       <br>
-      Title : {{post.title}}
+      Title : {{post?.title}}
     </div>
   </nb-card-header>
   <nb-card-body>
-    <span class="hoverEffect">
-      <pre><code>{{this.codeService.formatContent(post.content)}}</code></pre>
-    </span>
+    <div class="hoverEffect">
+      <pre><code
+        *ngIf="this.codeService.formatContent(post?.content)?.code">{{this.codeService.formatContent(post?.content)?.code}}</code></pre>
+      <p>{{this.codeService.formatContent(post?.content)?.text}}</p>
+    </div>
 
-    <span class="badge badge-pill badge-info tag-post" *ngFor="let tag of post.tags"> {{tag.name}} </span>
+    <span class="badge badge-pill badge-info tag-post" *ngFor="let tag of post?.tags"> {{tag.name}} </span>
 
     <br>
     <span class="hoverEffect" (click)="like_dislike(post.id)">
       <img *ngIf="!postIsLiked" src="assets/black_heart.png" alt="" height="20" width="20">
       <img *ngIf="postIsLiked" src="assets/red_heart.png" alt="" height="20" width="20">
     </span>
-    {{post.nbLike}}
+    {{post?.nbLike}}
   </nb-card-body>
 
   <nb-layout-column>
     <button nbButton
             status="basic"
             size="small"
-            routerLink="/post/{{post.id}}/comment"> Comment </button>
+            routerLink="/post/{{post?.id}}/comment"> Comment
+    </button>
   </nb-layout-column>
 
   <nb-card-footer>
@@ -57,7 +60,8 @@
             </nb-card-header>
             <nb-card-body class="hoverEffect">
               <div (click)="goToAnswerDetail(answer.key.id)" class="hoverEffect">
-                {{this.codeService.formatContent(answer.key.content)}}
+                <pre> <code>{{this.codeService.formatContent(answer.key.content)?.code}}</code></pre>
+                <p>{{this.codeService.formatContent(answer.key.content)?.text}}</p>
               </div>
               <span class="badge badge-pill badge-info tag-post"
                     *ngFor="let answerTag of answer.key.tags"> {{answerTag.name}} </span>

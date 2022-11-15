@@ -2,12 +2,11 @@
   <nb-card-body routerLink="../{{ post.id }}/detail">
     <nb-card-header> Title : {{ post.title }} </nb-card-header>
 
-    <div>
-      <pre>
-        <code class="hoverEffect">
-          {{post.content}}
-        </code>
-      </pre>
+    <div class="hoverEffect">
+      <pre> <code
+        *ngIf="this.codeService.formatContent(post?.content)?.code">{{this.codeService.formatContent(post.content)?.code}}</code></pre>
+      -->
+      <p>{{this.codeService.formatContent(post.content)?.text}}</p>
     </div>
 
     <div>

@@ -10,9 +10,11 @@
   </nb-card-header>
   <nb-card-body class="</nb-layout-column>" routerLink="../{{post.key.id}}/detail">
 
-    <span class="hoverEffect">
-      <pre><code>{{post.key.content}}</code></pre>
-    </span>
+    <div class="hoverEffect">
+      <pre> <code
+        *ngIf="this.codeService.formatContent(post.key.content)?.code">{{this.codeService.formatContent(post.key.content)?.code}}</code></pre>
+      <p>{{this.codeService.formatContent(post.key.content)?.text}}</p>
+    </div>
 
     <span class="badge badge-pill badge-info tag-post" *ngFor="let tag of post.key.tags">{{tag.name}}</span>
 

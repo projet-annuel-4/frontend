@@ -59,8 +59,8 @@ export class FeedComponent implements OnInit {
           tempPost = tempPost.slice(0, nb);
           tempPostMap = this.postService.postTabToPostMap(tempPost);
 
-          let distinctMap = this.distinct(this.posts, tempPostMap);
-          this.addAll(distinctMap, this.posts);
+          this.posts = this.distinct(this.posts, tempPostMap);
+          // console.log(distinctMap);// this.addAll(distinctMap, this.posts);
           this.posts = this.postService.reverseMap(this.posts);
         }
       }
@@ -68,14 +68,24 @@ export class FeedComponent implements OnInit {
   }
 
 
-  distinct(map1: Map<Post, { isLiked: boolean }>, map2: Map<Post, { isLiked: boolean }>){
-    let res: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>();
-    map1.forEach((value1, key1) => {
-      map2.forEach((value2, key2) => {
-        if (key2.id != key1.id) res.set(key2, value2);
+  distinct(map1: Map<Post, { isLiked: boolean }>, map2: Map<Post, { isLiked: boolean }>) {
+    const res: Map<Post, { isLiked: boolean }> = new Map<Post, { isLiked: boolean }>();
+    if (map1.size > 0 && map2.size > 0) {
+      map1.forEach((value1, key1) => {
+        map2.forEach((value2, key2) => {
+          if (key2.id !== key1.id) {
+            res.set(key2, value2);
+          }
+        });
       });
-    });
-    return res;
+      return res;
+    } else if (map1.size > 0 && map2.size === 0) {
+      return map1;
+    } else {
+      return map2;
+    }
+
+
   }
 
   /**
@@ -83,7 +93,7 @@ export class FeedComponent implements OnInit {
    * @param map1
    * @param map2
    */
-  addAll(map1: Map<Post, { isLiked: boolean }>, map2: Map<Post, { isLiked: boolean }>){
+  addAll(map1: Map<Post, { isLiked: boolean }>, map2: Map<Post, { isLiked: boolean }>) {
     map2.forEach((value, key) => {
       map1.forEach((value1, key1) => {
         map2.set(key1, value1);

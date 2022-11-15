@@ -55,8 +55,10 @@
               <div class="hoverEffect"
                    style="padding: 2%"
                    routerLink="../post/{{post.key.id}}/detail">
-              <!--<div (click)="viewPostDetail()">-->
-                 <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
+                <!--<div (click)="viewPostDetail()">-->
+                <pre> <code
+                  *ngIf="this.codeService.formatContent(post.key.content)?.code">{{this.codeService.formatContent(post.key.content)?.code}}</code></pre>
+                <p>{{this.codeService.formatContent(post.key.content)?.text}}</p>
               </div>
 
               <div *ngIf="post.key.tags !== undefined">
@@ -91,7 +93,8 @@
 
             <nb-card-body class="hoverEffect" routerLink="../post/{{userAnswer.key.id}}/detail">
               <div style="padding: 2%">
-                <pre><code>{{this.codeService.formatContent(userAnswer.key.content)}}</code></pre>
+                <pre> <code>{{this.codeService.formatContent(userAnswer.key.content)?.code}}</code></pre>
+                <p>{{this.codeService.formatContent(userAnswer.key.content)?.text}}</p>
               </div>
               <div>
                 <span class="badge badge-pill badge-info tag-post"
@@ -128,7 +131,8 @@
               routerLink="../post/{{postLiked.key.id}}/detail"
             >
               <div style="padding: 2%">
-                <pre><code>{{this.codeService.formatContent(postLiked.key.content)}}</code></pre>
+                <pre> <code>{{this.codeService.formatContent(postLiked.key.content)?.code}}</code></pre>
+                <p>{{this.codeService.formatContent(postLiked.key.content)?.text}}</p>
               </div>
 
               <div>

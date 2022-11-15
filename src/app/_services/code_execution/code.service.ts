@@ -1,30 +1,28 @@
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {TokenStorageService} from "../token/token-storage.service";
-import {Observable} from "rxjs";
-import {ApiResponse} from "../../_dtos/common/ApiResponse";
-import {Injectable} from "@angular/core";
-import {CodeExecution} from "../../_dtos/code_execution/CodeExecution";
-import {code_execution_service} from "../../../environments/environment";
-import {Code} from "../../_dtos/code_execution/Code";
-import {v4 as uuidv4} from 'uuid';
-import {CodeExecutionResponse} from "../../_dtos/code_execution/CodeExecutionResponse";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {CodeExecution} from '../../_dtos/code_execution/CodeExecution';
+import {code_execution_service} from '../../../environments/environment';
+import {Code} from '../../_dtos/code_execution/Code';
+import {CodeExecutionResponse} from '../../_dtos/code_execution/CodeExecutionResponse';
 
 @Injectable({providedIn: 'root'})
 export class CodeService {
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  sendCode(code:CodeExecution): Observable<CodeExecutionResponse>{
-    return this.http.post<CodeExecutionResponse>(`${code_execution_service.SEND}`, code , this.httpOptions);
+  sendCode(code: CodeExecution): Observable<CodeExecutionResponse> {
+    return this.http.post<CodeExecutionResponse>(`${code_execution_service.SEND}`, code, this.httpOptions);
   }
 
 
-  findCodeInContent(regexp: RegExp, str: string): string[]{
+  findCodeInContent(regexp: RegExp, str: string): string[] {
     let matches;
-    let codesFound = [];
+    const codesFound = [];
 
     while ((matches = regexp.exec(str)) !== null) {
       codesFound.push(matches[0]);
@@ -37,8 +35,10 @@ export class CodeService {
    * @param code
    * @param language
    */
-  cleanCode(code: string, language: string): string{
-    if(code == null || language == null) return
+  cleanCode(code: string, language: string): string {
+    if (code == null || language == null) {
+      return;
+    }
     return code
       .replace(language, '')
       .replace(/#/, '')
@@ -50,7 +50,7 @@ export class CodeService {
    *  `js` => js
    * @param language
    */
-  cleanLanguage(language: string): string{
+  cleanLanguage(language: string): string {
     return language
       .replace('`', '')
       .replace('`', '')
@@ -58,16 +58,16 @@ export class CodeService {
   }
 
 
-  createCodeFromString(codeString: string): Code{
-    const codeRegex = RegExp('`(.+?)`','g');
-    let languageMatch = codeRegex.exec(codeString);
+  createCodeFromString(codeString: string): Code {
+    const codeRegex = RegExp('`(.+?)`', 'g');
+    const languageMatch = codeRegex.exec(codeString);
 
-    if(languageMatch == null){
+    if (languageMatch == null) {
       return new Code(
         Math.floor(Math.random() * 1_000_000),
-        "",
-        this.cleanCode(codeString, ""),
-        "",
+        '',
+        this.cleanCode(codeString, ''),
+        '',
         false
       );
     }
@@ -77,18 +77,18 @@ export class CodeService {
       Math.floor(Math.random() * 1_000_000),
       this.cleanLanguage(languageMatch[0]),
       this.cleanCode(codeString, languageMatch[0]),
-      "",
+      '',
       false
     );
   }
 
 
-  codePreview(inputContent: string){
-    let codes: Code[] = [];
+  codePreview(inputContent: string) {
+    const codes: Code[] = [];
 
-    const regexp = RegExp('#(.+?)##','g');
+    const regexp = RegExp('#(.+?)##', 'g');
 
-    let codesFound = this.findCodeInContent(regexp, inputContent);
+    const codesFound = this.findCodeInContent(regexp, inputContent);
 
     codesFound.forEach(code => {
       codes.push(this.createCodeFromString(code));
@@ -98,23 +98,28 @@ export class CodeService {
   }
 
 
-  formatContent(content: string){
-    let newContent = content;
-    let codes = this.codePreview(content);
-
-    codes.codesFound.forEach((codeStr, i) => {
-      newContent = newContent.replace(codeStr, '\n' + codes.codes[i].content + '\n');
-    });
-
-    return newContent;
+  formatContent(content: string) {
+    const newContent = content;
+    const codes = this.codePreview(content);
+    const obj = {
+      text: '',
+      code: ''
+    };
+    if (codes.codesFound.length > 0) {
+      codes.codesFound.forEach((codeStr, i) => {
+        obj.text += newContent.replace(codeStr, '') + '\n';
+        obj.code += codes.codes[i].content.split('; ').join('; \n') + '\n';
+      });
+    } else {
+      obj.text = newContent;
+    }
+    return obj;
   }
 
 
-
-
-  codeValidation(content: string): boolean{
-    const regexp = RegExp('#`(.+?)`(.+?)##','g');
-    let languageMatch = regexp.exec(content);
+  codeValidation(content: string): boolean {
+    const regexp = RegExp('#`(.+?)`(.+?)##', 'g');
+    const languageMatch = regexp.exec(content);
 
     return languageMatch != null;
   }

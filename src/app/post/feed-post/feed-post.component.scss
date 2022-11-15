@@ -5,3 +5,16 @@
 .white {
   background-color: white;
 }
+
+code {
+  border: 1px dashed #000000;
+  background-color: #f3f1ef;
+  overflow: auto;
+  display: block;
+  padding: 5px;
+  max-height: 65px;
+  color: #0269ab;
+  font-family: Courier, monospace;
+  font-size: 0.9em;
+  font-size: 0.9rem;
+}
