@@ -3,7 +3,8 @@
     <nb-card>
       <nb-card-body style="text-align:center">
 
-        <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150" height="150" alt="">
+        <img *ngIf="image !== undefined; else noProfileImage" class="profile-image" [src]="image" width="150"
+             height="150" alt="">
         <ng-template #noProfileImage>
           <img class="profile-image" src="../../../../assets/profile.png" width="150" height="150" alt="">
         </ng-template>
@@ -15,10 +16,10 @@
 
       <nb-card-footer>
         <div class="hoverEffect" (click)="viewFollowers()">
-            {{friendProfile.nbFollowers || 0}} Followers
+          {{friendProfile.nbFollowers || 0}} Followers
         </div>
         <div class="hoverEffect" (click)="viewSubscriptions()">
-            {{friendProfile.nbSubscriptions || 0}} Subscriptions
+          {{friendProfile.nbSubscriptions || 0}} Subscriptions
         </div>
         <div style="text-align: right">
           <button nbButton (click)="follow_unfollow()">
@@ -37,7 +38,9 @@
 <!-- Impossible d'appeler le composant 'feed-post' Erreur : Maximum call stack size exceeded Error -->
             <nb-card-header> Title : {{post.key.title}} </nb-card-header>
             <nb-card-body class="hoverEffect" routerLink="/post/{{post.key.id}}/detail">
-              <pre><code>{{this.codeService.formatContent(post.key.content)}}</code></pre>
+              <pre> <code
+                *ngIf="this.codeService.formatContent(post.key.content)?.code">{{this.codeService.formatContent(post.key.content)?.code}}</code></pre>
+                <p>{{this.codeService.formatContent(post.key.content)?.text}}</p>
 
               <span class="badge badge-pill badge-info tag-post" *ngFor="let tag of post.key.tags"> {{tag.name}} </span>
             </nb-card-body>
@@ -48,7 +51,7 @@
               </span>
               {{post.key.nbLike}}
             </nb-card-footer>
-<!---->
+            <!---->
           </nb-card>
         </span>
 
@@ -66,8 +69,11 @@
               Title : {{friendAnswer.key.title}}
             </nb-card-header>
             <nb-card-body routerLink="../post/{{friendAnswer.key.id}}/detail">
-              <pre><code>{{this.codeService.formatContent(friendAnswer.key.content)}}</code></pre>
-
+              <div style="padding: 2%">
+                <pre> <code
+                  *ngIf="this.codeService.formatContent(friendAnswer.key.content)?.code">{{this.codeService.formatContent(friendAnswer.key.content)?.code}}</code></pre>
+                <p>{{this.codeService.formatContent(friendAnswer.key.content)?.text}}</p>
+              </div>
               <div>
                 <span class="badge badge-pill badge-info tag-post"
                       *ngFor="let tag of friendAnswer.key.tags"> {{tag.name}} </span>

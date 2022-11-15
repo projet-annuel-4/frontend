@@ -131,7 +131,8 @@
               routerLink="../post/{{postLiked.key.id}}/detail"
             >
               <div style="padding: 2%">
-                <pre> <code>{{this.codeService.formatContent(postLiked.key.content)?.code}}</code></pre>
+                <pre> <code
+                  *ngIf="this.codeService.formatContent(postLiked.key.content)?.code">{{this.codeService.formatContent(postLiked.key.content)?.code}}</code></pre>
                 <p>{{this.codeService.formatContent(postLiked.key.content)?.text}}</p>
               </div>
 
