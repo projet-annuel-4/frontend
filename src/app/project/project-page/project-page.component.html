@@ -191,7 +191,7 @@
 
     <nb-card-body>
       <nb-list>
-        <nb-list-item *ngFor="let branch of mergeBranchList">
+        <nb-list-item *ngFor="let branch of deleteBranchList">
           <div>
             <input
               class="deleteBranchCheckBox"
@@ -227,7 +227,7 @@
         <nb-list-item *ngFor="let branch of mergeBranchList">
           <div>
             <input
-              class="mergerBranchCheckBox"
+              class="mergeBranchCheckBox"
               id="branch_{{ branch }}"
               (click)="branchMergeInput(branch)"
               type="checkbox"

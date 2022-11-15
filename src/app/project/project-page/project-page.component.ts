@@ -1,29 +1,22 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core'
+import {ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild,} from '@angular/core';
 
-import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme'
-import { ActivatedRoute, Router } from '@angular/router'
-import { FileService } from '../../_services/project/fileService'
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FileService} from '../../_services/project/fileService';
 
-import { ProjectTreeComponent } from './project-tree/project-tree.component'
-import { Filess } from '../../_dtos/project/Filess'
-import { BranchService } from '../../_services/project/branchService'
-import { Commit } from '../../_dtos/project/Commit'
-import { delay } from 'rxjs/operators'
-import { CreateFileRequest } from '../../_dtos/project/CreateFileRequest'
-import { CreateBranchRequest } from '../../_dtos/project/CreateBranchRequest'
-import { CreateCommitRequest } from '../../_dtos/project/CreateCommitRequest'
-import { CommitService } from '../../_services/project/commitService'
-import { FormControl, FormGroup } from '@angular/forms'
-import { getFileType } from 'src/app/_helpers/fileLanguage'
+import {ProjectTreeComponent} from './project-tree/project-tree.component';
+import {Filess} from '../../_dtos/project/Filess';
+import {BranchService} from '../../_services/project/branchService';
+import {Commit} from '../../_dtos/project/Commit';
+import {delay} from 'rxjs/operators';
+import {CreateFileRequest} from '../../_dtos/project/CreateFileRequest';
+import {CreateBranchRequest} from '../../_dtos/project/CreateBranchRequest';
+import {CreateCommitRequest} from '../../_dtos/project/CreateCommitRequest';
+import {CommitService} from '../../_services/project/commitService';
+import {FormControl, FormGroup} from '@angular/forms';
+import {getFileType} from 'src/app/_helpers/fileLanguage';
 
-declare let monaco: any
+declare let monaco: any;
 
 @Component({
   selector: 'app-project-page',
@@ -31,37 +24,37 @@ declare let monaco: any
   styleUrls: ['./project-page.component.scss'],
 })
 export class ProjectPageComponent implements OnInit, OnChanges {
-  editorOptions = { theme: 'vs-dark', language: 'text', readonly: true }
-  code = 'Welcome ! Select or create a file :)'
-  selectedFile: Filess = null
-  fileModified = false
-  branchName = 'master'
-  projectId: number
-  groupId: number
-  atLeastOneFileModified = false
-  positions = NbGlobalPhysicalPosition
-  branchList = ['master']
-  mergeBranchList = []
-  deleteBranchList = []
-  selectedBranch: string
-  revertCommitId: string
-  mergeCommitId: string
-  branchToDelete: string
-  branchGroup: FormGroup
-  @ViewChild(ProjectTreeComponent) child: ProjectTreeComponent
+  editorOptions = {theme: 'vs-dark', language: 'text', readonly: true};
+  code = 'Welcome ! Select or create a file :)';
+  selectedFile: Filess = null;
+  fileModified = false;
+  branchName = 'master';
+  projectId: number;
+  groupId: number;
+  atLeastOneFileModified = false;
+  positions = NbGlobalPhysicalPosition;
+  branchList = ['master'];
+  mergeBranchList = [];
+  deleteBranchList = [];
+  selectedBranch: string;
+  revertCommitId: string;
+  mergeCommitId: string;
+  branchToDelete: string;
+  branchGroup: FormGroup;
+  @ViewChild(ProjectTreeComponent) child: ProjectTreeComponent;
 
-  commitExec = false
+  commitExec = false;
 
-  commits: Commit[]
+  commits: Commit[];
 
   // Popup
-  deleteFilePopup = 'pop-up-none'
-  createCommitPopup = 'pop-up-none'
-  revertCommitPopup = 'pop-up-none'
-  createBranchPopup = 'pop-up-none'
-  mergeBranchPopup = 'pop-up-none'
-  deleteBranchPopup = 'pop-up-none'
-  createFilePopup = 'pop-up-none'
+  deleteFilePopup = 'pop-up-none';
+  createCommitPopup = 'pop-up-none';
+  revertCommitPopup = 'pop-up-none';
+  createBranchPopup = 'pop-up-none';
+  mergeBranchPopup = 'pop-up-none';
+  deleteBranchPopup = 'pop-up-none';
+  createFilePopup = 'pop-up-none';
 
   constructor(
     private cf: ChangeDetectorRef,
@@ -74,27 +67,28 @@ export class ProjectPageComponent implements OnInit, OnChanges {
     private commitService: CommitService
   ) {
     this.route.params.subscribe(params => {
-      this.projectId = params.projectId
-      this.groupId = params.groupId
-    })
+      this.projectId = params.projectId;
+      this.groupId = params.groupId;
+    });
     this.branchGroup = new FormGroup({
       branchId: new FormControl(),
-    })
+    });
   }
   ngOnInit(): void {
-    this.updateOptions()
-    this.loadBranchList()
+    this.updateOptions();
+    this.loadBranchList();
   }
 
   loadBranchList() {
     this.branchService.getAllBranch(this.projectId).subscribe(
       data => (this.branchList = data),
-      () => {},
       () => {
-        document.getElementById('monaco-editor').style.display = 'block'
-        this.loadCurrentBranch()
+      },
+      () => {
+        document.getElementById('monaco-editor').style.display = 'block';
+        this.loadCurrentBranch();
       }
-    )
+    );
   }
 
   async loadCurrentBranch() {
@@ -102,9 +96,9 @@ export class ProjectPageComponent implements OnInit, OnChanges {
       .getActualBranch(this.projectId)
       .toPromise()
       .then(data => {
-        this.branchName = data.name
-        this.mergeBranchList = this.branchList.filter(value => value !== data.name)
-      })
+        this.branchName = data.name;
+        this.mergeBranchList = this.branchList.filter(value => value !== data.name);
+      });
   }
 
   async checkout(branch: string) {
@@ -116,16 +110,16 @@ export class ProjectPageComponent implements OnInit, OnChanges {
           this.nbToasterService.show(data[0], `Warning`, {
             position: this.positions.TOP_RIGHT,
             status: 'danger',
-          })
+          });
         } else {
-          await this.loadCurrentBranch()
-          this.child.updateFiles()
+          await this.loadCurrentBranch();
+          this.child.updateFiles();
           await this.router.navigateByUrl(
             '/group/' + this.groupId + '/project/' + this.projectId + '/branch/' + this.branchName
-          )
-          window.location.reload()
+          );
+          window.location.reload();
         }
-      })
+      });
   }
 
   ngOnChanges(simpleChanges: SimpleChanges) {}
@@ -137,118 +131,121 @@ export class ProjectPageComponent implements OnInit, OnChanges {
   sendCode() {}
 
   setSelectedFile(file: Filess) {
-    this.selectedFile = file
-    this.editorOptions = { ...this.editorOptions, language: getFileType(this.selectedFile.name) }
-    this.code = ''
-    document.getElementById('fileName').innerHTML = file.name
+    this.selectedFile = file;
+    this.editorOptions = {...this.editorOptions, language: getFileType(this.selectedFile.name)};
+    this.code = '';
+    document.getElementById('fileName').innerHTML = file.name;
     this.fileService.getFileData(this.projectId, this.selectedFile.name).subscribe(
       data => {
-        this.code = this.convertByteArrayToString(data)
+        this.code = this.convertByteArrayToString(data);
       },
-      () => {},
-      () => {}
-    )
-    this.fileModified = false
+      () => {
+      },
+      () => {
+      }
+    );
+    this.fileModified = false;
   }
 
   convertByteArrayToString(data: ArrayBuffer): string {
-    const jsonBytesToString = String.fromCharCode(...new Uint8Array(data))
-    return jsonBytesToString
+    const jsonBytesToString = String.fromCharCode(...new Uint8Array(data));
+    return jsonBytesToString;
   }
 
   async onChangeBranch($event, element: string) {
-    await this.checkout(element)
+    await this.checkout(element);
   }
 
   setFileChanged($event: Event) {
-    this.fileModified = true
+    this.fileModified = true;
   }
 
   saveFile() {
     if (this.selectedFile && this.selectedFile.name && this.selectedFile.name !== '') {
-      const fileContent = this.code
-      const blob = new Blob([fileContent], { type: 'text/plain' })
-      const file = new File([blob], 'foo.txt', { type: 'text/plain' })
-      const data: FormData = new FormData()
-      data.append('file', file)
+      const fileContent = this.code;
+      const blob = new Blob([fileContent], {type: 'text/plain'});
+      const file = new File([blob], 'foo.txt', {type: 'text/plain'});
+      const data: FormData = new FormData();
+      data.append('file', file);
       this.fileService.saveFile(this.projectId, this.selectedFile.name, data).subscribe(
         () => {
           this.nbToasterService.show('The file has been saved', `Done`, {
             position: this.positions.TOP_RIGHT,
             status: 'success',
-          })
-          this.atLeastOneFileModified = true
+          });
+          this.atLeastOneFileModified = true;
         },
         () => {
           this.nbToasterService.show('', `Error`, {
             position: this.positions.TOP_RIGHT,
             status: 'danger',
-          })
+          });
         },
-        () => {}
-      )
+        () => {
+        }
+      );
     } else {
       this.nbToasterService.show('You need to select file to save', `Warning`, {
         position: this.positions.TOP_RIGHT,
         status: 'warning',
-      })
+      });
     }
   }
 
   showDeleteFile() {
     if (this.selectedFile && this.selectedFile.name && this.selectedFile.name !== '') {
-      this.deleteFilePopup = 'pop-up-block'
+      this.deleteFilePopup = 'pop-up-block';
     } else {
       this.nbToasterService.show('You need to select file to delete', `Warning`, {
         position: this.positions.TOP_RIGHT,
         status: 'warning',
-      })
+      });
     }
   }
 
   /***** Create File *****/
   showCreateFilePopup() {
-    this.createFilePopup = 'pop-up-block'
-    this.onOverlay()
+    this.createFilePopup = 'pop-up-block';
+    this.onOverlay();
   }
 
   hideCreateFilePopup() {
-    this.createFilePopup = 'pop-up-none'
-    this.offOverlay()
+    this.createFilePopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   createFile() {
     const fileRequest = new CreateFileRequest(
       (document.getElementById('createFileName') as HTMLInputElement).value
-    )
+    );
     this.fileService.create(this.projectId, fileRequest).subscribe(
       data => {
         this.nbToasterService.show('File has been saved successfully', `Done`, {
           position: this.positions.TOP_RIGHT,
           status: 'success',
-        })
-        this.child.updateFiles()
-        delay(2000)
+        });
+        this.child.updateFiles();
+        delay(2000);
       },
       error => {
-        delay(2000)
+        delay(2000);
         this.nbToasterService.show(error.error.message, `Error`, {
           position: this.positions.TOP_RIGHT,
           status: 'danger',
-        })
-        return
+        });
+        return;
       },
       () => {
-        this.hideCreateFilePopup()
+        this.hideCreateFilePopup();
       }
-    )
+    );
   }
 
   /***** Delete File *****/
 
   hideDeleteFile() {
-    this.deleteFilePopup = 'pop-up-none'
-    this.offOverlay()
+    this.deleteFilePopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   deleteFile() {
@@ -257,72 +254,72 @@ export class ProjectPageComponent implements OnInit, OnChanges {
         this.nbToasterService.show('File deleted successfully', `Done`, {
           position: this.positions.TOP_RIGHT,
           status: 'success',
-        })
-        this.child.uppdateFilesV2()
-        window.location.reload()
+        });
+        this.child.uppdateFilesV2();
+        window.location.reload();
       },
       () => {
         this.nbToasterService.show('', `Error`, {
           position: this.positions.TOP_RIGHT,
           status: 'danger',
-        })
+        });
       },
       () => {
-        this.hideDeleteFile()
+        this.hideDeleteFile();
       }
-    )
+    );
   }
 
   /*** Show Diff ***/
   showDiff() {
-    console.log('diff')
+    console.log('diff');
   }
 
   /*** Commit ***/
   showCommitPopup() {
-    this.createCommitPopup = 'pop-up-block'
-    this.onOverlay()
+    this.createCommitPopup = 'pop-up-block';
+    this.onOverlay();
   }
 
   hideCommitPopup() {
-    this.createCommitPopup = 'pop-up-none'
-    this.offOverlay()
+    this.createCommitPopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   createCommit() {
     const commitRequest = new CreateCommitRequest(
       (document.getElementById('commitName') as HTMLInputElement).value
-    )
+    );
     this.commitService.create(this.projectId, commitRequest).subscribe(
       () => {
         this.nbToasterService.show('Commit has been saved successfully', `Done`, {
           position: this.positions.TOP_RIGHT,
           status: 'success',
-        })
-        delay(2000)
+        });
+        delay(2000);
       },
       () => {
         this.nbToasterService.show('', `Error`, {
           position: this.positions.TOP_RIGHT,
           status: 'danger',
-        })
+        });
       },
       () => {
-        this.hideCommitPopup()
+        this.hideCommitPopup();
       }
-    )
+    );
   }
 
   /****** Revert ******/
   showRevertCommitPopup() {
-    this.revertCommitPopup = 'pop-up-block'
-    this.onOverlay()
-    this.loadCommit()
+    this.revertCommitPopup = 'pop-up-block';
+    this.onOverlay();
+    this.loadCommit();
   }
 
   hideRevertCommitPopup() {
-    this.revertCommitPopup = 'pop-up-none'
-    this.offOverlay()
+    this.revertCommitPopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   revertCommit() {
@@ -332,75 +329,76 @@ export class ProjectPageComponent implements OnInit, OnChanges {
           this.nbToasterService.show('Commit has been revert successfully', `Done`, {
             position: this.positions.TOP_RIGHT,
             status: 'success',
-          })
-          delay(2000)
-          window.location.reload()
+          });
+          delay(2000);
+          window.location.reload();
         },
-        () => {},
         () => {
-          this.hideRevertCommitPopup()
+        },
+        () => {
+          this.hideRevertCommitPopup();
         }
-      )
+      );
     } else {
       this.nbToasterService.show('You need to check a commit', `Revert warning`, {
         position: this.positions.TOP_RIGHT,
         status: 'warning',
-      })
+      });
     }
   }
 
   /***** Create Branch *****/
   showCreateBranchPopup() {
-    this.createBranchPopup = 'pop-up-block'
-    this.onOverlay()
+    this.createBranchPopup = 'pop-up-block';
+    this.onOverlay();
   }
 
   hideCreateBranchPopup() {
-    this.createBranchPopup = 'pop-up-none'
-    this.offOverlay()
+    this.createBranchPopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   createBranch() {
     const branchRequest = new CreateBranchRequest(
       (document.getElementById('createBranchName') as HTMLInputElement).value
-    )
+    );
     this.branchService.create(this.projectId, branchRequest).subscribe(
       data => {
         this.nbToasterService.show('Branch has been saved successfully', `Done`, {
           position: this.positions.TOP_RIGHT,
           status: 'success',
-        })
-        delay(2000)
-        window.location.reload()
+        });
+        delay(2000);
+        window.location.reload();
       },
       error => {
         this.nbToasterService.show(error.error.message, `Error`, {
           position: this.positions.TOP_RIGHT,
           status: 'danger',
-        })
+        });
       },
       () => {
-        this.hideCreateBranchPopup()
+        this.hideCreateBranchPopup();
       }
-    )
+    );
   }
 
   /***** Delete File *****/
   showDeleteBranch() {
     if (this.branchList.length > 1) {
-      this.deleteBranchPopup = 'pop-up-block'
-      this.deleteBranchList = this.branchList.filter(value => value !== this.branchName)
+      this.deleteBranchPopup = 'pop-up-block';
+      this.deleteBranchList = this.branchList.filter(value => value !== this.branchName);
     } else {
       this.nbToasterService.show('You have only one branch', `Warning`, {
         position: this.positions.TOP_RIGHT,
         status: 'warning',
-      })
+      });
     }
   }
 
   hideDeleteBranch() {
-    this.deleteBranchPopup = 'pop-up-none'
-    this.offOverlay()
+    this.deleteBranchPopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   deleteBranch() {
@@ -409,33 +407,33 @@ export class ProjectPageComponent implements OnInit, OnChanges {
         this.nbToasterService.show('Branch deleted successfully', `Done`, {
           position: this.positions.TOP_RIGHT,
           status: 'success',
-        })
-        this.child.uppdateFilesV2()
-        window.location.reload()
+        });
+        this.child.uppdateFilesV2();
+        window.location.reload();
       },
       () => {
         this.nbToasterService.show('', `Error`, {
           position: this.positions.TOP_RIGHT,
           status: 'danger',
-        })
+        });
       },
       () => {
-        this.hideDeleteBranch()
+        this.hideDeleteBranch();
       }
-    )
+    );
   }
 
   /***** Merge Branch *****/
 
   showMergeBranchPopup() {
-    this.mergeBranchPopup = 'pop-up-block'
-    this.mergeBranchList = this.branchList.filter(value => value !== this.branchName)
-    this.onOverlay()
+    this.mergeBranchPopup = 'pop-up-block';
+    this.mergeBranchList = this.branchList.filter(value => value !== this.branchName);
+    this.onOverlay();
   }
 
   hideMergeBranchPopup() {
-    this.mergeBranchPopup = 'pop-up-none'
-    this.offOverlay()
+    this.mergeBranchPopup = 'pop-up-none';
+    this.offOverlay();
   }
 
   mergeBranch() {
@@ -445,74 +443,75 @@ export class ProjectPageComponent implements OnInit, OnChanges {
           this.nbToasterService.show('Branch has been merged successfully', `Done`, {
             position: this.positions.TOP_RIGHT,
             status: 'success',
-          })
-          delay(2000)
+          });
+          delay(2000);
           // window.location.reload();
         },
-        () => {},
         () => {
-          this.hideMergeBranchPopup()
+        },
+        () => {
+          this.hideMergeBranchPopup();
         }
-      )
+      );
     } else {
       this.nbToasterService.show('You need to check a branch', `Revert warning`, {
         position: this.positions.TOP_RIGHT,
         status: 'warning',
-      })
+      });
     }
   }
 
   checkRevertInput(selected: string) {
-    this.revertCommitId = selected
+    this.revertCommitId = selected;
     const checkbox = document.getElementsByClassName(
       'commitRevertCheckBox'
-    ) as HTMLCollectionOf<HTMLInputElement>
+    ) as HTMLCollectionOf<HTMLInputElement>;
     for (let i = 0; i < checkbox.length; i++) {
-      checkbox[i].checked = false
+      checkbox[i].checked = false;
     }
-    ;(document.getElementById('commit_' + selected) as HTMLInputElement).checked = true
+    (document.getElementById('commit_' + selected) as HTMLInputElement).checked = true;
   }
 
   branchMergeInput(selected: string) {
-    this.mergeCommitId = selected
+    this.mergeCommitId = selected;
     const checkbox = document.getElementsByClassName(
       'mergerBranchCheckBox'
-    ) as HTMLCollectionOf<HTMLInputElement>
+    ) as HTMLCollectionOf<HTMLInputElement>;
     for (let i = 0; i < checkbox.length; i++) {
-      checkbox[i].checked = false
+      checkbox[i].checked = false;
     }
-    ;(document.getElementById('branch_' + selected) as HTMLInputElement).checked = true
+    (document.getElementById('branch_' + selected) as HTMLInputElement).checked = true;
   }
 
   branchDeleteInput(selected: string) {
-    this.branchToDelete = selected
+    this.branchToDelete = selected;
     const checkbox = document.getElementsByClassName(
       'deleteBranchCheckBox'
-    ) as HTMLCollectionOf<HTMLInputElement>
+    ) as HTMLCollectionOf<HTMLInputElement>;
     for (let i = 0; i < checkbox.length; i++) {
-      checkbox[i].checked = false
+      checkbox[i].checked = false;
     }
-    ;(document.getElementById('branch_' + selected) as HTMLInputElement).checked = true
+    (document.getElementById('branch_' + selected) as HTMLInputElement).checked = true;
   }
 
   async loadCommit() {
     await this.commitService
       .getAllCommit(this.projectId)
       .toPromise()
-      .then(data => (this.commits = data.sort()))
+      .then(data => (this.commits = data.sort()));
   }
 
   sortCommits(): void {
     this.commits.sort(
       (commitA, commitB) => new Date(commitA.date).getTime() - new Date(commitB.date).getTime()
-    )
+    );
   }
 
   onOverlay() {
-    document.getElementById('overlay').style.display = 'block'
+    document.getElementById('overlay').style.display = 'block';
   }
 
   offOverlay() {
-    document.getElementById('overlay').style.display = 'none'
+    document.getElementById('overlay').style.display = 'none';
   }
 }
